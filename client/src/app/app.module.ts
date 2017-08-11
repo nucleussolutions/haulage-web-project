@@ -9,12 +9,18 @@ import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { NavService } from './nav/nav.service';
 import { AppRoutingModule } from "./app-routing.module";
+import { NotFoundComponent } from './not-found/not-found.component';
+import { RegisterComponent } from './register/register.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
-    IndexComponent
+    IndexComponent,
+    NotFoundComponent,
+    RegisterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
