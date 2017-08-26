@@ -1,0 +1,76 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/location','list']" class="list">Location List</a></li>
+    </ul>
+</div>
+<div id="persist-location" class="content scaffold-edit" role="main">
+    <h1>{{create ? "Create" : "Edit"}} Location</h1>
+    <ul class="errors" role="alert" *ngIf="errors">
+        <li *ngFor="let error of errors">{{error.message}}</li>
+    </ul>
+
+    <form name="save{className}" (ngSubmit)="save()">
+        <fieldset class="form">
+            <fieldset class="form">
+  <div class="fieldcontain required">
+    <label for="name">Name
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="name" id="name" [(ngModel)]="location.name" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="address1">Address1
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="address1" id="address1" [(ngModel)]="location.address1" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="address2">Address2
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="address2" id="address2" [(ngModel)]="location.address2" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="city">City
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="city" id="city" [(ngModel)]="location.city" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="state">State
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="state" id="state" [(ngModel)]="location.state" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="country">Country
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="country" id="country" [(ngModel)]="location.country" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="lat">Lat
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="lat" id="lat" [(ngModel)]="location.lat" type="number" step="any" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="lng">Lng
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="lng" id="lng" [(ngModel)]="location.lng" type="number" step="any" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="type">Type
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="type" id="type" [(ngModel)]="location.type" type="text" />
+  </div>
+</fieldset>
+        </fieldset>
+        <fieldset class="buttons">
+            <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" />
+        </fieldset>
+    </form>
+</div>

@@ -1,0 +1,70 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a class="list" [routerLink]="['/location', 'list']" class="list">Location List</a></li>
+        <li><a class="create" [routerLink]="['/location', 'create']" class="create">New Location</a></li>
+    </ul>
+</div>
+<div id="show-part" class="content scaffold-show" role="main">
+    <h1>Show Location</h1>
+    <ol class="property-list location">
+  <li class="fieldcontain">
+    <span id="name-label" class="property-label">Name</span>
+    <div class="property-value" aria-labelledby="name-label">
+      <span>{{location.name}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="address1-label" class="property-label">Address1</span>
+    <div class="property-value" aria-labelledby="address1-label">
+      <span>{{location.address1}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="address2-label" class="property-label">Address2</span>
+    <div class="property-value" aria-labelledby="address2-label">
+      <span>{{location.address2}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="city-label" class="property-label">City</span>
+    <div class="property-value" aria-labelledby="city-label">
+      <span>{{location.city}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="state-label" class="property-label">State</span>
+    <div class="property-value" aria-labelledby="state-label">
+      <span>{{location.state}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="country-label" class="property-label">Country</span>
+    <div class="property-value" aria-labelledby="country-label">
+      <span>{{location.country}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="lat-label" class="property-label">Lat</span>
+    <div class="property-value" aria-labelledby="lat-label">
+      <span>{{location.lat}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="lng-label" class="property-label">Lng</span>
+    <div class="property-value" aria-labelledby="lng-label">
+      <span>{{location.lng}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="type-label" class="property-label">Type</span>
+    <div class="property-value" aria-labelledby="type-label">
+      <span>{{location.type}}</span>
+    </div>
+  </li>
+</ol>
+
+    <a class="edit" [routerLink]="['/location', 'edit', location.id]">Edit</a>
+    <button type="button" (click)="destroy()">Delete</button>
+
+</div>
