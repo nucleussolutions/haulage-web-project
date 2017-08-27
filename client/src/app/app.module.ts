@@ -14,6 +14,7 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { LocationModule } from './location/location.module';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { LocationModule } from './location/location.module';
     NotFoundComponent,
     RegisterComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    ForgetPasswordComponent
   ],
   imports: [
     BrowserModule,
