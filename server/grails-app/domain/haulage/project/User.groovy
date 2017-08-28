@@ -18,6 +18,9 @@ class User {
     DriverInfo driverInfo
 
     static constraints = {
-
+        type nullable: false
+        forwarderInfo nullable: true
+        haulierInfo nullable: true
+        driverInfo nullable: true
     }
 }

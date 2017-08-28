@@ -79,6 +79,7 @@ class TransportRequest {
         gatePassImgUrl nullable: true
         bookingConfirmationImgUrl nullable: true
         cmoImgUrl nullable: false
+        consignments nullable: false
     }
 
     static mapping = {

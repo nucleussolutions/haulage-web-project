@@ -8,8 +8,11 @@ class HaulierInfo {
     String name
     Company company
 
+    Fleet fleet
+
     static constraints = {
         name nullable: false
-        company nullable: false
+        company nullable: true
+        fleet nullable: true
     }
 }

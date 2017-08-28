@@ -7,4 +7,12 @@ import grails.rest.*
 class Fleet {
 
     //will need one prime mover and one trailer
+    Vehicle primeMover
+
+    Vehicle trailer
+
+    static constraints = {
+        primeMover nullable: false
+        trailer nullable: false
+    }
 }
