@@ -8,7 +8,7 @@ class HaulierInfo {
     String name
     Company company
 
-    Fleet fleet
+    static hasOne = [fleet: Fleet]
 
     static constraints = {
         name nullable: false

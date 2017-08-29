@@ -23,6 +23,12 @@ class DriverInfo {
     String emergencyContactName
     String emergencyContactPhone
 
+    String address1
+    String address2
+    String city
+    String state
+    String country
+
     static constraints = {
         name nullable: false, blank: false
         //but the front end will be implemented as required
@@ -47,5 +53,11 @@ class DriverInfo {
         icBackImgUrl nullable: false, blank: true
 
         passportImgUrl nullable: false, blank: true
+
+        address1 blank: true
+        address2 blank: true
+        city blank: true
+        state blank: true
+        country blank: true
     }
 }

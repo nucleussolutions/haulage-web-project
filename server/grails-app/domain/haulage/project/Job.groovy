@@ -9,11 +9,10 @@ class Job {
     Consignment consignment
 
     //haulier assign driver
-    User driver
+    static belongsTo = [User]
 
     static constraints = {
         consignment nullable: false
-        driver nullable: false
     }
 
     static mapping = {

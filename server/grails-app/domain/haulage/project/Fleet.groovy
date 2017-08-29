@@ -11,6 +11,8 @@ class Fleet {
 
     Vehicle trailer
 
+    static belongsTo = [HaulierInfo]
+
     static constraints = {
         primeMover nullable: false
         trailer nullable: false
