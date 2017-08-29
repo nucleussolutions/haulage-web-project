@@ -1,3 +1,16 @@
-<p>
-  register works!
-</p>
+<form [formgroup]="credentials" (ngSubmit)="register(credentials)">
+
+<input type="email">
+
+  <input type="password" name="password">
+
+  <input type="password" name="confirmPassword">
+
+  <button type="submit">Register</button>
+
+</form>
+
+
+
+
+
