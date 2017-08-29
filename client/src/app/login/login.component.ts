@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
     private credentials: FormGroup;
 
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor(private formBuilder: FormBuilder, private loginService: LoginService) {
         this.credentials = this.formBuilder.group({
             email: ['', Validators.compose([Validators.required, Validators.email])],
             password: ['', Validators.required],
@@ -25,6 +25,10 @@ export class LoginComponent implements OnInit {
     }
 
     login(formData) {
+        this.loginService.login(formData.value.email, formData.value.password).then(response => {
 
+        }).catch(reason => {
+
+        });
     }
 }

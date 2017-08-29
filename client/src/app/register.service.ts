@@ -9,7 +9,7 @@ export class RegisterService {
 
   register(email, password, isHaulier){
     return new Promise((resolve, reject) => {
-      this.http.get('').subscribe(resolve => {
+      this.http.post('', '').subscribe(resolve => {
 
       }, reject => {
 
