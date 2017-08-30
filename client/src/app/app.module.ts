@@ -15,6 +15,14 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { LocationModule } from './location/location.module';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+import {RouterModule, Routes} from "@angular/router";
+import {LocationListComponent} from "./location/location-list.component";
+
+const appRoutes: Routes = [
+    // { path: 'locations', component: LocationListComponent },
+    // { path: 'heroes', component: HeroListComponent },
+];
+
 
 @NgModule({
   declarations: [
@@ -33,7 +41,11 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
     HttpModule,
     AppRoutingModule,
     NgbModule.forRoot(),
-    LocationModule
+    LocationModule,
+      RouterModule.forRoot(
+          appRoutes,
+          { enableTracing: true } // <-- debugging purposes only
+      )
 ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
   bootstrap: [AppComponent]

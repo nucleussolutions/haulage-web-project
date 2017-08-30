@@ -24,11 +24,8 @@ export class RegisterComponent implements OnInit {
 
 
     register(formData) {
+        this.registerService.register(formData.value.email, formData.value.password, false).then(value => {
 
-
-
-
-
-        this.registerService.register(formData.value.email, formData.value.password).then()
+        })
     }
 }
