@@ -17,6 +17,7 @@ import { LocationModule } from './location/location.module';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import {RouterModule, Routes} from "@angular/router";
 import {LocationListComponent} from "./location/location-list.component";
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const appRoutes: Routes = [
     // { path: 'locations', component: LocationListComponent },
@@ -33,7 +34,8 @@ const appRoutes: Routes = [
     RegisterComponent,
     HomeComponent,
     LoginComponent,
-    ForgetPasswordComponent
+    ForgetPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

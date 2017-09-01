@@ -1,23 +1,25 @@
 import { Injectable } from '@angular/core';
 import {Http, RequestOptions} from '@angular/http';
 
+
 @Injectable()
-export class ForgetPasswordService {
+export class ResetPasswordService {
 
   constructor(private http: Http) { }
 
-  requestReset(email){
+  resetPassword(password){
     return new Promise((resolve, reject) => {
 
+
       let postBody = {
-        email : email
+        password : password
       };
 
-      this.http.post('', '').subscribe(response => {
+      this.http.post('', postBody).subscribe(response => {
         resolve(response.json());
       }, error => {
         reject(error.json());
-      })
+      });
     });
   }
 }
