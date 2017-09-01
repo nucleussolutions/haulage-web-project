@@ -1,6 +1,14 @@
+'use strict';
+
 const mongoose = require('mongoose'),
     Schema = mongoose.Schema,
+    crypto = require('crypto'),
     bcrypt = require('bcrypt-nodejs');
+
+const SALT   = SECRET;
+const ITER   = 100000;
+const KEYLEN = 512;
+const DIGEST = 'sha512';
 
 //================================
 // User Schema
@@ -51,9 +59,11 @@ UserSchema.pre('save', function (next) {
 });
 
 // Method to compare password for login
-UserSchema.methods.comparePassword = function(candidatePassword, cb) {
-    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-        if (err) { return cb(err); }
+UserSchema.methods.comparePassword = function (candidatePassword, cb) {
+    bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+        if (err) {
+            return cb(err);
+        }
 
         cb(null, isMatch);
     });
