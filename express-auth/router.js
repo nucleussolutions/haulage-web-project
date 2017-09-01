@@ -30,6 +30,12 @@ module.exports = function(app) {
     // Login route
     authRoutes.post('/login', requireLogin, AuthenticationController.login);
 
+    // Password reset request route (generate/send token)
+    authRoutes.post('/forgot-password', AuthenticationController.forgotPassword);
+
+    // Password reset route (change password using token)
+    authRoutes.post('/reset-password/:token', AuthenticationController.verifyToken);
+
 // Set url for API group routesgit stat
     app.use('/api', apiRoutes);
 };

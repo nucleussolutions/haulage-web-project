@@ -1,9 +1,15 @@
 'use strict';
 
-const mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    crypto = require('crypto'),
-    bcrypt = require('bcrypt-nodejs');
+const mongoose = require('mongoose');
+const crypto   = require('crypto');
+const pbkdf2   = crypto.pbkdf2;
+
+const ROLE_MEMBER = require('../constants').ROLE_MEMBER;
+const ROLE_CLIENT = require('../constants').ROLE_CLIENT;
+const ROLE_OWNER = require('../constants').ROLE_OWNER;
+const ROLE_ADMIN = require('../constants').ROLE_ADMIN;
+
+const Schema = mongoose.Schema;
 
 const SALT   = SECRET;
 const ITER   = 100000;
@@ -18,20 +24,21 @@ const UserSchema = new Schema({
             type: String,
             lowercase: true,
             unique: true,
-            required: true
+            required: true,
+            trim: true
         },
         password: {
             type: String,
             required: true
         },
         profile: {
-            firstName: {type: String},
-            lastName: {type: String}
+            // firstName: {type: String},
+            // lastName: {type: String}
         },
         role: {
             type: String,
-            enum: ['Member', 'Client', 'Owner', 'Admin'],
-            default: 'Member'
+            enum: [ROLE_MEMBER, ROLE_CLIENT, ROLE_OWNER, ROLE_ADMIN],
+            default: ROLE_MEMBER
         },
         resetPasswordToken: {type: String},
         resetPasswordExpires: {type: Date}
@@ -42,31 +49,26 @@ const UserSchema = new Schema({
 
 // Pre-save of user to database, hash password if password is modified or new
 UserSchema.pre('save', function (next) {
-    const user = this,
-        SALT_FACTOR = 5;
+    const user       = this;
+    const changePass = user.isModified('password');
+    if (!changePass) { return next(); }
 
-    if (!user.isModified('password')) return next();
-
-    bcrypt.genSalt(SALT_FACTOR, function (err, salt) {
-        if (err) return next(err);
-
-        bcrypt.hash(user.password, salt, null, function (err, hash) {
-            if (err) return next(err);
-            user.password = hash;
-            next();
-        });
+    pbkdf2(user.password, SALT, ITER, KEYLEN, DIGEST, (err, key) => {
+        if (err) { return next(err); }
+        user.password = key.toString('hex');
+        next();
     });
 });
 
 // Method to compare password for login
-UserSchema.methods.comparePassword = function (candidatePassword, cb) {
-    bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
-        if (err) {
-            return cb(err);
-        }
+UserSchema.methods.comparePassword = function (password, next) {
 
-        cb(null, isMatch);
+    pbkdf2(password, SALT, ITER, KEYLEN, DIGEST, (err, key) => {
+        if (err) { return next(err); }
+        const isMatch = this.password === key.toString('hex');
+        next(null, isMatch);
     });
+
 };
 
 module.exports = mongoose.model('User', UserSchema);
