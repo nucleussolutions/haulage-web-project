@@ -2,9 +2,9 @@
 const express = require('express'),
     app = express(),
     logger = require('morgan'),
+    bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
     config = require('./config/main');
-
 
 
 // Start the server
@@ -29,3 +29,7 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Credentials", "true");
     next();
 });
+
+const router = require('./router');
+
+router(app);

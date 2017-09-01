@@ -11,12 +11,15 @@
     "express": "^4.15.4",
     "jsonwebtoken": "^7.4.3",
     "mailgun-js": "^0.13.1",
+    "mongoose": "^4.11.9",
     "morgan": "^1.8.2",
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.0",
     "passport-local": "^1.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "supertest": "^3.0.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
