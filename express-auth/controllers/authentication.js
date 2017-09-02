@@ -33,6 +33,8 @@ exports.login = function(req, res, next) {
 // Registration Route
 //========================================
 exports.register = function(req, res, next) {
+
+    console.log('register request '+req);
     // Check for registration errors
     const email = req.body.email;
     const firstName = req.body.firstName;
@@ -53,6 +55,11 @@ exports.register = function(req, res, next) {
     if (!password) {
         return res.status(422).send({ error: 'You must enter a password.' });
     }
+
+
+
+
+
 
     User.findOne({ email: email }, function(err, existingUser) {
         if (err) { return next(err); }

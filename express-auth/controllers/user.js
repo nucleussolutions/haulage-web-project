@@ -19,3 +19,12 @@ exports.viewProfile = function (req, res, next) {
         return res.status(200).json({ user: userToReturn });
     });
 };
+
+exports.updateProfile = function (req, res, next) {
+    const userId = req.params.userId;
+
+
+    User.findById(userId, (err, user) => {
+
+    });
+};

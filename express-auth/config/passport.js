@@ -6,6 +6,8 @@ const passport = require('passport'),
     ExtractJwt = require('passport-jwt').ExtractJwt,
     LocalStrategy = require('passport-local');
 
+const { NODE_ENV, ROOT, SECRET, PORT, DB_URI } = require('../config');
+
 const localOptions = { usernameField: 'email' };
 
 // Setting up local login strategy
@@ -25,9 +27,9 @@ const localLogin = new LocalStrategy(localOptions, function(email, password, don
 
 const jwtOptions = {
     // Telling Passport to check authorization headers for JWT
-    jwtFromRequest: ExtractJwt.fromAuthHeader(),
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     // Telling Passport where to find the secret
-    secretOrKey: config.secret
+    secretOrKey: SECRET
 };
 
 // Setting up JWT login strategy

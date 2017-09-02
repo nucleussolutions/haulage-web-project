@@ -9,9 +9,11 @@ const ROLE_CLIENT = require('../constants').ROLE_CLIENT;
 const ROLE_OWNER = require('../constants').ROLE_OWNER;
 const ROLE_ADMIN = require('../constants').ROLE_ADMIN;
 
+const config = require('../config/main');
+
 const Schema = mongoose.Schema;
 
-const SALT   = SECRET;
+const SALT   = config.secret;
 const ITER   = 100000;
 const KEYLEN = 512;
 const DIGEST = 'sha512';
