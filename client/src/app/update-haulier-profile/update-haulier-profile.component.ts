@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormBuilder} from "@angular/forms";
 
 @Component({
   selector: 'app-update-haulier-profile',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpdateHaulierProfileComponent implements OnInit {
 
-  constructor() { }
+  private credentials : any;
+
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+  }
+
+  updateHaulierProfile(formData){
+
   }
 
 }

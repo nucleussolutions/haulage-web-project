@@ -20,6 +20,7 @@ import {LocationListComponent} from "./location/location-list.component";
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { UpdateDriverProfileComponent } from './update-driver-profile/update-driver-profile.component';
 import { UpdateHaulierProfileComponent } from './update-haulier-profile/update-haulier-profile.component';
+import { UpdateForwarderProfileComponent } from './update-forwarder-profile/update-forwarder-profile.component';
 
 const appRoutes: Routes = [
     // { path: 'locations', component: LocationListComponent },
@@ -39,7 +40,8 @@ const appRoutes: Routes = [
     ForgetPasswordComponent,
     ResetPasswordComponent,
     UpdateDriverProfileComponent,
-    UpdateHaulierProfileComponent
+    UpdateHaulierProfileComponent,
+    UpdateForwarderProfileComponent
   ],
   imports: [
     BrowserModule,
