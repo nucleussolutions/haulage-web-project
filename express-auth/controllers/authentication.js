@@ -34,8 +34,8 @@ exports.login = function (req, res, next) {
 exports.register = function (req, res, next) {
   // Check for registration errors
   const email = req.body.email;
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
+  // const firstName = req.body.firstName;
+  // const lastName = req.body.lastName;
   const password = req.body.password;
 
   // Return error if no email provided
@@ -44,9 +44,9 @@ exports.register = function (req, res, next) {
   }
 
   // Return error if full name not provided
-  if (!firstName || !lastName) {
-    return res.status(422).send({ error: 'You must enter your full name.' });
-  }
+  // if (!firstName || !lastName) {
+  //   return res.status(422).send({ error: 'You must enter your full name.' });
+  // }
 
   // Return error if no password provided
   if (!password) {
@@ -65,7 +65,7 @@ exports.register = function (req, res, next) {
     const user = new User({
       email,
       password,
-      profile: { firstName, lastName }
+      // profile: { firstName, lastName }
     });
 
     user.save((err, user) => {
@@ -120,7 +120,7 @@ exports.forgotPassword = function (req, res, next) {
 
   User.findOne({ email }, (err, existingUser) => {
     // If user is not found, return error
-    if (err || existingUser == null) {
+    if (err || existingUser === null) {
       res.status(422).json({ error: 'Your request could not be processed as entered. Please try again.' });
       return next(err);
     }

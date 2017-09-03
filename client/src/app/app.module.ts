@@ -18,6 +18,8 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
 import {RouterModule, Routes} from "@angular/router";
 import {LocationListComponent} from "./location/location-list.component";
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { UpdateDriverProfileComponent } from './update-driver-profile/update-driver-profile.component';
+import { UpdateHaulierProfileComponent } from './update-haulier-profile/update-haulier-profile.component';
 
 const appRoutes: Routes = [
     // { path: 'locations', component: LocationListComponent },
@@ -35,7 +37,9 @@ const appRoutes: Routes = [
     HomeComponent,
     LoginComponent,
     ForgetPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    UpdateDriverProfileComponent,
+    UpdateHaulierProfileComponent
   ],
   imports: [
     BrowserModule,
