@@ -10,6 +10,9 @@ class Company {
     String registrationNo
     String address1
     String address2
+    String city
+    String state
+    String country
     String officePhone
     String yardPhone
     String companyImgUrl
@@ -20,6 +23,9 @@ class Company {
         registrationNo nullable: false, blank: false
         address1 nullable: false, blank: false
         address2 nullable: false, blank: true
+        city nullable: false, blank: false
+        state nullable: false, blank: false
+        country nullable: false, blank: false
         officePhone nullable: false, blank: false
         yardPhone nullable: false, blank: false
         companyImgUrl nullable: false, blank: false
