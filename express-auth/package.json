@@ -12,7 +12,7 @@
     "api",
     "server-side"
   ],
-  "author": "Joshua Slate",
+  "author": "Kevin Tan",
   "license": "ISC",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
