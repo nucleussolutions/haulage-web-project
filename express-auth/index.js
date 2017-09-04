@@ -33,6 +33,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.disable('x-powered-by');
+
 // Import routes to be served
 router(app);
 

@@ -1,1 +1,1 @@
-include 'client', 'server', 'auth-server'
+include 'client', 'server'

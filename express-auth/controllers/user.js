@@ -76,8 +76,6 @@ exports.updateProfile = function (req, res, next) {
 
     const northPortPassExpiry = req.params.northPortPassExpiry;
 
-
-
     const emergencyContactName = req.params.emergencyContactName;
 
     const emergencyContactPhone = req.params.emergencyContactPhone;
@@ -91,8 +89,6 @@ exports.updateProfile = function (req, res, next) {
     const state = req.params.state;
 
     const country = req.params.country;
-
-
 
     if (req.user._id.toString() !== userId) {
         return res.status(401).json({error: 'You are not authorized to modify this user profile.'});
