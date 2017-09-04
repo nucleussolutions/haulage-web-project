@@ -1,8 +1,5 @@
 const AuthenticationController = require('./controllers/authentication');
 const UserController = require('./controllers/user');
-const ChatController = require('./controllers/chat');
-const CommunicationController = require('./controllers/communication');
-const StripeController = require('./controllers/stripe');
 const express = require('express');
 const passport = require('passport');
 
@@ -18,9 +15,6 @@ module.exports = function (app) {
   const apiRoutes = express.Router(),
     authRoutes = express.Router(),
     userRoutes = express.Router();
-    // chatRoutes = express.Router(),
-    // payRoutes = express.Router(),
-    // communicationRoutes = express.Router();
 
   //= ========================
   // Auth Routes
