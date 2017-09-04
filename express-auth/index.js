@@ -5,7 +5,6 @@ const express = require('express'),
   logger = require('morgan'),
   router = require('./router'),
   mongoose = require('mongoose'),
-  socketEvents = require('./socketEvents'),
   config = require('./config/main');
 
 // Database Setup
@@ -19,14 +18,6 @@ if (process.env.NODE_ENV !== config.test_env) {
 } else{
   server = app.listen(config.test_port);
 }
-
-
-const io = require('socket.io').listen(server);
-
-socketEvents(io);
-
-// Set static file location for production
-// app.use(express.static(__dirname + '/public'));
 
 // Setting up basic middleware for all Express requests
 app.use(bodyParser.urlencoded({ extended: false })); // Parses urlencoded bodies

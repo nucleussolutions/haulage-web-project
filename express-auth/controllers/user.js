@@ -1,9 +1,9 @@
 const User = require('../models/user');
 const setUserInfo = require('../helpers').setUserInfo;
-const ROLE_USER = require('./constants').ROLE_USER;
-const ROLE_MANAGER = require('./constants').ROLE_MANAGER;
-const ROLE_SUPER_ADMIN = require('./constants').ROLE_SUPER_ADMIN;
-const ROLE_ADMIN = require('./constants').ROLE_ADMIN;
+const ROLE_USER = require('../constants').ROLE_USER;
+const ROLE_MANAGER = require('../constants').ROLE_MANAGER;
+const ROLE_SUPER_ADMIN = require('../constants').ROLE_SUPER_ADMIN;
+const ROLE_ADMIN = require('../constants').ROLE_ADMIN;
 
 
 //= =======================================
