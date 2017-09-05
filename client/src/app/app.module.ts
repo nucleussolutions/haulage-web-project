@@ -25,6 +25,10 @@ import { UpdateForwarderProfileComponent } from './update-forwarder-profile/upda
 const appRoutes: Routes = [
     // { path: 'locations', component: LocationListComponent },
     // { path: 'heroes', component: HeroListComponent },
+    { path: '',
+        redirectTo: '/login',
+        pathMatch: 'full'
+    },
 ];
 
 
