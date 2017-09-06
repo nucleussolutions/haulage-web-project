@@ -1,7 +1,36 @@
+<div class="page-content">
 
+  <div class="mdl-card mdl-shadow--6dp">
+    <div class="mdl-card__title mdl-color--primary mdl-color-text--white relative">
+      <h2 class="mdl-card__title-text">Simple Login</h2>
+    </div>
 
-<form [formgroup]="credentials" (ngSubmit)="login(credentials)">
-  <input type="email" formControlName="email">
-  <input type="password" formControlName="password">
-  <button type="submit">Login</button>
-</form>
+    <div class="mdl-card__supporting-text">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" id="login"/>
+        <label class="mdl-textfield__label" for="login">Login</label>
+      </div>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="password" id="password"/>
+        <label class="mdl-textfield__label" for="password">Password</label>
+      </div>
+    </div>
+
+    <div class="mdl-card__actions mdl-card--border">
+      <div class="mdl-grid">
+        <button class="mdl-cell mdl-cell--12-col mdl-button mdl-button--raised mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+          Login
+        </button>
+
+      </div>
+
+      <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col">
+          <a onClick='flip("show-left")' class="mdl-color-text--primary">Sign up!</a>
+          <a onClick='flip("show-bottom")' class="mdl-color-text--primary" style="float: right">Lost
+            Password?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

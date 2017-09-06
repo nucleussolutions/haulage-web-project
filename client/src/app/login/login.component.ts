@@ -11,14 +11,14 @@ import {LoginService} from "../login.service";
 })
 export class LoginComponent implements OnInit {
 
-    private credentials: FormGroup;
+    // private credentials: FormGroup;
 
 
     constructor(private formBuilder: FormBuilder, private loginService: LoginService) {
-        this.credentials = this.formBuilder.group({
-            email: ['', Validators.compose([Validators.required, Validators.email])],
-            password: ['', Validators.required],
-        });
+        // this.credentials = this.formBuilder.group({
+        //     email: ['', Validators.compose([Validators.required, Validators.email])],
+        //     password: ['', Validators.required],
+        // });
     }
 
     ngOnInit() {

@@ -1,63 +1,25 @@
-/* tslint:disable:no-unused-variable */
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TestBed, async } from '@angular/core/testing';
 import { IndexComponent } from './index.component';
-import { Observable, Observer } from 'rxjs';
-import { NavService } from '../nav/nav.service';
-import { APP_BASE_HREF } from '@angular/common';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Routes } from '@angular/router';
 
-describe('Component: Index', () => {
-
-  const rootRouterConfig: Routes = [
-    {path: '', redirectTo: 'index', pathMatch: 'full'},
-    {path: 'index', component: IndexComponent},
-  ];
-
+describe('IndexComponent', () => {
   let component: IndexComponent;
+  let fixture: ComponentFixture<IndexComponent>;
 
-  const navService = {
-    getNavData: () => {
-      return Observable.create((observer: Observer<any>) => {
-        observer.next({controllers: [{name: 'b'}, {name: 'a'}]});
-        observer.complete();
-      });
-    }
-  };
-
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        IndexComponent
-      ],
-      imports: [
-        RouterTestingModule.withRoutes(rootRouterConfig)
-      ],
-      providers: [
-        {provide: NavService, useValue: navService},
-        {provide: APP_BASE_HREF, useValue: '/'},
-      ],
-    });
-
-    let fixture = TestBed.createComponent(IndexComponent);
-    component = fixture.debugElement.componentInstance;
-  });
-
-  it('should create the component', async(() => {
-    expect(component).toBeTruthy();
+      declarations: [ IndexComponent ]
+    })
+    .compileComponents();
   }));
 
-  it('should initialize controllers with sorting', () => {
-    component.ngOnInit();
-    expect(component.controllers.length).toBe(2);
-    expect(component.controllers[0].name).toBe('a');
-    expect(component.controllers[1].name).toBe('b');
+  beforeEach(() => {
+    fixture = TestBed.createComponent(IndexComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
-  it('should determine if a route exists based on path', () => {
-    expect(component.hasRoute('index')).toBe(true);
-    expect(component.hasRoute('foo')).toBe(false);
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
-
 });

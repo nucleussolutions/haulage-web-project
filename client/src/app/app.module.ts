@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
@@ -22,14 +22,6 @@ import { UpdateDriverProfileComponent } from './update-driver-profile/update-dri
 import { UpdateHaulierProfileComponent } from './update-haulier-profile/update-haulier-profile.component';
 import { UpdateForwarderProfileComponent } from './update-forwarder-profile/update-forwarder-profile.component';
 
-const appRoutes: Routes = [
-    // { path: 'locations', component: LocationListComponent },
-    // { path: 'heroes', component: HeroListComponent },
-    { path: '',
-        redirectTo: '/login',
-        pathMatch: 'full'
-    },
-];
 
 
 @NgModule({
@@ -53,12 +45,9 @@ const appRoutes: Routes = [
     HttpModule,
     AppRoutingModule,
     NgbModule.forRoot(),
-    LocationModule,
-      RouterModule.forRoot(
-          appRoutes,
-          { enableTracing: true } // <-- debugging purposes only
-      )
-],
+      FormsModule, ReactiveFormsModule
+
+  ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
   bootstrap: [AppComponent]
 })
