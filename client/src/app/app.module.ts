@@ -21,6 +21,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { UpdateDriverProfileComponent } from './update-driver-profile/update-driver-profile.component';
 import { UpdateHaulierProfileComponent } from './update-haulier-profile/update-haulier-profile.component';
 import { UpdateForwarderProfileComponent } from './update-forwarder-profile/update-forwarder-profile.component';
+import { HaulierProfileComponent } from './haulier-profile/haulier-profile.component';
+import { DriverProfileComponent } from './driver-profile/driver-profile.component';
+import { ForwarderProfileComponent } from './forwarder-profile/forwarder-profile.component';
 
 
 
@@ -37,7 +40,10 @@ import { UpdateForwarderProfileComponent } from './update-forwarder-profile/upda
     ResetPasswordComponent,
     UpdateDriverProfileComponent,
     UpdateHaulierProfileComponent,
-    UpdateForwarderProfileComponent
+    UpdateForwarderProfileComponent,
+    HaulierProfileComponent,
+    DriverProfileComponent,
+    ForwarderProfileComponent
   ],
   imports: [
     BrowserModule,

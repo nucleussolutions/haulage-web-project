@@ -13,10 +13,10 @@ const appRoutes: Routes = [
     {path: 'register', component: RegisterComponent},
     {path: 'login', component: LoginComponent},
     {
-        path: 'index', component: IndexComponent, children: [
+        path: 'index', component: IndexComponent, children:[
     ]
     },
-    {path: '', redirectTo: 'index', pathMatch: 'full'},
+    {path: '', redirectTo: '/index', pathMatch: 'full'},
     {path: '**', component: NotFoundComponent},
 ];
 
