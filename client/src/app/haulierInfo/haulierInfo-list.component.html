@@ -1,0 +1,35 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/haulierInfo','create']" class="create">New HaulierInfo</a></li>
+    </ul>
+</div>
+<div id="list-haulierInfo" class="content scaffold-list" role="main">
+    <h1>HaulierInfo List</h1>
+    <table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Company</th>
+      <th>User Id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let haulierInfo of haulierInfoList; let e = even;">
+      <td>
+        <a [routerLink]="['/haulierInfo','show',haulierInfo.id]">{{haulierInfo.id}}</a>
+      </td>
+      <td>
+        <span>{{haulierInfo.name}}</span>
+      </td>
+      <td>
+        <a *ngIf="haulierInfo.company" [routerLink]="['/haulierInfo','show', haulierInfo.company.id]">{{haulierInfo.company.toString()}}</a>
+      </td>
+      <td>
+        <span>{{haulierInfo.userId}}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
