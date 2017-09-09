@@ -12,7 +12,7 @@ class HaulierInfo {
 
     static constraints = {
         name nullable: false
-        company nullable: true
+        company nullable: false
         userId nullable: false
     }
 }

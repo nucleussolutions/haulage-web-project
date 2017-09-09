@@ -15,13 +15,12 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { LocationModule } from './location/location.module';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
-import {RouterModule, Routes} from "@angular/router";
-import {LocationListComponent} from "./location/location-list.component";
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { HaulierProfileComponent } from './haulier-profile/haulier-profile.component';
 import { ForwarderProfileComponent } from './forwarder-profile/forwarder-profile.component';
 import { VehicleModule } from './vehicle/vehicle.module';
 import { DriverInfoModule } from './driverInfo/driverInfo.module';
+import { HaulierInfoModule } from './haulierInfo/haulierInfo.module';
 
 
 
@@ -48,7 +47,9 @@ import { DriverInfoModule } from './driverInfo/driverInfo.module';
     FormsModule,
     ReactiveFormsModule,
     VehicleModule,
-    DriverInfoModule
+    DriverInfoModule,
+    LocationModule,
+    HaulierInfoModule
 ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
   bootstrap: [AppComponent]
