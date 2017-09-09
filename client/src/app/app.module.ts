@@ -18,11 +18,7 @@ import { ForgetPasswordComponent } from './forget-password/forget-password.compo
 import {RouterModule, Routes} from "@angular/router";
 import {LocationListComponent} from "./location/location-list.component";
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { UpdateDriverProfileComponent } from './update-driver-profile/update-driver-profile.component';
-import { UpdateHaulierProfileComponent } from './update-haulier-profile/update-haulier-profile.component';
-import { UpdateForwarderProfileComponent } from './update-forwarder-profile/update-forwarder-profile.component';
 import { HaulierProfileComponent } from './haulier-profile/haulier-profile.component';
-import { DriverProfileComponent } from './driver-profile/driver-profile.component';
 import { ForwarderProfileComponent } from './forwarder-profile/forwarder-profile.component';
 import { VehicleModule } from './vehicle/vehicle.module';
 import { DriverInfoModule } from './driverInfo/driverInfo.module';
@@ -40,11 +36,7 @@ import { DriverInfoModule } from './driverInfo/driverInfo.module';
     LoginComponent,
     ForgetPasswordComponent,
     ResetPasswordComponent,
-    UpdateDriverProfileComponent,
-    UpdateHaulierProfileComponent,
-    UpdateForwarderProfileComponent,
     HaulierProfileComponent,
-    DriverProfileComponent,
     ForwarderProfileComponent,
   ],
   imports: [
