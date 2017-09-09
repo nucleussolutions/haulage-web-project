@@ -21,6 +21,7 @@ import { ForwarderProfileComponent } from './forwarder-profile/forwarder-profile
 import { VehicleModule } from './vehicle/vehicle.module';
 import { DriverInfoModule } from './driverInfo/driverInfo.module';
 import { HaulierInfoModule } from './haulierInfo/haulierInfo.module';
+import { ForwarderInfoModule } from './forwarderInfo/forwarderInfo.module';
 
 
 
@@ -49,7 +50,8 @@ import { HaulierInfoModule } from './haulierInfo/haulierInfo.module';
     VehicleModule,
     DriverInfoModule,
     LocationModule,
-    HaulierInfoModule
+    HaulierInfoModule,
+    ForwarderInfoModule
 ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
   bootstrap: [AppComponent]
