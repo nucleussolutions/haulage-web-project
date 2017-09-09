@@ -1,0 +1,148 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a class="list" [routerLink]="['/driverInfo', 'list']" class="list">DriverInfo List</a></li>
+        <li><a class="create" [routerLink]="['/driverInfo', 'create']" class="create">New DriverInfo</a></li>
+    </ul>
+</div>
+<div id="show-part" class="content scaffold-show" role="main">
+    <h1>Show DriverInfo</h1>
+    <ol class="property-list driverInfo">
+  <li class="fieldcontain">
+    <span id="name-label" class="property-label">Name</span>
+    <div class="property-value" aria-labelledby="name-label">
+      <span>{{driverInfo.name}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="icNumber-label" class="property-label">Ic Number</span>
+    <div class="property-value" aria-labelledby="icNumber-label">
+      <span>{{driverInfo.icNumber}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="passportNumber-label" class="property-label">Passport Number</span>
+    <div class="property-value" aria-labelledby="passportNumber-label">
+      <span>{{driverInfo.passportNumber}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="phone-label" class="property-label">Phone</span>
+    <div class="property-value" aria-labelledby="phone-label">
+      <span>{{driverInfo.phone}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="licenseClass-label" class="property-label">License Class</span>
+    <div class="property-value" aria-labelledby="licenseClass-label">
+      <span>{{driverInfo.licenseClass}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="licenseExpiry-label" class="property-label">License Expiry</span>
+    <div class="property-value" aria-labelledby="licenseExpiry-label">
+      <span>{{driverInfo.licenseExpiry | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="westPortPassNo-label" class="property-label">West Port Pass No</span>
+    <div class="property-value" aria-labelledby="westPortPassNo-label">
+      <span>{{driverInfo.westPortPassNo}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="northPortPassNo-label" class="property-label">North Port Pass No</span>
+    <div class="property-value" aria-labelledby="northPortPassNo-label">
+      <span>{{driverInfo.northPortPassNo}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="westPortPassExpiry-label" class="property-label">West Port Pass Expiry</span>
+    <div class="property-value" aria-labelledby="westPortPassExpiry-label">
+      <span>{{driverInfo.westPortPassExpiry | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="northPortPassExpiry-label" class="property-label">North Port Pass Expiry</span>
+    <div class="property-value" aria-labelledby="northPortPassExpiry-label">
+      <span>{{driverInfo.northPortPassExpiry | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="emergencyContactName-label" class="property-label">Emergency Contact Name</span>
+    <div class="property-value" aria-labelledby="emergencyContactName-label">
+      <span>{{driverInfo.emergencyContactName}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="emergencyContactPhone-label" class="property-label">Emergency Contact Phone</span>
+    <div class="property-value" aria-labelledby="emergencyContactPhone-label">
+      <span>{{driverInfo.emergencyContactPhone}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="icFrontImgUrl-label" class="property-label">Ic Front Img Url</span>
+    <div class="property-value" aria-labelledby="icFrontImgUrl-label">
+      <span>{{driverInfo.icFrontImgUrl}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="icBackImgUrl-label" class="property-label">Ic Back Img Url</span>
+    <div class="property-value" aria-labelledby="icBackImgUrl-label">
+      <span>{{driverInfo.icBackImgUrl}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="passportImgUrl-label" class="property-label">Passport Img Url</span>
+    <div class="property-value" aria-labelledby="passportImgUrl-label">
+      <span>{{driverInfo.passportImgUrl}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="address1-label" class="property-label">Address1</span>
+    <div class="property-value" aria-labelledby="address1-label">
+      <span>{{driverInfo.address1}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="address2-label" class="property-label">Address2</span>
+    <div class="property-value" aria-labelledby="address2-label">
+      <span>{{driverInfo.address2}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="city-label" class="property-label">City</span>
+    <div class="property-value" aria-labelledby="city-label">
+      <span>{{driverInfo.city}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="state-label" class="property-label">State</span>
+    <div class="property-value" aria-labelledby="state-label">
+      <span>{{driverInfo.state}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="country-label" class="property-label">Country</span>
+    <div class="property-value" aria-labelledby="country-label">
+      <span>{{driverInfo.country}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="userId-label" class="property-label">User Id</span>
+    <div class="property-value" aria-labelledby="userId-label">
+      <span>{{driverInfo.userId}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="haulierId-label" class="property-label">Haulier Id</span>
+    <div class="property-value" aria-labelledby="haulierId-label">
+      <span>{{driverInfo.haulierId}}</span>
+    </div>
+  </li>
+</ol>
+
+    <a class="edit" [routerLink]="['/driverInfo', 'edit', driverInfo.id]">Edit</a>
+    <button type="button" (click)="destroy()">Delete</button>
+
+</div>

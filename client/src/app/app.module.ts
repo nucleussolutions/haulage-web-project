@@ -25,6 +25,7 @@ import { HaulierProfileComponent } from './haulier-profile/haulier-profile.compo
 import { DriverProfileComponent } from './driver-profile/driver-profile.component';
 import { ForwarderProfileComponent } from './forwarder-profile/forwarder-profile.component';
 import { VehicleModule } from './vehicle/vehicle.module';
+import { DriverInfoModule } from './driverInfo/driverInfo.module';
 
 
 
@@ -44,7 +45,7 @@ import { VehicleModule } from './vehicle/vehicle.module';
     UpdateForwarderProfileComponent,
     HaulierProfileComponent,
     DriverProfileComponent,
-    ForwarderProfileComponent
+    ForwarderProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +55,8 @@ import { VehicleModule } from './vehicle/vehicle.module';
     NgbModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
-    VehicleModule
+    VehicleModule,
+    DriverInfoModule
 ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
   bootstrap: [AppComponent]

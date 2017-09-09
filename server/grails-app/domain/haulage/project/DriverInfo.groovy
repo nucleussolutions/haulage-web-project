@@ -6,6 +6,7 @@ import grails.rest.*
 @Resource(readOnly = false, formats = ['json', 'xml'])
 class DriverInfo {
 
+    //belongs to which driver
     String userId
 
     String name
@@ -31,6 +32,8 @@ class DriverInfo {
     String city
     String state
     String country
+
+    String haulierId
 
     static constraints = {
         name nullable: false, blank: false
@@ -63,5 +66,8 @@ class DriverInfo {
         state blank: true
         country blank: true
         userId nullable: false
+
+        //can belong to a haulier, or just none which could mean freelance
+        haulierId blank: true
     }
 }

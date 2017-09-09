@@ -1,0 +1,47 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/driverInfo','create']" class="create">New DriverInfo</a></li>
+    </ul>
+</div>
+<div id="list-driverInfo" class="content scaffold-list" role="main">
+    <h1>DriverInfo List</h1>
+    <table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Ic Number</th>
+      <th>Passport Number</th>
+      <th>Phone</th>
+      <th>License Class</th>
+      <th>License Expiry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let driverInfo of driverInfoList; let e = even;">
+      <td>
+        <a [routerLink]="['/driverInfo','show',driverInfo.id]">{{driverInfo.id}}</a>
+      </td>
+      <td>
+        <span>{{driverInfo.name}}</span>
+      </td>
+      <td>
+        <span>{{driverInfo.icNumber}}</span>
+      </td>
+      <td>
+        <span>{{driverInfo.passportNumber}}</span>
+      </td>
+      <td>
+        <span>{{driverInfo.phone}}</span>
+      </td>
+      <td>
+        <span>{{driverInfo.licenseClass}}</span>
+      </td>
+      <td>
+        <span>{{driverInfo.licenseExpiry | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>

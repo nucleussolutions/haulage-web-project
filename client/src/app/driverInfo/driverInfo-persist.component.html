@@ -1,0 +1,132 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/driverInfo','list']" class="list">DriverInfo List</a></li>
+    </ul>
+</div>
+<div id="persist-driverInfo" class="content scaffold-edit" role="main">
+    <h1>{{create ? "Create" : "Edit"}} DriverInfo</h1>
+    <ul class="errors" role="alert" *ngIf="errors">
+        <li *ngFor="let error of errors">{{error.message}}</li>
+    </ul>
+
+    <form name="save{className}" (ngSubmit)="save()">
+        <fieldset class="form">
+            <fieldset class="form">
+  <div class="fieldcontain required">
+    <label for="name">Name
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="name" id="name" [(ngModel)]="driverInfo.name" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="icNumber">Ic Number</label>
+    <input name="icNumber" id="icNumber" [(ngModel)]="driverInfo.icNumber" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="passportNumber">Passport Number</label>
+    <input name="passportNumber" id="passportNumber" [(ngModel)]="driverInfo.passportNumber" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="phone">Phone
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="phone" id="phone" [(ngModel)]="driverInfo.phone" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="licenseClass">License Class
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="licenseClass" id="licenseClass" [(ngModel)]="driverInfo.licenseClass" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="licenseExpiry">License Expiry
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="licenseExpiry" id="licenseExpiry" type="date" placeholder="YYYY-MM-DD" [value]="driverInfo.licenseExpiry | date:'y-MM-dd'" (change)="driverInfo.licenseExpiry = $event.target.valueAsDate" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="westPortPassNo">West Port Pass No
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="westPortPassNo" id="westPortPassNo" [(ngModel)]="driverInfo.westPortPassNo" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="northPortPassNo">North Port Pass No
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="northPortPassNo" id="northPortPassNo" [(ngModel)]="driverInfo.northPortPassNo" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="westPortPassExpiry">West Port Pass Expiry
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="westPortPassExpiry" id="westPortPassExpiry" type="date" placeholder="YYYY-MM-DD" [value]="driverInfo.westPortPassExpiry | date:'y-MM-dd'" (change)="driverInfo.westPortPassExpiry = $event.target.valueAsDate" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="northPortPassExpiry">North Port Pass Expiry
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="northPortPassExpiry" id="northPortPassExpiry" type="date" placeholder="YYYY-MM-DD" [value]="driverInfo.northPortPassExpiry | date:'y-MM-dd'" (change)="driverInfo.northPortPassExpiry = $event.target.valueAsDate" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="emergencyContactName">Emergency Contact Name
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="emergencyContactName" id="emergencyContactName" [(ngModel)]="driverInfo.emergencyContactName" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="emergencyContactPhone">Emergency Contact Phone
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="emergencyContactPhone" id="emergencyContactPhone" [(ngModel)]="driverInfo.emergencyContactPhone" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="icFrontImgUrl">Ic Front Img Url</label>
+    <input name="icFrontImgUrl" id="icFrontImgUrl" [(ngModel)]="driverInfo.icFrontImgUrl" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="icBackImgUrl">Ic Back Img Url</label>
+    <input name="icBackImgUrl" id="icBackImgUrl" [(ngModel)]="driverInfo.icBackImgUrl" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="passportImgUrl">Passport Img Url</label>
+    <input name="passportImgUrl" id="passportImgUrl" [(ngModel)]="driverInfo.passportImgUrl" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="address1">Address1</label>
+    <input name="address1" id="address1" [(ngModel)]="driverInfo.address1" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="address2">Address2</label>
+    <input name="address2" id="address2" [(ngModel)]="driverInfo.address2" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="city">City</label>
+    <input name="city" id="city" [(ngModel)]="driverInfo.city" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="state">State</label>
+    <input name="state" id="state" [(ngModel)]="driverInfo.state" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="country">Country</label>
+    <input name="country" id="country" [(ngModel)]="driverInfo.country" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="userId">User Id
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="userId" id="userId" [(ngModel)]="driverInfo.userId" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="haulierId">Haulier Id</label>
+    <input name="haulierId" id="haulierId" [(ngModel)]="driverInfo.haulierId" type="text" />
+  </div>
+</fieldset>
+        </fieldset>
+        <fieldset class="buttons">
+            <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" />
+        </fieldset>
+    </form>
+</div>
