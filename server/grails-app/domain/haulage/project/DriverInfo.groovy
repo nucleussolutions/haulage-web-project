@@ -5,6 +5,9 @@ import grails.rest.*
 
 @Resource(readOnly = false, formats = ['json', 'xml'])
 class DriverInfo {
+
+    String userId
+
     String name
     String icNumber
     String passportNumber
@@ -59,5 +62,6 @@ class DriverInfo {
         city blank: true
         state blank: true
         country blank: true
+        userId nullable: false
     }
 }

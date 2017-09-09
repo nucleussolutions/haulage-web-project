@@ -1,0 +1,94 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a class="list" [routerLink]="['/vehicle', 'list']" class="list">Vehicle List</a></li>
+        <li><a class="create" [routerLink]="['/vehicle', 'create']" class="create">New Vehicle</a></li>
+    </ul>
+</div>
+<div id="show-part" class="content scaffold-show" role="main">
+    <h1>Show Vehicle</h1>
+    <ol class="property-list vehicle">
+  <li class="fieldcontain">
+    <span id="internalNumber-label" class="property-label">Internal Number</span>
+    <div class="property-value" aria-labelledby="internalNumber-label">
+      <span>{{vehicle.internalNumber}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="registrationNumber-label" class="property-label">Registration Number</span>
+    <div class="property-value" aria-labelledby="registrationNumber-label">
+      <span>{{vehicle.registrationNumber}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="type-label" class="property-label">Type</span>
+    <div class="property-value" aria-labelledby="type-label">
+      <span>{{vehicle.type}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="otherInfo-label" class="property-label">Other Info</span>
+    <div class="property-value" aria-labelledby="otherInfo-label">
+      <span>{{vehicle.otherInfo}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="roadTaxRenewalDate-label" class="property-label">Road Tax Renewal Date</span>
+    <div class="property-value" aria-labelledby="roadTaxRenewalDate-label">
+      <span>{{vehicle.roadTaxRenewalDate | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="licenseExpiryDate-label" class="property-label">License Expiry Date</span>
+    <div class="property-value" aria-labelledby="licenseExpiryDate-label">
+      <span>{{vehicle.licenseExpiryDate | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="puspakomExpiryDate-label" class="property-label">Puspakom Expiry Date</span>
+    <div class="property-value" aria-labelledby="puspakomExpiryDate-label">
+      <span>{{vehicle.puspakomExpiryDate | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="model-label" class="property-label">Model</span>
+    <div class="property-value" aria-labelledby="model-label">
+      <span>{{vehicle.model}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="licensePlateNumber-label" class="property-label">License Plate Number</span>
+    <div class="property-value" aria-labelledby="licensePlateNumber-label">
+      <span>{{vehicle.licensePlateNumber}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="netWeight-label" class="property-label">Net Weight</span>
+    <div class="property-value" aria-labelledby="netWeight-label">
+      <span>{{vehicle.netWeight}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="spadPermitExpiryDate-label" class="property-label">Spad Permit Expiry Date</span>
+    <div class="property-value" aria-labelledby="spadPermitExpiryDate-label">
+      <span>{{vehicle.spadPermitExpiryDate | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="insuranceExpiryDate-label" class="property-label">Insurance Expiry Date</span>
+    <div class="property-value" aria-labelledby="insuranceExpiryDate-label">
+      <span>{{vehicle.insuranceExpiryDate | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="userId-label" class="property-label">User Id</span>
+    <div class="property-value" aria-labelledby="userId-label">
+      <span>{{vehicle.userId}}</span>
+    </div>
+  </li>
+</ol>
+
+    <a class="edit" [routerLink]="['/vehicle', 'edit', vehicle.id]">Edit</a>
+    <button type="button" (click)="destroy()">Delete</button>
+
+</div>

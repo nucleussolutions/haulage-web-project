@@ -40,6 +40,12 @@ const UserSchema = new Schema({
     enum: [ROLE_USER, ROLE_MANAGER, ROLE_SUPER_ADMIN, ROLE_ADMIN],
     default: ROLE_USER
   },
+  subscription : {
+    //contains subscription data and whether or not they have paid
+
+
+    //perhaps include transaction id or something
+  },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date }
 },

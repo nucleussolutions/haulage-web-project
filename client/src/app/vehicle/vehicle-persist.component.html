@@ -1,0 +1,98 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/vehicle','list']" class="list">Vehicle List</a></li>
+    </ul>
+</div>
+<div id="persist-vehicle" class="content scaffold-edit" role="main">
+    <h1>{{create ? "Create" : "Edit"}} Vehicle</h1>
+    <ul class="errors" role="alert" *ngIf="errors">
+        <li *ngFor="let error of errors">{{error.message}}</li>
+    </ul>
+
+    <form name="save{className}" (ngSubmit)="save()">
+        <fieldset class="form">
+            <fieldset class="form">
+  <div class="fieldcontain required">
+    <label for="internalNumber">Internal Number
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="internalNumber" id="internalNumber" [(ngModel)]="vehicle.internalNumber" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="registrationNumber">Registration Number
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="registrationNumber" id="registrationNumber" [(ngModel)]="vehicle.registrationNumber" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="type">Type
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="type" id="type" [(ngModel)]="vehicle.type" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="otherInfo">Other Info</label>
+    <input name="otherInfo" id="otherInfo" [(ngModel)]="vehicle.otherInfo" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="roadTaxRenewalDate">Road Tax Renewal Date
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="roadTaxRenewalDate" id="roadTaxRenewalDate" type="date" placeholder="YYYY-MM-DD" [value]="vehicle.roadTaxRenewalDate | date:'y-MM-dd'" (change)="vehicle.roadTaxRenewalDate = $event.target.valueAsDate" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="licenseExpiryDate">License Expiry Date
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="licenseExpiryDate" id="licenseExpiryDate" type="date" placeholder="YYYY-MM-DD" [value]="vehicle.licenseExpiryDate | date:'y-MM-dd'" (change)="vehicle.licenseExpiryDate = $event.target.valueAsDate" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="puspakomExpiryDate">Puspakom Expiry Date
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="puspakomExpiryDate" id="puspakomExpiryDate" type="date" placeholder="YYYY-MM-DD" [value]="vehicle.puspakomExpiryDate | date:'y-MM-dd'" (change)="vehicle.puspakomExpiryDate = $event.target.valueAsDate" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="model">Model
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="model" id="model" [(ngModel)]="vehicle.model" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="licensePlateNumber">License Plate Number
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="licensePlateNumber" id="licensePlateNumber" [(ngModel)]="vehicle.licensePlateNumber" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="netWeight">Net Weight
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="netWeight" id="netWeight" [(ngModel)]="vehicle.netWeight" type="number" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="spadPermitExpiryDate">Spad Permit Expiry Date
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="spadPermitExpiryDate" id="spadPermitExpiryDate" type="date" placeholder="YYYY-MM-DD" [value]="vehicle.spadPermitExpiryDate | date:'y-MM-dd'" (change)="vehicle.spadPermitExpiryDate = $event.target.valueAsDate" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="insuranceExpiryDate">Insurance Expiry Date
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="insuranceExpiryDate" id="insuranceExpiryDate" type="date" placeholder="YYYY-MM-DD" [value]="vehicle.insuranceExpiryDate | date:'y-MM-dd'" (change)="vehicle.insuranceExpiryDate = $event.target.valueAsDate" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="userId">User Id
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="userId" id="userId" [(ngModel)]="vehicle.userId" type="text" />
+  </div>
+</fieldset>
+        </fieldset>
+        <fieldset class="buttons">
+            <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" />
+        </fieldset>
+    </form>
+</div>

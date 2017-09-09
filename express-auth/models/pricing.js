@@ -6,6 +6,9 @@ const ProductSchema = new Schema({
     name : {
         type: String
     },
+    description: {
+        type: String
+    },
     price: { type: mongoose.Schema.Types.BigDecimal },
 
     criteria: {
@@ -16,7 +19,6 @@ const ProductSchema = new Schema({
             type: mongoose.Schema.Types.BigDecimal
         }
     },
-
     discountPercentage : {
         type: Number
     }

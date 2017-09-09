@@ -9,10 +9,14 @@ class Job {
     Consignment consignment
 
     //haulier assign driver
-    static belongsTo = [User]
+    String haulierId
+
+    String driverId
 
     static constraints = {
         consignment nullable: false
+        haulierId nullable: false
+        driverId nullable: false
     }
 
     static mapping = {

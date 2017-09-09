@@ -48,7 +48,7 @@ class TransportRequest {
 
     static hasMany = [consignments: Consignment]
 
-    static belongsTo = [User]
+    String userId
 
     static constraints = {
         containerVolume blank: false, nullable: false
@@ -80,6 +80,7 @@ class TransportRequest {
         bookingConfirmationImgUrl nullable: true
         cmoImgUrl nullable: false
         consignments nullable: false
+        userId nullable: false
     }
 
     static mapping = {

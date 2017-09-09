@@ -32,6 +32,9 @@ class Vehicle {
 
     Integer netWeight
 
+    //belongs to haulier, but first check role
+    String userId
+
     static constraints = {
         internalNumber blank: false, nullable: false
         registrationNumber blank: false, nullable: false
@@ -45,6 +48,7 @@ class Vehicle {
         netWeight nullable: false
         spadPermitExpiryDate nullable: false
         insuranceExpiryDate nullable: false
+        userId nullable: false
     }
 
     static mapping = {
