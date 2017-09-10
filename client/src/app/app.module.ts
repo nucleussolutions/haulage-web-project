@@ -22,6 +22,8 @@ import { VehicleModule } from './vehicle/vehicle.module';
 import { DriverInfoModule } from './driverInfo/driverInfo.module';
 import { HaulierInfoModule } from './haulierInfo/haulierInfo.module';
 import { ForwarderInfoModule } from './forwarderInfo/forwarderInfo.module';
+import { CompanyModule } from './company/company.module';
+import { SettingsComponent } from './settings/settings.component';
 
 
 
@@ -38,6 +40,7 @@ import { ForwarderInfoModule } from './forwarderInfo/forwarderInfo.module';
     ResetPasswordComponent,
     HaulierProfileComponent,
     ForwarderProfileComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +54,8 @@ import { ForwarderInfoModule } from './forwarderInfo/forwarderInfo.module';
     DriverInfoModule,
     LocationModule,
     HaulierInfoModule,
-    ForwarderInfoModule
+    ForwarderInfoModule,
+    CompanyModule
 ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
   bootstrap: [AppComponent]
