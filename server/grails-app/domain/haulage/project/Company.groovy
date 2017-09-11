@@ -29,6 +29,6 @@ class Company {
         officePhone nullable: false, blank: false
         yardPhone nullable: false, blank: false
         companyImgUrl nullable: false, blank: false
-        code nullable: false, blank: false
+        code nullable: false, blank: false, unique: true
     }
 }
