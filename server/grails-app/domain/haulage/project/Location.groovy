@@ -26,8 +26,8 @@ class Location {
         city blank: false, nullable: false
         state blank: false, nullable: false
         country blank: false, nullable: false
-        lat nullable: false
-        lng nullable: false
+        lat nullable: true
+        lng nullable: true
         type nullable: false
     }
 }
