@@ -17,7 +17,7 @@ const appRoutes: Routes = [
     ]
     },
     {path: '', redirectTo: '/index', pathMatch: 'full'},
-    {path: '**', component: NotFoundComponent},
+    // {path: '**', component: NotFoundComponent},
 ];
 
 @NgModule({
