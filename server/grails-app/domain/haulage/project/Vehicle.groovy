@@ -39,7 +39,7 @@ class Vehicle {
         internalNumber blank: false, nullable: false
         registrationNumber blank: false, nullable: false
         type nullable: false
-        otherInfo blank: true
+        otherInfo blank: true, nullable: true
         roadTaxRenewalDate nullable: false
         licenseExpiryDate nullable: false
         puspakomExpiryDate nullable: false
