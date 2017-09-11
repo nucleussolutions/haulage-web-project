@@ -3,18 +3,23 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 
 import {CompanyService} from './company.service';
-import {CompanyListComponent} from "./company-list.component";
-import {CompanyShowComponent} from "./company-show.component";
 
+
+import {CompanyRoutingModule} from './company-routing.module';
+import {CompanyShowComponent} from './company-show.component';
+import {CompanyListComponent} from './company-list.component';
+import {CompanyPersistComponent} from './company-persist.component';
 
 @NgModule({
   declarations: [
-      // CompanyListComponent,
-      // CompanyShowComponent
+    CompanyListComponent,
+    CompanyPersistComponent,
+    CompanyShowComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
+    CompanyRoutingModule
   ],
   providers: [
     CompanyService

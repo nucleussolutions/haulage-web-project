@@ -3,7 +3,17 @@
 export class Company {
   id: number;
 
-  
+  name: string;
+  registrationNo: string;
+  address1: string;
+  address2: string;
+  city: string;
+  state: string;
+  country: string;
+  officePhone: string;
+  yardPhone: string;
+  companyImgUrl: string;
+  code: string;
 
   constructor (object?: any) {
     if (object) {

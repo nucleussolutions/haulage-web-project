@@ -25,6 +25,7 @@ import { ForwarderInfoModule } from './forwarderInfo/forwarderInfo.module';
 import { CompanyModule } from './company/company.module';
 import { SettingsComponent } from './settings/settings.component';
 import { NavDrawerComponent } from './nav-drawer/nav-drawer.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 
@@ -41,6 +42,7 @@ import { NavDrawerComponent } from './nav-drawer/nav-drawer.component';
     ResetPasswordComponent,
     SettingsComponent,
     NavDrawerComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,8 @@ import { NavDrawerComponent } from './nav-drawer/nav-drawer.component';
     LocationModule,
     HaulierInfoModule,
     ForwarderInfoModule,
-    // CompanyModule
+    //CompanyModule,
+    CompanyModule
 ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
   bootstrap: [AppComponent, NavDrawerComponent]
