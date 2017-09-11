@@ -1,3 +1,5 @@
+"use strict";
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -16,14 +18,13 @@ import { LoginComponent } from './login/login.component';
 import { LocationModule } from './location/location.module';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { HaulierProfileComponent } from './haulier-profile/haulier-profile.component';
-import { ForwarderProfileComponent } from './forwarder-profile/forwarder-profile.component';
 import { VehicleModule } from './vehicle/vehicle.module';
 import { DriverInfoModule } from './driverInfo/driverInfo.module';
 import { HaulierInfoModule } from './haulierInfo/haulierInfo.module';
 import { ForwarderInfoModule } from './forwarderInfo/forwarderInfo.module';
 import { CompanyModule } from './company/company.module';
 import { SettingsComponent } from './settings/settings.component';
+import { NavDrawerComponent } from './nav-drawer/nav-drawer.component';
 
 
 
@@ -38,9 +39,8 @@ import { SettingsComponent } from './settings/settings.component';
     LoginComponent,
     ForgetPasswordComponent,
     ResetPasswordComponent,
-    HaulierProfileComponent,
-    ForwarderProfileComponent,
     SettingsComponent,
+    NavDrawerComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,9 +55,9 @@ import { SettingsComponent } from './settings/settings.component';
     LocationModule,
     HaulierInfoModule,
     ForwarderInfoModule,
-    CompanyModule
+    // CompanyModule
 ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, NavDrawerComponent]
 })
 export class AppModule { }

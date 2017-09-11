@@ -9,8 +9,8 @@ import {CompanyShowComponent} from "./company-show.component";
 
 @NgModule({
   declarations: [
-      CompanyListComponent,
-      CompanyShowComponent
+      // CompanyListComponent,
+      // CompanyShowComponent
   ],
   imports: [
     CommonModule,
