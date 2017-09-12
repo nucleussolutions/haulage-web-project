@@ -1,0 +1,58 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a class="list" [routerLink]="['/consignment', 'list']" class="list">Consignment List</a></li>
+        <li><a class="create" [routerLink]="['/consignment', 'create']" class="create">New Consignment</a></li>
+    </ul>
+</div>
+<div id="show-part" class="content scaffold-show" role="main">
+    <h1>Show Consignment</h1>
+    <ol class="property-list consignment">
+  <li class="fieldcontain">
+    <span id="containerNo-label" class="property-label">Container No</span>
+    <div class="property-value" aria-labelledby="containerNo-label">
+      <span>{{consignment.containerNo}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="name-label" class="property-label">Name</span>
+    <div class="property-value" aria-labelledby="name-label">
+      <span>{{consignment.name}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="type-label" class="property-label">Type</span>
+    <div class="property-value" aria-labelledby="type-label">
+      <span>{{consignment.type}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="pickupLadenDropoff-label" class="property-label">Pickup Laden Dropoff</span>
+    <div class="property-value" aria-labelledby="pickupLadenDropoff-label">
+      <a *ngIf="consignment.pickupLadenDropoff" [routerLink]="['/consignment','show', consignment.pickupLadenDropoff.id]">{{consignment.pickupLadenDropoff.toString()}}</a>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="acceptTime-label" class="property-label">Accept Time</span>
+    <div class="property-value" aria-labelledby="acceptTime-label">
+      <span>{{consignment.acceptTime | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="consignmentCode-label" class="property-label">Consignment Code</span>
+    <div class="property-value" aria-labelledby="consignmentCode-label">
+      <span>{{consignment.consignmentCode}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="size-label" class="property-label">Size</span>
+    <div class="property-value" aria-labelledby="size-label">
+      <span>{{consignment.size}}</span>
+    </div>
+  </li>
+</ol>
+
+    <a class="edit" [routerLink]="['/consignment', 'edit', consignment.id]">Edit</a>
+    <button type="button" (click)="destroy()">Delete</button>
+
+</div>

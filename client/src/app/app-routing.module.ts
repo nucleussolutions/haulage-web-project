@@ -6,9 +6,11 @@ import {RegisterComponent} from "./register/register.component";
 import {ForgetPasswordComponent} from "./forget-password/forget-password.component";
 import {ResetPasswordComponent} from "./reset-password/reset-password.component";
 import {NotFoundComponent} from "./not-found/not-found.component";
+import {ChangePasswordComponent} from "./change-password/change-password.component";
 
 const appRoutes: Routes = [
     {path: 'forget-password', component: ForgetPasswordComponent},
+    {path: 'change-password', component: ChangePasswordComponent},
     {path: 'reset-password', component: ResetPasswordComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'login', component: LoginComponent},

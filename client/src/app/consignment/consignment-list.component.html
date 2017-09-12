@@ -1,0 +1,47 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/consignment','create']" class="create">New Consignment</a></li>
+    </ul>
+</div>
+<div id="list-consignment" class="content scaffold-list" role="main">
+    <h1>Consignment List</h1>
+    <table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Container No</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Pickup Laden Dropoff</th>
+      <th>Accept Time</th>
+      <th>Consignment Code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let consignment of consignmentList; let e = even;">
+      <td>
+        <a [routerLink]="['/consignment','show',consignment.id]">{{consignment.id}}</a>
+      </td>
+      <td>
+        <span>{{consignment.containerNo}}</span>
+      </td>
+      <td>
+        <span>{{consignment.name}}</span>
+      </td>
+      <td>
+        <span>{{consignment.type}}</span>
+      </td>
+      <td>
+        <a *ngIf="consignment.pickupLadenDropoff" [routerLink]="['/consignment','show', consignment.pickupLadenDropoff.id]">{{consignment.pickupLadenDropoff.toString()}}</a>
+      </td>
+      <td>
+        <span>{{consignment.acceptTime | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+      </td>
+      <td>
+        <span>{{consignment.consignmentCode}}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>

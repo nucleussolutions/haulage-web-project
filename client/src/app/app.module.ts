@@ -26,6 +26,7 @@ import { CompanyModule } from './company/company.module';
 import { SettingsComponent } from './settings/settings.component';
 import { NavDrawerComponent } from './nav-drawer/nav-drawer.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ConsignmentModule } from './consignment/consignment.module';
 
 
 
@@ -58,7 +59,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     HaulierInfoModule,
     ForwarderInfoModule,
     //CompanyModule,
-    CompanyModule
+    CompanyModule,
+    ConsignmentModule
 ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
   bootstrap: [AppComponent, NavDrawerComponent]
