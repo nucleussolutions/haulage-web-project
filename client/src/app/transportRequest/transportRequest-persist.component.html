@@ -216,17 +216,41 @@
                 </label>
                 <input required="" name="customer.country" id="customer.country" [(ngModel)]="transportRequest.customer.country" type="text"/>
               </div>
-              <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+              <!--<div class="fieldcontain required mdl-textfield mdl-js-textfield">-->
+                <!--<label for="customer.state">State-->
+                  <!--<span class="required-indicator">*</span>-->
+                <!--</label>-->
+                <!--<input required="" name="customer.state" id="customer.state" [(ngModel)]="transportRequest.customer.state" type="text"/>-->
+              <!--</div>-->
+              <!-- Simple Select -->
+              <div class="fieldcontain required mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
                 <label for="customer.state">State
                   <span class="required-indicator">*</span>
                 </label>
-                <input required="" name="customer.state" id="customer.state" [(ngModel)]="transportRequest.customer.state" type="text"/>
+                <input class="mdl-textfield__input" name="customer.state" id="customer.state" [(ngModel)]="transportRequest.customer.state" type="text" readonly tabindex="-1">
+                <ul for="customer.state" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                  <li class="mdl-menu__item" value="Johor">Johor</li>
+                  <li class="mdl-menu__item" value="Kedah">Kedah</li>
+                  <li class="mdl-menu__item" value="Kelantan">Kelantan</li>
+                  <li class="mdl-menu__item" value="Kuala Lumpur">Kuala Lumpur</li>
+                  <li class="mdl-menu__item" value="Melaka">Melaka</li>
+                  <li class="mdl-menu__item" value="Negeri Sembilan">Negeri Sembilan</li>
+                  <li class="mdl-menu__item" value="Pahang">Pahang</li>
+                  <li class="mdl-menu__item" value="Perak">Perak</li>
+                  <li class="mdl-menu__item" value="Perlis">Perlis</li>
+                  <li class="mdl-menu__item" value="Pulau Pinang">Pulau Pinang</li>
+                  <li class="mdl-menu__item" value="Sabah">Sabah</li>
+                  <li class="mdl-menu__item" value="Sarawak">Sarawak</li>
+                  <li class="mdl-menu__item" value="Selangor">Selangor</li>
+                  <li class="mdl-menu__item" value="Terengganu">Terengganu</li>
+                  <li class="mdl-menu__item" value="Wilayah Persekutuan – Labuan">Wilayah Persekutuan – Labuan</li>
+                </ul>
               </div>
             </fieldset>
           </fieldset>
         </fieldset>
         <fieldset class="buttons">
-          <input class="mdl-color-text--white mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" class="save" [value]="create ? 'Save' : 'Update'"/>
+          <input class="mdl-color-text--white mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit"  [value]="create ? 'Save' : 'Update'"/>
         </fieldset>
       </form>
     </div>

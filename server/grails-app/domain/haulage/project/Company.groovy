@@ -31,4 +31,5 @@ class Company {
         companyImgUrl nullable: false, blank: false
         code nullable: false, blank: false, unique: true
     }
+
 }
