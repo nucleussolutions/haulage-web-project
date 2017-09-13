@@ -27,6 +27,8 @@ import { SettingsComponent } from './settings/settings.component';
 import { NavDrawerComponent } from './nav-drawer/nav-drawer.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ConsignmentModule } from './consignment/consignment.module';
+import { CustomerModule } from './customer/customer.module';
+import { TransportRequestModule } from './transportRequest/transportRequest.module';
 
 
 
@@ -60,7 +62,9 @@ import { ConsignmentModule } from './consignment/consignment.module';
     ForwarderInfoModule,
     //CompanyModule,
     CompanyModule,
-    ConsignmentModule
+    ConsignmentModule,
+    CustomerModule,
+    TransportRequestModule
 ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
   bootstrap: [AppComponent, NavDrawerComponent]

@@ -13,11 +13,11 @@
     <form name="save{className}" (ngSubmit)="save()">
         <fieldset class="form">
             <fieldset class="form">
-  <div class="fieldcontain required">
-    <label for="name">Name
+  <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+    <label class="mdl-textfield__label" for="name">Name
       <span class="required-indicator">*</span>
     </label>
-    <input required="" name="name" id="name" [(ngModel)]="haulierInfo.name" type="text" />
+    <input class="mdl-textfield__input" required="" name="name" id="name" [(ngModel)]="haulierInfo.name" type="text" />
   </div>
   <div class="fieldcontain required">
     <label for="company">Company

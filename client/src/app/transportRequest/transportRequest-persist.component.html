@@ -1,0 +1,180 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/transportRequest','list']" class="list">TransportRequest List</a></li>
+    </ul>
+</div>
+<div id="persist-transportRequest" class="content scaffold-edit" role="main">
+    <h1>{{create ? "Create" : "Edit"}} TransportRequest</h1>
+    <ul class="errors" role="alert" *ngIf="errors">
+        <li *ngFor="let error of errors">{{error.message}}</li>
+    </ul>
+
+    <form name="save{className}" (ngSubmit)="save()">
+        <fieldset class="form">
+            <fieldset class="form">
+  <div class="fieldcontain required">
+    <label for="containerVolume">Container Volume
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="containerVolume" id="containerVolume" [(ngModel)]="transportRequest.containerVolume" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="type">Type
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="type" id="type" [(ngModel)]="transportRequest.type" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="equipment">Equipment</label>
+    <input name="equipment" id="equipment" [(ngModel)]="transportRequest.equipment" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="bookingRefNo">Booking Ref No</label>
+    <input name="bookingRefNo" id="bookingRefNo" [(ngModel)]="transportRequest.bookingRefNo" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="otherRefNo">Other Ref No</label>
+    <input name="otherRefNo" id="otherRefNo" [(ngModel)]="transportRequest.otherRefNo" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="terminal">Terminal
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="terminal" id="terminal" [(ngModel)]="transportRequest.terminal">
+      <option *ngFor="let location of locationList" [value]="location.id" [selected]="transportRequest.terminal?.id == location.id">{{location.toString()}}</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
+    <label for="vesselName">Vessel Name
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="vesselName" id="vesselName" [(ngModel)]="transportRequest.vesselName" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="voyageNo">Voyage No
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="voyageNo" id="voyageNo" [(ngModel)]="transportRequest.voyageNo" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="vesselEtaOrEtd">Vessel Eta Or Etd
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="vesselEtaOrEtd" id="vesselEtaOrEtd" type="date" placeholder="YYYY-MM-DD" [value]="transportRequest.vesselEtaOrEtd | date:'y-MM-dd'" (change)="transportRequest.vesselEtaOrEtd = $event.target.valueAsDate" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="polPod">Pol Pod
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="polPod" id="polPod" [(ngModel)]="transportRequest.polPod">
+      <option *ngFor="let location of locationList" [value]="location.id" [selected]="transportRequest.polPod?.id == location.id">{{location.toString()}}</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
+    <label for="shippingAgent">Shipping Agent
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="shippingAgent" id="shippingAgent" [(ngModel)]="transportRequest.shippingAgent" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="forwardingAgent">Forwarding Agent
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="forwardingAgent" id="forwardingAgent" [(ngModel)]="transportRequest.forwardingAgent" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="operatorCode">Operator Code</label>
+    <input name="operatorCode" id="operatorCode" [(ngModel)]="transportRequest.operatorCode" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="hazardous">Hazardous</label>
+    <input name="hazardous" id="hazardous" [(ngModel)]="transportRequest.hazardous" type="checkbox" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="grossWeight">Gross Weight
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="grossWeight" id="grossWeight" [(ngModel)]="transportRequest.grossWeight" type="number" step="any" />
+  </div>
+  <div class="fieldcontain">
+    <label for="overDimension">Over Dimension</label>
+    <input name="overDimension" id="overDimension" [(ngModel)]="transportRequest.overDimension" type="checkbox" />
+  </div>
+  <div class="fieldcontain">
+    <label for="temperature">Temperature</label>
+    <input name="temperature" id="temperature" [(ngModel)]="transportRequest.temperature" type="number" step="any" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="productDesc">Product Desc
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="productDesc" id="productDesc" [(ngModel)]="transportRequest.productDesc" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="shipper">Shipper
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="shipper" id="shipper" [(ngModel)]="transportRequest.shipper" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="orderRemarks">Order Remarks</label>
+    <input name="orderRemarks" id="orderRemarks" [(ngModel)]="transportRequest.orderRemarks" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="containerRemarks">Container Remarks</label>
+    <input name="containerRemarks" id="containerRemarks" [(ngModel)]="transportRequest.containerRemarks" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="dgCode">Dg Code
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="dgCode" id="dgCode" [(ngModel)]="transportRequest.dgCode" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="kOnekEightFormImgUrl">K Onek Eight Form Img Url</label>
+    <input name="kOnekEightFormImgUrl" id="kOnekEightFormImgUrl" [(ngModel)]="transportRequest.kOnekEightFormImgUrl" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="gatePassImgUrl">Gate Pass Img Url</label>
+    <input name="gatePassImgUrl" id="gatePassImgUrl" [(ngModel)]="transportRequest.gatePassImgUrl" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="bookingConfirmationImgUrl">Booking Confirmation Img Url</label>
+    <input name="bookingConfirmationImgUrl" id="bookingConfirmationImgUrl" [(ngModel)]="transportRequest.bookingConfirmationImgUrl" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="cmoImgUrl">Cmo Img Url
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="cmoImgUrl" id="cmoImgUrl" [(ngModel)]="transportRequest.cmoImgUrl" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="consignments">Consignments
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="consignments" id="consignments" [(ngModel)]="transportRequest.consignments" multiple="">
+      <option *ngFor="let consignment of consignmentList" [value]="consignment.id" [selected]="transportRequest.consignments?.id == consignment.id">{{consignment.toString()}}</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
+    <label for="forwarderId">Forwarder Id
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="forwarderId" id="forwarderId" [(ngModel)]="transportRequest.forwarderId" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="customer">Customer
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="customer" id="customer" [(ngModel)]="transportRequest.customer">
+      <option *ngFor="let customer of customerList" [value]="customer.id" [selected]="transportRequest.customer?.id == customer.id">{{customer.toString()}}</option>
+    </select>
+  </div>
+</fieldset>
+        </fieldset>
+        <fieldset class="buttons">
+            <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" />
+        </fieldset>
+    </form>
+</div>

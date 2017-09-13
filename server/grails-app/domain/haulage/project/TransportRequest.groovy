@@ -48,7 +48,10 @@ class TransportRequest {
 
     static hasMany = [consignments: Consignment]
 
-    String userId
+    //forwarder id or in the rft form's case it's requestor
+    String forwarderId
+
+    Customer customer
 
     static constraints = {
         containerVolume blank: false, nullable: false
@@ -80,7 +83,8 @@ class TransportRequest {
         bookingConfirmationImgUrl nullable: true
         cmoImgUrl nullable: false
         consignments nullable: false
-        userId nullable: false
+        forwarderId nullable: false
+        customer nullable: false
     }
 
     static mapping = {
