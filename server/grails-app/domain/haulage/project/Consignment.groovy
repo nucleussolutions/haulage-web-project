@@ -9,6 +9,8 @@ class Consignment {
     String containerNo
     String name
     String size
+
+    //OT,Flat Rack,Reefer,HQ,GP
     String type
     Location pickupLadenDropoff
     Date acceptTime
@@ -26,4 +28,5 @@ class Consignment {
         acceptTime nullable: false
         consignmentCode nullable: false
     }
+
 }

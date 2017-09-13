@@ -1,0 +1,239 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a class="list" [routerLink]="['/transportRequest', 'list']" class="list">TransportRequest List</a></li>
+        <li><a class="create" [routerLink]="['/transportRequest', 'create']" class="create">New TransportRequest</a></li>
+    </ul>
+</div>
+<div id="show-part" class="content scaffold-show" role="main">
+    <h1>Show TransportRequest</h1>
+    <ol class="property-list transportRequest">
+  <li class="fieldcontain">
+    <span id="containerVolume-label" class="property-label">Container Volume</span>
+    <div class="property-value" aria-labelledby="containerVolume-label">
+      <span>{{transportRequest.containerVolume}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="type-label" class="property-label">Type</span>
+    <div class="property-value" aria-labelledby="type-label">
+      <span>{{transportRequest.type}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="equipment-label" class="property-label">Equipment</span>
+    <div class="property-value" aria-labelledby="equipment-label">
+      <span>{{transportRequest.equipment}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="bookingRefNo-label" class="property-label">Booking Ref No</span>
+    <div class="property-value" aria-labelledby="bookingRefNo-label">
+      <span>{{transportRequest.bookingRefNo}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="otherRefNo-label" class="property-label">Other Ref No</span>
+    <div class="property-value" aria-labelledby="otherRefNo-label">
+      <span>{{transportRequest.otherRefNo}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="terminal-label" class="property-label">Terminal</span>
+    <div class="property-value" aria-labelledby="terminal-label">
+      <a *ngIf="transportRequest.terminal" [routerLink]="['/transportRequest','show', transportRequest.terminal.id]">{{transportRequest.terminal.toString()}}</a>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="vesselName-label" class="property-label">Vessel Name</span>
+    <div class="property-value" aria-labelledby="vesselName-label">
+      <span>{{transportRequest.vesselName}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="voyageNo-label" class="property-label">Voyage No</span>
+    <div class="property-value" aria-labelledby="voyageNo-label">
+      <span>{{transportRequest.voyageNo}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="vesselEtaOrEtd-label" class="property-label">Vessel Eta Or Etd</span>
+    <div class="property-value" aria-labelledby="vesselEtaOrEtd-label">
+      <span>{{transportRequest.vesselEtaOrEtd | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="polPod-label" class="property-label">Pol Pod</span>
+    <div class="property-value" aria-labelledby="polPod-label">
+      <span>{{transportRequest.polPod}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="shippingAgent-label" class="property-label">Shipping Agent</span>
+    <div class="property-value" aria-labelledby="shippingAgent-label">
+      <span>{{transportRequest.shippingAgent}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="forwardingAgent-label" class="property-label">Forwarding Agent</span>
+    <div class="property-value" aria-labelledby="forwardingAgent-label">
+      <span>{{transportRequest.forwardingAgent}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="operatorCode-label" class="property-label">Operator Code</span>
+    <div class="property-value" aria-labelledby="operatorCode-label">
+      <span>{{transportRequest.operatorCode}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="hazardous-label" class="property-label">Hazardous</span>
+    <div class="property-value" aria-labelledby="hazardous-label">
+      <span>{{transportRequest.hazardous}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="grossWeight-label" class="property-label">Gross Weight</span>
+    <div class="property-value" aria-labelledby="grossWeight-label">
+      <span>{{transportRequest.grossWeight}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="overDimension-label" class="property-label">Over Dimension</span>
+    <div class="property-value" aria-labelledby="overDimension-label">
+      <span>{{transportRequest.overDimension}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="temperature-label" class="property-label">Temperature</span>
+    <div class="property-value" aria-labelledby="temperature-label">
+      <span>{{transportRequest.temperature}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="productDesc-label" class="property-label">Product Desc</span>
+    <div class="property-value" aria-labelledby="productDesc-label">
+      <span>{{transportRequest.productDesc}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="shipper-label" class="property-label">Shipper</span>
+    <div class="property-value" aria-labelledby="shipper-label">
+      <span>{{transportRequest.shipper}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="orderRemarks-label" class="property-label">Order Remarks</span>
+    <div class="property-value" aria-labelledby="orderRemarks-label">
+      <span>{{transportRequest.orderRemarks}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="containerRemarks-label" class="property-label">Container Remarks</span>
+    <div class="property-value" aria-labelledby="containerRemarks-label">
+      <span>{{transportRequest.containerRemarks}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="dgCode-label" class="property-label">Dg Code</span>
+    <div class="property-value" aria-labelledby="dgCode-label">
+      <span>{{transportRequest.dgCode}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="kOnekEightFormImgUrl-label" class="property-label">K Onek Eight Form Img Url</span>
+    <div class="property-value" aria-labelledby="kOnekEightFormImgUrl-label">
+      <span>{{transportRequest.kOnekEightFormImgUrl}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="gatePassImgUrl-label" class="property-label">Gate Pass Img Url</span>
+    <div class="property-value" aria-labelledby="gatePassImgUrl-label">
+      <span>{{transportRequest.gatePassImgUrl}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="bookingConfirmationImgUrl-label" class="property-label">Booking Confirmation Img Url</span>
+    <div class="property-value" aria-labelledby="bookingConfirmationImgUrl-label">
+      <span>{{transportRequest.bookingConfirmationImgUrl}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="cmoImgUrl-label" class="property-label">Cmo Img Url</span>
+    <div class="property-value" aria-labelledby="cmoImgUrl-label">
+      <span>{{transportRequest.cmoImgUrl}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="consignments-label" class="property-label">Consignments</span>
+    <div class="property-value" aria-labelledby="consignments-label">
+      <ul>
+        <li *ngFor="let consignment of transportRequest.consignments">
+          <a [routerLink]="['/consignment', 'show', consignment.id]">{{consignment.toString()}}</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="forwarderId-label" class="property-label">Forwarder Id</span>
+    <div class="property-value" aria-labelledby="forwarderId-label">
+      <span>{{transportRequest.forwarderId}}</span>
+    </div>
+  </li>
+  <fieldset class="embedded customer">
+    <legend>Customer</legend>
+    <li class="fieldcontain">
+      <span id="customer.phone-label" class="property-label">Phone</span>
+      <div class="property-value" aria-labelledby="customer.phone-label">
+        <span>{{transportRequest.customer.phone}}</span>
+      </div>
+    </li>
+    <li class="fieldcontain">
+      <span id="customer.address1-label" class="property-label">Address1</span>
+      <div class="property-value" aria-labelledby="customer.address1-label">
+        <span>{{transportRequest.customer.address1}}</span>
+      </div>
+    </li>
+    <li class="fieldcontain">
+      <span id="customer.address2-label" class="property-label">Address2</span>
+      <div class="property-value" aria-labelledby="customer.address2-label">
+        <span>{{transportRequest.customer.address2}}</span>
+      </div>
+    </li>
+    <li class="fieldcontain">
+      <span id="customer.city-label" class="property-label">City</span>
+      <div class="property-value" aria-labelledby="customer.city-label">
+        <span>{{transportRequest.customer.city}}</span>
+      </div>
+    </li>
+    <li class="fieldcontain">
+      <span id="customer.personInCharge-label" class="property-label">Person In Charge</span>
+      <div class="property-value" aria-labelledby="customer.personInCharge-label">
+        <span>{{transportRequest.customer.personInCharge}}</span>
+      </div>
+    </li>
+    <li class="fieldcontain">
+      <span id="customer.companyName-label" class="property-label">Company Name</span>
+      <div class="property-value" aria-labelledby="customer.companyName-label">
+        <span>{{transportRequest.customer.companyName}}</span>
+      </div>
+    </li>
+    <li class="fieldcontain">
+      <span id="customer.country-label" class="property-label">Country</span>
+      <div class="property-value" aria-labelledby="customer.country-label">
+        <span>{{transportRequest.customer.country}}</span>
+      </div>
+    </li>
+    <li class="fieldcontain">
+      <span id="customer.state-label" class="property-label">State</span>
+      <div class="property-value" aria-labelledby="customer.state-label">
+        <span>{{transportRequest.customer.state}}</span>
+      </div>
+    </li>
+  </fieldset>
+</ol>
+
+    <a class="edit" [routerLink]="['/transportRequest', 'edit', transportRequest.id]">Edit</a>
+    <button type="button" (click)="destroy()">Delete</button>
+
+</div>
