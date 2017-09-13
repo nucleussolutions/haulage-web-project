@@ -6,7 +6,7 @@
 </div>
 <div id="list-location" class="content scaffold-list" role="main">
     <h1>Location List</h1>
-    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
   <thead>
     <tr>
       <th>Id</th>
@@ -16,6 +16,7 @@
       <th>City</th>
       <th>State</th>
       <th>Country</th>
+      <th>Type</th>
     </tr>
   </thead>
   <tbody>
@@ -40,6 +41,9 @@
       </td>
       <td>
         <span>{{location.country}}</span>
+      </td>
+      <td>
+        <span>{{location.type}}</span>
       </td>
     </tr>
   </tbody>
