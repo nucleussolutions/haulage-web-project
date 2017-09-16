@@ -16,4 +16,8 @@ class Subscription {
         pricing nullable: false
         monthlyRecurring nullable: false
     }
+
+    static mapping = {
+        autoTimestamp true
+    }
 }

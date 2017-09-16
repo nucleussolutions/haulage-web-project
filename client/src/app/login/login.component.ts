@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import {LoginService} from "../login.service";
+import {Title} from "@angular/platform-browser";
 
 
 @Component({
@@ -14,11 +15,13 @@ export class LoginComponent implements OnInit {
     private credentials: FormGroup;
 
 
-    constructor(private formBuilder: FormBuilder, private loginService: LoginService) {
+    constructor(private formBuilder: FormBuilder, private loginService: LoginService, private titleService : Title) {
         this.credentials = this.formBuilder.group({
             email: ['', Validators.compose([Validators.required, Validators.email])],
             password: ['', Validators.required],
         });
+
+        this.titleService.setTitle('Login');
     }
 
     ngOnInit() {

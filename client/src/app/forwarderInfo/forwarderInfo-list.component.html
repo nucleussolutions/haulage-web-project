@@ -1,21 +1,21 @@
 <div class="nav" role="navigation">
-    <ul>
-        <li><a [routerLink]="['/index']" class="home">Home</a></li>
-        <li><a [routerLink]="['/forwarderInfo','create']" class="create">New ForwarderInfo</a></li>
-    </ul>
+  <ul>
+    <li><a [routerLink]="['/index']" class="home">Home</a></li>
+    <li><a [routerLink]="['/forwarderInfo','create']" class="create">New ForwarderInfo</a></li>
+  </ul>
 </div>
 <div id="list-forwarderInfo" class="content scaffold-list" role="main">
-    <h1>ForwarderInfo List</h1>
-    <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
-  <thead>
+  <h1>ForwarderInfo List</h1>
+  <div class="table-responsive"><table class="table">
+    <thead>
     <tr>
       <th>Id</th>
       <th>Name</th>
       <th>Company</th>
       <th>User Id</th>
     </tr>
-  </thead>
-  <tbody>
+    </thead>
+    <tbody>
     <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let forwarderInfo of forwarderInfoList; let e = even;">
       <td>
         <a [routerLink]="['/forwarderInfo','show',forwarderInfo.id]">{{forwarderInfo.id}}</a>
@@ -30,6 +30,6 @@
         <span>{{forwarderInfo.userId}}</span>
       </td>
     </tr>
-  </tbody>
-</table>
+    </tbody>
+  </table></div>
 </div>

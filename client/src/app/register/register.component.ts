@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RegisterService} from "../register.service";
 import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-register',
@@ -12,12 +13,14 @@ export class RegisterComponent implements OnInit {
 
     private credentials: FormGroup;
 
-    constructor(private formBuilder: FormBuilder, private registerService: RegisterService) {
+    constructor(private formBuilder: FormBuilder, private registerService: RegisterService, private titleService: Title) {
         this.credentials = this.formBuilder.group({
             email: ['', Validators.compose([Validators.required, Validators.email])],
             password: ['', Validators.compose([Validators.minLength(6), Validators.required])],
             retypePassword: ['', Validators.compose([Validators.minLength(6), Validators.required])]
         }, {validator: this.matchingPasswords('password', 'retypePassword')});
+
+        this.titleService.setTitle('Register');
     }
 
     ngOnInit() {
