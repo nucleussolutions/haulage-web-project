@@ -1,0 +1,46 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a class="list" [routerLink]="['/pricing', 'list']" class="list">Pricing List</a></li>
+        <li><a class="create" [routerLink]="['/pricing', 'create']" class="create">New Pricing</a></li>
+    </ul>
+</div>
+<div id="show-part" class="content scaffold-show" role="main">
+    <h1>Show Pricing</h1>
+    <ol class="property-list pricing">
+  <li class="fieldcontain">
+    <span id="discountPercent-label" class="property-label">Discount Percent</span>
+    <div class="property-value" aria-labelledby="discountPercent-label">
+      <span>{{pricing.discountPercent}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="price-label" class="property-label">Price</span>
+    <div class="property-value" aria-labelledby="price-label">
+      <span>{{pricing.price}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="pricePerMove-label" class="property-label">Price Per Move</span>
+    <div class="property-value" aria-labelledby="pricePerMove-label">
+      <span>{{pricing.pricePerMove}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="minPrimeMover-label" class="property-label">Min Prime Mover</span>
+    <div class="property-value" aria-labelledby="minPrimeMover-label">
+      <span>{{pricing.minPrimeMover}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="maxPrimeMover-label" class="property-label">Max Prime Mover</span>
+    <div class="property-value" aria-labelledby="maxPrimeMover-label">
+      <span>{{pricing.maxPrimeMover}}</span>
+    </div>
+  </li>
+</ol>
+
+    <a class="edit" [routerLink]="['/pricing', 'edit', pricing.id]">Edit</a>
+    <button type="button" (click)="destroy()">Delete</button>
+
+</div>

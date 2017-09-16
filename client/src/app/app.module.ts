@@ -29,6 +29,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { ConsignmentModule } from './consignment/consignment.module';
 import { CustomerModule } from './customer/customer.module';
 import { TransportRequestModule } from './transportRequest/transportRequest.module';
+import { PricingModule } from './pricing/pricing.module';
 
 
 
@@ -64,7 +65,8 @@ import { TransportRequestModule } from './transportRequest/transportRequest.modu
     CompanyModule,
     ConsignmentModule,
     CustomerModule,
-    TransportRequestModule
+    TransportRequestModule,
+    PricingModule
 ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
   bootstrap: [AppComponent, NavDrawerComponent]

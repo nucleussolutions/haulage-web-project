@@ -1,66 +1,88 @@
 <div class="nav" role="navigation">
-    <ul>
-        <li><a [routerLink]="['/index']" class="home">Home</a></li>
-        <li><a [routerLink]="['/consignment','list']" class="list">Consignment List</a></li>
-    </ul>
+  <ul>
+    <li><a [routerLink]="['/index']" class="home">Home</a></li>
+    <li><a [routerLink]="['/consignment','list']" class="list">Consignment List</a></li>
+  </ul>
 </div>
-<div id="persist-consignment" class="content scaffold-edit" role="main">
-    <h1>{{create ? "Create" : "Edit"}} Consignment</h1>
-    <ul class="errors" role="alert" *ngIf="errors">
-        <li *ngFor="let error of errors">{{error.message}}</li>
-    </ul>
 
-    <form name="save{className}" (ngSubmit)="save()">
-        <fieldset class="form">
-            <fieldset class="form">
-  <div class="fieldcontain required mdl-textfield mdl-js-textfield">
-    <label for="containerNo">Container No
-      <span class="required-indicator">*</span>
-    </label>
-    <input class="mdl-textfield__input" required="" name="containerNo" id="containerNo" [(ngModel)]="consignment.containerNo" type="text" />
+<div class="page-content">
+
+
+  <div class="mdl-grid">
+    <div class="mdl-cell mdl-cell--4-col">
+      <!-- contents go here -->
+    </div>
+    <div class="mdl-cell mdl-cell--4-col">
+      <!-- contents go here -->
+    </div>
+    <div class="mdl-cell mdl-cell--4-col">
+      <!-- contents go here -->
+
+    </div>
   </div>
-  <div class="fieldcontain required mdl-textfield mdl-js-textfield">
-    <label for="name">Name
-      <span class="required-indicator">*</span>
-    </label>
-    <input class="mdl-textfield__input" required="" name="name" id="name" [(ngModel)]="consignment.name" type="text" />
-  </div>
-  <div class="fieldcontain required mdl-textfield mdl-js-textfield">
-    <label for="type">Type
-      <span class="required-indicator">*</span>
-    </label>
-    <input class="mdl-textfield__input" required="" name="type" id="type" [(ngModel)]="consignment.type" type="text" />
-  </div>
-  <div class="fieldcontain required mdl-textfield mdl-js-textfield">
-    <label for="pickupLadenDropoff">Pickup Laden Dropoff
-      <span class="required-indicator">*</span>
-    </label>
-    <select required="" name="pickupLadenDropoff" id="pickupLadenDropoff" [(ngModel)]="consignment.pickupLadenDropoff">
-      <option *ngFor="let location of locationList" [value]="location.id" [selected]="consignment.pickupLadenDropoff?.id == location.id">{{location.toString()}}</option>
-    </select>
-  </div>
-  <div class="fieldcontain required mdl-textfield mdl-js-textfield">
-    <label for="acceptTime">Accept Time
-      <span class="required-indicator">*</span>
-    </label>
-    <input class="mdl-textfield__input" required="" name="acceptTime" id="acceptTime" type="date" placeholder="YYYY-MM-DD" [value]="consignment.acceptTime | date:'y-MM-dd'" (change)="consignment.acceptTime = $event.target.valueAsDate" />
-  </div>
-  <div class="fieldcontain required mdl-textfield mdl-js-textfield">
-    <label for="consignmentCode">Consignment Code
-      <span class="required-indicator">*</span>
-    </label>
-    <input class="mdl-textfield__input" required="" name="consignmentCode" id="consignmentCode" [(ngModel)]="consignment.consignmentCode" type="text" />
-  </div>
-  <div class="fieldcontain required mdl-textfield mdl-js-textfield">
-    <label for="size">Size
-      <span class="required-indicator">*</span>
-    </label>
-    <input class="mdl-textfield__input" required="" name="size" id="size" [(ngModel)]="consignment.size" type="text" />
-  </div>
-</fieldset>
-        </fieldset>
-        <fieldset class="buttons">
-            <input type="submit" class="save mdl-color-text--white mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" [value]="create ? 'Save' : 'Update'" />
-        </fieldset>
-    </form>
+</div>
+
+<div id="persist-consignment" class="content scaffold-edit" role="main">
+  <h1>{{create ? "Create" : "Edit"}} Consignment</h1>
+  <ul class="errors" role="alert" *ngIf="errors">
+    <li *ngFor="let error of errors">{{error.message}}</li>
+  </ul>
+
+  <form name="save{className}" (ngSubmit)="save()">
+    <fieldset class="form">
+      <fieldset class="form">
+        <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+          <label for="containerNo">Container No
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="mdl-textfield__input" required="" name="containerNo" id="containerNo" [(ngModel)]="consignment.containerNo" type="text"/>
+        </div>
+        <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+          <label for="name">Name
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="mdl-textfield__input" required="" name="name" id="name" [(ngModel)]="consignment.name" type="text"/>
+        </div>
+        <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+          <label for="type">Type
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="mdl-textfield__input" required="" name="type" id="type" [(ngModel)]="consignment.type" type="text"/>
+        </div>
+        <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+          <label for="pickupLadenDropoff">Pickup Laden Dropoff
+            <span class="required-indicator">*</span>
+          </label>
+          <select required="" name="pickupLadenDropoff" id="pickupLadenDropoff" [(ngModel)]="consignment.pickupLadenDropoff">
+            <option *ngFor="let location of locationList" [value]="location.id" [selected]="consignment.pickupLadenDropoff?.id == location.id">
+              {{location.toString()}}
+            </option>
+          </select>
+        </div>
+        <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+          <label for="acceptTime">Accept Time
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="mdl-textfield__input" required="" name="acceptTime" id="acceptTime" type="date" placeholder="YYYY-MM-DD"
+                 [value]="consignment.acceptTime | date:'y-MM-dd'" (change)="consignment.acceptTime = $event.target.valueAsDate"/>
+        </div>
+        <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+          <label for="consignmentCode">Consignment Code
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="mdl-textfield__input" required="" name="consignmentCode" id="consignmentCode" [(ngModel)]="consignment.consignmentCode" type="text"/>
+        </div>
+        <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+          <label for="size">Size
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="mdl-textfield__input" required="" name="size" id="size" [(ngModel)]="consignment.size" type="text"/>
+        </div>
+      </fieldset>
+    </fieldset>
+    <fieldset class="buttons">
+      <input type="submit" class="save mdl-color-text--white mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+             [value]="create ? 'Save' : 'Update'"/>
+    </fieldset>
+  </form>
 </div>

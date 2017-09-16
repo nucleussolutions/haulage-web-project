@@ -1,0 +1,43 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/pricing','create']" class="create">New Pricing</a></li>
+    </ul>
+</div>
+<div id="list-pricing" class="content scaffold-list" role="main">
+    <h1>Pricing List</h1>
+    <table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Discount Percent</th>
+      <th>Price</th>
+      <th>Price Per Move</th>
+      <th>Min Prime Mover</th>
+      <th>Max Prime Mover</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let pricing of pricingList; let e = even;">
+      <td>
+        <a [routerLink]="['/pricing','show',pricing.id]">{{pricing.id}}</a>
+      </td>
+      <td>
+        <span>{{pricing.discountPercent}}</span>
+      </td>
+      <td>
+        <span>{{pricing.price}}</span>
+      </td>
+      <td>
+        <span>{{pricing.pricePerMove}}</span>
+      </td>
+      <td>
+        <span>{{pricing.minPrimeMover}}</span>
+      </td>
+      <td>
+        <span>{{pricing.maxPrimeMover}}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
