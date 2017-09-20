@@ -17,7 +17,7 @@ export class RegisterService {
         type: userType
       };
 
-      this.http.post(environment.authUrl+'/register', postBody).subscribe(response => {
+      this.http.post(environment.serverUrl+'/register', postBody).subscribe(response => {
         resolve(response.json());
       }, error => {
         reject(error.json());

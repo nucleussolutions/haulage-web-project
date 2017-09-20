@@ -5,6 +5,5 @@
 
 export const environment = {
     production: false,
-    serverUrl: 'http://localhost:8080/',
-    authUrl: 'http://localhost:3000/'
+    serverUrl: 'http://localhost:8081/'
 };
