@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {RegisterService} from "../register.service";
 import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import {Title} from "@angular/platform-browser";
+import {Router} from "@angular/router";
+import {CookieService} from "ngx-cookie";
 
 @Component({
     selector: 'app-register',
@@ -13,7 +15,9 @@ export class RegisterComponent implements OnInit {
 
     private credentials: FormGroup;
 
-    constructor(private formBuilder: FormBuilder, private registerService: RegisterService, private titleService: Title) {
+    private response : any;
+
+    constructor(private formBuilder: FormBuilder, private registerService: RegisterService, private titleService: Title, private router: Router, private cookieService: CookieService) {
         this.credentials = this.formBuilder.group({
             email: ['', Validators.compose([Validators.required, Validators.email])],
             password: ['', Validators.compose([Validators.minLength(6), Validators.required])],
@@ -27,9 +31,15 @@ export class RegisterComponent implements OnInit {
     }
 
     register(formData) {
-        this.registerService.register(formData.value.email, formData.value.password, false).then(value => {
+        this.registerService.register(formData.value.email, formData.value.password, false).then(response => {
 
-        })
+            this.response = response;
+            this.cookieService.put('token', this.response.token);
+            this.router.navigate(['/index']);
+
+        }).catch(reason => {
+            console.log('failed to register with reason '+reason);
+        });
     }
 
 

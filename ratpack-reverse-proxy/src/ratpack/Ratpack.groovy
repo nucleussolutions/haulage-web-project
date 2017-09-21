@@ -3,6 +3,8 @@ import ratpack.groovy.template.MarkupTemplateModule
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+import java.time.Duration
+
 import static ratpack.groovy.Groovy.byMethod
 import static ratpack.groovy.Groovy.groovyMarkupTemplate
 import static ratpack.groovy.Groovy.ratpack
@@ -25,7 +27,9 @@ ratpack {
                 proxyUri.scheme = 'http'
                 proxyUri.port = 3000
                 httpClient.requestStream(proxyUri) { RequestSpec spec ->
+                    println 'request.headers '+request.headers.toString()
                     spec.headers.copy(request.headers)
+                    println 'spec.headers '+spec.headers.toString()
                 }.then { StreamedResponse responseStream ->
                     responseStream.forwardTo(response)
                 }
