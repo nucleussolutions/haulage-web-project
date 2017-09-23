@@ -18,7 +18,7 @@ export class LoginService {
                 password: password
             };
 
-            this.http.post(environment.serverUrl + '/login', postBody).subscribe(response => {
+            this.http.post(environment.serverUrl + '/api/auth/login', postBody).subscribe(response => {
                 resolve(response.json());
             }, error => {
                 reject(error.json());
