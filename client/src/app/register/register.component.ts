@@ -4,6 +4,7 @@ import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import {Title} from "@angular/platform-browser";
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie";
+import {CookieOptionsProvider} from "ngx-cookie/src/cookie-options-provider";
 
 @Component({
     selector: 'app-register',
