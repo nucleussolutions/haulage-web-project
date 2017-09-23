@@ -1,15 +1,20 @@
-FROM node:4
+FROM mhart/alpine-node:latest
 
-RUN mkdir /src
+#ADD package.json /tmp/package.json
+#RUN cd /tmp && npm install
+#RUN mkdir -p /opt/app && cp -a /tmp/node_modules /opt/app/
 
-RUN npm install nodemon -g
+#WORKDIR /opt/app
+#ADD . /opt/app
 
-WORKDIR /src
-ADD package.json /src/package.json
+WORKDIR /app
+COPY . .
+
 RUN npm install
-
-#ADD app/nodemon.json /src/nodemon.json
 
 EXPOSE 3000
 
-CMD nodemon index.js
+#CMD ["npm", "start"]
+
+#CMD nodemon index.js
+CMD ["node", "index.js"]
