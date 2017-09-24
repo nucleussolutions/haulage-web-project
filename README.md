@@ -17,4 +17,4 @@ docker run -e "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=5005,server=
 
 ##Running Nginx on Docker
 
-docker run -d --name haulage-nginx --link=haulage-server --link=expressauth_web_1 -p 80:80 haulage-nginx
+docker run -d --name haulage-nginx --link=haulage-server --link=expressauth_web_1 -p 80:80 haulage-nginx-p 80:80 haulage-nginx
