@@ -1,0 +1,1 @@
+grails -Dgrails.env=development assemble && docker build . -t haulage-server

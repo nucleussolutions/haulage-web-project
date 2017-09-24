@@ -1,0 +1,1 @@
+docker build . -t haulage-nginx && docker run -d --name haulage-nginx -p 80:80 haulage-nginx

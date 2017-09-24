@@ -31,13 +31,16 @@ export class LoginComponent implements OnInit {
     }
 
     login(formData) {
+        // console.log('login formData '+JSON.stringify(formData));
+        console.log('login email '+formData.value.email);
+        console.log('login password '+formData.value.password);
         this.loginService.login(formData.value.email, formData.value.password).then(response => {
             this.response = response;
             this.cookieService.put('token', this.response.token);
             //todo redirect them to the dashboard page
             this.router.navigate(['/index']);
         }).catch(reason => {
-            console.log('failed to login, reason '+reason);
+            console.log('failed to login, reason '+JSON.stringify(reason));
         });
     }
 }
