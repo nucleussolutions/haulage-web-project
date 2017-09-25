@@ -11,17 +11,13 @@ import {UserService} from "../user.service";
 })
 export class UserListComponent implements OnInit{
 
+    userList: User[] = [];
 
     constructor(private userService : UserService){
-        //todo list by who's under the haulier
-        this.userService.list().subscribe()
     }
 
     ngOnInit() {
-        // throw new Error('Method not implemented.');
-    }
-
-    userList: User[] = [];
-
-
+        this.userService.list().subscribe((userList: User[]) => {
+            this.userList = userList;
+        });    }
 }
