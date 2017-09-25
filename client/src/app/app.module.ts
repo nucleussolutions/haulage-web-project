@@ -31,6 +31,7 @@ import {CustomerModule} from './customer/customer.module';
 import {TransportRequestModule} from './transportRequest/transportRequest.module';
 import {PricingModule} from './pricing/pricing.module';
 import {CookieModule} from 'ngx-cookie';
+import { UserComponent } from './user/user.component';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import {CookieModule} from 'ngx-cookie';
         SettingsComponent,
         NavDrawerComponent,
         ChangePasswordComponent,
+        UserComponent,
     ],
     imports: [
         BrowserModule,
