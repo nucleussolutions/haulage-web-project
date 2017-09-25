@@ -10,7 +10,6 @@ export class ResetPasswordService {
   resetPassword(password){
     return new Promise((resolve, reject) => {
 
-
       let postBody = {
         password : password
       };

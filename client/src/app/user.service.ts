@@ -3,7 +3,7 @@ import {Http, Response, RequestOptions, RequestMethod, Request, Headers} from '@
 import {Observable} from "rxjs/Observable";
 import {Subject} from "rxjs/Subject";
 import {User} from "./user/user";
-import {environment} from '../environments/environment';
+import {environment} from "../environments/environment";
 
 @Injectable()
 export class UserService {
@@ -11,7 +11,7 @@ export class UserService {
     constructor(private http: Http) {
     }
 
-    //todo fix this 
+    //todo fix url mappings
     list(): Observable<User[]> {
         let subject = new Subject<User[]>();
         this.http.get(environment.serverUrl + '/user')
