@@ -40,6 +40,7 @@ export class RegisterComponent implements OnInit {
 
         }).catch(reason => {
             console.log('failed to register with reason '+reason);
+
         });
     }
 

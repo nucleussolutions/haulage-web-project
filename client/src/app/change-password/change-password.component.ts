@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import {ChangePasswordService} from "../change-password.service";
+import {CookieService} from "ngx-cookie";
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -13,11 +16,15 @@ export class ChangePasswordComponent implements OnInit {
 
     private credentials: FormGroup;
 
-    constructor(private formBuilder: FormBuilder, private changePasswordService: ChangePasswordService) {
+    private token : string;
+
+    constructor(private formBuilder: FormBuilder, private changePasswordService: ChangePasswordService, private cookieService: CookieService, public modal: Modal, private router: Router) {
         this.credentials = this.formBuilder.group({
             password: ['', Validators.compose([Validators.minLength(6), Validators.required])],
             confirmPassword: ['', Validators.compose([Validators.minLength(6), Validators.required])]
         }, {validator: this.matchingPasswords('password', 'confirmPassword')});
+
+        this.token = this.cookieService.get('token');
     }
 
 
@@ -25,7 +32,17 @@ export class ChangePasswordComponent implements OnInit {
     }
 
     changePassword(formData) {
-        this.changePasswordService.changePassword(formData.value.password)
+        this.changePasswordService.changePassword(formData.value.password, this.token).then(response => {
+
+            //todo clear cookies
+            this.router.navigate(['/login']);
+
+        }, error => {
+            this.modal.alert()
+                .title('Error')
+                .body('Failed to change password, reason '+error)
+                .open();
+        });
     }
 
     matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
