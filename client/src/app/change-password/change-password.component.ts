@@ -1,17 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
+import {ChangePasswordService} from "../change-password.service";
 
 
 @Component({
     selector: 'app-change-password',
     templateUrl: './change-password.component.html',
     styleUrls: ['./change-password.component.css'],
+    providers: [ChangePasswordService]
 })
 export class ChangePasswordComponent implements OnInit {
 
     private credentials: FormGroup;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor(private formBuilder: FormBuilder, private changePasswordService: ChangePasswordService) {
         this.credentials = this.formBuilder.group({
             password: ['', Validators.compose([Validators.minLength(6), Validators.required])],
             confirmPassword: ['', Validators.compose([Validators.minLength(6), Validators.required])]
@@ -23,7 +25,7 @@ export class ChangePasswordComponent implements OnInit {
     }
 
     changePassword(formData) {
-
+        this.changePasswordService.changePassword(formData.value.password)
     }
 
     matchingPasswords(passwordKey: string, confirmPasswordKey: string) {

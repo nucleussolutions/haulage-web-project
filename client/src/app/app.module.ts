@@ -32,6 +32,8 @@ import {TransportRequestModule} from './transportRequest/transportRequest.module
 import {PricingModule} from './pricing/pricing.module';
 import {CookieModule} from 'ngx-cookie';
 import { UserComponent } from './user/user.component';
+import {ModalModule} from "ngx-modialog";
+import {BootstrapModalModule} from "ngx-modialog/plugins/bootstrap";
 
 
 @NgModule({
@@ -69,7 +71,9 @@ import { UserComponent } from './user/user.component';
         ConsignmentModule,
         CustomerModule,
         TransportRequestModule,
-        PricingModule
+        PricingModule,
+        ModalModule.forRoot(),
+        BootstrapModalModule
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
     bootstrap: [AppComponent, NavDrawerComponent]
