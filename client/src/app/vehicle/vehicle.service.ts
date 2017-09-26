@@ -3,6 +3,7 @@ import {Http, Response, RequestOptions, RequestMethod, Request, Headers} from '@
 import {Observable} from 'rxjs/Observable';
 import {Vehicle} from './vehicle';
 import {Subject} from 'rxjs/Subject';
+import {environment} from '../environments/environment';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
@@ -10,14 +11,13 @@ import 'rxjs/add/observable/of';
 @Injectable()
 export class VehicleService {
 
-  private baseUrl = 'http://localhost:8080/';
 
   constructor(private http: Http) {
   }
 
   list(): Observable<Vehicle[]> {
     let subject = new Subject<Vehicle[]>();
-    this.http.get(this.baseUrl + 'vehicle')
+    this.http.get(environment.serverUrl + '/vehicle')
       .map((r: Response) => r.json())
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new Vehicle(item)))
@@ -26,7 +26,7 @@ export class VehicleService {
   }
 
   get(id: number): Observable<Vehicle> {
-    return this.http.get(this.baseUrl + 'vehicle/'+id)
+    return this.http.get(environment.serverUrl + '/vehicle/'+id)
       .map((r: Response) => new Vehicle(r.json()));
   }
 
@@ -34,10 +34,10 @@ export class VehicleService {
     const requestOptions = new RequestOptions();
     if (vehicle.id) {
       requestOptions.method = RequestMethod.Put;
-      requestOptions.url = this.baseUrl + 'vehicle/' + vehicle.id;
+      requestOptions.url = environment.serverUrl + '/vehicle/' + vehicle.id;
     } else {
       requestOptions.method = RequestMethod.Post;
-      requestOptions.url = this.baseUrl + 'vehicle';
+      requestOptions.url = environment.serverUrl + '/vehicle';
     }
     requestOptions.body = JSON.stringify(vehicle);
     requestOptions.headers = new Headers({"Content-Type": "application/json"});
@@ -47,7 +47,7 @@ export class VehicleService {
   }
 
   destroy(vehicle: Vehicle): Observable<boolean> {
-    return this.http.delete(this.baseUrl + 'vehicle/' + vehicle.id).map((res: Response) => res.ok).catch(() => {
+    return this.http.delete(environment.serverUrl + '/vehicle/' + vehicle.id).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
   }

@@ -1,5 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule,Routes} from '@angular/router';
+import {UserListComponent} from "./user-list.component";
+import {UserPersistComponent} from "./user-persist.component";
+import {UserShowComponent} from "./user-show.component";
 
 const routes: Routes = [
     {path: 'user', redirectTo: 'User/list', pathMatch: 'full'},

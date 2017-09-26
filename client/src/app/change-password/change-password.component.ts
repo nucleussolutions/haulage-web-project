@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
     selector: 'app-change-password',
     templateUrl: './change-password.component.html',
     styleUrls: ['./change-password.component.css'],
-    providers: [ChangePasswordService]
+    providers: [ChangePasswordService, CookieService]
 })
 export class ChangePasswordComponent implements OnInit {
 
@@ -35,6 +35,7 @@ export class ChangePasswordComponent implements OnInit {
         this.changePasswordService.changePassword(formData.value.password, this.token).then(response => {
 
             //todo clear cookies
+            this.cookieService.removeAll();
             this.router.navigate(['/login']);
 
         }, error => {
