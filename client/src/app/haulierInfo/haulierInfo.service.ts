@@ -6,18 +6,17 @@ import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class HaulierInfoService {
-
-  private baseUrl = 'http://localhost:8080/';
 
   constructor(private http: Http) {
   }
 
   list(): Observable<HaulierInfo[]> {
     let subject = new Subject<HaulierInfo[]>();
-    this.http.get(this.baseUrl + 'haulierInfo')
+    this.http.get(environment.serverUrl + '/haulierInfo')
       .map((r: Response) => r.json())
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new HaulierInfo(item)))
@@ -26,7 +25,7 @@ export class HaulierInfoService {
   }
 
   get(id: number): Observable<HaulierInfo> {
-    return this.http.get(this.baseUrl + 'haulierInfo/'+id)
+    return this.http.get(environment.serverUrl + '/haulierInfo/'+id)
       .map((r: Response) => new HaulierInfo(r.json()));
   }
 
@@ -34,10 +33,10 @@ export class HaulierInfoService {
     const requestOptions = new RequestOptions();
     if (haulierInfo.id) {
       requestOptions.method = RequestMethod.Put;
-      requestOptions.url = this.baseUrl + 'haulierInfo/' + haulierInfo.id;
+      requestOptions.url = environment.serverUrl + '/haulierInfo/' + haulierInfo.id;
     } else {
       requestOptions.method = RequestMethod.Post;
-      requestOptions.url = this.baseUrl + 'haulierInfo';
+      requestOptions.url = environment.serverUrl + '/haulierInfo';
     }
     requestOptions.body = JSON.stringify(haulierInfo);
     requestOptions.headers = new Headers({"Content-Type": "application/json"});
@@ -47,7 +46,7 @@ export class HaulierInfoService {
   }
 
   destroy(haulierInfo: HaulierInfo): Observable<boolean> {
-    return this.http.delete(this.baseUrl + 'haulierInfo/' + haulierInfo.id).map((res: Response) => res.ok).catch(() => {
+    return this.http.delete(environment.serverUrl + '/haulierInfo/' + haulierInfo.id).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
   }

@@ -11,8 +11,6 @@ import {environment} from "../../environments/environment";
 @Injectable()
 export class TransportRequestService {
 
-  // private baseUrl = 'http://localhost:8080/';
-
   constructor(private http: Http) {
   }
 

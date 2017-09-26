@@ -6,18 +6,18 @@ import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class ForwarderInfoService {
 
-  private baseUrl = 'http://localhost:8080/';
 
   constructor(private http: Http) {
   }
 
   list(): Observable<ForwarderInfo[]> {
     let subject = new Subject<ForwarderInfo[]>();
-    this.http.get(this.baseUrl + 'forwarderInfo')
+    this.http.get(environment.serverUrl + 'forwarderInfo')
       .map((r: Response) => r.json())
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new ForwarderInfo(item)))
@@ -26,7 +26,7 @@ export class ForwarderInfoService {
   }
 
   get(id: number): Observable<ForwarderInfo> {
-    return this.http.get(this.baseUrl + 'forwarderInfo/'+id)
+    return this.http.get(environment.serverUrl + 'forwarderInfo/'+id)
       .map((r: Response) => new ForwarderInfo(r.json()));
   }
 
@@ -34,10 +34,10 @@ export class ForwarderInfoService {
     const requestOptions = new RequestOptions();
     if (forwarderInfo.id) {
       requestOptions.method = RequestMethod.Put;
-      requestOptions.url = this.baseUrl + 'forwarderInfo/' + forwarderInfo.id;
+      requestOptions.url = environment.serverUrl + 'forwarderInfo/' + forwarderInfo.id;
     } else {
       requestOptions.method = RequestMethod.Post;
-      requestOptions.url = this.baseUrl + 'forwarderInfo';
+      requestOptions.url = environment.serverUrl + 'forwarderInfo';
     }
     requestOptions.body = JSON.stringify(forwarderInfo);
     requestOptions.headers = new Headers({"Content-Type": "application/json"});
@@ -47,7 +47,7 @@ export class ForwarderInfoService {
   }
 
   destroy(forwarderInfo: ForwarderInfo): Observable<boolean> {
-    return this.http.delete(this.baseUrl + 'forwarderInfo/' + forwarderInfo.id).map((res: Response) => res.ok).catch(() => {
+    return this.http.delete(environment.serverUrl + 'forwarderInfo/' + forwarderInfo.id).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
   }

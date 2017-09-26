@@ -6,18 +6,17 @@ import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class CustomerService {
-
-  private baseUrl = 'http://localhost:8080/';
 
   constructor(private http: Http) {
   }
 
   list(): Observable<Customer[]> {
     let subject = new Subject<Customer[]>();
-    this.http.get(this.baseUrl + 'customer')
+    this.http.get(environment.serverUrl + '/customer')
       .map((r: Response) => r.json())
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new Customer(item)))
@@ -26,7 +25,7 @@ export class CustomerService {
   }
 
   get(id: number): Observable<Customer> {
-    return this.http.get(this.baseUrl + 'customer/'+id)
+    return this.http.get(environment.serverUrl + '/customer/'+id)
       .map((r: Response) => new Customer(r.json()));
   }
 
@@ -34,10 +33,10 @@ export class CustomerService {
     const requestOptions = new RequestOptions();
     if (customer.id) {
       requestOptions.method = RequestMethod.Put;
-      requestOptions.url = this.baseUrl + 'customer/' + customer.id;
+      requestOptions.url = environment.serverUrl + '/customer/' + customer.id;
     } else {
       requestOptions.method = RequestMethod.Post;
-      requestOptions.url = this.baseUrl + 'customer';
+      requestOptions.url = environment.serverUrl + '/customer';
     }
     requestOptions.body = JSON.stringify(customer);
     requestOptions.headers = new Headers({"Content-Type": "application/json"});
@@ -47,7 +46,7 @@ export class CustomerService {
   }
 
   destroy(customer: Customer): Observable<boolean> {
-    return this.http.delete(this.baseUrl + 'customer/' + customer.id).map((res: Response) => res.ok).catch(() => {
+    return this.http.delete(environment.serverUrl + '/customer/' + customer.id).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
   }
