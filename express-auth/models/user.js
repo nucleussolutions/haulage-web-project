@@ -31,20 +31,10 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  profile: {
-    // firstName: { type: String },
-    // lastName: { type: String }
-  },
   role: {
     type: String,
     enum: [ROLE_USER, ROLE_MANAGER, ROLE_SUPER_ADMIN, ROLE_ADMIN],
     default: ROLE_USER
-  },
-  subscription : {
-    //contains subscription data and whether or not they have paid
-
-
-    //perhaps include transaction id or something
   },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date }
