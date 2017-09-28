@@ -38,6 +38,8 @@ exports.register = function (req, res, next) {
   // const lastName = req.body.lastName;
   const password = req.body.password;
 
+  const role = req.body.role;
+
   // Return error if no email provided
   if (!email) {
     return res.status(422).send({ error: 'You must enter an email address.' });
@@ -53,6 +55,12 @@ exports.register = function (req, res, next) {
     return res.status(422).send({ error: 'You must enter a password.' });
   }
 
+  if(!role){
+    return res.status(422).send({
+        error : 'You must enter a role.'
+    });
+  }
+
   User.findOne({ email }, (err, existingUser) => {
     if (err) { return next(err); }
 
@@ -65,7 +73,7 @@ exports.register = function (req, res, next) {
     const user = new User({
       email,
       password,
-      // profile: { firstName, lastName }
+        role
     });
 
     user.save((err, user) => {
