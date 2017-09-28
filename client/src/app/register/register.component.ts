@@ -22,7 +22,8 @@ export class RegisterComponent implements OnInit {
         this.credentials = this.formBuilder.group({
             email: ['', Validators.compose([Validators.required, Validators.email])],
             password: ['', Validators.compose([Validators.minLength(6), Validators.required])],
-            retypePassword: ['', Validators.compose([Validators.minLength(6), Validators.required])]
+            retypePassword: ['', Validators.compose([Validators.minLength(6), Validators.required])],
+            role: new FormControl('Admin'),
         }, {validator: this.matchingPasswords('password', 'retypePassword')});
 
         this.titleService.setTitle('Register');
@@ -32,7 +33,7 @@ export class RegisterComponent implements OnInit {
     }
 
     register(formData) {
-        this.registerService.register(formData.value.email, formData.value.password, false).then(response => {
+        this.registerService.register(formData.value.email, formData.value.password, formData.value.role).then(response => {
 
             this.response = response;
             this.cookieService.put('token', this.response.token);

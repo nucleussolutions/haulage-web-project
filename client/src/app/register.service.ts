@@ -8,13 +8,13 @@ export class RegisterService {
 
   constructor(private http: Http) { }
 
-  register(email, password, userType){
+  register(email, password, role){
     return new Promise((resolve, reject) => {
 
       let postBody = {
         email: email,
         password : password,
-        type: userType
+        role: role
       };
 
       this.http.post(environment.serverUrl+'/api/auth/register', postBody).subscribe(response => {

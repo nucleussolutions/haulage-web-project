@@ -55,11 +55,11 @@ exports.register = function (req, res, next) {
     return res.status(422).send({ error: 'You must enter a password.' });
   }
 
-  if(!role){
-    return res.status(422).send({
-        error : 'You must enter a role.'
-    });
-  }
+  // if(!role){
+  //   return res.status(422).send({
+  //       error : 'You must enter a role.'
+  //   });
+  // }
 
   User.findOne({ email }, (err, existingUser) => {
     if (err) { return next(err); }
