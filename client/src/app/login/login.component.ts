@@ -37,8 +37,13 @@ export class LoginComponent implements OnInit {
         this.loginService.login(formData.value.email, formData.value.password).then(response => {
             this.response = response;
             this.cookieService.put('token', this.response.token);
+            this.cookieService.put('userId', this.response.user._id);
+            this.cookieService.put('userRole', this.response.user.role);
             //todo redirect them to the dashboard page
+            // window.location.reload();
             this.router.navigate(['/index']);
+            //todo signal refresh event on the nav drawer component
+            this.loginService.changeLoginState(true);
         }).catch(reason => {
             console.log('failed to login, reason '+JSON.stringify(reason));
         });

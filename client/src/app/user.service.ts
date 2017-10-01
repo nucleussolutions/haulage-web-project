@@ -14,7 +14,7 @@ export class UserService {
     //todo fix url mappings
     list(): Observable<User[]> {
         let subject = new Subject<User[]>();
-        this.http.get(environment.serverUrl + '/user')
+        this.http.get(environment.serverUrl + '/api/user')
             .map((r: Response) => r.json())
             .subscribe((json: any[]) => {
                 subject.next(json.map((item: any) => new User(item)))
@@ -23,7 +23,7 @@ export class UserService {
     }
 
     get(id: string): Observable<User> {
-        return this.http.get(environment.serverUrl + '/user/'+id)
+        return this.http.get(environment.serverUrl + '/api/user/'+id)
             .map((r: Response) => new User(r.json()));
     }
 

@@ -1,10 +1,16 @@
 import {Injectable} from '@angular/core';
 import {Http, RequestOptions} from '@angular/http';
 import {environment} from '../environments/environment';
+import {Subject} from "rxjs/Subject";
 
 
 @Injectable()
 export class LoginService {
+
+    private loginStateChangedSource = new Subject<boolean>();
+
+
+    loginStateChanged$ = this.loginStateChangedSource.asObservable();
 
     constructor(private http: Http) {
 
@@ -24,5 +30,9 @@ export class LoginService {
                 reject(error.json());
             });
         })
+    }
+
+    changeLoginState(loggedIn) {
+        this.loginStateChangedSource.next(loggedIn);
     }
 }

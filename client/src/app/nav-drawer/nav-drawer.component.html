@@ -1,5 +1,18 @@
 <div class="col-sm-3 col-md-2 sidebar">
-  <ul class="nav nav-sidebar">
+  <ul class="nav nav-sidebar" *ngIf="!token">
+    <li>
+      <a routerLinkActive="active" routerLink="/register">Register</a>
+    </li>
+    <li>
+      <a routerLinkActive="active" routerLink="/login">Login</a>
+    </li>
+    <li>
+      <a routerLink="/forget-password" routerLinkActive="active">Forget Password</a>
+    </li>
+
+  </ul>
+
+  <ul class="nav nav-sidebar" *ngIf="token">
     <li>
       <a routerLink="/user" routerLinkActive="active">User</a>
     </li>
@@ -27,12 +40,8 @@
     <li>
       <a routerLinkActive="active" routerLink="/pricing">Pricing</a>
     </li>
-
     <li>
-      <a routerLinkActive="active" routerLink="/register">Register</a>
-    </li>
-    <li>
-      <a routerLinkActive="active" routerLink="/login">Login</a>
+      <a (click)="logout()" href="#">Logout</a>
     </li>
   </ul>
 </div>

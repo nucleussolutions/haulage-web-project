@@ -5,7 +5,7 @@ import {UserPersistComponent} from "./user-persist.component";
 import {UserShowComponent} from "./user-show.component";
 
 const routes: Routes = [
-    {path: 'user', redirectTo: 'User/list', pathMatch: 'full'},
+    {path: 'user', redirectTo: 'user/list', pathMatch: 'full'},
     {path: 'user/list', component: UserListComponent},
     {path: 'user/create', component: UserPersistComponent},
     {path: 'user/edit/:id', component: UserPersistComponent},

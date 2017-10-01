@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ForgetPasswordService} from "../forget-password.service";
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import {FormGroup} from "@angular/forms";
 
 
 @Component({
@@ -11,7 +12,11 @@ import { Modal } from 'ngx-modialog/plugins/bootstrap';
 })
 export class ForgetPasswordComponent implements OnInit {
 
-  constructor(private forgetPasswordService: ForgetPasswordService, public modal: Modal) { }
+  private credentials : FormGroup;
+
+  constructor(private forgetPasswordService: ForgetPasswordService, public modal: Modal) {
+
+  }
 
   ngOnInit() {
   }
