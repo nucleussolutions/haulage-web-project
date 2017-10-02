@@ -10,6 +10,11 @@ export class IndexComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
+    //if it's a first time user, and the user is a haulier and forwarder, then show a modal prompting for profile creation
   }
+
+
+
 
 }
