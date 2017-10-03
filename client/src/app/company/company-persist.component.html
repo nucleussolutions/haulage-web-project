@@ -5,29 +5,9 @@
   </ul>
 </div>
 
-<div class="page-content">
 
-  <div class="mdl-grid">
-
-
-
-
-    <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--4-col">
-        <!-- contents go here -->
-      </div>
-      <div class="mdl-cell mdl-cell--4-col">
-        <!-- contents go here -->
-      </div>
-      <div class="mdl-cell mdl-cell--4-col">
-        <!-- contents go here -->
-
-      </div>
-    </div>
-
-  </div>
-
-
+<div class="row">
+  
 </div>
 
 
@@ -40,69 +20,69 @@
   <form name="save{className}" (ngSubmit)="save()">
     <fieldset class="form">
       <fieldset class="form">
-        <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+        <div class="form-group">
           <label for="name">Name
             <span class="required-indicator">*</span>
           </label>
-          <input class="mdl-textfield__input" required="" name="name" id="name" [(ngModel)]="company.name" type="text"/>
+          <input class="form-control" required="" name="name" id="name" [(ngModel)]="company.name" type="text"/>
         </div>
-        <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+        <div class="form-group">
           <label for="registrationNo">Registration No
             <span class="required-indicator">*</span>
           </label>
-          <input class="mdl-textfield__input" required="" name="registrationNo" id="registrationNo" [(ngModel)]="company.registrationNo" type="text"/>
+          <input class="form-control" required="" name="registrationNo" id="registrationNo" [(ngModel)]="company.registrationNo" type="text"/>
         </div>
-        <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+        <div class="form-group">
           <label for="address1">Address1
             <span class="required-indicator">*</span>
           </label>
-          <input class="mdl-textfield__input" required="" name="address1" id="address1" [(ngModel)]="company.address1" type="text"/>
+          <input class="form-control" required="" name="address1" id="address1" [(ngModel)]="company.address1" type="text"/>
         </div>
-        <div class="fieldcontain mdl-textfield mdl-js-textfield">
+        <div class="form-group">
           <label for="address2">Address2</label>
-          <input class="mdl-textfield__input" name="address2" id="address2" [(ngModel)]="company.address2" type="text"/>
+          <input class="form-control" name="address2" id="address2" [(ngModel)]="company.address2" type="text"/>
         </div>
-        <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+        <div class="form-group">
           <label for="city">City
             <span class="required-indicator">*</span>
           </label>
-          <input class="mdl-textfield__input" required="" name="city" id="city" [(ngModel)]="company.city" type="text"/>
+          <input class="form-control" required="" name="city" id="city" [(ngModel)]="company.city" type="text"/>
         </div>
-        <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+        <div class="form-group">
           <label for="state">State
             <span class="required-indicator">*</span>
           </label>
-          <input class="mdl-textfield__input" required="" name="state" id="state" [(ngModel)]="company.state" type="text"/>
+          <input class="form-control" required="" name="state" id="state" [(ngModel)]="company.state" type="text"/>
         </div>
-        <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+        <div class="form-group">
           <label for="country">Country
             <span class="required-indicator">*</span>
           </label>
-          <input class="mdl-textfield__input" required="" name="country" id="country" [(ngModel)]="company.country" type="text"/>
+          <input class="form-control" required="" name="country" id="country" [(ngModel)]="company.country" type="text"/>
         </div>
-        <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+        <div class="form-group">
           <label for="officePhone">Office Phone
             <span class="required-indicator">*</span>
           </label>
-          <input class="mdl-textfield__input" required="" name="officePhone" id="officePhone" [(ngModel)]="company.officePhone" type="text"/>
+          <input class="form-control" required="" name="officePhone" id="officePhone" [(ngModel)]="company.officePhone" type="text"/>
         </div>
-        <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+        <div class="form-group">
           <label for="yardPhone">Yard Phone
             <span class="required-indicator">*</span>
           </label>
-          <input class="mdl-textfield__input" required="" name="yardPhone" id="yardPhone" [(ngModel)]="company.yardPhone" type="text"/>
+          <input class="form-control" required="" name="yardPhone" id="yardPhone" [(ngModel)]="company.yardPhone" type="text"/>
         </div>
-        <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+        <div class="form-group">
           <label for="companyImgUrl">Company Img Url
             <span class="required-indicator">*</span>
           </label>
-          <input class="mdl-textfield__input" required="" name="companyImgUrl" id="companyImgUrl" [(ngModel)]="company.companyImgUrl" type="text"/>
+          <input class="form-control" required="" name="companyImgUrl" id="companyImgUrl" [(ngModel)]="company.companyImgUrl" type="text"/>
         </div>
-        <div class="fieldcontain required mdl-textfield mdl-js-textfield">
+        <div class="form-group">
           <label for="code">Code
             <span class="required-indicator">*</span>
           </label>
-          <input class="mdl-textfield__input" required="" name="code" id="code" [(ngModel)]="company.code" type="text"/>
+          <input class="form-control" required="" name="code" id="code" [(ngModel)]="company.code" type="text"/>
         </div>
       </fieldset>
     </fieldset>

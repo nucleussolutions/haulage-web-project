@@ -34,6 +34,7 @@ import {CookieModule} from 'ngx-cookie';
 import { UserComponent } from './user/user.component';
 import {ModalModule} from "ngx-modialog";
 import {BootstrapModalModule} from "ngx-modialog/plugins/bootstrap";
+import { CreateProfileModalComponent } from './create-profile-modal/create-profile-modal.component';
 
 
 @NgModule({
@@ -51,7 +52,9 @@ import {BootstrapModalModule} from "ngx-modialog/plugins/bootstrap";
         NavDrawerComponent,
         ChangePasswordComponent,
         UserComponent,
+        CreateProfileModalComponent,
     ],
+    entryComponents: [CreateProfileModalComponent],
     imports: [
         BrowserModule,
         CookieModule.forRoot(),
