@@ -23,6 +23,8 @@ apply plugin:"org.grails.plugins.views-json"
 repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
+    maven { url 'http://dl.bintray.com/agorapulse/libs' }
+
 }
 
 dependencies {
@@ -59,7 +61,10 @@ dependencies {
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
     compile 'org.grails.plugins:quartz:2.0.1'
     compile "org.grails.plugins:angular-scaffolding:2.0.0.RC2"
-//    compile "org.grails.plugins:spring-security-rest:2.0.0.M2"
+    compile "org.grails.plugins:spring-security-rest:2.0.0.M2"
+    compile 'org.grails.plugins:spring-security-core:3.2.0'
+    compile 'org.grails.plugins:aws-sdk-s3:2.1.5'
+
 }
 
 bootRun {
