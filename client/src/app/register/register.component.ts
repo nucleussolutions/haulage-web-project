@@ -4,7 +4,9 @@ import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import {Title} from "@angular/platform-browser";
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie";
-import {CookieOptionsProvider} from "ngx-cookie/src/cookie-options-provider";
+import {AngularFireAuth} from "angularfire2/auth";
+import { Overlay } from 'ngx-modialog';
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
 
 @Component({
     selector: 'app-register',
@@ -18,7 +20,7 @@ export class RegisterComponent implements OnInit {
 
     private response : any;
 
-    constructor(private formBuilder: FormBuilder, private registerService: RegisterService, private titleService: Title, private router: Router, private cookieService: CookieService) {
+    constructor(private formBuilder: FormBuilder, private registerService: RegisterService, private titleService: Title, private router: Router, private cookieService: CookieService, private firebaseAuth: AngularFireAuth, private modal: Modal) {
         this.credentials = this.formBuilder.group({
             email: ['', Validators.compose([Validators.required, Validators.email])],
             password: ['', Validators.compose([Validators.minLength(6), Validators.required])],
@@ -33,16 +35,38 @@ export class RegisterComponent implements OnInit {
     }
 
     register(formData) {
-        this.registerService.register(formData.value.email, formData.value.password, formData.value.role).then(response => {
+        // this.registerService.register(formData.value.email, formData.value.password, formData.value.role).then(response => {
+        //
+        //     this.response = response;
+        //     this.cookieService.put('token', this.response.token);
+        //     this.router.navigate(['/index']);
+        //
+        // }).catch(reason => {
+        //     console.log('failed to register with reason '+reason);
+        //
+        // });
 
+        this.firebaseAuth.auth.createUserWithEmailAndPassword(formData.value.email, formData.value.password).then(response => {
             this.response = response;
-            this.cookieService.put('token', this.response.token);
+
+            console.log('register response '+this.response);
+
+            this.cookieService.put('token', this.response.accessToken);
+            this.cookieService.put('refreshToken', this.response.refreshToken);
+            this.cookieService.put('emailVerified', this.response.emailVerified);
+            this.cookieService.put('expirationTime', this.response.expirationTime);
+
             this.router.navigate(['/index']);
 
-        }).catch(reason => {
-            console.log('failed to register with reason '+reason);
+            this.modal.alert().title('Status')
+                .message('Verification email has been sent to your inbox')
+                .open();
 
-        });
+        }, error => {
+            console.log('failed to register '+error);
+        }).catch(error => {
+            console.log('failed to register '+error.message);
+        })
     }
 
 

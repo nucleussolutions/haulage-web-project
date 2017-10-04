@@ -35,8 +35,11 @@ import { UserComponent } from './user/user.component';
 import {ModalModule} from "ngx-modialog";
 import {BootstrapModalModule} from "ngx-modialog/plugins/bootstrap";
 import { CreateProfileModalComponent } from './create-profile-modal/create-profile-modal.component';
-import {Cloudinary, CloudinaryModule} from "@cloudinary/angular-4.x";
-import CloudinaryConfiguration from "@cloudinary/angular-4.x/src/cloudinary-configuration.class";
+import { ResendCodeComponent } from './resend-code/resend-code.component';
+import {AngularFireModule} from "angularfire2";
+import {environment} from "environments/environment";
+import {AngularFireAuthModule} from "angularfire2/auth";
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
 
 
 @NgModule({
@@ -55,6 +58,8 @@ import CloudinaryConfiguration from "@cloudinary/angular-4.x/src/cloudinary-conf
         ChangePasswordComponent,
         UserComponent,
         CreateProfileModalComponent,
+        ResendCodeComponent,
+        VerifyEmailComponent,
     ],
     entryComponents: [CreateProfileModalComponent],
     imports: [
@@ -71,7 +76,6 @@ import CloudinaryConfiguration from "@cloudinary/angular-4.x/src/cloudinary-conf
         LocationModule,
         HaulierInfoModule,
         ForwarderInfoModule,
-        //CompanyModule,
         CompanyModule,
         ConsignmentModule,
         CustomerModule,
@@ -79,7 +83,8 @@ import CloudinaryConfiguration from "@cloudinary/angular-4.x/src/cloudinary-conf
         PricingModule,
         ModalModule.forRoot(),
         BootstrapModalModule,
-        CloudinaryModule.forRoot({Cloudinary}, { cloud_name: 'your_cloud_name' } as CloudinaryConfiguration),
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule, // imports firebase/auth, only needed for auth features
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
     bootstrap: [AppComponent, NavDrawerComponent]
