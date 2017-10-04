@@ -35,6 +35,8 @@ import { UserComponent } from './user/user.component';
 import {ModalModule} from "ngx-modialog";
 import {BootstrapModalModule} from "ngx-modialog/plugins/bootstrap";
 import { CreateProfileModalComponent } from './create-profile-modal/create-profile-modal.component';
+import {Cloudinary, CloudinaryModule} from "@cloudinary/angular-4.x";
+import CloudinaryConfiguration from "@cloudinary/angular-4.x/src/cloudinary-configuration.class";
 
 
 @NgModule({
@@ -76,7 +78,8 @@ import { CreateProfileModalComponent } from './create-profile-modal/create-profi
         TransportRequestModule,
         PricingModule,
         ModalModule.forRoot(),
-        BootstrapModalModule
+        BootstrapModalModule,
+        CloudinaryModule.forRoot({Cloudinary}, { cloud_name: 'your_cloud_name' } as CloudinaryConfiguration),
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
     bootstrap: [AppComponent, NavDrawerComponent]

@@ -20,9 +20,11 @@
     "@angular/platform-browser": "^4.3.6",
     "@angular/platform-browser-dynamic": "^4.3.6",
     "@angular/router": "^4.3.6",
+    "@cloudinary/angular-4.x": "^1.0.0",
     "@ng-bootstrap/ng-bootstrap": "1.0.0-alpha.22",
     "bootstrap": "^3.3.7",
     "bootswatch": "^3.3.7",
+    "cloudinary-core": "^2.3.0",
     "core-js": "^2.5.1",
     "material-design-icons": "^3.0.1",
     "moment": "^2.18.1",
@@ -34,7 +36,7 @@
     "zone.js": "^0.8.17"
   },
   "devDependencies": {
-    "@angular/cli": "^1.0.0",
+    "@angular/cli": "^1.4.4",
     "@angular/compiler-cli": "^4.3.6",
     "@types/jasmine": "2.5.38",
     "@types/node": "^6.0.88",

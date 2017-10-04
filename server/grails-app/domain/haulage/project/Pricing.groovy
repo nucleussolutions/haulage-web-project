@@ -10,7 +10,7 @@ class Pricing {
     BigDecimal pricePerMove
     Integer minPrimeMover
     Integer maxPrimeMover
-    Integer discountPercent
+    Integer discountPercent = 0
 
     Boolean published = false
 
