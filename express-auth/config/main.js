@@ -1,6 +1,6 @@
 module.exports = {
   // Secret key for JWT signing and encryption
-  secret: 'super secret passphrase',
+  secret: 'yFXjnyqIljnPPCiHQE4HzCYU01rKlYWN',
   // Database connection information
   database: 'mongodb://192.168.99.100:27017',
   // Setting port for server
