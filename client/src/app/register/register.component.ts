@@ -35,21 +35,11 @@ export class RegisterComponent implements OnInit {
     }
 
     register(formData) {
-        // this.registerService.register(formData.value.email, formData.value.password, formData.value.role).then(response => {
-        //
-        //     this.response = response;
-        //     this.cookieService.put('token', this.response.token);
-        //     this.router.navigate(['/index']);
-        //
-        // }).catch(reason => {
-        //     console.log('failed to register with reason '+reason);
-        //
-        // });
 
         this.firebaseAuth.auth.createUserWithEmailAndPassword(formData.value.email, formData.value.password).then(response => {
             this.response = response;
 
-            console.log('register response '+this.response);
+            console.log('register response '+JSON.stringify(this.response));
 
             this.cookieService.put('token', this.response.stsTokenManager.accessToken);
             this.cookieService.put('refreshToken', this.response.stsTokenManager.refreshToken);
@@ -66,6 +56,7 @@ export class RegisterComponent implements OnInit {
                 .open();
 
         }, error => {
+            this.modal.alert().title('Error').message(error).open();
             console.log('failed to register '+error);
         }).catch(error => {
             console.log('failed to register '+error.message);
