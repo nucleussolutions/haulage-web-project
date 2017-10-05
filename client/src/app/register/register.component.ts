@@ -51,10 +51,13 @@ export class RegisterComponent implements OnInit {
 
             console.log('register response '+this.response);
 
-            this.cookieService.put('token', this.response.accessToken);
-            this.cookieService.put('refreshToken', this.response.refreshToken);
+            this.cookieService.put('token', this.response.stsTokenManager.accessToken);
+            this.cookieService.put('refreshToken', this.response.stsTokenManager.refreshToken);
             this.cookieService.put('emailVerified', this.response.emailVerified);
-            this.cookieService.put('expirationTime', this.response.expirationTime);
+            this.cookieService.put('expirationTime', this.response.stsTokenManager.expirationTime);
+            this.cookieService.put('displayName', this.response.displayName);
+            this.cookieService.put('photoUrl', this.response.photoURL);
+
 
             this.router.navigate(['/index']);
 

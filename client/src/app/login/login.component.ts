@@ -54,10 +54,12 @@ export class LoginComponent implements OnInit {
             this.response = response;
 
             console.log('login response '+JSON.stringify(this.response));
-            this.cookieService.put('token', this.response.accessToken);
-            this.cookieService.put('refreshToken', this.response.refreshToken);
+            this.cookieService.put('token', this.response.stsTokenManager.accessToken);
+            this.cookieService.put('refreshToken', this.response.stsTokenManager.refreshToken);
             this.cookieService.put('emailVerified', this.response.emailVerified);
-            this.cookieService.put('expirationTime', this.response.expirationTime);
+            this.cookieService.put('expirationTime', this.response.stsTokenManager.expirationTime);
+            this.cookieService.put('displayName', this.response.displayName);
+            this.cookieService.put('photoUrl', this.response.photoURL);
 
             //todo if email is not verified, pop up a dialog for them to verify email
             this.router.navigate(['/index']);
