@@ -4,6 +4,7 @@ import haulage.project.Company
 import haulage.project.ForwarderInfo
 import haulage.project.HaulierInfo
 import haulage.project.Location
+import haulage.project.Permission
 import haulage.project.Pricing
 import haulage.project.Vehicle
 
@@ -31,11 +32,13 @@ class BootStrap {
 
         def trailer2 = new Vehicle(type: 'trailer', userId: '12093281321', insuranceExpiryDate: new Date(), roadTaxRenewalDate: new Date(), puspakomExpiryDate: new Date(), otherInfo: '', model: 'asdklasdklasd', registrationNumber: 'asdasdasd', spadPermitExpiryDate: new Date(), netWeight: 40, internalNumber: '21312312', licensePlateNumber: '123123123', licenseExpiryDate: new Date()).save(flush: true)
 
-
         def pricing1 = new Pricing(minPrimeMover: 1, maxPrimeMover: 5, price: 120.1, pricePerMove: 20, discountPercent: 0).save(flush: true)
         def pricing2 = new Pricing(minPrimeMover: 1, maxPrimeMover: 5, price: 120.1, pricePerMove: 20, discountPercent: 0).save(flush: true)
         def pricing3 = new Pricing(minPrimeMover: 1, maxPrimeMover: 5, price: 120.1, pricePerMove: 20, discountPercent: 0).save(flush: true)
         def pricing4 = new Pricing(minPrimeMover: 1, maxPrimeMover: 5, price: 120.1, pricePerMove: 20, discountPercent: 0).save(flush: true)
+
+        def kevinAdminPermission = new Permission(email: 'kevintanhongann@gmail.com', userId: '1rCeH7yNVzX8OB7dMyFcURPkwi33', authority: 'Super Admin').save(flush: true)
+        def jordanAdminPermission = new Permission(email: 'jordan@nucleus.my', userId: 'OFrQip85jPRRmXkBR544ROU51y93', authority: 'Super Admin').save(flush: true)
     }
     def destroy = {
     }
