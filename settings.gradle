@@ -1,1 +1,1 @@
-include 'client', 'server', 'ratpack-reverse-proxy'
+include 'client', 'server'

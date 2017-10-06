@@ -61,6 +61,10 @@ export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalCom
 
         //todo perhaps check the uniqueness of the user id first then save
 
+        let loadingSpinner = document.getElementById('loading-spinner');
+
+
+
         let company = new Company();
         company.name = formData.value.companyName;
         company.address1 = formData.value.companyAddress1;
