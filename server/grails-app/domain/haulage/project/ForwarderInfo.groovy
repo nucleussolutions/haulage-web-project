@@ -13,7 +13,7 @@ class ForwarderInfo {
     static constraints = {
         name nullable: false
         company nullable: false
-        userId nullable: false
+        userId nullable: false, unique: true
     }
 
 }

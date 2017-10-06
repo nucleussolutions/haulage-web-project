@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
 
     private credentials: FormGroup;
 
-    private response : any;
+    private verificationResponse : any;
 
     constructor(private formBuilder: FormBuilder, private registerService: RegisterService, private titleService: Title, private router: Router, private cookieService: CookieService, private firebaseAuth: AngularFireAuth, private modal: Modal) {
         this.credentials = this.formBuilder.group({
@@ -37,23 +37,33 @@ export class RegisterComponent implements OnInit {
     register(formData) {
 
         this.firebaseAuth.auth.createUserWithEmailAndPassword(formData.value.email, formData.value.password).then(response => {
-            this.response = response;
 
-            console.log('register response '+JSON.stringify(this.response));
+            console.log('register response '+JSON.stringify(response));
+            
+            let responseStr = JSON.stringify(response);
+            
+            response = JSON.parse(responseStr);
 
-            this.cookieService.put('token', this.response.stsTokenManager.accessToken);
-            this.cookieService.put('refreshToken', this.response.stsTokenManager.refreshToken);
-            this.cookieService.put('emailVerified', this.response.emailVerified);
-            this.cookieService.put('expirationTime', this.response.stsTokenManager.expirationTime);
-            this.cookieService.put('displayName', this.response.displayName);
-            this.cookieService.put('photoUrl', this.response.photoURL);
-
+            this.cookieService.put('uid', response.uid);
+            this.cookieService.put('emailVerified', response.emailVerified);
+            this.cookieService.put('displayName', response.displayName);
+            this.cookieService.put('photoUrl', response.photoURL);
+            this.cookieService.put('apiKey', response.apiKey);
+            this.cookieService.put('refreshToken', response.stsTokenManager.refreshToken);
+            this.cookieService.put('token', response.stsTokenManager.accessToken);
+            this.cookieService.put('expirationTime', response.stsTokenManager.expirationTime);
 
             this.router.navigate(['/index']);
 
-            this.modal.alert().title('Status')
-                .message('Verification email has been sent to your inbox')
-                .open();
+            this.firebaseAuth.auth.currentUser.sendEmailVerification().then(verificationResponse => {
+                this.verificationResponse = verificationResponse;
+                console.log('send email verification response '+JSON.stringify(this.verificationResponse));
+                this.modal.alert().title('Status')
+                    .message('Verification email has been sent to your inbox')
+                    .open();
+            }, error => {
+                this.modal.alert().title('Error').message(error).open();
+            });
 
         }, error => {
             this.modal.alert().title('Error').message(error).open();
@@ -62,7 +72,6 @@ export class RegisterComponent implements OnInit {
             console.log('failed to register '+error.message);
         })
     }
-
 
     matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
         return (group: FormGroup): { [key: string]: any } => {

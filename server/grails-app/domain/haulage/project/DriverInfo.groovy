@@ -65,7 +65,7 @@ class DriverInfo {
         city blank: true
         state blank: true
         country blank: true
-        userId nullable: false
+        userId nullable: false, unique: true
 
         //can belong to a haulier, or just none which could mean freelance
         haulierId blank: true

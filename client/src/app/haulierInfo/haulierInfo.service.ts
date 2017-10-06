@@ -29,6 +29,8 @@ export class HaulierInfoService {
       .map((r: Response) => new HaulierInfo(r.json()));
   }
 
+
+
   save(haulierInfo: HaulierInfo): Observable<HaulierInfo> {
     const requestOptions = new RequestOptions();
     if (haulierInfo.id) {

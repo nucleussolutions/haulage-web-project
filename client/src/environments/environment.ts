@@ -5,7 +5,7 @@
 
 export const environment = {
     production: false,
-    serverUrl: 'http://192.168.99.100',
+    serverUrl: 'http://localhost:8080',
     firebase: {
         apiKey: "AIzaSyCoySi7DI5sv5ajB0IWMklWoFIDa8g5U_4",
         authDomain: "oms-haulage.firebaseapp.com",

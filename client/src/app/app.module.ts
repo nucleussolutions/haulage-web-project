@@ -40,6 +40,7 @@ import {AngularFireModule} from "angularfire2";
 import {environment} from "environments/environment";
 import {AngularFireAuthModule} from "angularfire2/auth";
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import {FlashMessagesModule} from "ngx-flash-messages";
 
 
 @NgModule({
@@ -85,6 +86,7 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
         BootstrapModalModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAuthModule, // imports firebase/auth, only needed for auth features
+        FlashMessagesModule
     ],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
     bootstrap: [AppComponent, NavDrawerComponent]
