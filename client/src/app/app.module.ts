@@ -41,6 +41,7 @@ import {environment} from "environments/environment";
 import {AngularFireAuthModule} from "angularfire2/auth";
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import {FlashMessagesModule} from "ngx-flash-messages";
+import { PermissionModule } from './permission/permission.module';
 
 
 @NgModule({
@@ -64,30 +65,32 @@ import {FlashMessagesModule} from "ngx-flash-messages";
     ],
     entryComponents: [CreateProfileModalComponent],
     imports: [
-        BrowserModule,
-        CookieModule.forRoot(),
-        FormsModule,
-        HttpModule,
-        AppRoutingModule,
-        NgbModule.forRoot(),
-        FormsModule,
-        ReactiveFormsModule,
-        VehicleModule,
-        DriverInfoModule,
-        LocationModule,
-        HaulierInfoModule,
-        ForwarderInfoModule,
-        CompanyModule,
-        ConsignmentModule,
-        CustomerModule,
-        TransportRequestModule,
-        PricingModule,
-        ModalModule.forRoot(),
-        BootstrapModalModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFireAuthModule, // imports firebase/auth, only needed for auth features
-        FlashMessagesModule
-    ],
+    BrowserModule,
+    CookieModule.forRoot(),
+    FormsModule,
+    HttpModule,
+    AppRoutingModule,
+    NgbModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule,
+    VehicleModule,
+    DriverInfoModule,
+    LocationModule,
+    HaulierInfoModule,
+    ForwarderInfoModule,
+    CompanyModule,
+    ConsignmentModule,
+    CustomerModule,
+    TransportRequestModule,
+    PricingModule,
+    ModalModule.forRoot(),
+    BootstrapModalModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    //importsfirebase/auth,
+    FlashMessagesModule,
+    PermissionModule
+],
     providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, NavService],
     bootstrap: [AppComponent, NavDrawerComponent]
 })

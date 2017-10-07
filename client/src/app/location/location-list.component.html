@@ -1,51 +1,53 @@
-<div class="nav" role="navigation">
-    <ul>
-        <li><a [routerLink]="['/index']" class="home">Home</a></li>
-        <li><a [routerLink]="['/location','create']" class="create">New Location</a></li>
-    </ul>
+<div role="navigation">
+  <ul class="nav nav-pills">
+    <li class="nav-item"><a [routerLink]="['/index']" class="home nav-link">Home</a></li>
+    <li class="nav-item"><a [routerLink]="['/location','create']" class="create nav-link">New Location</a></li>
+  </ul>
 </div>
 <div id="list-location" class="content scaffold-list" role="main">
-    <h1>Location List</h1>
-    <table class="table table-responsive">
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Address1</th>
-      <th>Address2</th>
-      <th>City</th>
-      <th>State</th>
-      <th>Country</th>
-      <th>Type</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let location of locationList; let e = even;">
-      <td>
-        <a [routerLink]="['/location','show',location.id]">{{location.id}}</a>
-      </td>
-      <td>
-        <span>{{location.name}}</span>
-      </td>
-      <td>
-        <span>{{location.address1}}</span>
-      </td>
-      <td>
-        <span>{{location.address2}}</span>
-      </td>
-      <td>
-        <span>{{location.city}}</span>
-      </td>
-      <td>
-        <span>{{location.state}}</span>
-      </td>
-      <td>
-        <span>{{location.country}}</span>
-      </td>
-      <td>
-        <span>{{location.type}}</span>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <h1>Location List</h1>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Address1</th>
+        <th>Address2</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Country</th>
+        <th>Type</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let location of locationList; let e = even;">
+        <td>
+          <a [routerLink]="['/location','show',location.id]">{{location.id}}</a>
+        </td>
+        <td>
+          <span>{{location.name}}</span>
+        </td>
+        <td>
+          <span>{{location.address1}}</span>
+        </td>
+        <td>
+          <span>{{location.address2}}</span>
+        </td>
+        <td>
+          <span>{{location.city}}</span>
+        </td>
+        <td>
+          <span>{{location.state}}</span>
+        </td>
+        <td>
+          <span>{{location.country}}</span>
+        </td>
+        <td>
+          <span>{{location.type}}</span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

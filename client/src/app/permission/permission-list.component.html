@@ -1,0 +1,37 @@
+<div  role="navigation">
+  <ul class="nav nav-pills">
+    <li class="nav-item"><a [routerLink]="['/index']" class="home nav-link">Home</a></li>
+    <li class="nav-item"><a [routerLink]="['/permission','create']" class="create nav-link">New Permission</a></li>
+  </ul>
+</div>
+<div id="list-permission" class="content scaffold-list" role="main">
+  <h1>Permission List</h1>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Email</th>
+        <th>User Id</th>
+        <th>Authority</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let permission of permissionList; let e = even;">
+        <td>
+          <a [routerLink]="['/permission','show',permission.id]">{{permission.id}}</a>
+        </td>
+        <td>
+          <span>{{permission.email}}</span>
+        </td>
+        <td>
+          <span>{{permission.userId}}</span>
+        </td>
+        <td>
+          <span>{{permission.authority}}</span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

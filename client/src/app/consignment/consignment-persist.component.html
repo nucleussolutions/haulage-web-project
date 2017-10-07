@@ -1,7 +1,7 @@
-<div class="nav" role="navigation">
-  <ul>
-    <li><a [routerLink]="['/index']" class="home">Home</a></li>
-    <li><a [routerLink]="['/consignment','list']" class="list">Consignment List</a></li>
+<div  role="navigation">
+  <ul class="nav nav-pills">
+    <li class="nav-item"><a [routerLink]="['/index']" class="home nav-link">Home</a></li>
+    <li class="nav-item"><a [routerLink]="['/consignment','list']" class="list nav-link">Consignment List</a></li>
   </ul>
 </div>
 
@@ -39,7 +39,7 @@
               <label for="pickupLadenDropoff">Pickup Laden Dropoff
                 <span class="required-indicator">*</span>
               </label>
-              <select required="" name="pickupLadenDropoff" id="pickupLadenDropoff" [(ngModel)]="consignment.pickupLadenDropoff">
+              <select required="" name="pickupLadenDropoff" id="pickupLadenDropoff" [(ngModel)]="consignment.pickupLadenDropoff" class="form-control">
                 <option *ngFor="let location of locationList" [value]="location.id" [selected]="consignment.pickupLadenDropoff?.id == location.id">
                   {{location.toString()}}
                 </option>

@@ -21,6 +21,10 @@ export class IndexComponent implements OnInit {
 
     private token: string;
 
+    private permission: string;
+
+
+
     constructor(public modal: Modal, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private cookieService: CookieService) {
         this.token = this.cookieService.get('token');
     }
@@ -35,6 +39,8 @@ export class IndexComponent implements OnInit {
                 }, BSModalContext));
         }
 
+
+        //todo get permission for the user
     }
 
     submitDetails(formData) {

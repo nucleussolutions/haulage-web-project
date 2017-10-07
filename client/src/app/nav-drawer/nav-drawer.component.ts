@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie";
 import {LoginService} from "../login.service";
 import {AngularFireAuth} from "angularfire2/auth";
+import {PermissionService} from "../permission/permission.service";
 
 
 @Component({
@@ -18,7 +19,7 @@ export class NavDrawerComponent implements OnInit {
 
     private signoutResponse : any;
 
-    constructor(private router: Router, private cookieService: CookieService, private loginService: LoginService, private firebaseAuth: AngularFireAuth) {
+    constructor(private router: Router, private cookieService: CookieService, private loginService: LoginService, private firebaseAuth: AngularFireAuth, private permissionService : PermissionService) {
         this.loginService.loginStateChanged$.subscribe(loggedIn => {
             console.log('loginService loginStateChanged loggedIn '+loggedIn);
             this.token = this.cookieService.get('token');

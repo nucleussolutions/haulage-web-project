@@ -1,0 +1,52 @@
+<div role="navigation">
+  <ul class="nav nav-pills">
+    <li class="nav-item"><a [routerLink]="['/index']" class="home nav-link">Home</a></li>
+    <li class="nav-item"><a [routerLink]="['/permission','list']" class="list nav-link">Permission List</a></li>
+  </ul>
+</div>
+
+<div class="row">
+
+  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    <div id="persist-permission" class="content scaffold-edit" role="main">
+      <h1>{{create ? "Create" : "Edit"}} Permission</h1>
+      <ul class="errors" role="alert" *ngIf="errors">
+        <li *ngFor="let error of errors">{{error.message}}</li>
+      </ul>
+
+      <form name="save{className}" (ngSubmit)="save()">
+        <fieldset class="form">
+          <fieldset class="form">
+            <div class="fieldcontain required">
+              <label for="email">Email
+                <span class="required-indicator">*</span>
+              </label>
+              <input required="" name="email" id="email" [(ngModel)]="permission.email" type="email"/>
+            </div>
+            <div class="fieldcontain required">
+              <label for="userId">User Id
+                <span class="required-indicator">*</span>
+              </label>
+              <input required="" name="userId" id="userId" [(ngModel)]="permission.userId" type="text"/>
+            </div>
+            <div class="fieldcontain required">
+              <label for="authority">Authority
+                <span class="required-indicator">*</span>
+              </label>
+              <select required="" name="authority" id="authority" [(ngModel)]="permission.authority">
+                <option value="Admin">Admin</option>
+                <option value="Manager">Manager</option>
+                <option value="Super Admin">Super Admin</option>
+                <option value="User">User</option>
+              </select>
+            </div>
+          </fieldset>
+        </fieldset>
+        <fieldset class="buttons">
+          <input type="submit" class="save" [value]="create ? 'Save' : 'Update'"/>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+
