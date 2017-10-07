@@ -23,6 +23,7 @@
     "@angular/router": "^4.3.6",
     "@cloudinary/angular-4.x": "^1.0.0",
     "@ng-bootstrap/ng-bootstrap": "1.0.0-alpha.22",
+    "@swimlane/ngx-datatable": "^10.2.3",
     "angularfire2": "^5.0.0-rc.1",
     "aws-sdk": "^2.126.0",
     "bootstrap": "^3.3.7",

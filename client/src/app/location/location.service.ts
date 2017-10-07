@@ -14,9 +14,19 @@ export class LocationService {
   constructor(private http: Http) {
   }
 
-  list(): Observable<Location[]> {
+  list(token, apiKey): Observable<Location[]> {
     let subject = new Subject<Location[]>();
-    this.http.get(environment.serverUrl + '/location')
+
+    let headers = new Headers({
+      'token': token,
+      'apiKey': apiKey
+    });
+
+    let options = new RequestOptions({
+      headers : headers
+    });
+
+    this.http.get(environment.serverUrl + '/location', options)
       .map((r: Response) => r.json())
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new Location(item)))

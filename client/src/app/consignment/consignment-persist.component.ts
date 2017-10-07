@@ -5,6 +5,7 @@ import {ConsignmentService} from './consignment.service';
 import {Response} from "@angular/http";
 import { LocationService } from '../location/location.service';
 import { Location } from '../location/location';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'consignment-persist',
@@ -17,10 +18,18 @@ export class ConsignmentPersistComponent implements OnInit {
   errors: any[];
   locationList: Location[];
 
-  constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private router: Router, private locationService: LocationService) {}
+  private token : string;
+
+  private apiKey : string;
+
+  constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private router: Router, private locationService: LocationService, private cookieService : CookieService) {
+    this.token = this.cookieService.get('token');
+    this.apiKey = this.cookieService.get('apiKey');
+  }
 
   ngOnInit() {
-    this.locationService.list().subscribe((locationList: Location[]) => { this.locationList = locationList; });
+
+    this.locationService.list(this.token, this.apiKey).subscribe((locationList: Location[]) => { this.locationList = locationList; });
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
         this.consignmentService.get(+params['id']).subscribe((consignment: Consignment) => {

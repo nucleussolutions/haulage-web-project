@@ -1,7 +1,7 @@
-<div class="nav" role="navigation">
-  <ul>
-    <li><a [routerLink]="['/index']" class="home">Home</a></li>
-    <li><a [routerLink]="['/transportRequest','list']" class="list">TransportRequest List</a></li>
+<div  role="navigation">
+  <ul class="nav nav-pills">
+    <li class="nav-item"><a [routerLink]="['/index']" class="home">Home</a></li>
+    <li class="nav-item"><a [routerLink]="['/transportRequest','list']" class="list">TransportRequest List</a></li>
   </ul>
 </div>
 
@@ -220,11 +220,11 @@
                 <label for="customer.country">Country
                   <span class="required-indicator">*</span>
                 </label>
-                <input required="" name="customer.country" id="customer.country" [(ngModel)]="transportRequest.customer.country" type="text"/>
+                <input class="form-control" required="" name="customer.country" id="customer.country" [(ngModel)]="transportRequest.customer.country" type="text"/>
               </div>
 
               <!-- Simple Select -->
-              <div class="fieldcontain required mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
+              <div class="form-group">
                 <label for="customer.state">State
                   <span class="required-indicator">*</span>
                 </label>

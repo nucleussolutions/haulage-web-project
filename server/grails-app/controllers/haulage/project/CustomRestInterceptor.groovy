@@ -20,11 +20,12 @@ class CustomRestInterceptor {
     boolean before() {
         // perform authentication with firebase
         String token = session.token ?: request.getHeader('token')
-        if(!token) { // Please note you could also have your own custom validation logic here
+        String apiKey = session.apiKey ?: request.getHeader('apiKey')
+        if(!token && !apiKey) { // Please note you could also have your own custom validation logic here
             response.status = SC_UNAUTHORIZED
             return false
         }else {
-            def http = new HTTPBuilder( 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key=AIzaSyCoySi7DI5sv5ajB0IWMklWoFIDa8g5U_4')
+            def http = new HTTPBuilder( 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key='+apiKey)
 
             http.request( POST ) {
 //                uri.path = '/'

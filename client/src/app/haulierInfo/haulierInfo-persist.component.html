@@ -1,42 +1,49 @@
-<div class="nav" role="navigation">
-    <ul>
-        <li><a [routerLink]="['/index']" class="home">Home</a></li>
-        <li><a [routerLink]="['/haulierInfo','list']" class="list">HaulierInfo List</a></li>
-    </ul>
+<div role="navigation">
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+      <a [routerLink]="['/index']" class="home nav-link">Home</a>
+    </li>
+    <li class="nav-item">
+      <a [routerLink]="['/haulierInfo','list']" class="list nav-link">HaulierInfo List</a>
+    </li>
+  </ul>
 </div>
-<div id="persist-haulierInfo" class="content scaffold-edit" role="main">
-    <h1>{{create ? "Create" : "Edit"}} HaulierInfo</h1>
-    <ul class="errors" role="alert" *ngIf="errors">
+<div class="row">
+  <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+    <div id="persist-haulierInfo" class="content scaffold-edit" role="main">
+      <h1>{{create ? "Create" : "Edit"}} HaulierInfo</h1>
+      <ul class="errors" role="alert" *ngIf="errors">
         <li *ngFor="let error of errors">{{error.message}}</li>
-    </ul>
+      </ul>
 
-    <form name="save{className}" (ngSubmit)="save()">
+      <form name="save{className}" (ngSubmit)="save()">
         <fieldset class="form">
-            <fieldset class="form">
-  <div class="fieldcontain required mdl-textfield mdl-js-textfield">
-    <label class="mdl-textfield__label" for="name">Name
-      <span class="required-indicator">*</span>
-    </label>
-    <input class="mdl-textfield__input" required="" name="name" id="name" [(ngModel)]="haulierInfo.name" type="text" />
-  </div>
-  <div class="fieldcontain required">
-    <label for="company">Company
-      <span class="required-indicator">*</span>
-    </label>
-    <select required="" name="company" id="company" [(ngModel)]="haulierInfo.company">
-      <option *ngFor="let company of companyList" [value]="company.id" [selected]="haulierInfo.company?.id == company.id">{{company.toString()}}</option>
-    </select>
-  </div>
-  <div class="fieldcontain required">
-    <label for="userId">User Id
-      <span class="required-indicator">*</span>
-    </label>
-    <input required="" name="userId" id="userId" [(ngModel)]="haulierInfo.userId" type="text" />
-  </div>
-</fieldset>
+          <fieldset class="form">
+            <div class="form-group">
+              <label for="name">Name
+                <span class="required-indicator">*</span>
+              </label>
+              <input class="form-control" required="" name="name" id="name" [(ngModel)]="haulierInfo.name" type="text" />
+            </div>
+            <div class="fieldcontain required">
+              <label for="company">Company
+                <span class="required-indicator">*</span>
+              </label>
+              <select required="" name="company" id="company" [(ngModel)]="haulierInfo.company">
+                <option *ngFor="let company of companyList" [value]="company.id" [selected]="haulierInfo.company?.id == company.id">{{company.toString()}}</option>
+              </select>
+            </div>
+            <div class="fieldcontain required">
+              <label for="userId">User Id
+                <span class="required-indicator">*</span>
+              </label>
+              <input class="form-control" required="" name="userId" id="userId" [(ngModel)]="haulierInfo.userId" type="text" />
+            </div>
+          </fieldset>
         </fieldset>
-        <fieldset class="buttons">
-            <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" />
-        </fieldset>
-    </form>
+          <input type="submit" class="save btn btn-primary" [value]="create ? 'Save' : 'Update'" />
+      </form>
+    </div>
+  </div>
+
 </div>

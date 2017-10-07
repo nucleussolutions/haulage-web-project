@@ -9,6 +9,7 @@ import {ConsignmentService} from '../consignment/consignment.service';
 import {Consignment} from '../consignment/consignment';
 import {CustomerService} from '../customer/customer.service';
 import {Customer} from '../customer/customer';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
     selector: 'transportRequest-persist',
@@ -23,9 +24,13 @@ export class TransportRequestPersistComponent implements OnInit {
     consignmentList: Consignment[];
     customerList: Customer[];
 
+    private token : string;
+
+    private apiKey : string;
+
     settings: any;
 
-    constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private locationService: LocationService, private consignmentService: ConsignmentService, private customerService: CustomerService) {
+    constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private locationService: LocationService, private consignmentService: ConsignmentService, private customerService: CustomerService, private cookieService : CookieService) {
 
         this.settings = {
             columns: {
@@ -43,10 +48,13 @@ export class TransportRequestPersistComponent implements OnInit {
                 }
             }
         };
+
+        this.token = this.cookieService.get('token');
+        this.apiKey = this.cookieService.get('apiKey');
     }
 
     ngOnInit() {
-        this.locationService.list().subscribe((locationList: Location[]) => {
+        this.locationService.list(this.token, this.apiKey).subscribe((locationList: Location[]) => {
             this.locationList = locationList;
         });
         this.transportRequest.hazardous = false;
