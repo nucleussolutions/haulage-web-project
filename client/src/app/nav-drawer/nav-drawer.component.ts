@@ -14,23 +14,19 @@ import {PermissionService} from "../permission/permission.service";
 })
 export class NavDrawerComponent implements OnInit {
 
-    private userRole: string;
     private token: any;
 
     private signoutResponse : any;
 
-    constructor(private router: Router, private cookieService: CookieService, private loginService: LoginService, private firebaseAuth: AngularFireAuth, private permissionService : PermissionService) {
-        this.loginService.loginStateChanged$.subscribe(loggedIn => {
-            console.log('loginService loginStateChanged loggedIn '+loggedIn);
-            this.token = this.cookieService.get('token');
-            this.userRole = this.cookieService.get('userRole');
-        })
+    private userId : string;
+
+    constructor(private router: Router, private cookieService: CookieService, private firebaseAuth: AngularFireAuth, private permissionService : PermissionService) {
+        this.token = this.cookieService.get('token');
     }
 
     ngOnInit() {
-        this.token = this.cookieService.get('token');
-        this.userRole = this.cookieService.get('userRole');
-        // console.log('NavDrawerComponent token '+this.token);
+        //use the permission service to get the permission of the user based on the userId
+
     }
 
     logout() {
@@ -44,7 +40,6 @@ export class NavDrawerComponent implements OnInit {
         //clear cookies from the cookieservice
         this.cookieService.removeAll();
         this.token = null;
-        this.userRole = null;
         window.location.reload();
         // this.router.navigate(['/login']);
 
