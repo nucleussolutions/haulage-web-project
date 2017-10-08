@@ -15,9 +15,20 @@ export class ForwarderInfoService {
   constructor(private http: Http) {
   }
 
-  list(): Observable<ForwarderInfo[]> {
+  list(token: string, apiKey: string): Observable<ForwarderInfo[]> {
     let subject = new Subject<ForwarderInfo[]>();
-    this.http.get(environment.serverUrl + 'forwarderInfo')
+
+    let headers = new Headers({
+      'token': token,
+      'apiKey': apiKey
+    });
+
+    let options = new RequestOptions({
+      headers : headers
+    });
+
+
+    this.http.get(environment.serverUrl + '/forwarderInfo', options)
       .map((r: Response) => r.json())
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new ForwarderInfo(item)))
@@ -25,29 +36,52 @@ export class ForwarderInfoService {
     return subject.asObservable();
   }
 
-  get(id: number): Observable<ForwarderInfo> {
-    return this.http.get(environment.serverUrl + 'forwarderInfo/'+id)
+  get(id: number, token : string, apiKey: string): Observable<ForwarderInfo> {
+
+    let headers = new Headers({
+      'token': token,
+      'apiKey': apiKey
+    });
+
+    let options = new RequestOptions({
+      headers : headers
+    });
+
+    return this.http.get(environment.serverUrl + '/forwarderInfo/'+id, options)
       .map((r: Response) => new ForwarderInfo(r.json()));
   }
 
-  save(forwarderInfo: ForwarderInfo): Observable<ForwarderInfo> {
+  save(forwarderInfo: ForwarderInfo, token : string, apiKey: string): Observable<ForwarderInfo> {
     const requestOptions = new RequestOptions();
     if (forwarderInfo.id) {
       requestOptions.method = RequestMethod.Put;
-      requestOptions.url = environment.serverUrl + 'forwarderInfo/' + forwarderInfo.id;
+      requestOptions.url = environment.serverUrl + '/forwarderInfo/' + forwarderInfo.id;
     } else {
       requestOptions.method = RequestMethod.Post;
-      requestOptions.url = environment.serverUrl + 'forwarderInfo';
+      requestOptions.url = environment.serverUrl + '/forwarderInfo';
     }
     requestOptions.body = JSON.stringify(forwarderInfo);
-    requestOptions.headers = new Headers({"Content-Type": "application/json"});
+    requestOptions.headers = new Headers({
+      "Content-Type": "application/json",
+      'token' : token,
+      'apiKey': apiKey
+    });
 
     return this.http.request(new Request(requestOptions))
       .map((r: Response) => new ForwarderInfo(r.json()));
   }
 
-  destroy(forwarderInfo: ForwarderInfo): Observable<boolean> {
-    return this.http.delete(environment.serverUrl + 'forwarderInfo/' + forwarderInfo.id).map((res: Response) => res.ok).catch(() => {
+  destroy(forwarderInfo: ForwarderInfo, token : string, apiKey : string): Observable<boolean> {
+    let headers = new Headers({
+      'token': token,
+      'apiKey': apiKey
+    });
+
+    let options = new RequestOptions({
+      headers : headers
+    });
+
+    return this.http.delete(environment.serverUrl + '/forwarderInfo/' + forwarderInfo.id, options).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
   }

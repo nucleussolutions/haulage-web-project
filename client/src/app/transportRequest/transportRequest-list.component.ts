@@ -21,7 +21,7 @@ export class TransportRequestListComponent implements OnInit {
     let apiKey = this.cookieService.get('apiKey');
     console.log('TransportRequestListComponent token '+token);
     if(token){
-      this.transportRequestService.list(token).subscribe((transportRequestList: TransportRequest[]) => {
+      this.transportRequestService.list(token, apiKey).subscribe((transportRequestList: TransportRequest[]) => {
         this.transportRequestList = transportRequestList;
       });
     }

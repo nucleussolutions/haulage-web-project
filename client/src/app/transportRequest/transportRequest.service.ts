@@ -14,11 +14,12 @@ export class TransportRequestService {
   constructor(private http: Http) {
   }
 
-  list(token : string): Observable<TransportRequest[]> {
+  list(token : string, apiKey : string): Observable<TransportRequest[]> {
     let subject = new Subject<TransportRequest[]>();
 
     let headers = new Headers({
-      'token': token
+      'token': token,
+      'apiKey': apiKey
     });
 
     let options = new RequestOptions({
@@ -33,12 +34,22 @@ export class TransportRequestService {
     return subject.asObservable();
   }
 
-  get(id: number): Observable<TransportRequest> {
-    return this.http.get(environment.serverUrl + '/transportRequest/'+id)
+  get(id: number, token: string, apiKey : string): Observable<TransportRequest> {
+
+    let headers = new Headers({
+      'token': token,
+      'apiKey': apiKey
+    });
+
+    let options = new RequestOptions({
+      headers : headers
+    });
+
+    return this.http.get(environment.serverUrl + '/transportRequest/'+id, options)
       .map((r: Response) => new TransportRequest(r.json()));
   }
 
-  save(transportRequest: TransportRequest): Observable<TransportRequest> {
+  save(transportRequest: TransportRequest, token: string, apiKey : string): Observable<TransportRequest> {
     const requestOptions = new RequestOptions();
     if (transportRequest.id) {
       requestOptions.method = RequestMethod.Put;
@@ -48,14 +59,28 @@ export class TransportRequestService {
       requestOptions.url = environment.serverUrl + '/transportRequest';
     }
     requestOptions.body = JSON.stringify(transportRequest);
-    requestOptions.headers = new Headers({"Content-Type": "application/json"});
+    requestOptions.headers = new Headers({
+      "Content-Type": "application/json",
+      'token': token,
+      'apiKey': apiKey
+    });
 
     return this.http.request(new Request(requestOptions))
       .map((r: Response) => new TransportRequest(r.json()));
   }
 
-  destroy(transportRequest: TransportRequest): Observable<boolean> {
-    return this.http.delete(environment.serverUrl + '/transportRequest/' + transportRequest.id).map((res: Response) => res.ok).catch(() => {
+  destroy(transportRequest: TransportRequest, token: string, apiKey : string): Observable<boolean> {
+
+    let headers = new Headers({
+      'token': token,
+      'apiKey': apiKey
+    });
+
+    let options = new RequestOptions({
+      headers : headers
+    });
+
+    return this.http.delete(environment.serverUrl + '/transportRequest/' + transportRequest.id, options).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
   }

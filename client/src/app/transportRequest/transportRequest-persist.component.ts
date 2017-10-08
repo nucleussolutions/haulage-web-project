@@ -62,12 +62,12 @@ export class TransportRequestPersistComponent implements OnInit {
         this.consignmentService.list().subscribe((consignmentList: Consignment[]) => {
             this.consignmentList = consignmentList;
         });
-        this.customerService.list().subscribe((customerList: Customer[]) => {
+        this.customerService.list(this.token, this.apiKey).subscribe((customerList: Customer[]) => {
             this.customerList = customerList;
         });
         this.route.params.subscribe((params: Params) => {
             if (params.hasOwnProperty('id')) {
-                this.transportRequestService.get(+params['id']).subscribe((transportRequest: TransportRequest) => {
+                this.transportRequestService.get(+params['id'], this.token, this.apiKey).subscribe((transportRequest: TransportRequest) => {
                     this.create = false;
                     this.transportRequest = transportRequest;
                 });
@@ -79,7 +79,7 @@ export class TransportRequestPersistComponent implements OnInit {
     }
 
     save() {
-        this.transportRequestService.save(this.transportRequest).subscribe((transportRequest: TransportRequest) => {
+        this.transportRequestService.save(this.transportRequest, this.token, this.apiKey).subscribe((transportRequest: TransportRequest) => {
             this.router.navigate(['/transportRequest', 'show', transportRequest.id]);
         }, (res: Response) => {
             const json = res.json();

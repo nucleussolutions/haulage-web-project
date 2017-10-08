@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {VehicleService} from './vehicle.service';
 import {Vehicle} from './vehicle';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'vehicle-list',
@@ -10,10 +11,17 @@ export class VehicleListComponent implements OnInit {
 
   vehicleList: Vehicle[] = [];
 
-  constructor(private vehicleService: VehicleService) { }
+  private token : string;
+
+  private apiKey : string;
+
+  constructor(private vehicleService: VehicleService, private cookieService: CookieService) {
+    this.token = this.cookieService.get('token');
+    this.apiKey = this.cookieService.get('apiKey');
+  }
 
   ngOnInit() {
-    this.vehicleService.list().subscribe((vehicleList: Vehicle[]) => {
+    this.vehicleService.list(this.token, this.apiKey).subscribe((vehicleList: Vehicle[]) => {
       this.vehicleList = vehicleList;
     });
   }

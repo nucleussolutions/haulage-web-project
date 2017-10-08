@@ -15,9 +15,19 @@ export class VehicleService {
   constructor(private http: Http) {
   }
 
-  list(): Observable<Vehicle[]> {
+  list(token: string, apiKey : string): Observable<Vehicle[]> {
     let subject = new Subject<Vehicle[]>();
-    this.http.get(environment.serverUrl + '/vehicle')
+
+    let headers = new Headers({
+      'token': token,
+      'apiKey': apiKey
+    });
+
+    let options = new RequestOptions({
+      headers : headers
+    });
+
+    this.http.get(environment.serverUrl + '/vehicle', options)
       .map((r: Response) => r.json())
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new Vehicle(item)))
@@ -25,12 +35,19 @@ export class VehicleService {
     return subject.asObservable();
   }
 
-  get(id: number): Observable<Vehicle> {
-    return this.http.get(environment.serverUrl + '/vehicle/'+id)
+  get(id: number, token: string, apiKey: string): Observable<Vehicle> {
+    let headers = new Headers({
+      'token': token,
+      'apiKey': apiKey
+    });
+    let options = new RequestOptions({
+      headers : headers
+    });
+    return this.http.get(environment.serverUrl + '/vehicle/'+id, options)
       .map((r: Response) => new Vehicle(r.json()));
   }
 
-  save(vehicle: Vehicle): Observable<Vehicle> {
+  save(vehicle: Vehicle, token: string, apiKey: string): Observable<Vehicle> {
     const requestOptions = new RequestOptions();
     if (vehicle.id) {
       requestOptions.method = RequestMethod.Put;
@@ -40,13 +57,26 @@ export class VehicleService {
       requestOptions.url = environment.serverUrl + '/vehicle';
     }
     requestOptions.body = JSON.stringify(vehicle);
-    requestOptions.headers = new Headers({"Content-Type": "application/json"});
+    requestOptions.headers = new Headers({
+      "Content-Type": "application/json",
+      'token' : token,
+      'apiKey': apiKey
+    });
 
     return this.http.request(new Request(requestOptions))
       .map((r: Response) => new Vehicle(r.json()));
   }
 
-  destroy(vehicle: Vehicle): Observable<boolean> {
+  destroy(vehicle: Vehicle, token : string, apiKey : string): Observable<boolean> {
+
+    let headers = new Headers({
+      'token': token,
+      'apiKey': apiKey
+    });
+    let options = new RequestOptions({
+      headers : headers
+    });
+
     return this.http.delete(environment.serverUrl + '/vehicle/' + vehicle.id).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
