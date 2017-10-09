@@ -31,11 +31,8 @@ export class PricingService {
         this.http.get(environment.serverUrl + '/pricing', options)
             .map((r: Response) => r.json())
             .catch(err => {
-                if (err.status === 401) {
-                    return Observable.throw('Unauthorized');
-                }else if(err.status === 500){
-                    return Observable.throw('Internal server error');
-                }
+                subject.error(err);
+                return subject.asObservable();
             }).subscribe((json: any[]) => {
                 subject.next(json.map((item: any) => new Pricing(item)))
             });
@@ -56,9 +53,9 @@ export class PricingService {
         return this.http.get(environment.serverUrl + '/pricing/' + id, options)
             .map((r: Response) => new Pricing(r.json())).catch(err => {
                 if (err.status === 401) {
-                    return Observable.throw('Unauthorized');
+                    return Observable.throw(new Error('Unauthorized'));
                 }else if(err.status === 500){
-                    return Observable.throw('Internal server error');
+                    return Observable.throw(new Error('Internal server error'));
                 }
             });
     }
@@ -82,9 +79,9 @@ export class PricingService {
         return this.http.request(new Request(requestOptions))
             .map((r: Response) => new Pricing(r.json())).catch(err => {
                 if (err.status === 401) {
-                    return Observable.throw('Unauthorized');
+                    return Observable.throw(new Error('Unauthorized'));
                 }else if(err.status === 500){
-                    return Observable.throw('Internal server error');
+                    return Observable.throw(new Error('Internal server error'));
                 }
             });
     }

@@ -30,11 +30,8 @@ export class LocationService {
     this.http.get(environment.serverUrl + '/location', options)
       .map((r: Response) => r.json())
         .catch(err => {
-            if (err.status === 401) {
-                return Observable.throw('Unauthorized');
-            }else if(err.status === 500){
-                return Observable.throw('Internal server error');
-            }
+            subject.error(err);
+            return subject.asObservable();
         })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new Location(item)))
@@ -56,9 +53,9 @@ export class LocationService {
     return this.http.get(environment.serverUrl + '/location/'+id, options)
       .map((r: Response) => new Location(r.json())).catch(err => {
             if (err.status === 401) {
-                return Observable.throw('Unauthorized');
+                return Observable.throw(new Error('Unauthorized'));
             }else if(err.status === 500){
-                return Observable.throw('Internal server error');
+                return Observable.throw(new Error('Internal server error'));
             }
         });
   }

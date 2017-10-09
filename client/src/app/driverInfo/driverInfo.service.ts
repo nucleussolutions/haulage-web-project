@@ -31,6 +31,10 @@ export class DriverInfoService {
 
     this.http.get(environment.serverUrl + '/driverInfo', options)
       .map((r: Response) => r.json())
+        .catch(err => {
+          subject.error(err);
+          return subject.asObservable();
+        })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new DriverInfo(item)))
       });

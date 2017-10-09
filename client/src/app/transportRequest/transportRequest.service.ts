@@ -30,11 +30,8 @@ export class TransportRequestService {
     this.http.get(environment.serverUrl + '/transportRequest', options)
       .map((r: Response) => r.json())
         .catch(err => {
-            if (err.status === 401) {
-                return Observable.throw('Unauthorized');
-            }else if(err.status === 500){
-                return Observable.throw('Internal server error');
-            }
+            subject.error(err);
+            return subject.asObservable();
         })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new TransportRequest(item)))
