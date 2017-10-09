@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {CompanyService} from './company.service';
-import {Company} from './company';
+import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CompanyService } from './company.service';
+import { Company } from './company';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'company-list',
@@ -10,10 +12,17 @@ export class CompanyListComponent implements OnInit {
 
   companyList: Company[] = [];
 
-  constructor(private companyService: CompanyService) { }
+  private token: string;
+
+  private apiKey: string;
+
+  constructor(private companyService: CompanyService, private cookieService: CookieService) {
+    this.token = this.cookieService.get('token');
+    this.apiKey = this.cookieService.get('apiKey');
+  }
 
   ngOnInit() {
-    this.companyService.list().subscribe((companyList: Company[]) => {
+    this.companyService.list(this.token, this.apiKey).subscribe((companyList: Company[]) => {
       this.companyList = companyList;
     });
   }

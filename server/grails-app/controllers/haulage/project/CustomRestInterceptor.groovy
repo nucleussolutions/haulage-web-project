@@ -32,10 +32,16 @@ class CustomRestInterceptor {
                 requestContentType = ContentType.JSON
                 body =  [idToken : token]
 
+                response.failure = { resp ->
+                    println "POST response status: ${resp.statusLine}"
+                    println 'response body '+resp.data
+                    response.status = SC_UNAUTHORIZED
+                    return false
+                }
+
                 response.success = { resp ->
                     println "POST response status: ${resp.statusLine}"
-                    assert resp.statusLine.statusCode == 200
-
+                    // assert resp.statusLine.statusCode == 200
                     println 'response body '+resp.data
 
                     response.status = SC_ACCEPTED

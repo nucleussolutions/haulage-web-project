@@ -31,6 +31,9 @@ export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalCom
 
     private userId : string;
     private token : string;
+
+    private apiKey : string;
+
     constructor(public dialog: DialogRef<CreateProfileModalContext>, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private formBuilder: FormBuilder, private cookieService: CookieService, private modal : Modal) {
         this.context = dialog.context;
         dialog.setCloseGuard(this);
@@ -53,6 +56,7 @@ export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalCom
 
         this.userId = cookieService.get('uid');
         this.token = cookieService.get('token');
+        this.apiKey = cookieService.get('apiKey');
     }
 
 
@@ -84,7 +88,7 @@ export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalCom
             haulierInfo.userId = this.userId;
             haulierInfo.company = company;
 
-            this.haulierInfoService.save(haulierInfo).subscribe(response => {
+            this.haulierInfoService.save(haulierInfo, this.token, this.apiKey).subscribe(response => {
                 console.log('haulier service save response '+JSON.stringify(response));
 
                 let responseStr = JSON.stringify(response);
@@ -105,7 +109,7 @@ export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalCom
             forwarderInfo.company = company;
             forwarderInfo.name = formData.value.name;
 
-            this.forwarderInfoService.save(forwarderInfo).subscribe(response => {
+            this.forwarderInfoService.save(forwarderInfo, this.token, this.apiKey).subscribe(response => {
                 console.log('forwarder service save response '+JSON.stringify(response));
 
                 let responseStr = JSON.stringify(response);

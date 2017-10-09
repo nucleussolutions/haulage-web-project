@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Company} from './company';
-import {CompanyService} from './company.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Company } from './company';
+import { CompanyService } from './company.service';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'company-persist',
@@ -11,11 +12,18 @@ export class CompanyShowComponent implements OnInit {
 
   company = new Company();
 
-  constructor(private route: ActivatedRoute, private companyService: CompanyService, private router: Router) {}
+  private token : string;
+
+  private apiKey : string;
+
+  constructor(private route: ActivatedRoute, private companyService: CompanyService, private router: Router, private cookieService: CookieService) {
+    this.token = this.cookieService.get('token');
+    this.apiKey = this.cookieService.get('apiKey');
+  }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.companyService.get(+params['id']).subscribe((company: Company) => {
+      this.companyService.get(+params['id'], this.token, this.apiKey).subscribe((company: Company) => {
         this.company = company;
       });
     });
@@ -23,9 +31,9 @@ export class CompanyShowComponent implements OnInit {
 
   destroy() {
     if (confirm("Are you sure?")) {
-      this.companyService.destroy(this.company).subscribe((success: boolean) => {
+      this.companyService.destroy(this.company, this.token, this.apiKey).subscribe((success: boolean) => {
         if (success) {
-          this.router.navigate(['/company','list']);
+          this.router.navigate(['/company', 'list']);
         } else {
           alert("Error occurred during delete");
         }

@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {Http, Response, RequestOptions, RequestMethod, Request, Headers} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
-import {Company} from './company';
-import {Subject} from 'rxjs/Subject';
+import { Injectable } from '@angular/core';
+import { Http, Response, RequestOptions, RequestMethod, Request, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { Company } from './company';
+import { Subject } from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
@@ -14,9 +14,20 @@ export class CompanyService {
   constructor(private http: Http) {
   }
 
-  list(): Observable<Company[]> {
+  list(token: string, apiKey: string): Observable<Company[]> {
     let subject = new Subject<Company[]>();
-    this.http.get(environment.serverUrl + '/company')
+
+    let headers = new Headers({
+      'token': token,
+      'apiKey': apiKey,
+    });
+
+    let options = new RequestOptions({
+      headers: headers
+    });
+
+
+    this.http.get(environment.serverUrl + '/company', options)
       .map((r: Response) => r.json())
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new Company(item)))
@@ -24,12 +35,22 @@ export class CompanyService {
     return subject.asObservable();
   }
 
-  get(id: number): Observable<Company> {
-    return this.http.get(environment.serverUrl + '/company/'+id)
+  get(id: number, token: string, apiKey: string): Observable<Company> {
+
+    let headers = new Headers({
+      'token': token,
+      'apiKey': apiKey
+    });
+
+    let options = new RequestOptions({
+      headers: headers
+    });
+
+    return this.http.get(environment.serverUrl + '/company/' + id, options)
       .map((r: Response) => new Company(r.json()));
   }
 
-  save(company: Company): Observable<Company> {
+  save(company: Company, token: string, apiKey: string): Observable<Company> {
     const requestOptions = new RequestOptions();
     if (company.id) {
       requestOptions.method = RequestMethod.Put;
@@ -39,13 +60,27 @@ export class CompanyService {
       requestOptions.url = environment.serverUrl + '/company';
     }
     requestOptions.body = JSON.stringify(company);
-    requestOptions.headers = new Headers({"Content-Type": "application/json"});
+    requestOptions.headers = new Headers({
+      "Content-Type": "application/json",
+      'token': token,
+      'apiKey': apiKey
+    });
 
     return this.http.request(new Request(requestOptions))
       .map((r: Response) => new Company(r.json()));
   }
 
-  destroy(company: Company): Observable<boolean> {
+  destroy(company: Company, token: string, apiKey: string): Observable<boolean> {
+
+    let headers = new Headers({
+      'token': token,
+      'apiKey': apiKey
+    });
+
+    let options = new RequestOptions({
+      headers: headers
+    });
+
     return this.http.delete(environment.serverUrl + '/company/' + company.id).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });

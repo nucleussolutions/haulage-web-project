@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
             this.cookieService.put('apiKey', response.apiKey);
             this.cookieService.put('refreshToken', response.stsTokenManager.refreshToken);
             this.cookieService.put('token', response.stsTokenManager.accessToken);
-            this.cookieService.put('expirationTime', response.stsTokenManager.expirationTime);
+            this.cookieService.put('expiresIn', response.stsTokenManager.expiresIn);
 
             //todo if email is not verified, pop up a dialog for them to verify email
 
