@@ -6,7 +6,7 @@ import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.Method
 import org.springframework.beans.factory.annotation.Autowired
 import static groovyx.net.http.Method.*
-
+import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST
 import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED
 import static javax.servlet.http.HttpServletResponse.SC_ACCEPTED
 
@@ -27,25 +27,36 @@ class CustomRestInterceptor {
         }else {
             def http = new HTTPBuilder( 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key='+apiKey)
 
-            http.request( POST ) {
-//                uri.path = '/'
-                requestContentType = ContentType.JSON
-                body =  [idToken : token]
 
-                response.failure = { resp ->
-                    println "POST response status: ${resp.statusLine}"
-                    println 'response body '+resp.data
-                    response.status = SC_UNAUTHORIZED
-                    return false
-                }
 
-                response.success = { resp ->
-                    println "POST response status: ${resp.statusLine}"
-                    // assert resp.statusLine.statusCode == 200
-                    println 'response body '+resp.data
+            def postBody = [idToken: token] // will be url-encoded
 
+//            http.request( POST ) {
+//                requestContentType = ContentType.JSON
+//                body =  [idToken : token]
+//
+//                response.'400' = { resp ->
+//                    response.status = SC_BAD_REQUEST
+//                    return false
+//                }
+//
+//                response.success = { resp ->
+//                    println "POST response status: ${resp.statusLine}"
+//                    // assert resp.statusLine.statusCode == 200
+//                    println 'response body '+resp.data
+//
+//                    response.status = SC_ACCEPTED
+//                    return true
+//                }
+//            }
+
+            http.post(body: postBody, requestContentType: ContentType.JSON) { resp ->
+                if(resp.statusLine.statusCode == 200 || resp.statusLine.statusCode == 201){
                     response.status = SC_ACCEPTED
                     return true
+                }else {
+                    response.status = resp.statusLine.statusCode
+                    return false
                 }
             }
         }

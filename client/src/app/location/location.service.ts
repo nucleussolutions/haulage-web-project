@@ -34,12 +34,22 @@ export class LocationService {
     return subject.asObservable();
   }
 
-  get(id: number): Observable<Location> {
-    return this.http.get(environment.serverUrl + '/location/'+id)
+  get(id: number, token : string, apiKey : string): Observable<Location> {
+
+      let headers = new Headers({
+          'token': token,
+          'apiKey': apiKey
+      });
+
+      let options = new RequestOptions({
+          headers: headers
+      });
+
+    return this.http.get(environment.serverUrl + '/location/'+id, options)
       .map((r: Response) => new Location(r.json()));
   }
 
-  save(location: Location): Observable<Location> {
+  save(location: Location, token : string, apiKey : string): Observable<Location> {
     const requestOptions = new RequestOptions();
     if (location.id) {
       requestOptions.method = RequestMethod.Put;
@@ -49,14 +59,29 @@ export class LocationService {
       requestOptions.url = environment.serverUrl + '/location';
     }
     requestOptions.body = JSON.stringify(location);
-    requestOptions.headers = new Headers({"Content-Type": "application/json"});
+    requestOptions.headers = new Headers({
+        "Content-Type": "application/json",
+        'token' : token,
+        'apiKey': apiKey
+    });
 
     return this.http.request(new Request(requestOptions))
       .map((r: Response) => new Location(r.json()));
   }
 
-  destroy(location: Location): Observable<boolean> {
-    return this.http.delete(environment.serverUrl + '/location/' + location.id).map((res: Response) => res.ok).catch(() => {
+  destroy(location: Location, token:string, apiKey : string): Observable<boolean> {
+
+      let headers = new Headers({
+          'token': token,
+          'apiKey': apiKey
+      });
+
+      let options = new RequestOptions({
+          headers : headers
+      });
+
+
+      return this.http.delete(environment.serverUrl + '/location/' + location.id, options).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
   }

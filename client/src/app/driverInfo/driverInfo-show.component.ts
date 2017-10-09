@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DriverInfo } from './driverInfo';
 import { DriverInfoService } from './driverInfo.service';
 import { CookieService } from 'ngx-cookie';
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
 
 @Component({
   selector: 'driverInfo-persist',
@@ -18,7 +19,7 @@ export class DriverInfoShowComponent implements OnInit {
 
   private expirationTime : any;
 
-  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private router: Router, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private router: Router, private cookieService: CookieService, private modal : Modal) {
     this.token = this.cookieService.get('token');
     this.apiKey = this.cookieService.get('apiKey');
     this.expirationTime = this.cookieService.get('expirationTime');
@@ -28,6 +29,9 @@ export class DriverInfoShowComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.driverInfoService.get(+params['id'], this.token, this.apiKey).subscribe((driverInfo: DriverInfo) => {
         this.driverInfo = driverInfo;
+      }, error => {
+        this.modal.alert().title('Error').message(error).open();
+        //todo direct them back to login
       });
     });
   }
@@ -40,6 +44,9 @@ export class DriverInfoShowComponent implements OnInit {
         } else {
           alert("Error occurred during delete");
         }
+      }, error => {
+          this.modal.alert().title('Error').message(error).open();
+          //todo direct them back to login
       });
     }
   }

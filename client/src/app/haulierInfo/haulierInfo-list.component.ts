@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {HaulierInfoService} from './haulierInfo.service';
 import {HaulierInfo} from './haulierInfo';
 import { CookieService } from 'ngx-cookie';
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
+
 
 @Component({
   selector: 'haulierInfo-list',
@@ -15,7 +17,7 @@ export class HaulierInfoListComponent implements OnInit {
 
   private apiKey : string;
 
-  constructor(private haulierInfoService: HaulierInfoService, private cookieService : CookieService) {
+  constructor(private haulierInfoService: HaulierInfoService, private cookieService : CookieService, private modal : Modal) {
     this.token = this.cookieService.get('token');
     this.apiKey = this.cookieService.get('apiKey');
   }
@@ -23,6 +25,9 @@ export class HaulierInfoListComponent implements OnInit {
   ngOnInit() {
     this.haulierInfoService.list(this.token, this.apiKey).subscribe((haulierInfoList: HaulierInfo[]) => {
       this.haulierInfoList = haulierInfoList;
+    }, error => {
+      this.modal.alert().title('Error').message(error).open();
+      //todo navigate to the login page again
     });
   }
 }

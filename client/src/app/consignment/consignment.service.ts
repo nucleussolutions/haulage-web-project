@@ -15,9 +15,20 @@ export class ConsignmentService {
   constructor(private http: Http) {
   }
 
-  list(): Observable<Consignment[]> {
+  list(token : string, apiKey : string): Observable<Consignment[]> {
     let subject = new Subject<Consignment[]>();
-    this.http.get(environment.serverUrl + '/consignment')
+
+      let headers = new Headers({
+          'token': token,
+          'apiKey': apiKey
+      });
+
+      let options = new RequestOptions({
+          headers : headers
+      });
+
+
+    this.http.get(environment.serverUrl + '/consignment', options)
       .map((r: Response) => r.json())
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new Consignment(item)))
@@ -25,12 +36,22 @@ export class ConsignmentService {
     return subject.asObservable();
   }
 
-  get(id: number): Observable<Consignment> {
-    return this.http.get(environment.serverUrl + 'consignment/'+id)
+  get(id: number, token : string, apiKey : string): Observable<Consignment> {
+
+      let headers = new Headers({
+          'token': token,
+          'apiKey': apiKey
+      });
+
+      let options = new RequestOptions({
+          headers : headers
+      });
+
+      return this.http.get(environment.serverUrl + 'consignment/'+id, options)
       .map((r: Response) => new Consignment(r.json()));
   }
 
-  save(consignment: Consignment): Observable<Consignment> {
+  save(consignment: Consignment, token : string, apiKey: string): Observable<Consignment> {
     const requestOptions = new RequestOptions();
     if (consignment.id) {
       requestOptions.method = RequestMethod.Put;
@@ -40,14 +61,28 @@ export class ConsignmentService {
       requestOptions.url = environment.serverUrl + '/consignment';
     }
     requestOptions.body = JSON.stringify(consignment);
-    requestOptions.headers = new Headers({"Content-Type": "application/json"});
+    requestOptions.headers = new Headers({
+        "Content-Type": "application/json",
+        'token': token,
+        'apiKey': apiKey
+    });
 
     return this.http.request(new Request(requestOptions))
       .map((r: Response) => new Consignment(r.json()));
   }
 
-  destroy(consignment: Consignment): Observable<boolean> {
-    return this.http.delete(environment.serverUrl + '/consignment/' + consignment.id).map((res: Response) => res.ok).catch(() => {
+  destroy(consignment: Consignment, token : string, apiKey: string): Observable<boolean> {
+
+      let headers = new Headers({
+          'token': token,
+          'apiKey': apiKey
+      });
+
+      let options = new RequestOptions({
+          headers : headers
+      });
+
+    return this.http.delete(environment.serverUrl + '/consignment/' + consignment.id, options).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
   }

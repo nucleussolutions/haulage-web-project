@@ -3,6 +3,8 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Permission} from './permission';
 import {PermissionService} from './permission.service';
 import {Response} from "@angular/http";
+import { CookieService } from 'ngx-cookie';
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
 
 
 @Component({
@@ -14,15 +16,22 @@ export class PermissionPersistComponent implements OnInit {
   permission = new Permission();
   create = true;
   errors: any[];
-  
 
-  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private router: Router) {}
+  private token : string;
+
+  private apiKey : string;
+
+
+  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private router: Router, private modal : Modal, private cookieService : CookieService) {
+    this.token = this.cookieService.get('token');
+    this.apiKey = this.cookieService.get('apiKey');
+  }
 
   ngOnInit() {
-    
+
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
-        this.permissionService.get(+params['id']).subscribe((permission: Permission) => {
+        this.permissionService.get(+params['id'], this.token, this.apiKey).subscribe((permission: Permission) => {
           this.create = false;
           this.permission = permission;
         });
@@ -31,7 +40,7 @@ export class PermissionPersistComponent implements OnInit {
   }
 
   save() {
-    this.permissionService.save(this.permission).subscribe((permission: Permission) => {
+    this.permissionService.save(this.permission, this.token, this.apiKey).subscribe((permission: Permission) => {
       this.router.navigate(['/permission', 'show', permission.id]);
     }, (res: Response) => {
       const json = res.json();

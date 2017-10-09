@@ -59,7 +59,7 @@ export class TransportRequestPersistComponent implements OnInit {
         });
         this.transportRequest.hazardous = false;
         this.transportRequest.overDimension = false;
-        this.consignmentService.list().subscribe((consignmentList: Consignment[]) => {
+        this.consignmentService.list(this.token, this.apiKey).subscribe((consignmentList: Consignment[]) => {
             this.consignmentList = consignmentList;
         });
         this.customerService.list(this.token, this.apiKey).subscribe((customerList: Customer[]) => {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
 import { CompanyService } from './company.service';
 import { Company } from './company';
 import { CookieService } from 'ngx-cookie';
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
 
 @Component({
   selector: 'company-list',
@@ -16,7 +16,7 @@ export class CompanyListComponent implements OnInit {
 
   private apiKey: string;
 
-  constructor(private companyService: CompanyService, private cookieService: CookieService) {
+  constructor(private companyService: CompanyService, private cookieService: CookieService, private modal : Modal) {
     this.token = this.cookieService.get('token');
     this.apiKey = this.cookieService.get('apiKey');
   }
@@ -24,6 +24,11 @@ export class CompanyListComponent implements OnInit {
   ngOnInit() {
     this.companyService.list(this.token, this.apiKey).subscribe((companyList: Company[]) => {
       this.companyList = companyList;
+    }, error => {
+      this.modal.alert()
+          .title('Error').message(error).open();
+      //todo might need to navigate them back to login
+
     });
   }
 }
