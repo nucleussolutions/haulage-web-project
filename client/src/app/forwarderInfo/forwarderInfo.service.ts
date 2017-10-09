@@ -32,11 +32,8 @@ export class ForwarderInfoService {
     this.http.get(environment.serverUrl + '/forwarderInfo', options)
       .map((r: Response) => r.json())
         .catch(err => {
-            if (err.status === 401) {
-                return Observable.throw('Unauthorized');
-            }else if(err.status === 500){
-                return Observable.throw('Internal server error');
-            }
+            subject.error(err);
+            return subject.asObservable();
         })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new ForwarderInfo(item)))
@@ -58,9 +55,9 @@ export class ForwarderInfoService {
     return this.http.get(environment.serverUrl + '/forwarderInfo/'+id, options)
       .map((r: Response) => new ForwarderInfo(r.json())).catch(err => {
             if (err.status === 401) {
-                return Observable.throw('Unauthorized');
+                return Observable.throw(new Error('Unauthorized'));
             }else if(err.status === 500){
-                return Observable.throw('Internal server error');
+                return Observable.throw(new Error('Internal server error'));
             }
         });
   }
@@ -84,9 +81,9 @@ export class ForwarderInfoService {
     return this.http.request(new Request(requestOptions))
       .map((r: Response) => new ForwarderInfo(r.json())).catch(err => {
             if (err.status === 401) {
-                return Observable.throw('Unauthorized');
+                return Observable.throw(new Error('Unauthorized'));
             }else if(err.status === 500){
-                return Observable.throw('Internal server error');
+                return Observable.throw(new Error('Internal server error'));
             }
         });
   }
