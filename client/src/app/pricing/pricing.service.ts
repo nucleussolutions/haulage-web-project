@@ -6,6 +6,7 @@ import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
 import {environment} from 'environments/environment';
 
 @Injectable()
@@ -27,7 +28,7 @@ export class PricingService {
             headers: headers
         });
 
-        this.http.get(environment.serverUrl + '/pricing')
+        this.http.get(environment.serverUrl + '/pricing', options)
             .map((r: Response) => r.json())
             .catch(err => {
                 if (err.status === 401) {

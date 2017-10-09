@@ -6,6 +6,7 @@ import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
 import { environment } from 'environments/environment';
 
 @Injectable()
@@ -30,6 +31,13 @@ export class ForwarderInfoService {
 
     this.http.get(environment.serverUrl + '/forwarderInfo', options)
       .map((r: Response) => r.json())
+        .catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new ForwarderInfo(item)))
       });
@@ -48,7 +56,13 @@ export class ForwarderInfoService {
     });
 
     return this.http.get(environment.serverUrl + '/forwarderInfo/'+id, options)
-      .map((r: Response) => new ForwarderInfo(r.json()));
+      .map((r: Response) => new ForwarderInfo(r.json())).catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        });
   }
 
   save(forwarderInfo: ForwarderInfo, token : string, apiKey: string): Observable<ForwarderInfo> {
@@ -68,7 +82,13 @@ export class ForwarderInfoService {
     });
 
     return this.http.request(new Request(requestOptions))
-      .map((r: Response) => new ForwarderInfo(r.json()));
+      .map((r: Response) => new ForwarderInfo(r.json())).catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        });
   }
 
   destroy(forwarderInfo: ForwarderInfo, token : string, apiKey : string): Observable<boolean> {

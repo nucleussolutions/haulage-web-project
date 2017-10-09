@@ -30,6 +30,13 @@ export class ConsignmentService {
 
     this.http.get(environment.serverUrl + '/consignment', options)
       .map((r: Response) => r.json())
+        .catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new Consignment(item)))
       });
@@ -48,7 +55,13 @@ export class ConsignmentService {
       });
 
       return this.http.get(environment.serverUrl + 'consignment/'+id, options)
-      .map((r: Response) => new Consignment(r.json()));
+      .map((r: Response) => new Consignment(r.json())).catch(err => {
+              if (err.status === 401) {
+                  return Observable.throw('Unauthorized');
+              }else if(err.status === 500){
+                  return Observable.throw('Internal server error');
+              }
+          });
   }
 
   save(consignment: Consignment, token : string, apiKey: string): Observable<Consignment> {
@@ -68,7 +81,13 @@ export class ConsignmentService {
     });
 
     return this.http.request(new Request(requestOptions))
-      .map((r: Response) => new Consignment(r.json()));
+      .map((r: Response) => new Consignment(r.json())).catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        });
   }
 
   destroy(consignment: Consignment, token : string, apiKey: string): Observable<boolean> {

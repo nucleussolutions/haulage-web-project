@@ -6,6 +6,7 @@ import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
 import {environment} from "../../environments/environment";
 
 @Injectable()
@@ -29,6 +30,13 @@ export class VehicleService {
 
     this.http.get(environment.serverUrl + '/vehicle', options)
       .map((r: Response) => r.json())
+        .catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new Vehicle(item)))
       });
@@ -44,7 +52,13 @@ export class VehicleService {
       headers : headers
     });
     return this.http.get(environment.serverUrl + '/vehicle/'+id, options)
-      .map((r: Response) => new Vehicle(r.json()));
+      .map((r: Response) => new Vehicle(r.json())).catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        });
   }
 
   save(vehicle: Vehicle, token: string, apiKey: string): Observable<Vehicle> {
@@ -64,7 +78,13 @@ export class VehicleService {
     });
 
     return this.http.request(new Request(requestOptions))
-      .map((r: Response) => new Vehicle(r.json()));
+      .map((r: Response) => new Vehicle(r.json())).catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        });
   }
 
   destroy(vehicle: Vehicle, token : string, apiKey : string): Observable<boolean> {

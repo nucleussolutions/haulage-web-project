@@ -5,6 +5,7 @@ import {TransportRequest} from './transportRequest';
 import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';
 import {environment} from "../../environments/environment";
 
@@ -28,6 +29,13 @@ export class TransportRequestService {
 
     this.http.get(environment.serverUrl + '/transportRequest', options)
       .map((r: Response) => r.json())
+        .catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new TransportRequest(item)))
       });
@@ -46,7 +54,13 @@ export class TransportRequestService {
     });
 
     return this.http.get(environment.serverUrl + '/transportRequest/'+id, options)
-      .map((r: Response) => new TransportRequest(r.json()));
+      .map((r: Response) => new TransportRequest(r.json())).catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        });
   }
 
   save(transportRequest: TransportRequest, token: string, apiKey : string): Observable<TransportRequest> {
@@ -66,7 +80,13 @@ export class TransportRequestService {
     });
 
     return this.http.request(new Request(requestOptions))
-      .map((r: Response) => new TransportRequest(r.json()));
+      .map((r: Response) => new TransportRequest(r.json())).catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        });
   }
 
   destroy(transportRequest: TransportRequest, token: string, apiKey : string): Observable<boolean> {

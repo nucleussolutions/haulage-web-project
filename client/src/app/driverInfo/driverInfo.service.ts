@@ -6,6 +6,7 @@ import { Subject } from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
 import { environment } from "../../environments/environment";
 
 @Injectable()

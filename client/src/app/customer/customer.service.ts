@@ -28,6 +28,13 @@ export class CustomerService {
 
     this.http.get(environment.serverUrl + '/customer', options)
       .map((r: Response) => r.json())
+        .catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new Customer(item)))
       });
@@ -46,7 +53,13 @@ export class CustomerService {
     });
 
     return this.http.get(environment.serverUrl + '/customer/'+id, options)
-      .map((r: Response) => new Customer(r.json()));
+      .map((r: Response) => new Customer(r.json())).catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        });
   }
 
   save(customer: Customer, token :string, apiKey: string): Observable<Customer> {
@@ -66,7 +79,13 @@ export class CustomerService {
     });
 
     return this.http.request(new Request(requestOptions))
-      .map((r: Response) => new Customer(r.json()));
+      .map((r: Response) => new Customer(r.json())).catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        });
   }
 
   destroy(customer: Customer, token: string, apiKey: string): Observable<boolean> {

@@ -29,6 +29,13 @@ export class CompanyService {
 
     this.http.get(environment.serverUrl + '/company', options)
       .map((r: Response) => r.json())
+        .catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new Company(item)))
       });
@@ -47,7 +54,13 @@ export class CompanyService {
     });
 
     return this.http.get(environment.serverUrl + '/company/' + id, options)
-      .map((r: Response) => new Company(r.json()));
+      .map((r: Response) => new Company(r.json())).catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        });
   }
 
   save(company: Company, token: string, apiKey: string): Observable<Company> {
@@ -67,7 +80,13 @@ export class CompanyService {
     });
 
     return this.http.request(new Request(requestOptions))
-      .map((r: Response) => new Company(r.json()));
+      .map((r: Response) => new Company(r.json())).catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        });
   }
 
   destroy(company: Company, token: string, apiKey: string): Observable<boolean> {

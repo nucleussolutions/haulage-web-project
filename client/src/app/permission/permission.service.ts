@@ -28,6 +28,13 @@ export class PermissionService {
 
     this.http.get(environment.serverUrl + '/permission', options)
       .map((r: Response) => r.json())
+        .catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new Permission(item)))
       });
@@ -60,7 +67,13 @@ export class PermissionService {
       headers: headers
     });
 
-    return this.http.get(environment.serverUrl + '/permission?userId=' + userId, options).map((r: Response) => new Permission(r.json()));
+    return this.http.get(environment.serverUrl + '/permission?userId=' + userId, options).map((r: Response) => new Permission(r.json())).catch(err => {
+        if (err.status === 401) {
+            return Observable.throw('Unauthorized');
+        }else if(err.status === 500){
+            return Observable.throw('Internal server error');
+        }
+    });
   }
 
   save(permission: Permission, token: string, apiKey: string): Observable<Permission> {
@@ -80,7 +93,13 @@ export class PermissionService {
     });
 
     return this.http.request(new Request(requestOptions))
-      .map((r: Response) => new Permission(r.json()));
+      .map((r: Response) => new Permission(r.json())).catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        });
   }
 
   destroy(permission: Permission, token: string, apiKey: string): Observable<boolean> {

@@ -6,6 +6,7 @@ import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
 import { environment } from 'environments/environment';
 
 @Injectable()
@@ -28,6 +29,13 @@ export class LocationService {
 
     this.http.get(environment.serverUrl + '/location', options)
       .map((r: Response) => r.json())
+        .catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new Location(item)))
       });
@@ -46,7 +54,13 @@ export class LocationService {
       });
 
     return this.http.get(environment.serverUrl + '/location/'+id, options)
-      .map((r: Response) => new Location(r.json()));
+      .map((r: Response) => new Location(r.json())).catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        });
   }
 
   save(location: Location, token : string, apiKey : string): Observable<Location> {
@@ -66,7 +80,13 @@ export class LocationService {
     });
 
     return this.http.request(new Request(requestOptions))
-      .map((r: Response) => new Location(r.json()));
+      .map((r: Response) => new Location(r.json())).catch(err => {
+            if (err.status === 401) {
+                return Observable.throw('Unauthorized');
+            }else if(err.status === 500){
+                return Observable.throw('Internal server error');
+            }
+        });
   }
 
   destroy(location: Location, token:string, apiKey : string): Observable<boolean> {
