@@ -25,7 +25,15 @@ export class PermissionListComponent implements OnInit {
     this.permissionService.list(this.token, this.apiKey).subscribe((permissionList: Permission[]) => {
       this.permissionList = permissionList;
     }, error => {
-      this.modal.alert().title('Error').message(error).open();
+      let message;
+
+      if(error.status === 401){
+        message = 'Unauthorized';
+      }else if(error.status === 500){
+        message = 'Internal server error';
+      }
+
+      this.modal.alert().title('Error').message(message).open();
     });
   }
 }

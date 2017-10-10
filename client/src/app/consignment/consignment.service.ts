@@ -31,11 +31,8 @@ export class ConsignmentService {
     this.http.get(environment.serverUrl + '/consignment', options)
       .map((r: Response) => r.json())
         .catch(err => {
-            if (err.status === 401) {
-                return Observable.throw('Unauthorized');
-            }else if(err.status === 500){
-                return Observable.throw('Internal server error');
-            }
+            subject.error(err);
+            return subject.asObservable();
         })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new Consignment(item)))
@@ -57,9 +54,9 @@ export class ConsignmentService {
       return this.http.get(environment.serverUrl + 'consignment/'+id, options)
       .map((r: Response) => new Consignment(r.json())).catch(err => {
               if (err.status === 401) {
-                  return Observable.throw('Unauthorized');
+                  return Observable.throw(new Error('Unauthorized'));
               }else if(err.status === 500){
-                  return Observable.throw('Internal server error');
+                  return Observable.throw(new Error('Internal server error'));
               }
           });
   }
@@ -83,9 +80,9 @@ export class ConsignmentService {
     return this.http.request(new Request(requestOptions))
       .map((r: Response) => new Consignment(r.json())).catch(err => {
             if (err.status === 401) {
-                return Observable.throw('Unauthorized');
+                return Observable.throw(new Error('Unauthorized'));
             }else if(err.status === 500){
-                return Observable.throw('Internal server error');
+                return Observable.throw(new Error('Internal server error'));
             }
         });
   }

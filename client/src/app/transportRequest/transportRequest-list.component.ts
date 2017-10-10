@@ -25,8 +25,16 @@ export class TransportRequestListComponent implements OnInit {
         this.transportRequestService.list(token, apiKey).subscribe((transportRequestList: TransportRequest[]) => {
             this.transportRequestList = transportRequestList;
         }, error => {
-            console.log('transport request list error '+error);
-            this.modal.alert().title('Error').message(error).open();
+
+            let message;
+
+            if(error.status === 401){
+                message = 'Unauthorized';
+            }else if(error.status === 500){
+                message = 'Internal server error';
+            }
+
+            this.modal.alert().title('Error').message(message).open();
         });
     }
 }

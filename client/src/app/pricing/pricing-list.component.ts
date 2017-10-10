@@ -26,7 +26,16 @@ export class PricingListComponent implements OnInit {
     this.pricingService.list(this.token, this.apiKey).subscribe((pricingList: Pricing[]) => {
       this.pricingList = pricingList;
     }, error => {
-      this.modal.alert().title('Error').message(error).open();
+
+      let message;
+
+      if(error.status === 401){
+        message = 'Unauthorized';
+      }else if(error.status === 500){
+        message = 'Internal server error';
+      }
+
+      this.modal.alert().title('Error').message(message).open();
     });
   }
 }
