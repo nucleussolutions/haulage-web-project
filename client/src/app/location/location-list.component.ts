@@ -39,10 +39,11 @@ export class LocationListComponent implements OnInit {
       dialog.then(value => {
         //todo trigger an event to reload the navdrawer component
 
-        this.navDrawerService.trigger(false);
-        this.cookieService.removeAll();
-        this.router.navigate(['/login']);
       });
+      
+      this.navDrawerService.trigger(false);
+      this.cookieService.removeAll();
+      this.router.navigate(['/login']);
     });
   }
 }

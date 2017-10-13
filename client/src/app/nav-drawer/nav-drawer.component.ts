@@ -25,8 +25,8 @@ export class NavDrawerComponent implements OnInit {
         this.token = this.cookieService.get('token');
     }
 
-    handleLoginState(loggedIn : boolean){
-        console.log('NavDrawerComponent handleLoginState '+loggedIn);
+    handleLoginState(loggedIn: boolean) {
+        console.log('NavDrawerComponent handleLoginState ' + loggedIn);
         if (loggedIn) {
             this.token = this.cookieService.get('token');
         } else {
@@ -50,6 +50,5 @@ export class NavDrawerComponent implements OnInit {
         //clear cookies from the cookieservice
         this.cookieService.removeAll();
         this.token = null;
-        this.router.navigate(['/login']);
     }
 }

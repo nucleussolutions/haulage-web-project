@@ -35,13 +35,17 @@ export class IndexComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         //if it's a first time user, and the user is a haulier and forwarder, then show a modal prompting for profile creation
-        if (this.token) {
-            this.modal
-                .open(CreateProfileModalComponent, overlayConfigFactory({
-                    isBlocking: false,
-                    size: 'lg'
-                }, BSModalContext));
-        }
+
+        setTimeout(() => {
+            if (this.token) {
+                this.modal
+                    .open(CreateProfileModalComponent, overlayConfigFactory({
+                        isBlocking: false,
+                        size: 'lg'
+                    }, BSModalContext));
+            }
+        });
+
 
         //todo get permission for the user
     }

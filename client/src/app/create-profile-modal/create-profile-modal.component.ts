@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {BSModalContext} from "ngx-modialog/plugins/bootstrap";
-import {CloseGuard, DialogRef, ModalComponent} from "ngx-modialog";
-import {HaulierInfoService} from "../haulierInfo/haulierInfo.service";
-import {ForwarderInfoService} from "../forwarderInfo/forwarderInfo.service";
-import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
-import {CookieService} from "ngx-cookie";
-import {ForwarderInfo} from "../forwarderInfo/forwarderInfo";
-import {Company} from "../company/company";
-import {HaulierInfo} from "../haulierInfo/haulierInfo";
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import { BSModalContext } from "ngx-modialog/plugins/bootstrap";
+import { CloseGuard, DialogRef, ModalComponent } from "ngx-modialog";
+import { HaulierInfoService } from "../haulierInfo/haulierInfo.service";
+import { ForwarderInfoService } from "../forwarderInfo/forwarderInfo.service";
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { CookieService } from "ngx-cookie";
+import { ForwarderInfo } from "../forwarderInfo/forwarderInfo";
+import { Company } from "../company/company";
+import { HaulierInfo } from "../haulierInfo/haulierInfo";
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 
 @Component({
@@ -19,9 +19,16 @@ import { Modal } from 'ngx-modialog/plugins/bootstrap';
 export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalComponent<CreateProfileModalContext> {
 
 
+    beforeDismiss?(): boolean | Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
+    beforeClose?(): boolean | Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
+
+
     ngOnInit(): void {
         //throw new Error('Method not implemented.');
-
     }
 
 
@@ -29,15 +36,18 @@ export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalCom
 
     private credentials: FormGroup;
 
-    private userId : string;
-    private token : string;
+    private userId: string;
+    private token: string;
 
-    private apiKey : string;
+    private apiKey: string;
 
-    constructor(public dialog: DialogRef<CreateProfileModalContext>, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private formBuilder: FormBuilder, private cookieService: CookieService, private modal : Modal) {
+    constructor(public dialog: DialogRef<CreateProfileModalContext>, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private formBuilder: FormBuilder, private cookieService: CookieService, private modal: Modal, private cdRef: ChangeDetectorRef) {
         this.context = dialog.context;
-        dialog.setCloseGuard(this);
+        this.userId = cookieService.get('uid');
+        this.token = cookieService.get('token');
+        this.apiKey = cookieService.get('apiKey');
 
+        this.dialog.setCloseGuard(this);
         this.credentials = this.formBuilder.group({
             name: ['', Validators.required],
             companyName: ['', Validators.required],
@@ -53,10 +63,6 @@ export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalCom
             companyRegNo: ['', Validators.required],
             usertype: new FormControl('Admin'),
         });
-
-        this.userId = cookieService.get('uid');
-        this.token = cookieService.get('token');
-        this.apiKey = cookieService.get('apiKey');
     }
 
 
@@ -89,7 +95,7 @@ export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalCom
             haulierInfo.company = company;
 
             this.haulierInfoService.save(haulierInfo, this.token, this.apiKey).subscribe(response => {
-                console.log('haulier service save response '+JSON.stringify(response));
+                console.log('haulier service save response ' + JSON.stringify(response));
 
                 let responseStr = JSON.stringify(response);
 
@@ -102,7 +108,7 @@ export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalCom
                     .message(error).open();
             })
 
-        }else if(formData.value.usertype === 'Manager'){
+        } else if (formData.value.usertype === 'Manager') {
             let forwarderInfo = new ForwarderInfo();
 
             forwarderInfo.userId = this.userId;
@@ -110,7 +116,7 @@ export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalCom
             forwarderInfo.name = formData.value.name;
 
             this.forwarderInfoService.save(forwarderInfo, this.token, this.apiKey).subscribe(response => {
-                console.log('forwarder service save response '+JSON.stringify(response));
+                console.log('forwarder service save response ' + JSON.stringify(response));
 
                 let responseStr = JSON.stringify(response);
 
