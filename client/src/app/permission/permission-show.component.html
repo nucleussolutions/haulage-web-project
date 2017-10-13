@@ -1,8 +1,8 @@
-<div class="nav" role="navigation">
-    <ul>
-        <li><a [routerLink]="['/index']" class="home">Home</a></li>
-        <li><a class="list" [routerLink]="['/permission', 'list']" class="list">Permission List</a></li>
-        <li><a class="create" [routerLink]="['/permission', 'create']" class="create">New Permission</a></li>
+<div  role="navigation">
+    <ul class="nav nav-pills">
+        <li class="nav-item"><a [routerLink]="['/index']" class="home nav-link">Home</a></li>
+        <li class="nav-item"><a class="list" [routerLink]="['/permission', 'list']" class="list nav-link">Permission List</a></li>
+        <li class="nav-item"><a class="create" [routerLink]="['/permission', 'create']" class="create nav-link">New Permission</a></li>
     </ul>
 </div>
 <div id="show-part" class="content scaffold-show" role="main">
@@ -28,7 +28,7 @@
   </li>
 </ol>
 
-    <a class="edit" [routerLink]="['/permission', 'edit', permission.id]">Edit</a>
-    <button type="button" (click)="destroy()">Delete</button>
+    <a class="edit btn btn-primary" [routerLink]="['/permission', 'edit', permission.id]">Edit</a>
+    <button type="button" class="btn btn-danger" (click)="destroy()">Delete</button>
 
 </div>

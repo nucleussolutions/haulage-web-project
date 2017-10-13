@@ -1,23 +1,24 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
-import {LoginService} from "../login.service";
 import {Title} from "@angular/platform-browser";
 import { CookieService } from 'ngx-cookie';
 import {Router} from "@angular/router";
 import {AngularFireAuth} from "angularfire2/auth";
+import { NavDrawerService } from 'app/nav-drawer.service';
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
 
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css'],
-    providers: [LoginService]
+    providers: [NavDrawerService]
 })
 export class LoginComponent implements OnInit {
 
     private credentials: FormGroup;
 
-    constructor(private formBuilder: FormBuilder, private loginService: LoginService, private titleService : Title, private cookieService: CookieService, private router: Router, private firebaseAuth: AngularFireAuth) {
+    constructor(private formBuilder: FormBuilder, private titleService : Title, private cookieService: CookieService, private router: Router, private firebaseAuth: AngularFireAuth, private navDrawerService : NavDrawerService, private modal : Modal) {
         this.credentials = this.formBuilder.group({
             email: ['', Validators.compose([Validators.required, Validators.email])],
             password: ['', Validators.required],
@@ -36,15 +37,9 @@ export class LoginComponent implements OnInit {
 
         this.firebaseAuth.auth.signInWithEmailAndPassword(formData.value.email, formData.value.password).then(response => {
 
-            console.log('login response '+JSON.stringify(response));
-
             let responseStr = JSON.stringify(response);
 
-            console.log('login response string '+responseStr);
-
             response = JSON.parse(responseStr);
-
-            console.log('login response json parse '+response);
 
             this.cookieService.put('uid', response.uid);
             this.cookieService.put('emailVerified', response.emailVerified);
@@ -56,12 +51,10 @@ export class LoginComponent implements OnInit {
             this.cookieService.put('expiresIn', response.stsTokenManager.expiresIn);
 
             //todo if email is not verified, pop up a dialog for them to verify email
-
-
-
+            this.navDrawerService.trigger(true);
             this.router.navigate(['/index']);
         }, error => {
-            console.log('failed to login with reason '+error);
+            this.modal.alert().title('Error').message(error).open();
         });
     }
 }

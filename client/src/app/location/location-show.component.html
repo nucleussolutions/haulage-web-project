@@ -1,5 +1,5 @@
-<div class="nav" role="navigation">
-  <ul>
+<div  role="navigation">
+  <ul class="nav nav-pills">
     <li><a [routerLink]="['/index']" class="home">Home</a></li>
     <li><a class="list" [routerLink]="['/location', 'list']" class="list">Location List</a></li>
     <li><a class="create" [routerLink]="['/location', 'create']" class="create">New Location</a></li>
@@ -69,7 +69,7 @@
       </ol>
 
       <a class="btn btn-primary" [routerLink]="['/location', 'edit', location.id]">Edit</a>
-      <button class="btn btn-primary" type="button" (click)="destroy()">Delete</button>
+      <button class="btn btn-danger" type="button" (click)="destroy()">Delete</button>
 
     </div>
   </div>

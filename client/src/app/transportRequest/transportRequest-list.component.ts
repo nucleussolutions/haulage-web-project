@@ -3,6 +3,7 @@ import {TransportRequestService} from './transportRequest.service';
 import {TransportRequest} from './transportRequest';
 import {CookieService} from 'ngx-cookie';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -14,8 +15,8 @@ export class TransportRequestListComponent implements OnInit {
 
     transportRequestList: TransportRequest[] = [];
 
-    constructor(private transportRequestService: TransportRequestService, private cookieService: CookieService, private modal : Modal) {
-
+    constructor(private transportRequestService: TransportRequestService, private cookieService: CookieService, private modal : Modal, private titleService : Title) {
+        this.titleService.setTitle('Transport Request List');
     }
 
     ngOnInit() {
@@ -32,6 +33,8 @@ export class TransportRequestListComponent implements OnInit {
                 message = 'Unauthorized';
             }else if(error.status === 500){
                 message = 'Internal server error';
+            }else if(error.status === 400){
+                message = 'Bad request';
             }
 
             this.modal.alert().title('Error').message(message).open();

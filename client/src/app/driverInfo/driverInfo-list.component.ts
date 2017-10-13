@@ -36,9 +36,12 @@ export class DriverInfoListComponent implements OnInit {
         message = 'Unauthorized';
       }else if(error.status === 500){
         message = 'Internal server error';
+      }else if(error.status === 400){
+        message = 'Bad request';
       }
 
       this.modal.alert().title('Error').message(message).open();
+
     });
   }
 }

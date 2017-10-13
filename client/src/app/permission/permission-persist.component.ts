@@ -5,6 +5,7 @@ import {PermissionService} from './permission.service';
 import {Response} from "@angular/http";
 import { CookieService } from 'ngx-cookie';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import {Title} from "@angular/platform-browser";
 
 
 @Component({
@@ -22,9 +23,11 @@ export class PermissionPersistComponent implements OnInit {
   private apiKey : string;
 
 
-  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private router: Router, private modal : Modal, private cookieService : CookieService) {
+  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private router: Router, private modal : Modal, private cookieService : CookieService, private titleService: Title) {
     this.token = this.cookieService.get('token');
     this.apiKey = this.cookieService.get('apiKey');
+
+    this.titleService.setTitle('Create Permission');
   }
 
   ngOnInit() {

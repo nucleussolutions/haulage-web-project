@@ -3,6 +3,7 @@ import {ForwarderInfoService} from './forwarderInfo.service';
 import {ForwarderInfo} from './forwarderInfo';
 import {CookieService} from 'ngx-cookie';
 import {Modal} from 'ngx-modialog/plugins/bootstrap';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -17,9 +18,10 @@ export class ForwarderInfoListComponent implements OnInit {
 
     private apiKey: string;
 
-    constructor(private forwarderInfoService: ForwarderInfoService, private cookieService: CookieService, private modal: Modal) {
+    constructor(private forwarderInfoService: ForwarderInfoService, private cookieService: CookieService, private modal: Modal, private titleService : Title) {
         this.token = this.cookieService.get('token');
         this.apiKey = this.cookieService.get('apiKey');
+        this.titleService.setTitle('Forwarders');
     }
 
     ngOnInit() {
@@ -31,6 +33,8 @@ export class ForwarderInfoListComponent implements OnInit {
                 message = 'Unauthorized';
             } else if (error.status === 500) {
                 message = 'Internal server error';
+            }else if(error.status === 400){
+                message = 'Bad request';
             }
             this.modal.alert().title('Error').message(message).open();
         });

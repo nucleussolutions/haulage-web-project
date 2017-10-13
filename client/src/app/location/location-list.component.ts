@@ -3,6 +3,8 @@ import {LocationService} from './location.service';
 import {Location} from './location';
 import { CookieService } from 'ngx-cookie';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import {Router} from "@angular/router";
+import { NavDrawerService } from 'app/nav-drawer.service';
 
 
 @Component({
@@ -13,7 +15,7 @@ export class LocationListComponent implements OnInit {
 
   locationList: Location[] = [];
 
-  constructor(private locationService: LocationService, private cookieService : CookieService, private modal : Modal) {
+  constructor(private locationService: LocationService, private cookieService : CookieService, private modal : Modal, private router: Router, private navDrawerService : NavDrawerService) {
   }
 
   ngOnInit() {
@@ -26,11 +28,21 @@ export class LocationListComponent implements OnInit {
 
       if(error.status === 401){
         message = 'Unauthorized';
-      }else {
+      }else if(error.status === 500){
         message = "Internal server error";
+      }else if(error.status === 400){
+        message = 'Bad request';
       }
 
-      this.modal.alert().title('Error').message(message).open();
+      const dialog = this.modal.alert().isBlocking(true).title('Error').message(message).open();
+
+      dialog.then(value => {
+        //todo trigger an event to reload the navdrawer component
+
+        this.navDrawerService.trigger(false);
+        this.cookieService.removeAll();
+        this.router.navigate(['/login']);
+      });
     });
   }
 }

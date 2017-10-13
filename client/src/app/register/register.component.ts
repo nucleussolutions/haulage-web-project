@@ -7,6 +7,7 @@ import {CookieService} from "ngx-cookie";
 import {AngularFireAuth} from "angularfire2/auth";
 import { Overlay } from 'ngx-modialog';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import { NavDrawerService } from 'app/nav-drawer.service';
 
 @Component({
     selector: 'app-register',
@@ -20,12 +21,11 @@ export class RegisterComponent implements OnInit {
 
     private verificationResponse : any;
 
-    constructor(private formBuilder: FormBuilder, private registerService: RegisterService, private titleService: Title, private router: Router, private cookieService: CookieService, private firebaseAuth: AngularFireAuth, private modal: Modal) {
+    constructor(private formBuilder: FormBuilder, private registerService: RegisterService, private titleService: Title, private router: Router, private cookieService: CookieService, private firebaseAuth: AngularFireAuth, private modal: Modal, private navDrawerService : NavDrawerService) {
         this.credentials = this.formBuilder.group({
             email: ['', Validators.compose([Validators.required, Validators.email])],
             password: ['', Validators.compose([Validators.minLength(6), Validators.required])],
             retypePassword: ['', Validators.compose([Validators.minLength(6), Validators.required])],
-            role: new FormControl('Admin'),
         }, {validator: this.matchingPasswords('password', 'retypePassword')});
 
         this.titleService.setTitle('Register');
@@ -39,9 +39,9 @@ export class RegisterComponent implements OnInit {
         this.firebaseAuth.auth.createUserWithEmailAndPassword(formData.value.email, formData.value.password).then(response => {
 
             console.log('register response '+JSON.stringify(response));
-            
+
             let responseStr = JSON.stringify(response);
-            
+
             response = JSON.parse(responseStr);
 
             this.cookieService.put('uid', response.uid);
@@ -51,8 +51,9 @@ export class RegisterComponent implements OnInit {
             this.cookieService.put('apiKey', response.apiKey);
             this.cookieService.put('refreshToken', response.stsTokenManager.refreshToken);
             this.cookieService.put('token', response.stsTokenManager.accessToken);
-            this.cookieService.put('expirationTime', response.stsTokenManager.expirationTime);
+            this.cookieService.put('expiresIn', response.stsTokenManager.expiresIn);
 
+            this.navDrawerService.trigger(true);
             this.router.navigate(['/index']);
 
             this.firebaseAuth.auth.currentUser.sendEmailVerification().then(verificationResponse => {
