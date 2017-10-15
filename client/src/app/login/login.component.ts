@@ -12,7 +12,6 @@ import { Modal } from 'ngx-modialog/plugins/bootstrap';
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css'],
-    providers: [NavDrawerService]
 })
 export class LoginComponent implements OnInit {
 
@@ -52,6 +51,7 @@ export class LoginComponent implements OnInit {
 
             //todo if email is not verified, pop up a dialog for them to verify email
             this.navDrawerService.trigger(true);
+            // location.reload();
             this.router.navigate(['/index']);
         }, error => {
             this.modal.alert().title('Error').message(error).open();

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { BSModalContext, Modal } from 'ngx-modialog/plugins/bootstrap';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -7,13 +7,14 @@ import { ForwarderInfoService } from "../forwarderInfo/forwarderInfo.service";
 import { CreateProfileModalComponent } from "../create-profile-modal/create-profile-modal.component";
 import { overlayConfigFactory } from "ngx-modialog";
 import { CookieService } from "ngx-cookie";
+import { NavDrawerComponent } from 'app/nav-drawer/nav-drawer.component';
 
 
 @Component({
     selector: 'app-index',
     templateUrl: './index.component.html',
     styleUrls: ['./index.component.css'],
-    providers: [CookieService]
+    providers: [CookieService],
 })
 export class IndexComponent implements OnInit, AfterViewInit {
 
@@ -23,7 +24,8 @@ export class IndexComponent implements OnInit, AfterViewInit {
 
     private permission: string;
 
-
+    @ViewChild(NavDrawerComponent)
+    navDrawerComponent: NavDrawerComponent;
 
     constructor(public modal: Modal, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private cookieService: CookieService) {
         this.token = this.cookieService.get('token');
@@ -48,13 +50,5 @@ export class IndexComponent implements OnInit, AfterViewInit {
 
 
         //todo get permission for the user
-    }
-
-    submitDetails(formData) {
-
-
-        //determine whether it's a haullier or forwarder then submit details to the backend
-
-
     }
 }

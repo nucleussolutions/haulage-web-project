@@ -18,15 +18,6 @@ import { Modal } from 'ngx-modialog/plugins/bootstrap';
 })
 export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalComponent<CreateProfileModalContext> {
 
-
-    beforeDismiss?(): boolean | Promise<boolean> {
-        throw new Error("Method not implemented.");
-    }
-    beforeClose?(): boolean | Promise<boolean> {
-        throw new Error("Method not implemented.");
-    }
-
-
     ngOnInit(): void {
         //throw new Error('Method not implemented.');
     }
@@ -34,7 +25,7 @@ export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalCom
 
     context: CreateProfileModalContext;
 
-    private credentials: FormGroup;
+    private personalDetails: FormGroup;
 
     private userId: string;
     private token: string;
@@ -48,7 +39,7 @@ export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalCom
         this.apiKey = cookieService.get('apiKey');
 
         this.dialog.setCloseGuard(this);
-        this.credentials = this.formBuilder.group({
+        this.personalDetails = this.formBuilder.group({
             name: ['', Validators.required],
             companyName: ['', Validators.required],
             companyAddress1: ['', Validators.required],
