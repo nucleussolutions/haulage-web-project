@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Permission} from './permission';
 import {PermissionService} from './permission.service';
@@ -6,13 +6,19 @@ import {Response} from "@angular/http";
 import { CookieService } from 'ngx-cookie';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import {Title} from "@angular/platform-browser";
+import { UserService } from 'app/user.service';
+import { Subscription } from 'rxjs/Subscription';
 
 
 @Component({
   selector: 'permission-persist',
   templateUrl: './permission-persist.component.html'
 })
-export class PermissionPersistComponent implements OnInit {
+export class PermissionPersistComponent implements OnInit, OnDestroy {
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   permission = new Permission();
   create = true;
@@ -22,16 +28,24 @@ export class PermissionPersistComponent implements OnInit {
 
   private apiKey : string;
 
+  private response : any;
 
-  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private router: Router, private modal : Modal, private cookieService : CookieService, private titleService: Title) {
-    this.token = this.cookieService.get('token');
-    this.apiKey = this.cookieService.get('apiKey');
+  private subscription : Subscription;
+
+
+  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private userService: UserService, private router: Router, private modal : Modal, private titleService: Title) {
+    // this.token = this.cookieService.get('token');
+    // this.apiKey = this.cookieService.get('apiKey');
+    this.subscription = this.userService.getUser().subscribe(response => {
+      this.response = response;
+      this.token = this.response.stsTokenManager.accessToken;
+      this.apiKey = this.response.apiKey;
+    });
 
     this.titleService.setTitle('Create Permission');
   }
 
   ngOnInit() {
-
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
         this.permissionService.get(+params['id'], this.token, this.apiKey).subscribe((permission: Permission) => {

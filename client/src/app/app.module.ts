@@ -31,7 +31,6 @@ import { CustomerModule } from './customer/customer.module';
 import { TransportRequestModule } from './transportRequest/transportRequest.module';
 import { PricingModule } from './pricing/pricing.module';
 import { CookieModule } from 'ngx-cookie';
-import { UserComponent } from './user/user.component';
 import { ModalModule } from "ngx-modialog";
 import { BootstrapModalModule } from "ngx-modialog/plugins/bootstrap";
 import { CreateProfileModalComponent } from './create-profile-modal/create-profile-modal.component';
@@ -58,7 +57,6 @@ import { PermissionModule } from './permission/permission.module';
         SettingsComponent,
         NavDrawerComponent,
         ChangePasswordComponent,
-        UserComponent,
         CreateProfileModalComponent,
         ResendCodeComponent,
         VerifyEmailComponent,
@@ -87,7 +85,6 @@ import { PermissionModule } from './permission/permission.module';
         BootstrapModalModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAuthModule,
-        //importsfirebase/auth,
         FlashMessagesModule,
         PermissionModule
     ],

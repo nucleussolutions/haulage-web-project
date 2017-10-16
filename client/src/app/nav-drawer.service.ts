@@ -28,7 +28,4 @@ export class NavDrawerService {
     return this.loginState.asObservable();
   }
 
-  // getAppToNavDrawerLoginState() : Observable<any> {
-  //   return this.appToNavDrawerLoginState.asObservable();
-  // }
 }
