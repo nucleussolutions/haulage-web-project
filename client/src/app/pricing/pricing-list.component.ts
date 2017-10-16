@@ -17,9 +17,9 @@ export class PricingListComponent implements OnInit {
 
   pricingList: Pricing[] = [];
 
-  private userObject : any;
+  private userObject: any;
 
-  constructor(private pricingService: PricingService, private modal: Modal, private titleService: Title, private router: Router, private userService : UserService) {
+  constructor(private pricingService: PricingService, private modal: Modal, private titleService: Title, private router: Router, private userService: UserService) {
     // this.token = this.cookieService.get('token');
     // this.apiKey = this.cookieService.get('apiKey');
     this.titleService.setTitle('Pricing List');

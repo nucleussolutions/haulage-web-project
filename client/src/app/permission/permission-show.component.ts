@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Permission} from './permission';
-import {PermissionService} from './permission.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Permission } from './permission';
+import { PermissionService } from './permission.service';
 import { CookieService } from 'ngx-cookie';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 
@@ -13,11 +13,11 @@ export class PermissionShowComponent implements OnInit {
 
   permission = new Permission();
 
-  private token : string;
+  private token: string;
 
-  private apiKey : string;
+  private apiKey: string;
 
-  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private router: Router, private cookieService : CookieService, private modal : Modal) {
+  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private router: Router, private cookieService: CookieService, private modal: Modal) {
     this.token = this.cookieService.get('token');
     this.apiKey = this.cookieService.get('apiKey');
   }
@@ -36,7 +36,7 @@ export class PermissionShowComponent implements OnInit {
     if (confirm("Are you sure?")) {
       this.permissionService.destroy(this.permission, this.token, this.apiKey).subscribe((success: boolean) => {
         if (success) {
-          this.router.navigate(['/permission','list']);
+          this.router.navigate(['/permission', 'list']);
         } else {
           alert("Error occurred during delete");
         }
