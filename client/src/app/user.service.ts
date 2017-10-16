@@ -1,46 +1,44 @@
-import {Injectable} from '@angular/core';
-import {Http, Response, RequestOptions, RequestMethod, Request, Headers} from '@angular/http';
-import {Observable} from "rxjs/Observable";
-import {Subject} from "rxjs/Subject";
-import {User} from "./user/user";
-import {environment} from "../environments/environment";
+import { Injectable } from '@angular/core';
+import { Http, Response, RequestOptions, RequestMethod, Request, Headers } from '@angular/http';
+import { Observable } from "rxjs/Observable";
+import { Subject } from "rxjs/Subject";
+import { User } from "./user/user";
+import { environment } from "../environments/environment";
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable()
 export class UserService {
 
-    constructor(private http: Http) {
+    constructor(private http: Http, private firebaseAuth: AngularFireAuth) {
     }
 
-    //todo fix url mappings
-    list(): Observable<User[]> {
-        let subject = new Subject<User[]>();
-        this.http.get(environment.serverUrl + '/api/user')
-            .map((r: Response) => r.json())
-            .subscribe((json: any[]) => {
-                subject.next(json.map((item: any) => new User(item)))
+    register(email: string, password: string) {
+        return new Promise((resolve, reject) => {
+            this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password).then(response => {
+                resolve(response);
+            }, error => {
+                reject(error);
             });
-        return subject.asObservable();
+        });
     }
 
-    get(id: string): Observable<User> {
-        return this.http.get(environment.serverUrl + '/api/user/'+id)
-            .map((r: Response) => new User(r.json()));
+    login(email: string, password, string) {
+        return new Promise((resolve, reject) => {
+            this.firebaseAuth.auth.signInWithEmailAndPassword(email, password).then(response => {
+                resolve(response);
+            }, error => {
+                reject(error);
+            });
+        });
     }
 
-
-    // save(User: User): Observable<User> {
-    //     const requestOptions = new RequestOptions();
-    //     if (User.id) {
-    //         requestOptions.method = RequestMethod.Put;
-    //         requestOptions.url = environment.serverUrl + '/user/' + User.id;
-    //     } else {
-    //         requestOptions.method = RequestMethod.Post;
-    //         requestOptions.url = environment.serverUrl + '/user';
-    //     }
-    //     requestOptions.body = JSON.stringify(User);
-    //     requestOptions.headers = new Headers({"Content-Type": "application/json"});
-    //
-    //     return this.http.request(new Request(requestOptions))
-    //         .map((r: Response) => new User(r.json()));
-    // }
+    logout() {
+        return new Promise((resolve, reject) => {
+            this.firebaseAuth.auth.signOut().then(response => {
+                resolve(response);
+            }, error => {
+                reject(error);
+            });
+        });
+    }
 }

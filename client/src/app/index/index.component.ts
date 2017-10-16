@@ -8,6 +8,7 @@ import { CreateProfileModalComponent } from "../create-profile-modal/create-prof
 import { overlayConfigFactory } from "ngx-modialog";
 import { CookieService } from "ngx-cookie";
 import { NavDrawerComponent } from 'app/nav-drawer/nav-drawer.component';
+import {Title} from "@angular/platform-browser";
 
 
 @Component({
@@ -27,8 +28,9 @@ export class IndexComponent implements OnInit, AfterViewInit {
     @ViewChild(NavDrawerComponent)
     navDrawerComponent: NavDrawerComponent;
 
-    constructor(public modal: Modal, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private cookieService: CookieService) {
+    constructor(public modal: Modal, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private cookieService: CookieService, private titleService: Title) {
         this.token = this.cookieService.get('token');
+        this.titleService.setTitle('Dashboard');
     }
 
     ngOnInit() {
