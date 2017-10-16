@@ -4,8 +4,8 @@ import {HaulierInfo} from './haulierInfo';
 import { CookieService } from 'ngx-cookie';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import {Title} from "@angular/platform-browser";
-import { NavDrawerService } from 'app/nav-drawer.service';
 import { Router } from '@angular/router';
+import { UserService } from 'app/user.service';
 
 
 @Component({
@@ -20,9 +20,26 @@ export class HaulierInfoListComponent implements OnInit {
 
   private apiKey : string;
 
-  constructor(private haulierInfoService: HaulierInfoService, private cookieService : CookieService, private modal : Modal, private titleService: Title, private router: Router, private navDrawerService : NavDrawerService) {
-    this.token = this.cookieService.get('token');
-    this.apiKey = this.cookieService.get('apiKey');
+  private userObject: any;
+
+  constructor(private haulierInfoService: HaulierInfoService, private modal : Modal, private titleService: Title, private router: Router, private userService : UserService) {
+    // this.token = this.cookieService.get('token');
+    // this.apiKey = this.cookieService.get('apiKey');
+
+    this.userService.loginState$.subscribe(loggedIn => {
+
+    }, error => {
+
+    });
+
+    this.userService.getUser().subscribe(response => {
+      this.userObject = response;
+      this.token = this.userObject.token;
+      this.apiKey = this.userObject.apiKey;
+    }, error => {
+
+    });
+
     this.titleService.setTitle('Hauliers');
   }
 
@@ -45,8 +62,9 @@ export class HaulierInfoListComponent implements OnInit {
 
       dialog.then(value => {
         //todo might need to navigate them back to login
-        this.cookieService.removeAll();
-        this.navDrawerService.trigger(false);
+        // this.cookieService.removeAll();
+        // this.navDrawerService.trigger(false);
+
         this.router.navigate(['/login']);
       });
     });

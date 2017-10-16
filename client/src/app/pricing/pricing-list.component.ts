@@ -4,30 +4,40 @@ import { Pricing } from './pricing';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { CookieService } from "ngx-cookie";
 import { Title } from '@angular/platform-browser';
-import { NavDrawerService } from 'app/nav-drawer.service';
 import { Router } from '@angular/router';
+import { UserService } from 'app/user.service';
 
 
 @Component({
   selector: 'pricing-list',
-  templateUrl: './pricing-list.component.html'
+  templateUrl: './pricing-list.component.html',
+  providers: [UserService]
 })
 export class PricingListComponent implements OnInit {
 
   pricingList: Pricing[] = [];
 
-  private token: string;
+  private userObject : any;
 
-  private apiKey: string;
-
-  constructor(private pricingService: PricingService, private modal: Modal, private cookieService: CookieService, private titleService: Title, private navDrawerService: NavDrawerService, private router: Router) {
-    this.token = this.cookieService.get('token');
-    this.apiKey = this.cookieService.get('apiKey');
+  constructor(private pricingService: PricingService, private modal: Modal, private titleService: Title, private router: Router, private userService : UserService) {
+    // this.token = this.cookieService.get('token');
+    // this.apiKey = this.cookieService.get('apiKey');
     this.titleService.setTitle('Pricing List');
   }
 
   ngOnInit() {
-    this.pricingService.list(this.token, this.apiKey).subscribe((pricingList: Pricing[]) => {
+
+    this.userService.getUser().subscribe(response => {
+      this.userObject = response;
+    }, error => {
+
+    });
+
+    this.userService.loginState$.subscribe(loggedIn => {
+
+    });
+
+    this.pricingService.list(this.userObject.token, this.userObject.apiKey).subscribe((pricingList: Pricing[]) => {
       this.pricingList = pricingList;
     }, error => {
 
@@ -45,8 +55,8 @@ export class PricingListComponent implements OnInit {
 
       dialog.then(value => {
         //todo might need to navigate them back to login
-        this.cookieService.removeAll();
-        this.navDrawerService.trigger(false);
+        // this.cookieService.removeAll();
+        // this.navDrawerService.trigger(false);
         this.router.navigate(['/login']);
       });
     });

@@ -4,7 +4,6 @@ import { Title } from "@angular/platform-browser";
 import { CookieService } from 'ngx-cookie';
 import { Router } from "@angular/router";
 import { AngularFireAuth } from "angularfire2/auth";
-import { NavDrawerService } from 'app/nav-drawer.service';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { UserService } from 'app/user.service';
 

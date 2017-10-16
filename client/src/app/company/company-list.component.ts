@@ -4,7 +4,7 @@ import { Company } from './company';
 import { CookieService } from 'ngx-cookie';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { Router } from '@angular/router';
-import { NavDrawerService } from 'app/nav-drawer.service';
+import { UserService } from 'app/user.service';
 
 @Component({
   selector: 'company-list',
@@ -14,17 +14,24 @@ export class CompanyListComponent implements OnInit {
 
   companyList: Company[] = [];
 
-  private token: string;
+  private userObject: any;
 
-  private apiKey: string;
 
-  constructor(private companyService: CompanyService, private cookieService: CookieService, private modal: Modal, private router: Router, private navDrawerService: NavDrawerService) {
-    this.token = this.cookieService.get('token');
-    this.apiKey = this.cookieService.get('apiKey');
+  constructor(private companyService: CompanyService, private modal: Modal, private router: Router, private userService: UserService) {
+    // this.token = this.cookieService.get('token');
+    // this.apiKey = this.cookieService.get('apiKey');
   }
 
   ngOnInit() {
-    this.companyService.list(this.token, this.apiKey).subscribe((companyList: Company[]) => {
+
+    this.userService.getUser().subscribe(response => {
+      this.userObject = response;
+    }, error => {
+
+    });
+
+
+    this.companyService.list(this.userObject.token, this.userObject.apiKey).subscribe((companyList: Company[]) => {
       this.companyList = companyList;
     }, error => {
       const dialog = this.modal.alert().isBlocking(true)
@@ -32,8 +39,8 @@ export class CompanyListComponent implements OnInit {
 
       dialog.then(value => {
         //todo might need to navigate them back to login
-        this.cookieService.removeAll();
-        this.navDrawerService.trigger(false);
+        // this.cookieService.removeAll();
+        // this.navDrawerService.trigger(false);
         this.router.navigate(['/login']);
       });
     });

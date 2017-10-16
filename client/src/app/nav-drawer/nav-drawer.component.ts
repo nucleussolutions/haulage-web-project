@@ -39,7 +39,11 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
     constructor(private router: Router, private firebaseAuth: AngularFireAuth, private permissionService: PermissionService, private userService: UserService) {
         this.executeSubscription();
         this.userService.loginState$.subscribe(loggedIn => {
+            console.log('NavDrawerComponent loginstate subscribe ' + loggedIn);
             this.executeSubscription();
+            if (!loggedIn) {
+                this.token = null;
+            }
         });
     }
 
@@ -51,13 +55,13 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
         // });
     }
 
-    executeSubscription(){
+    executeSubscription() {
         this.subscription = this.userService.getUser().subscribe(response => {
             this.response = response;
             this.token = this.response.token;
             this.userId = this.response.uid;
             this.apiKey = this.response.apiKey;
-            console.log('NavDrawerComponent token '+this.token);
+            console.log('NavDrawerComponent token ' + this.token);
         }, error => {
             console.log('NavDrawerComponent failed to subscribe to getUser ' + error);
         });

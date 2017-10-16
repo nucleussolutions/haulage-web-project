@@ -4,24 +4,44 @@ import {Location} from './location';
 import { CookieService } from 'ngx-cookie';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import {Router} from "@angular/router";
-import { NavDrawerService } from 'app/nav-drawer.service';
+import { UserService } from 'app/user.service';
 
 
 @Component({
   selector: 'location-list',
-  templateUrl: './location-list.component.html'
+  templateUrl: './location-list.component.html',
+  providers: [UserService]
 })
 export class LocationListComponent implements OnInit {
 
   locationList: Location[] = [];
 
-  constructor(private locationService: LocationService, private cookieService : CookieService, private modal : Modal, private router: Router, private navDrawerService : NavDrawerService) {
+  private token : string;
+
+  private apiKey : string;
+
+  private userObject : any ;
+
+  constructor(private locationService: LocationService, private modal : Modal, private router: Router, private userService: UserService) {
   }
 
   ngOnInit() {
-    let token = this.cookieService.get('token');
-    let apiKey = this.cookieService.get('apiKey');
-    this.locationService.list(token, apiKey).subscribe((locationList: Location[]) => {
+    // let token = this.cookieService.get('token');
+    // let apiKey = this.cookieService.get('apiKey');
+
+    this.userService.loginState$.subscribe(loggedIn => {
+
+    }, error => {
+
+    });
+
+    this.userService.getUser().subscribe(response => {
+      this.userObject = response;
+    }, error => {
+
+    });
+
+    this.locationService.list(this.userObject.token, this.userObject.apiKey).subscribe((locationList: Location[]) => {
       this.locationList = locationList;
     }, error => {
       let message;
@@ -38,12 +58,12 @@ export class LocationListComponent implements OnInit {
 
       dialog.then(value => {
         //todo trigger an event to reload the navdrawer component
-
+        this.router.navigate(['/login']);
       });
-      
-      this.navDrawerService.trigger(false);
-      this.cookieService.removeAll();
-      this.router.navigate(['/login']);
+
+      // this.navDrawerService.trigger(false);
+      // this.cookieService.removeAll();
     });
   }
+
 }
