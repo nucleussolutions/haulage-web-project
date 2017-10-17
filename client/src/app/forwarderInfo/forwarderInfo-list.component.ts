@@ -4,6 +4,8 @@ import {ForwarderInfo} from './forwarderInfo';
 import {CookieService} from 'ngx-cookie';
 import {Modal} from 'ngx-modialog/plugins/bootstrap';
 import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs/Subscription';
+import { UserService } from 'app/user.service';
 
 
 @Component({
@@ -14,18 +16,19 @@ export class ForwarderInfoListComponent implements OnInit {
 
     forwarderInfoList: ForwarderInfo[] = [];
 
-    private token: string;
+    private subscription: Subscription;
 
-    private apiKey: string;
+    private userObject : any;
 
-    constructor(private forwarderInfoService: ForwarderInfoService, private cookieService: CookieService, private modal: Modal, private titleService : Title) {
-        this.token = this.cookieService.get('token');
-        this.apiKey = this.cookieService.get('apiKey');
+    constructor(private forwarderInfoService: ForwarderInfoService, private modal: Modal, private titleService : Title, private userService : UserService) {
         this.titleService.setTitle('Forwarders');
+        this.subscription = this.userService.getUser().subscribe(response => {
+            this.userObject = response;
+        });
     }
 
     ngOnInit() {
-        this.forwarderInfoService.list(this.token, this.apiKey).subscribe((forwarderInfoList: ForwarderInfo[]) => {
+        this.forwarderInfoService.list(this.userObject.token, this.userObject.apiKey).subscribe((forwarderInfoList: ForwarderInfo[]) => {
             this.forwarderInfoList = forwarderInfoList;
         }, error => {
             let message;

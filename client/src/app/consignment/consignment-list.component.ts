@@ -1,28 +1,36 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ConsignmentService} from './consignment.service';
 import {Consignment} from './consignment';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import {CookieService} from "ngx-cookie";
+import { UserService } from 'app/user.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'consignment-list',
   templateUrl: './consignment-list.component.html'
 })
-export class ConsignmentListComponent implements OnInit {
+export class ConsignmentListComponent implements OnInit, OnDestroy {
+
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  private userObject : any;
+
+  private subscription : Subscription;
 
   consignmentList: Consignment[] = [];
 
-  private token : string;
-
-  private apiKey : string;
-
-  constructor(private consignmentService: ConsignmentService, private modal : Modal, private cookieService : CookieService) {
-    this.token = this.cookieService.get('token');
-    this.apiKey = this.cookieService.get('apiKey');
+  constructor(private consignmentService: ConsignmentService, private modal : Modal, private userService: UserService) {
+    this.subscription = this.userService.getUser().subscribe(response => {
+      this.userObject = response;
+    });
   }
 
   ngOnInit() {
-    this.consignmentService.list(this.token, this.apiKey).subscribe((consignmentList: Consignment[]) => {
+    this.consignmentService.list(this.userObject.token, this.userObject.apiKey).subscribe((consignmentList: Consignment[]) => {
       this.consignmentList = consignmentList;
     }, error => {
       let message;
@@ -31,6 +39,8 @@ export class ConsignmentListComponent implements OnInit {
         message = 'Unauthorized'
       }else if(error.status === 500){
         message = 'Internal server error';
+      }else if(error.status ==- 400){
+        message = 'Bad request';
       }
 
       this.modal.alert().title('Error').message(message).open();

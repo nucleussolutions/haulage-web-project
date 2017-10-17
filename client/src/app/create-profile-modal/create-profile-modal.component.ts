@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef, AfterViewChecked, OnDestroy } from '@angular/core';
 import { BSModalContext } from "ngx-modialog/plugins/bootstrap";
 import { CloseGuard, DialogRef, ModalComponent } from "ngx-modialog";
 import { HaulierInfoService } from "../haulierInfo/haulierInfo.service";
@@ -9,6 +9,8 @@ import { ForwarderInfo } from "../forwarderInfo/forwarderInfo";
 import { Company } from "../company/company";
 import { HaulierInfo } from "../haulierInfo/haulierInfo";
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import { UserService } from 'app/user.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'app-create-profile-modal',
@@ -16,10 +18,13 @@ import { Modal } from 'ngx-modialog/plugins/bootstrap';
     styleUrls: ['./create-profile-modal.component.css'],
     providers: [CookieService]
 })
-export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalComponent<CreateProfileModalContext> {
+export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuard, ModalComponent<CreateProfileModalContext> {
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+    }
 
     ngOnInit(): void {
-        //throw new Error('Method not implemented.');
     }
 
 
@@ -27,16 +32,12 @@ export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalCom
 
     private personalDetails: FormGroup;
 
-    private userId: string;
-    private token: string;
+    private userObject : any;
 
-    private apiKey: string;
+    private subscription: Subscription;
 
-    constructor(public dialog: DialogRef<CreateProfileModalContext>, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private formBuilder: FormBuilder, private cookieService: CookieService, private modal: Modal, private cdRef: ChangeDetectorRef) {
+    constructor(public dialog: DialogRef<CreateProfileModalContext>, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private formBuilder: FormBuilder, private modal: Modal, private cdRef: ChangeDetectorRef, private userService: UserService) {
         this.context = dialog.context;
-        this.userId = cookieService.get('uid');
-        this.token = cookieService.get('token');
-        this.apiKey = cookieService.get('apiKey');
 
         this.dialog.setCloseGuard(this);
         this.personalDetails = this.formBuilder.group({
@@ -54,6 +55,10 @@ export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalCom
             companyRegNo: ['', Validators.required],
             usertype: new FormControl('Admin'),
         });
+
+        this.subscription = this.userService.getUser().subscribe(response => {
+            this.userObject = response;
+        })
     }
 
 
@@ -82,10 +87,10 @@ export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalCom
         if (formData.value.usertype === 'Admin') {
             let haulierInfo = new HaulierInfo();
             haulierInfo.name = formData.value.name;
-            haulierInfo.userId = this.userId;
+            haulierInfo.userId = this.userObject.userId;
             haulierInfo.company = company;
 
-            this.haulierInfoService.save(haulierInfo, this.token, this.apiKey).subscribe(response => {
+            this.haulierInfoService.save(haulierInfo, this.userObject.token, this.userObject.apiKey).subscribe(response => {
                 console.log('haulier service save response ' + JSON.stringify(response));
 
                 let responseStr = JSON.stringify(response);
@@ -102,11 +107,11 @@ export class CreateProfileModalComponent implements OnInit, CloseGuard, ModalCom
         } else if (formData.value.usertype === 'Manager') {
             let forwarderInfo = new ForwarderInfo();
 
-            forwarderInfo.userId = this.userId;
+            forwarderInfo.userId = this.userObject.userId;
             forwarderInfo.company = company;
             forwarderInfo.name = formData.value.name;
 
-            this.forwarderInfoService.save(forwarderInfo, this.token, this.apiKey).subscribe(response => {
+            this.forwarderInfoService.save(forwarderInfo, this.userObject.token, this.userObject.apiKey).subscribe(response => {
                 console.log('forwarder service save response ' + JSON.stringify(response));
 
                 let responseStr = JSON.stringify(response);

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import { BSModalContext, Modal } from 'ngx-modialog/plugins/bootstrap';
 import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -9,6 +9,8 @@ import { overlayConfigFactory } from "ngx-modialog";
 import { CookieService } from "ngx-cookie";
 import { NavDrawerComponent } from 'app/nav-drawer/nav-drawer.component';
 import {Title} from "@angular/platform-browser";
+import { Subscription } from 'rxjs/Subscription';
+import { UserService } from 'app/user.service';
 
 
 @Component({
@@ -17,19 +19,30 @@ import {Title} from "@angular/platform-browser";
     styleUrls: ['./index.component.css'],
     providers: [CookieService],
 })
-export class IndexComponent implements OnInit, AfterViewInit {
+export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
+
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+    }
 
     bsModalRef: BsModalRef;
-
-    private token: string;
 
     private permission: string;
 
     @ViewChild(NavDrawerComponent)
     navDrawerComponent: NavDrawerComponent;
 
-    constructor(public modal: Modal, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private cookieService: CookieService, private titleService: Title) {
-        this.token = this.cookieService.get('token');
+    private userObject: any;
+
+    private subscription: Subscription;
+
+    constructor(public modal: Modal, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private titleService: Title, private userService: UserService) {
+
+        this.subscription = this.userService.getUser().subscribe(response => {
+            this.userObject = response;
+        })
+
         this.titleService.setTitle('Dashboard');
     }
 
@@ -41,7 +54,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
         //if it's a first time user, and the user is a haulier and forwarder, then show a modal prompting for profile creation
 
         setTimeout(() => {
-            if (this.token) {
+            if (this.userObject.token) {
                 this.modal
                     .open(CreateProfileModalComponent, overlayConfigFactory({
                         isBlocking: false,

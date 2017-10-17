@@ -4,6 +4,7 @@ import { Company } from './company';
 import { CompanyService } from './company.service';
 import { Response } from "@angular/http";
 import { CookieService } from 'ngx-cookie';
+import { UserService } from 'app/user.service';
 
 
 @Component({
@@ -16,21 +17,19 @@ export class CompanyPersistComponent implements OnInit {
   create = true;
   errors: any[];
 
-  private token: string;
+  private userObject : any;
 
-  private apiKey: string;
-
-
-  constructor(private route: ActivatedRoute, private companyService: CompanyService, private router: Router, private cookieService: CookieService) {
-    this.token = cookieService.get('token');
-    this.apiKey = cookieService.get('apiKey');
+  constructor(private route: ActivatedRoute, private companyService: CompanyService, private router: Router, private userService: UserService) {
+    this.userService.getUser().subscribe(response => {
+      this.userObject = response;
+    });
   }
 
   ngOnInit() {
 
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
-        this.companyService.get(+params['id'], this.token, this.apiKey).subscribe((company: Company) => {
+        this.companyService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((company: Company) => {
           this.create = false;
           this.company = company;
         });
@@ -39,7 +38,7 @@ export class CompanyPersistComponent implements OnInit {
   }
 
   save() {
-    this.companyService.save(this.company, this.token, this.apiKey).subscribe((company: Company) => {
+    this.companyService.save(this.company, this.userObject.token, this.userObject.apiKey).subscribe((company: Company) => {
       this.router.navigate(['/company', 'show', company.id]);
     }, (res: Response) => {
       const json = res.json();

@@ -10,10 +10,13 @@ import {Consignment} from '../consignment/consignment';
 import {CustomerService} from '../customer/customer.service';
 import {Customer} from '../customer/customer';
 import { CookieService } from 'ngx-cookie';
+import { UserService } from 'app/user.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'transportRequest-persist',
-    templateUrl: './transportRequest-persist.component.html'
+    templateUrl: './transportRequest-persist.component.html',
+    providers: [UserService]
 })
 export class TransportRequestPersistComponent implements OnInit {
 
@@ -24,13 +27,13 @@ export class TransportRequestPersistComponent implements OnInit {
     consignmentList: Consignment[];
     customerList: Customer[];
 
-    private token : string;
-
-    private apiKey : string;
-
     settings: any;
 
-    constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private locationService: LocationService, private consignmentService: ConsignmentService, private customerService: CustomerService, private cookieService : CookieService) {
+    private subscription : Subscription;
+
+    private userObject : any;
+
+    constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private locationService: LocationService, private consignmentService: ConsignmentService, private customerService: CustomerService, private userService: UserService) {
 
         this.settings = {
             columns: {
@@ -49,25 +52,26 @@ export class TransportRequestPersistComponent implements OnInit {
             }
         };
 
-        this.token = this.cookieService.get('token');
-        this.apiKey = this.cookieService.get('apiKey');
+        this.subscription = this.userService.getUser().subscribe(response => {
+            this.userObject = response;
+        });
     }
 
     ngOnInit() {
-        this.locationService.list(this.token, this.apiKey).subscribe((locationList: Location[]) => {
+        this.locationService.list(this.userObject.token, this.userObject.apiKey).subscribe((locationList: Location[]) => {
             this.locationList = locationList;
         });
         this.transportRequest.hazardous = false;
         this.transportRequest.overDimension = false;
-        this.consignmentService.list(this.token, this.apiKey).subscribe((consignmentList: Consignment[]) => {
+        this.consignmentService.list(this.userObject.token, this.userObject.apiKey).subscribe((consignmentList: Consignment[]) => {
             this.consignmentList = consignmentList;
         });
-        this.customerService.list(this.token, this.apiKey).subscribe((customerList: Customer[]) => {
+        this.customerService.list(this.userObject.token, this.userObject.apiKey).subscribe((customerList: Customer[]) => {
             this.customerList = customerList;
         });
         this.route.params.subscribe((params: Params) => {
             if (params.hasOwnProperty('id')) {
-                this.transportRequestService.get(+params['id'], this.token, this.apiKey).subscribe((transportRequest: TransportRequest) => {
+                this.transportRequestService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((transportRequest: TransportRequest) => {
                     this.create = false;
                     this.transportRequest = transportRequest;
                 });

@@ -12,9 +12,6 @@ export class ChangePasswordService {
     changePassword(password, token) {
         return new Promise((resolve, reject) => {
 
-            //todo include token in the header so that api call goes through
-
-
             let postBody = {
                 password : password
             };

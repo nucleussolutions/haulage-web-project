@@ -1,25 +1,30 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Location} from './location';
 import {LocationService} from './location.service';
 import {CookieService} from "ngx-cookie";
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import { UserService } from 'app/user.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'location-persist',
-  templateUrl: './location-show.component.html'
+  templateUrl: './location-show.component.html',
+  providers: [UserService]
 })
-export class LocationShowComponent implements OnInit {
+export class LocationShowComponent implements OnInit, OnDestroy {
 
   location = new Location();
 
-  private token :string;
+  private subscription: Subscription;
 
-  private apiKey : string;
+  private userObject: any;
 
-  constructor(private route: ActivatedRoute, private locationService: LocationService, private router: Router, private cookieService : CookieService, private modal : Modal) {
-    this.token = this.cookieService.get('token');
-    this.apiKey = this.cookieService.get('apiKey');
+  constructor(private route: ActivatedRoute, private locationService: LocationService, private router: Router, private userService: UserService, private modal : Modal) {
+
+    this.subscription = this.userService.getUser().subscribe(response => {
+      this.userObject = response;
+    });
   }
 
   ngOnInit() {

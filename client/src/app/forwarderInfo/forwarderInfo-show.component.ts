@@ -1,29 +1,38 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {ForwarderInfo} from './forwarderInfo';
 import {ForwarderInfoService} from './forwarderInfo.service';
 import { CookieService } from 'ngx-cookie';
+import { UserService } from 'app/user.service';
+import { Subscription } from 'rxjs/Subscription';
+
 
 @Component({
   selector: 'forwarderInfo-persist',
-  templateUrl: './forwarderInfo-show.component.html'
+  templateUrl: './forwarderInfo-show.component.html',
+  providers: [UserService]
 })
-export class ForwarderInfoShowComponent implements OnInit {
+export class ForwarderInfoShowComponent implements OnInit, OnDestroy {
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   forwarderInfo = new ForwarderInfo();
 
-  private token : string;
+  private subscription: Subscription;
 
-  private apiKey : string;
+  private userObject : any;
 
-  constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private router: Router, private cookieService : CookieService) {
-    this.token = cookieService.get('token');
-    this.apiKey = cookieService.get('apiKey');
+  constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private router: Router, private userService: UserService) {
+    this.subscription = this.userService.getUser().subscribe(response => {
+      this.userObject = response;
+    });
   }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.forwarderInfoService.get(+params['id'], this.token, this.apiKey).subscribe((forwarderInfo: ForwarderInfo) => {
+      this.forwarderInfoService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((forwarderInfo: ForwarderInfo) => {
         this.forwarderInfo = forwarderInfo;
       });
     });
@@ -31,7 +40,7 @@ export class ForwarderInfoShowComponent implements OnInit {
 
   destroy() {
     if (confirm("Are you sure?")) {
-      this.forwarderInfoService.destroy(this.forwarderInfo, this.token, this.apiKey).subscribe((success: boolean) => {
+      this.forwarderInfoService.destroy(this.forwarderInfo, this.userObject.token, this.userObject.apiKey).subscribe((success: boolean) => {
         if (success) {
           this.router.navigate(['/forwarderInfo','list']);
         } else {

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {ForwarderInfo} from './forwarderInfo';
 import {ForwarderInfoService} from './forwarderInfo.service';
@@ -6,32 +6,40 @@ import {Response} from "@angular/http";
 import { CompanyService } from '../company/company.service';
 import { Company } from '../company/company';
 import { CookieService } from 'ngx-cookie';
+import { UserService } from 'app/user.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'forwarderInfo-persist',
-  templateUrl: './forwarderInfo-persist.component.html'
+  templateUrl: './forwarderInfo-persist.component.html',
+  providers: [UserService]
 })
-export class ForwarderInfoPersistComponent implements OnInit {
+export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   forwarderInfo = new ForwarderInfo();
   create = true;
   errors: any[];
   companyList: Company[];
 
-  private token : string;
+  private subscription: Subscription;
 
-  private apiKey : string;
+  private userObject: any;
 
-  constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private router: Router, private companyService: CompanyService, private cookieService : CookieService) {
-    this.token = this.cookieService.get('token');
-    this.apiKey = this.cookieService.get('apiKey');
+  constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private router: Router, private companyService: CompanyService, private userService : UserService) {
+    this.subscription = this.userService.getUser().subscribe(response => {
+      this.userObject = response;
+    });
   }
 
   ngOnInit() {
-    this.companyService.list(this.token, this.apiKey).subscribe((companyList: Company[]) => { this.companyList = companyList; });
+    this.companyService.list(this.userObject.token, this.userObject.apiKey).subscribe((companyList: Company[]) => { this.companyList = companyList; });
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
-        this.forwarderInfoService.get(+params['id'], this.token, this.apiKey).subscribe((forwarderInfo: ForwarderInfo) => {
+        this.forwarderInfoService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((forwarderInfo: ForwarderInfo) => {
           this.create = false;
           this.forwarderInfo = forwarderInfo;
         });
@@ -40,7 +48,7 @@ export class ForwarderInfoPersistComponent implements OnInit {
   }
 
   save() {
-    this.forwarderInfoService.save(this.forwarderInfo, this.token, this.apiKey).subscribe((forwarderInfo: ForwarderInfo) => {
+    this.forwarderInfoService.save(this.forwarderInfo, this.userObject.token, this.userObject.apiKey).subscribe((forwarderInfo: ForwarderInfo) => {
       this.router.navigate(['/forwarderInfo', 'show', forwarderInfo.id]);
     }, (res: Response) => {
       const json = res.json();

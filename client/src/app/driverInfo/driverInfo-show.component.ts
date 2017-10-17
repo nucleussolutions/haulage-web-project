@@ -1,33 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DriverInfo } from './driverInfo';
 import { DriverInfoService } from './driverInfo.service';
 import { CookieService } from 'ngx-cookie';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import { Subscription } from 'rxjs/Subscription';
+import { UserService } from 'app/user.service';
 
 @Component({
   selector: 'driverInfo-persist',
-  templateUrl: './driverInfo-show.component.html'
+  templateUrl: './driverInfo-show.component.html',
+  providers: [UserService]
 })
-export class DriverInfoShowComponent implements OnInit {
+export class DriverInfoShowComponent implements OnInit, OnDestroy {
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   driverInfo = new DriverInfo();
 
-  private token: string;
+  private subscription: Subscription;
 
-  private apiKey: string;
+  private userObject: any;
 
-  private expirationTime : any;
-
-  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private router: Router, private cookieService: CookieService, private modal : Modal) {
-    this.token = this.cookieService.get('token');
-    this.apiKey = this.cookieService.get('apiKey');
-    this.expirationTime = this.cookieService.get('expirationTime');
+  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private router: Router, private modal : Modal, private userService: UserService) {
+    this.subscription = this.userService.getUser().subscribe(response => {
+      this.userObject = response;
+    });
   }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.driverInfoService.get(+params['id'], this.token, this.apiKey).subscribe((driverInfo: DriverInfo) => {
+      this.driverInfoService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((driverInfo: DriverInfo) => {
         this.driverInfo = driverInfo;
       }, error => {
         this.modal.alert().title('Error').message(error).open();
@@ -38,7 +43,7 @@ export class DriverInfoShowComponent implements OnInit {
 
   destroy() {
     if (confirm("Are you sure?")) {
-      this.driverInfoService.destroy(this.driverInfo, this.token, this.apiKey).subscribe((success: boolean) => {
+      this.driverInfoService.destroy(this.driverInfo, this.userObject.token, this.userObject.apiKey).subscribe((success: boolean) => {
         if (success) {
           this.router.navigate(['/driverInfo', 'list']);
         } else {

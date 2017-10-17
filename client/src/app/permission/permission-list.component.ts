@@ -18,8 +18,6 @@ export class PermissionListComponent implements OnInit {
   private userObject : any;
 
   constructor(private permissionService: PermissionService, private modal: Modal, private router: Router, private userService: UserService) {
-    // this.token = this.cookieService.get('token');
-    // this.apiKey = this.cookieService.get('apiKey');
   }
 
   ngOnInit() {
@@ -44,8 +42,6 @@ export class PermissionListComponent implements OnInit {
 
         dialog.then(value => {
           //todo might need to navigate them back to login
-          // this.cookieService.removeAll();
-          // this.navDrawerService.trigger(false);
           this.router.navigate(['/login']);
         });
       });

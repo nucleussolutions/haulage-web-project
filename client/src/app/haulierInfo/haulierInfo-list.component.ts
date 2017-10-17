@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HaulierInfoService} from './haulierInfo.service';
 import {HaulierInfo} from './haulierInfo';
-import { CookieService } from 'ngx-cookie';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import {Title} from "@angular/platform-browser";
 import { Router } from '@angular/router';
@@ -10,21 +9,16 @@ import { UserService } from 'app/user.service';
 
 @Component({
   selector: 'haulierInfo-list',
-  templateUrl: './haulierInfo-list.component.html'
+  templateUrl: './haulierInfo-list.component.html',
+  providers: [UserService]
 })
 export class HaulierInfoListComponent implements OnInit {
 
   haulierInfoList: HaulierInfo[] = [];
 
-  private token : string;
-
-  private apiKey : string;
-
   private userObject: any;
 
   constructor(private haulierInfoService: HaulierInfoService, private modal : Modal, private titleService: Title, private router: Router, private userService : UserService) {
-    // this.token = this.cookieService.get('token');
-    // this.apiKey = this.cookieService.get('apiKey');
 
     this.userService.loginState$.subscribe(loggedIn => {
 
@@ -34,8 +28,6 @@ export class HaulierInfoListComponent implements OnInit {
 
     this.userService.getUser().subscribe(response => {
       this.userObject = response;
-      this.token = this.userObject.token;
-      this.apiKey = this.userObject.apiKey;
     }, error => {
 
     });
@@ -44,7 +36,7 @@ export class HaulierInfoListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.haulierInfoService.list(this.token, this.apiKey).subscribe((haulierInfoList: HaulierInfo[]) => {
+    this.haulierInfoService.list(this.userObject.token, this.userObject.apiKey).subscribe((haulierInfoList: HaulierInfo[]) => {
       this.haulierInfoList = haulierInfoList;
     }, error => {
 
@@ -62,9 +54,6 @@ export class HaulierInfoListComponent implements OnInit {
 
       dialog.then(value => {
         //todo might need to navigate them back to login
-        // this.cookieService.removeAll();
-        // this.navDrawerService.trigger(false);
-
         this.router.navigate(['/login']);
       });
     });

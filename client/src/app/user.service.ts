@@ -83,9 +83,9 @@ export class UserService {
 
     getUser() {
         let currentUser = this.firebaseAuth.auth.currentUser;
-        console.log('currentUser '+currentUser);
+        console.log('currentUser ' + currentUser);
         let cookieObjects = this.cookieService.getAll();
-        console.log('cookieObjects '+cookieObjects);
+        console.log('cookieObjects ' + cookieObjects);
         // let merged = Object.assign(this.firebaseAuth.auth.currentUser, this.cookieService.getAll());
         return Observable.of(cookieObjects);
     }
@@ -93,6 +93,27 @@ export class UserService {
     sendPasswordResetEmail(email: string) {
         return new Promise((resolve, reject) => {
             this.firebaseAuth.auth.sendPasswordResetEmail(email).then(response => {
+                resolve(response);
+            }, error => {
+                reject(error);
+            });
+        });
+    }
+
+    confirmPasswordReset(code: string, password: string) {
+        return new Promise((resolve, reject) => {
+            this.firebaseAuth.auth.confirmPasswordReset(code, password).then(response => {
+                this.cookieService.removeAll();
+                resolve(response);
+            }, error => {
+                reject(error);
+            });
+        });
+    }
+
+    verifyPasswordResetCode(code: string) {
+        return new Promise((resolve, reject) => {
+            this.firebaseAuth.auth.verifyPasswordResetCode(code).then(response => {
                 resolve(response);
             }, error => {
                 reject(error);

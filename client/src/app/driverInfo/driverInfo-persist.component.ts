@@ -4,6 +4,8 @@ import { DriverInfo } from './driverInfo';
 import { DriverInfoService } from './driverInfo.service';
 import { Response } from "@angular/http";
 import { CookieService } from 'ngx-cookie';
+import { UserService } from 'app/user.service';
+import { Subscription } from 'rxjs/Subscription';
 
 
 @Component({
@@ -16,21 +18,22 @@ export class DriverInfoPersistComponent implements OnInit {
   create = true;
   errors: any[];
 
-  private token: string;
+  private subscription: Subscription;
 
-  private apiKey: string;
+  private userObject : any;
 
-
-  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private router: Router, private cookieService: CookieService) {
-    this.token = this.cookieService.get('token');
-    this.apiKey = this.cookieService.get('apiKey');
+  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private router: Router, private userService: UserService) {
+    this.subscription = this.userService.getUser().subscribe(response => {
+      this.userObject = response;
+    });
+    
   }
 
   ngOnInit() {
 
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
-        this.driverInfoService.get(+params['id'], this.token, this.apiKey).subscribe((driverInfo: DriverInfo) => {
+        this.driverInfoService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((driverInfo: DriverInfo) => {
           this.create = false;
           this.driverInfo = driverInfo;
         });
@@ -39,7 +42,7 @@ export class DriverInfoPersistComponent implements OnInit {
   }
 
   save() {
-    this.driverInfoService.save(this.driverInfo, this.token, this.apiKey).subscribe((driverInfo: DriverInfo) => {
+    this.driverInfoService.save(this.driverInfo, this.userObject.token, this.userObject.apiKey).subscribe((driverInfo: DriverInfo) => {
       this.router.navigate(['/driverInfo', 'show', driverInfo.id]);
     }, (res: Response) => {
       const json = res.json();

@@ -18,8 +18,6 @@ export class CompanyListComponent implements OnInit {
 
 
   constructor(private companyService: CompanyService, private modal: Modal, private router: Router, private userService: UserService) {
-    // this.token = this.cookieService.get('token');
-    // this.apiKey = this.cookieService.get('apiKey');
   }
 
   ngOnInit() {
@@ -38,9 +36,6 @@ export class CompanyListComponent implements OnInit {
         .title('Error').message(error).open();
 
       dialog.then(value => {
-        //todo might need to navigate them back to login
-        // this.cookieService.removeAll();
-        // this.navDrawerService.trigger(false);
         this.router.navigate(['/login']);
       });
     });

@@ -26,9 +26,6 @@ export class LocationListComponent implements OnInit {
   }
 
   ngOnInit() {
-    // let token = this.cookieService.get('token');
-    // let apiKey = this.cookieService.get('apiKey');
-
     this.userService.loginState$.subscribe(loggedIn => {
 
     }, error => {
@@ -57,12 +54,9 @@ export class LocationListComponent implements OnInit {
       const dialog = this.modal.alert().isBlocking(true).title('Error').message(message).open();
 
       dialog.then(value => {
-        //todo trigger an event to reload the navdrawer component
         this.router.navigate(['/login']);
       });
 
-      // this.navDrawerService.trigger(false);
-      // this.cookieService.removeAll();
     });
   }
 

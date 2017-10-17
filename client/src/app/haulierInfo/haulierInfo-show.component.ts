@@ -1,29 +1,37 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {HaulierInfo} from './haulierInfo';
-import {HaulierInfoService} from './haulierInfo.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { HaulierInfo } from './haulierInfo';
+import { HaulierInfoService } from './haulierInfo.service';
 import { CookieService } from 'ngx-cookie';
+import { Subscription } from 'rxjs/Subscription';
+import { UserService } from 'app/user.service';
+
 
 @Component({
   selector: 'haulierInfo-persist',
   templateUrl: './haulierInfo-show.component.html'
 })
-export class HaulierInfoShowComponent implements OnInit {
+export class HaulierInfoShowComponent implements OnInit, OnDestroy {
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   haulierInfo = new HaulierInfo();
 
-  private token : string;
+  private userObject: any;
 
-  private apiKey : string;
+  private subscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private haulierInfoService: HaulierInfoService, private router: Router, private cookieService: CookieService) {
-    this.token = this.cookieService.get('token');
-    this.apiKey = this.cookieService.get('apiKey');
+  constructor(private route: ActivatedRoute, private haulierInfoService: HaulierInfoService, private router: Router, private userService: UserService) {
+    this.subscription = this.userService.getUser().subscribe(response => {
+      this.userObject = response;
+    })
   }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.haulierInfoService.get(+params['id'], this.token, this.apiKey).subscribe((haulierInfo: HaulierInfo) => {
+      this.haulierInfoService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((haulierInfo: HaulierInfo) => {
         this.haulierInfo = haulierInfo;
       });
     });
@@ -31,9 +39,9 @@ export class HaulierInfoShowComponent implements OnInit {
 
   destroy() {
     if (confirm("Are you sure?")) {
-      this.haulierInfoService.destroy(this.haulierInfo, this.token, this.apiKey).subscribe((success: boolean) => {
+      this.haulierInfoService.destroy(this.haulierInfo, this.userObject.token, this.userObject.apiKey).subscribe((success: boolean) => {
         if (success) {
-          this.router.navigate(['/haulierInfo','list']);
+          this.router.navigate(['/haulierInfo', 'list']);
         } else {
           alert("Error occurred during delete");
         }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { PricingService } from './pricing.service';
 import { Pricing } from './pricing';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
-import { CookieService } from "ngx-cookie";
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UserService } from 'app/user.service';
@@ -20,8 +19,6 @@ export class PricingListComponent implements OnInit {
   private userObject: any;
 
   constructor(private pricingService: PricingService, private modal: Modal, private titleService: Title, private router: Router, private userService: UserService) {
-    // this.token = this.cookieService.get('token');
-    // this.apiKey = this.cookieService.get('apiKey');
     this.titleService.setTitle('Pricing List');
   }
 
@@ -54,9 +51,6 @@ export class PricingListComponent implements OnInit {
       const dialog = this.modal.alert().title('Error').message(message).open();
 
       dialog.then(value => {
-        //todo might need to navigate them back to login
-        // this.cookieService.removeAll();
-        // this.navDrawerService.trigger(false);
         this.router.navigate(['/login']);
       });
     });

@@ -1,31 +1,39 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Consignment} from './consignment';
 import {ConsignmentService} from './consignment.service';
 import {CookieService} from "ngx-cookie";
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import { UserService } from 'app/user.service';
+import { Subscription } from 'rxjs/Subscription';
 
 
 @Component({
   selector: 'consignment-persist',
-  templateUrl: './consignment-show.component.html'
+  templateUrl: './consignment-show.component.html',
+  providers: [UserService]
 })
-export class ConsignmentShowComponent implements OnInit {
+export class ConsignmentShowComponent implements OnInit, OnDestroy {
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   consignment = new Consignment();
 
-  private token : string;
+  private subscription: Subscription;
 
-  private apiKey : string;
+  private userObject: any;
 
-  constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private router: Router, private  cookieService: CookieService, private modal : Modal) {
-    this.token = this.cookieService.get('token');
-    this.apiKey = this.cookieService.get('apiKey');
+  constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private router: Router, private userService : UserService, private modal : Modal) {
+    this.subscription = this.userService.getUser().subscribe(response => {
+      this.userObject = response;
+    });
   }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.consignmentService.get(+params['id'], this.token, this.apiKey).subscribe((consignment: Consignment) => {
+      this.consignmentService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((consignment: Consignment) => {
         this.consignment = consignment;
       }, error => {
         this.modal.alert()
@@ -38,7 +46,7 @@ export class ConsignmentShowComponent implements OnInit {
 
   destroy() {
     if (confirm("Are you sure?")) {
-      this.consignmentService.destroy(this.consignment, this.token, this.apiKey).subscribe((success: boolean) => {
+      this.consignmentService.destroy(this.consignment, this.userObject.token, this.userObject.apiKey).subscribe((success: boolean) => {
         if (success) {
           this.router.navigate(['/consignment','list']);
         } else {

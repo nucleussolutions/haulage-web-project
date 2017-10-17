@@ -4,6 +4,8 @@ import {Location} from './location';
 import {LocationService} from './location.service';
 import {Response} from "@angular/http";
 import {CookieService} from "ngx-cookie";
+import { Subscription } from 'rxjs/Subscription';
+import { UserService } from 'app/user.service';
 
 
 @Component({
@@ -16,21 +18,21 @@ export class LocationPersistComponent implements OnInit {
   create = true;
   errors: any[];
 
-  private token : string;
+  private subscription : Subscription;
 
-  private apiKey : string;
-  
+  private userObject : any;
 
-  constructor(private route: ActivatedRoute, private locationService: LocationService, private router: Router, private cookieService : CookieService) {
-    this.token = this.cookieService.get('token');
-    this.apiKey = this.cookieService.get('apiKey');
+  constructor(private route: ActivatedRoute, private locationService: LocationService, private router: Router, private userService: UserService) {
+    this.subscription = this.userService.getUser().subscribe(response => {
+      this.userObject = response;
+    });
   }
 
   ngOnInit() {
-    
+
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
-        this.locationService.get(+params['id'], this.token, this.apiKey).subscribe((location: Location) => {
+        this.locationService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((location: Location) => {
           this.create = false;
           this.location = location;
         });
@@ -39,7 +41,7 @@ export class LocationPersistComponent implements OnInit {
   }
 
   save() {
-    this.locationService.save(this.location, this.token, this.apiKey).subscribe((location: Location) => {
+    this.locationService.save(this.location, this.userObject.token, this.userObject.apiKey).subscribe((location: Location) => {
       this.router.navigate(['/location', 'show', location.id]);
     }, (res: Response) => {
       const json = res.json();
