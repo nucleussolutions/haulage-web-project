@@ -12,7 +12,8 @@ import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'permission-persist',
-  templateUrl: './permission-persist.component.html'
+  templateUrl: './permission-persist.component.html',
+  providers: [UserService]
 })
 export class PermissionPersistComponent implements OnInit, OnDestroy {
 
@@ -38,7 +39,7 @@ export class PermissionPersistComponent implements OnInit, OnDestroy {
     // this.apiKey = this.cookieService.get('apiKey');
     this.subscription = this.userService.getUser().subscribe(response => {
       this.response = response;
-      this.token = this.response.stsTokenManager.accessToken;
+      this.token = this.response.token;
       this.apiKey = this.response.apiKey;
     });
 

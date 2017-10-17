@@ -15,4 +15,6 @@ class Permission {
         userId nullable: false, unique: true
         authority nullable: false, inList: ['Admin', 'Manager', 'Super Admin', 'User']
     }
+
+
 }

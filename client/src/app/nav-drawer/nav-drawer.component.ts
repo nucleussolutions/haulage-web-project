@@ -36,6 +36,8 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     private response: any;
 
+    private permission : Permission;
+
     constructor(private router: Router, private firebaseAuth: AngularFireAuth, private permissionService: PermissionService, private userService: UserService) {
         this.executeSubscription();
         this.userService.loginState$.subscribe(loggedIn => {
@@ -50,9 +52,11 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
     ngOnInit() {
         //use the permission service to get the permission of the user based on the userId
 
-        // this.permissionService.getByUserId(this.userId, this.token, this.apiKey).subscribe(permission => Permission, error => {
-        //     console.log('NavDrawerComponent permissionService error '+error);
-        // });
+        this.permissionService.getByUserId(this.userId, this.token, this.apiKey).subscribe(permission => {
+            this.permission = permission;
+        }, error => {
+            console.log('NavDrawerComponent permissionService error '+error);
+        });
     }
 
     executeSubscription() {

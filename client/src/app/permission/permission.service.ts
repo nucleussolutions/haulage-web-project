@@ -49,6 +49,10 @@ export class PermissionService {
       headers: headers
     });
 
+    // this.http.get(environment.serverUrl + '/permission/' + id, options).subscribe(response => {
+    //   console.log('permission '+response);
+    // });
+
     return this.http.get(environment.serverUrl + '/permission/' + id, options)
       .map((r: Response) => new Permission(r.json()));
   }
@@ -64,7 +68,11 @@ export class PermissionService {
       headers: headers
     });
 
-    return this.http.get(environment.serverUrl + '/permission?userId=' + userId, options).map((r: Response) => new Permission(r.json()));
+      this.http.get(environment.serverUrl + '/api/permission?userId=' + userId, options).subscribe(response => {
+        console.log('getByUserId response '+response);
+      });
+
+    return this.http.get(environment.serverUrl + '/api/permission?userId=' + userId, options).map((r: Response) => new Permission(r.json()));
   }
 
   save(permission: Permission, token: string, apiKey: string): Observable<Permission> {
