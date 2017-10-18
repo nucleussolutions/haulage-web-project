@@ -1,5 +1,5 @@
 package haulage.project
 
 enum TransactionStatus {
-    PENDING('pending'), SUCCESS('success');
+    PENDING('Pending'), SUCCESS('Success'), FAILURE('Failure')
 }

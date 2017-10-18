@@ -6,11 +6,11 @@ import grails.rest.*
 @Resource(readOnly = false, formats = ['json', 'xml'])
 class Transaction {
     //belongs to which user, most likely haulier
-    String status
+    TransactionStatus status
     Subscription subscription
 
     static constraints = {
-        status nullable: false
+        status nullable: false, inList: TransactionStatus.values()*.id
         subscription nullable: false
     }
 

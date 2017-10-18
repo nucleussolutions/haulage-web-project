@@ -53,7 +53,7 @@ class TransportRequest {
 
     Customer customer
 
-    String status = 'PENDING'
+    RFTStatus status = RFTStatus.PENDING
 
     static constraints = {
         containerVolume blank: false, nullable: false
@@ -87,7 +87,7 @@ class TransportRequest {
         consignments nullable: false
         forwarderId nullable: false
         customer nullable: false
-        status nullable: false, inList: ['APPROVED', 'REJECTED', 'PENDING']
+        status nullable: false, inList: RFTStatus.values()*.id
     }
 
     static embedded = ['customer']
