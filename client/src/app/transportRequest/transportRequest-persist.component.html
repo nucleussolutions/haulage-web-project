@@ -144,11 +144,13 @@
             </div>
             <div class="form-group">
               <label for="gatePassImgUrl">Gate Pass Img Url</label>
+              <input type="file">
               <input name="gatePassImgUrl" id="gatePassImgUrl" [(ngModel)]="transportRequest.gatePassImgUrl" type="text"/>
             </div>
             <div class="form-group">
               <label for="bookingConfirmationImgUrl">Booking Confirmation Img Url</label>
-              <input name="bookingConfirmationImgUrl" id="bookingConfirmationImgUrl" [(ngModel)]="transportRequest.bookingConfirmationImgUrl" type="text"/>
+              <input type="file">
+              <!-- <input name="bookingConfirmationImgUrl" id="bookingConfirmationImgUrl" [(ngModel)]="transportRequest.bookingConfirmationImgUrl" type="text"/> -->
             </div>
             <div class="form-group">
               <label for="cmoImgUrl">Cmo Img Url
@@ -170,7 +172,7 @@
               <label for="forwarderId">Forwarder Id
                 <span class="required-indicator">*</span>
               </label>
-              <input required="" name="forwarderId" id="forwarderId" [(ngModel)]="transportRequest.forwarderId" type="text"/>
+              <input class="form-control" required="" name="forwarderId" id="forwarderId" [(ngModel)]="transportRequest.forwarderId" type="text"/>
             </div>
             <fieldset class="embedded customer">
               <legend>Customer</legend>

@@ -53,6 +53,8 @@ class TransportRequest {
 
     Customer customer
 
+    String status = 'PENDING'
+
     static constraints = {
         containerVolume blank: false, nullable: false
         type nullable: false, blank: false
@@ -85,6 +87,7 @@ class TransportRequest {
         consignments nullable: false
         forwarderId nullable: false
         customer nullable: false
+        status nullable: false, inList: ['APPROVED', 'REJECTED', 'PENDING']
     }
 
     static embedded = ['customer']

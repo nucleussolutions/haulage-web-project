@@ -13,13 +13,16 @@
   </ul>
 
   <ul class="nav nav-sidebar" *ngIf="token">
-    <li *ngIf="permission && permission.authority === 'Super Admin'">
+    <li>
+      <a routerLinkActive="active" routerLink="/index">Home</a>
+    </li>
+    <li *ngIf="permission?.authority === 'Super Admin'">
       <a routerLinkActive="active" routerLink="/permission">User Permissions</a>
     </li>
-    <li *ngIf="permission && permission.authority === 'Super Admin'">
+    <li *ngIf="permission?.authority === 'Super Admin'">
       <a routerLinkActive="active" routerLink="/location">Location</a>
     </li>
-    <li *ngIf="permission && permission.authority === 'Manager'">
+    <li *ngIf="permission?.authority === 'Manager' || permission?.authority === 'Super Admin'">
       <a routerLinkActive="active" routerLink="/driverInfo">Drivers</a>
     </li>
     <li>
@@ -37,7 +40,7 @@
     <li>
       <a routerLinkActive="active" routerLink="/transportRequest">RFT / ROT</a>
     </li>
-    <li *ngIf="permission && permission.authority === 'Super Admin'">
+    <li *ngIf="permission?.authority === 'Super Admin'">
       <a routerLinkActive="active" routerLink="/pricing">Pricing</a>
     </li>
     <li>
