@@ -42,7 +42,7 @@
               <input class="form-control" required="" name="city" id="city" [(ngModel)]="location.city" type="text"/>
             </div>
             <!-- Simple Select -->
-            <div class="fieldcontain required mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select getmdl-select__fullwidth">
+            <div class="form-group">
               <label for="state">State
                 <span class="required-indicator">*</span>
               </label>
@@ -87,7 +87,11 @@
               <label for="type">Type
                 <span class="required-indicator">*</span>
               </label>
-              <input class="form-control" required="" name="type" id="type" [(ngModel)]="location.type" type="text"/>
+              <select class="form-control" required="" name="type" id="type" [(ngModel)]="location.type">
+                <option value="customer">Customer</option>
+                <option value="depot">Depot</option>
+                <option value="loading">Loading</option>
+              </select>
             </div>
           </fieldset>
         </fieldset>

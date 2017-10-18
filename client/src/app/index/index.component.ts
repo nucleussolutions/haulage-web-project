@@ -17,7 +17,7 @@ import { UserService } from 'app/user.service';
     selector: 'app-index',
     templateUrl: './index.component.html',
     styleUrls: ['./index.component.css'],
-    providers: [CookieService],
+    providers: [UserService],
 })
 export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 

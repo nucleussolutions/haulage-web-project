@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Pricing } from './pricing';
 import { PricingService } from './pricing.service';
@@ -11,9 +11,14 @@ import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'pricing-persist',
-  templateUrl: './pricing-persist.component.html'
+  templateUrl: './pricing-persist.component.html',
+  providers: [UserService]
 })
-export class PricingPersistComponent implements OnInit {
+export class PricingPersistComponent implements OnInit, OnDestroy {
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   pricing = new Pricing();
   create = true;

@@ -83,7 +83,7 @@ export class TransportRequestPersistComponent implements OnInit {
     }
 
     save() {
-        this.transportRequestService.save(this.transportRequest, this.token, this.apiKey).subscribe((transportRequest: TransportRequest) => {
+        this.transportRequestService.save(this.transportRequest, this.userObject.token, this.userObject.apiKey).subscribe((transportRequest: TransportRequest) => {
             this.router.navigate(['/transportRequest', 'show', transportRequest.id]);
         }, (res: Response) => {
             const json = res.json();

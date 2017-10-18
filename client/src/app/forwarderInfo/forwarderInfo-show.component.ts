@@ -1,7 +1,7 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {ForwarderInfo} from './forwarderInfo';
-import {ForwarderInfoService} from './forwarderInfo.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ForwarderInfo } from './forwarderInfo';
+import { ForwarderInfoService } from './forwarderInfo.service';
 import { CookieService } from 'ngx-cookie';
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -22,18 +22,19 @@ export class ForwarderInfoShowComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private userObject : any;
+  private userObject: any;
 
   constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private router: Router, private userService: UserService) {
-    this.subscription = this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    });
+
   }
 
   ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
-      this.forwarderInfoService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((forwarderInfo: ForwarderInfo) => {
-        this.forwarderInfo = forwarderInfo;
+    this.subscription = this.userService.getUser().subscribe(response => {
+      this.userObject = response;
+      this.route.params.subscribe((params: Params) => {
+        this.forwarderInfoService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((forwarderInfo: ForwarderInfo) => {
+          this.forwarderInfo = forwarderInfo;
+        });
       });
     });
   }
@@ -42,7 +43,7 @@ export class ForwarderInfoShowComponent implements OnInit, OnDestroy {
     if (confirm("Are you sure?")) {
       this.forwarderInfoService.destroy(this.forwarderInfo, this.userObject.token, this.userObject.apiKey).subscribe((success: boolean) => {
         if (success) {
-          this.router.navigate(['/forwarderInfo','list']);
+          this.router.navigate(['/forwarderInfo', 'list']);
         } else {
           alert("Error occurred during delete");
         }

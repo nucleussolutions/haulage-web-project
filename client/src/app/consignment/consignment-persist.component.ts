@@ -11,7 +11,8 @@ import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'consignment-persist',
-  templateUrl: './consignment-persist.component.html'
+  templateUrl: './consignment-persist.component.html',
+  providers: [UserService]
 })
 export class ConsignmentPersistComponent implements OnInit, OnDestroy {
 
@@ -38,10 +39,10 @@ export class ConsignmentPersistComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.locationService.list(this.token, this.apiKey).subscribe((locationList: Location[]) => { this.locationList = locationList; });
+    this.locationService.list(this.userObject.token, this.userObject.apiKey).subscribe((locationList: Location[]) => { this.locationList = locationList; });
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
-        this.consignmentService.get(+params['id'], this.token, this.apiKey).subscribe((consignment: Consignment) => {
+        this.consignmentService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((consignment: Consignment) => {
           this.create = false;
           this.consignment = consignment;
         });
@@ -50,7 +51,7 @@ export class ConsignmentPersistComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    this.consignmentService.save(this.consignment, this.token, this.apiKey).subscribe((consignment: Consignment) => {
+    this.consignmentService.save(this.consignment, this.userObject.token, this.userObject.apiKey).subscribe((consignment: Consignment) => {
       this.router.navigate(['/consignment', 'show', consignment.id]);
     }, (res: Response) => {
       const json = res.json();

@@ -45,17 +45,17 @@ export class ChangePasswordComponent implements OnInit {
     }
 
     changePassword(formData) {
-        this.userService.changePassword(this.code, formData.value.password).then(response => {
-            this.modal.alert()
-            .title('Status')
-            .message('Password change success')
-            .open();
-        }, error => {
-            this.modal.alert()
-                .title('Error')
-                .body('Failed to change password, reason ' + error)
-                .open();
-        });
+        // this.userService.changePassword(this.code, formData.value.password).then(response => {
+        //     this.modal.alert()
+        //     .title('Status')
+        //     .message('Password change success')
+        //     .open();
+        // }, error => {
+        //     this.modal.alert()
+        //         .title('Error')
+        //         .body('Failed to change password, reason ' + error)
+        //         .open();
+        // });
     }
 
     matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
