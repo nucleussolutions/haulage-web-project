@@ -9,7 +9,7 @@ class TransportRequest {
     String containerVolume
 
     //normal import, direct import, normal export or direct export
-    String type
+    RFTType type
 
     //trailer or s/loader
     String equipment
@@ -57,7 +57,7 @@ class TransportRequest {
 
     static constraints = {
         containerVolume blank: false, nullable: false
-        type nullable: false, blank: false
+        type nullable: false, inList: RFTType.values()*.id
         equipment nullable: true
         bookingRefNo blank: true
         otherRefNo blank: true

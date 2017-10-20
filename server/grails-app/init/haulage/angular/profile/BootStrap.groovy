@@ -7,6 +7,7 @@ import haulage.project.HaulierInfo
 import haulage.project.Location
 import haulage.project.Permission
 import haulage.project.Pricing
+import haulage.project.TransportRequest
 import haulage.project.Vehicle
 
 class BootStrap {
@@ -47,6 +48,9 @@ class BootStrap {
             output['email'] = it.email
             return output
         }
+
+        def testRFT = new TransportRequest();
+
     }
     def destroy = {
     }
