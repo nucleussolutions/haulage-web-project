@@ -41,17 +41,19 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.subscription = this.userService.getUser().subscribe(response => {
             this.userObject = response;
-        })
+        });
 
         this.titleService.setTitle('Dashboard');
     }
 
     ngOnInit() {
-
     }
 
     ngAfterViewInit() {
         //if it's a first time user, and the user is a haulier and forwarder, then show a modal prompting for profile creation
+
+        //todo check if user exists in hauliers and forwarders table
+
 
         setTimeout(() => {
             if (this.userObject.token) {

@@ -15,5 +15,7 @@ class UrlMappings {
         "404"(view: '/notFound')
 
         "/api/permission"(controller: 'permission', action: 'getByUserId')
+
+        "/api/usertype"(controller: 'userType', action: 'checkUserExist')
     }
 }
