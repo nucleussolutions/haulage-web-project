@@ -9,7 +9,7 @@ class UserTypeController {
 	static responseFormats = ['json', 'xml']
 	
     def checkUserExist(){
-        String userId = request.JSON.userId
+        String userId = params.userId
         if(!userId){
             render status: HttpStatus.NOT_FOUND, message: 'user id not found'
         }else{

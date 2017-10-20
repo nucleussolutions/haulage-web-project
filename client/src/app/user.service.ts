@@ -120,4 +120,24 @@ export class UserService {
             });
         });
     }
+
+    checkUserType(userId: string, token: string, apiKey : string){
+
+        let headers = new Headers({
+            'token': token,
+            'apiKey': apiKey
+        });
+
+        let options = new RequestOptions({
+            headers: headers
+        });
+
+        return new Promise((resolve, reject) => {
+            this.http.get(environment.serverUrl + '/api/usertype?userId='+userId, options).subscribe(response => {
+                resolve(response);
+            }, error => {
+                reject(error);
+            });
+        });
+    }
 }
