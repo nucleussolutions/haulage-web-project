@@ -27,7 +27,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuar
     ngOnInit(): void {
     }
 
-
     context: CreateProfileModalContext;
 
     private personalDetails: FormGroup;
@@ -47,11 +46,11 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuar
             companyAddress2: ['', Validators.required],
             companyCity: ['', Validators.required],
             companyState: ['', Validators.required],
-            companyCountry: ['', Validators.required],
+            companyCountry: new FormControl('Malaysia'),
             companyOfficePhone: ['', Validators.required],
             companyYardPhone: ['', Validators.required],
             companyCode: ['', Validators.required],
-            companyImage: ['', Validators.required],
+            companyImage: [''],
             companyRegNo: ['', Validators.required],
             usertype: new FormControl('Admin'),
         });
@@ -79,6 +78,9 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuar
         company.state = formData.value.companyState;
         company.country = formData.value.companyCountry;
         company.registrationNo = formData.value.companyRegNo;
+        company.code = formData.value.companyCode;
+        company.yardPhone = formData.value.companyYardPhone;
+        company.officePhone = formData.value.companyOfficePhone;
         // company.companyImgUrl =
 
         //upload photos to amazon s3 or firebase storage
@@ -87,7 +89,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuar
         if (formData.value.usertype === 'Admin') {
             let haulierInfo = new HaulierInfo();
             haulierInfo.name = formData.value.name;
-            haulierInfo.userId = this.userObject.userId;
+            haulierInfo.userId = this.userObject.uid;
             haulierInfo.company = company;
 
             this.haulierInfoService.save(haulierInfo, this.userObject.token, this.userObject.apiKey).subscribe(response => {
@@ -102,7 +104,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuar
                 this.modal.alert()
                     .title('Error')
                     .message(error).open();
-            })
+            });
 
         } else if (formData.value.usertype === 'Manager') {
             let forwarderInfo = new ForwarderInfo();
