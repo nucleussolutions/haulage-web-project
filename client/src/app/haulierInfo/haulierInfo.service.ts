@@ -76,13 +76,7 @@ export class HaulierInfoService {
         });
 
         return this.http.request(new Request(requestOptions))
-            .map((r: Response) => new HaulierInfo(r.json())).catch(err => {
-                if (err.status === 401) {
-                    return Observable.throw('Unauthorized');
-                } else if (err.status === 500) {
-                    return Observable.throw('Internal server error');
-                }
-            });
+            .map((r: Response) => new HaulierInfo(r.json()));
     }
 
     destroy(haulierInfo: HaulierInfo, token: string, apiKey: string): Observable<boolean> {

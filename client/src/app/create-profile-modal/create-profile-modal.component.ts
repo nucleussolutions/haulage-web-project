@@ -31,7 +31,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuar
 
     private personalDetails: FormGroup;
 
-    private userObject : any;
+    private userObject: any;
 
     private subscription: Subscription;
 
@@ -85,7 +85,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuar
 
         //upload photos to amazon s3 or firebase storage
 
-
         if (formData.value.usertype === 'Admin') {
             let haulierInfo = new HaulierInfo();
             haulierInfo.name = formData.value.name;
@@ -99,11 +98,12 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuar
 
                 response = JSON.parse(responseStr);
 
-
+                this.dialog.dismiss();
             }, error => {
+                console.log('haulierInfoService error ' + error.json());
                 this.modal.alert()
                     .title('Error')
-                    .message(error).open();
+                    .message(error.json().message).open();
             });
 
         } else if (formData.value.usertype === 'Manager') {
@@ -120,11 +120,12 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuar
 
                 response = JSON.parse(responseStr);
 
-
+                this.dialog.dismiss();
             }, error => {
+                console.log('forwarderInfoService error' + error.json());
                 this.modal.alert()
                     .title('Error')
-                    .message(error).open();
+                    .message(error.json().message).open();
             });
         }
     }
