@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { Title } from "@angular/platform-browser";
-import { CookieService } from 'ngx-cookie';
-import { Router } from "@angular/router";
-import { AngularFireAuth } from "angularfire2/auth";
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
-import { UserService } from 'app/user.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Title} from "@angular/platform-browser";
+import {Router} from "@angular/router";
+import {Modal} from 'ngx-modialog/plugins/bootstrap';
+import {UserService} from 'app/user.service';
 
 
 @Component({

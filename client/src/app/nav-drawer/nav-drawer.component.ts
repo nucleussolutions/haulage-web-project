@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy, Input, AfterViewInit } from '@angular/core';
-import { Router } from "@angular/router";
-import { AngularFireAuth } from "angularfire2/auth";
-import { PermissionService } from "../permission/permission.service";
-import { Subscription } from 'rxjs/Subscription';
-import { Permission } from "../permission/permission";
-import { UserService } from 'app/user.service';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
+import {PermissionService} from "../permission/permission.service";
+import {Subscription} from 'rxjs/Subscription';
+import {Permission} from "../permission/permission";
+import {UserService} from 'app/user.service';
 
 
 @Component({
@@ -36,9 +35,9 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     private response: any;
 
-    private permission : Permission;
+    private permission: Permission;
 
-    constructor(private router: Router, private firebaseAuth: AngularFireAuth, private permissionService: PermissionService, private userService: UserService) {
+    constructor(private router: Router, private permissionService: PermissionService, private userService: UserService) {
         this.executeSubscription();
         this.userService.loginState$.subscribe(loggedIn => {
             console.log('NavDrawerComponent loginstate subscribe ' + loggedIn);
@@ -55,7 +54,7 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
         this.permissionService.getByUserId(this.userId, this.token, this.apiKey).subscribe(permission => {
             this.permission = permission;
         }, error => {
-            console.log('NavDrawerComponent permissionService error '+error);
+            console.log('NavDrawerComponent permissionService error ' + error);
         });
     }
 
