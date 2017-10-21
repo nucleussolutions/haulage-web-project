@@ -1,0 +1,56 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a class="list" [routerLink]="['/job', 'list']" class="list">Job List</a></li>
+        <li><a class="create" [routerLink]="['/job', 'create']" class="create">New Job</a></li>
+    </ul>
+</div>
+<div id="show-part" class="content scaffold-show" role="main">
+    <h1>Show Job</h1>
+    <ol class="property-list job">
+  <li class="fieldcontain">
+    <span id="consignments-label" class="property-label">Consignments</span>
+    <div class="property-value" aria-labelledby="consignments-label">
+      <ul>
+        <li *ngFor="let consignment of job.consignments">
+          <a [routerLink]="['/consignment', 'show', consignment.id]">{{consignment.toString()}}</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="haulierId-label" class="property-label">Haulier Id</span>
+    <div class="property-value" aria-labelledby="haulierId-label">
+      <span>{{job.haulierId}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="driverId-label" class="property-label">Driver Id</span>
+    <div class="property-value" aria-labelledby="driverId-label">
+      <span>{{job.driverId}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="status-label" class="property-label">Status</span>
+    <div class="property-value" aria-labelledby="status-label">
+      <span>{{job.status}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="startDateTime-label" class="property-label">Start Date Time</span>
+    <div class="property-value" aria-labelledby="startDateTime-label">
+      <span>{{job.startDateTime | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="endDateTime-label" class="property-label">End Date Time</span>
+    <div class="property-value" aria-labelledby="endDateTime-label">
+      <span>{{job.endDateTime | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+    </div>
+  </li>
+</ol>
+
+    <a class="edit" [routerLink]="['/job', 'edit', job.id]">Edit</a>
+    <button type="button" (click)="destroy()">Delete</button>
+
+</div>

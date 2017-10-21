@@ -1,0 +1,61 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/job','list']" class="list">Job List</a></li>
+    </ul>
+</div>
+<div id="persist-job" class="content scaffold-edit" role="main">
+    <h1>{{create ? "Create" : "Edit"}} Job</h1>
+    <ul class="errors" role="alert" *ngIf="errors">
+        <li *ngFor="let error of errors">{{error.message}}</li>
+    </ul>
+
+    <form name="save{className}" (ngSubmit)="save()">
+        <fieldset class="form">
+            <fieldset class="form">
+  <div class="fieldcontain required">
+    <label for="consignments">Consignments
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="consignments" id="consignments" [(ngModel)]="job.consignments" multiple="">
+      <option *ngFor="let consignment of consignmentList" [value]="consignment.id" [selected]="job.consignments?.id == consignment.id">{{consignment.toString()}}</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
+    <label for="haulierId">Haulier Id
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="haulierId" id="haulierId" [(ngModel)]="job.haulierId" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="driverId">Driver Id
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="driverId" id="driverId" [(ngModel)]="job.driverId" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="status">Status
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="status" id="status" [(ngModel)]="job.status">
+      <option value="COMPLETE">COMPLETE</option>
+      <option value="PENDING">PENDING</option>
+      <option value="STARTED">STARTED</option>
+      <option value="PENDING_REASSIGN">PENDING_REASSIGN</option>
+    </select>
+  </div>
+  <div class="fieldcontain">
+    <label for="startDateTime">Start Date Time</label>
+    <input name="startDateTime" id="startDateTime" type="date" placeholder="YYYY-MM-DD" [value]="job.startDateTime | date:'y-MM-dd'" (change)="job.startDateTime = $event.target.valueAsDate" />
+  </div>
+  <div class="fieldcontain">
+    <label for="endDateTime">End Date Time</label>
+    <input name="endDateTime" id="endDateTime" type="date" placeholder="YYYY-MM-DD" [value]="job.endDateTime | date:'y-MM-dd'" (change)="job.endDateTime = $event.target.valueAsDate" />
+  </div>
+</fieldset>
+        </fieldset>
+        <fieldset class="buttons">
+            <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" />
+        </fieldset>
+    </form>
+</div>

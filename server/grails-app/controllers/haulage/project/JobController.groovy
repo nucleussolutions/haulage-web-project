@@ -41,6 +41,15 @@ class JobController {
             return
         }
 
+        if(job.status == JobStatus.STARTED) {
+            job.startDateTime = new Date()
+        }else if(job.status == JobStatus.COMPLETE){
+            job.endDateTime = new Date()
+        }else if(job.status == JobStatus.PENDING_REASSIGN){
+            job.startDateTime = null
+            job.endDateTime = null
+        }
+
         try {
             jobService.save(job)
         } catch (ValidationException e) {

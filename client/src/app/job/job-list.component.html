@@ -1,0 +1,51 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/job','create']" class="create">New Job</a></li>
+    </ul>
+</div>
+<div id="list-job" class="content scaffold-list" role="main">
+    <h1>Job List</h1>
+    <table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Consignments</th>
+      <th>Haulier Id</th>
+      <th>Driver Id</th>
+      <th>Status</th>
+      <th>Start Date Time</th>
+      <th>End Date Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let job of jobList; let e = even;">
+      <td>
+        <a [routerLink]="['/job','show',job.id]">{{job.id}}</a>
+      </td>
+      <td>
+        <ul>
+          <li *ngFor="let consignment of job.consignments">
+            <a [routerLink]="['/consignment', 'show', consignment.id]">{{consignment.toString()}}</a>
+          </li>
+        </ul>
+      </td>
+      <td>
+        <span>{{job.haulierId}}</span>
+      </td>
+      <td>
+        <span>{{job.driverId}}</span>
+      </td>
+      <td>
+        <span>{{job.status}}</span>
+      </td>
+      <td>
+        <span>{{job.startDateTime | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+      </td>
+      <td>
+        <span>{{job.endDateTime | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
