@@ -1,7 +1,7 @@
 <div role="navigation">
   <ul class="nav nav-pills">
     <li class="nav-item"><a [routerLink]="['/index']" class="home nav-link">Home</a></li>
-    <li class="nav-item"><a [routerLink]="['/job','create']" class="create nav-link">New Job</a></li>
+    <li *ngIf="permission.authority !== 'Manager' && permission.authority !== 'User'" class="nav-item"><a [routerLink]="['/job','create']" class="create nav-link">New Job</a></li>
   </ul>
 </div>
 <div id="list-job" class="content scaffold-list" role="main">

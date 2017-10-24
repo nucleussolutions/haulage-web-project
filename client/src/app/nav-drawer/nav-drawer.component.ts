@@ -20,7 +20,7 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
     ngOnDestroy(): void {
-        // this.subscription.unsubscribe();
+        this.subscription.unsubscribe();
     }
 
     private token: any;

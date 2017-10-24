@@ -22,10 +22,10 @@
     <li *ngIf="permission?.authority === 'Super Admin'">
       <a routerLinkActive="active" routerLink="/location">Location</a>
     </li>
-    <li *ngIf="permission?.authority === 'Manager' || permission?.authority === 'Super Admin'">
+    <li *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
       <a routerLinkActive="active" routerLink="/driverInfo">Drivers</a>
     </li>
-    <li>
+    <li *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
       <a routerLink="/job" routerLinkActive="active">Jobs</a>
     </li>
     <li>

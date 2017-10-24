@@ -1,6 +1,9 @@
 package haulage.project
 
+import grails.util.Environment
 import grails.validation.ValidationException
+import groovyx.net.http.HTTPBuilder
+
 import static org.springframework.http.HttpStatus.*
 
 class JobController {
@@ -31,6 +34,24 @@ class JobController {
             respond job.errors, view:'create'
             return
         }
+        //todo trigger firebase server notification api
+        //https://fcm.googleapis.com/fcm/send
+
+        def postBody = {
+            to: '/topics/driver/'
+            registration_ids : []
+            priority : 'normal'
+            data : {
+                message : 'A job is assigned to you. Tap for details'
+            }
+        }
+
+        if(Environment.DEVELOPMENT){
+            postBody.dry_run  = true
+        }
+
+//        def http = new HTTPBuilder('https://fcm.googleapis.com/fcm/send')
+
 
         respond job, [status: CREATED, view:"show"]
     }
@@ -57,6 +78,22 @@ class JobController {
             return
         }
 
+        //todo trigger firebase notification if the job is assigned to another driver
+        //https://fcm.googleapis.com/fcm/send
+//        def http = new HTTPBuilder('https://fcm.googleapis.com/fcm/send')
+        def postBody = {
+            to: '/topics/driver/'
+            registration_ids : []
+            priority : 'normal'
+            data : {
+                message: 'Job assigned to another driver'
+            }
+        }
+
+        if(Environment.DEVELOPMENT){
+            postBody.dry_run  = true
+        }
+
         respond job, [status: OK, view:"show"]
     }
 
@@ -67,6 +104,20 @@ class JobController {
         }
 
         jobService.delete(id)
+
+        //todo firebase notification if the job is deleted if assigned to driver
+        def postBody = {
+            to: '/topics/driver/'
+            registration_ids : []
+            priority : 'normal'
+            data : {
+                message : 'Job deleted by haulier'
+            }
+        }
+
+        if(Environment.DEVELOPMENT){
+            postBody.dry_run  = true
+        }
 
         render status: NO_CONTENT
     }

@@ -7,6 +7,7 @@ import {ConsignmentService} from '../consignment/consignment.service';
 import {Consignment} from '../consignment/consignment';
 import {Subscription} from "rxjs/Subscription";
 import {UserService} from "../user.service";
+import {PermissionService} from "../permission/permission.service";
 
 @Component({
     selector: 'job-persist',
@@ -28,9 +29,21 @@ export class JobPersistComponent implements OnInit, OnDestroy {
 
     private userObject: any;
 
-    constructor(private route: ActivatedRoute, private jobService: JobService, private router: Router, private consignmentService: ConsignmentService, private userService: UserService) {
+    private permission : any;
+
+    constructor(private route: ActivatedRoute, private jobService: JobService, private router: Router, private consignmentService: ConsignmentService, private userService: UserService, private permissionService: PermissionService) {
+
+
+
         this.subscription = this.userService.getUser().subscribe(response => {
             this.userObject = response;
+
+            this.permissionService.getByUserId(this.userObject.uid, this.userObject.token, this.userObject.apiKey).subscribe(permission => {
+                this.permission = permission;
+            }, error => {
+                console.log('JobPersistComponent error'+error);
+
+            })
         });
     }
 
