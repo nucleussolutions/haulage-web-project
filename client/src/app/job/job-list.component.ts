@@ -3,6 +3,7 @@ import {JobService} from './job.service';
 import {Job} from './job';
 import {Subscription} from "rxjs/Subscription";
 import {UserService} from "../user.service";
+import {PermissionService} from "../permission/permission.service";
 
 @Component({
     selector: 'job-list',
@@ -21,9 +22,15 @@ export class JobListComponent implements OnInit, OnDestroy {
 
     private userObject: any;
 
-    constructor(private jobService: JobService, private userService: UserService) {
+    private permission : any;
+
+    constructor(private jobService: JobService, private userService: UserService, private permissionService: PermissionService) {
         this.subscription = this.userService.getUser().subscribe(response => {
             this.userObject = response;
+
+            this.permissionService.getByUserId(this.userObject.uid, this.userObject.token, this.userObject.apiKey).subscribe(permission => {
+                this.permission = permission;
+            });
         });
     }
 

@@ -42,6 +42,7 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { FlashMessagesModule } from "ngx-flash-messages";
 import { PermissionModule } from './permission/permission.module';
 import { JobModule } from './job/job.module';
+import { CreateConsignmentModalComponent } from './create-consignment-modal/create-consignment-modal.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { JobModule } from './job/job.module';
         CreateProfileModalComponent,
         ResendCodeComponent,
         VerifyEmailComponent,
+        CreateConsignmentModalComponent,
     ],
     entryComponents: [CreateProfileModalComponent],
     imports: [

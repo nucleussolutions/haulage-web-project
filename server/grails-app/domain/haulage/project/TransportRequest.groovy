@@ -8,7 +8,7 @@ class TransportRequest {
 
     String containerVolume
 
-    //normal import, direct import, normal export or direct export
+    //uncouple import, direct import, uncouple export or direct export
     RFTType type
 
     //trailer or s/loader

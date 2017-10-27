@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DriverInfoService } from './driverInfo.service';
 import { DriverInfo } from './driverInfo';
 import { Title } from "@angular/platform-browser";
-import { CookieService } from 'ngx-cookie';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { Subscription } from 'rxjs/Subscription';
 import { UserService } from 'app/user.service';
@@ -10,7 +9,8 @@ import { UserService } from 'app/user.service';
 
 @Component({
   selector: 'driverInfo-list',
-  templateUrl: './driverInfo-list.component.html'
+  templateUrl: './driverInfo-list.component.html',
+    providers: [UserService]
 })
 export class DriverInfoListComponent implements OnInit, OnDestroy {
 

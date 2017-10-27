@@ -3,7 +3,6 @@ import {RegisterService} from "../register.service";
 import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import {Title} from "@angular/platform-browser";
 import {Router} from "@angular/router";
-import {CookieService} from "ngx-cookie";
 import {AngularFireAuth} from "angularfire2/auth";
 import { Overlay } from 'ngx-modialog';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
@@ -13,6 +12,7 @@ import { UserService } from 'app/user.service';
     selector: 'app-register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.css'],
+    providers: [UserService]
 })
 export class RegisterComponent implements OnInit {
 

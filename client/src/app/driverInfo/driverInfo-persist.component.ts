@@ -10,7 +10,8 @@ import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'driverInfo-persist',
-  templateUrl: './driverInfo-persist.component.html'
+  templateUrl: './driverInfo-persist.component.html',
+  providers: [UserService]
 })
 export class DriverInfoPersistComponent implements OnInit {
 
@@ -26,7 +27,7 @@ export class DriverInfoPersistComponent implements OnInit {
     this.subscription = this.userService.getUser().subscribe(response => {
       this.userObject = response;
     });
-    
+
   }
 
   ngOnInit() {

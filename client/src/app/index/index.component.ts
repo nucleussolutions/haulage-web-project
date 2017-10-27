@@ -55,32 +55,44 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.permissionService.getByUserId(this.userObject.userId, this.userObject.token, this.userObject.apiKey).subscribe(permission => {
             this.permission = permission;
+
+            if(this.permission.authority !== 'Super Admin'){
+                //todo check if user exists in hauliers and forwarders table
+                this.userService.checkUserType(this.userObject.uid, this.userObject.token, this.userObject.apiKey).then(response => {
+
+                }, error => {
+                    if(error.status === 422){
+                        setTimeout(() => {
+                            if (this.userObject.token) {
+                                this.modal
+                                    .open(CreateProfileModalComponent, overlayConfigFactory({
+                                        isBlocking: false,
+                                        size: 'lg'
+                                    }, BSModalContext));
+                            }
+                        });
+                    }else{
+                        this.modal.alert().title('Error').message(error.message).open();
+                    }
+
+                });
+
+            }
         }, error => {
+            if(error.status == 400){
+                setTimeout(() => {
+                    if (this.userObject.token) {
+                        this.modal
+                            .open(CreateProfileModalComponent, overlayConfigFactory({
+                                isBlocking: false,
+                                size: 'lg'
+                            }, BSModalContext));
+                    }
+                });
+            }
             console.log('NavDrawerComponent permissionService error '+error);
         });
 
-        if(this.permission.authority !== 'Super Admin'){
-            //todo check if user exists in hauliers and forwarders table
-            this.userService.checkUserType(this.userObject.uid, this.userObject.token, this.userObject.apiKey).then(response => {
 
-            }, error => {
-                if(error.status === 422){
-                    setTimeout(() => {
-                        if (this.userObject.token) {
-                            this.modal
-                                .open(CreateProfileModalComponent, overlayConfigFactory({
-                                    isBlocking: false,
-                                    size: 'lg'
-                                }, BSModalContext));
-                        }
-                    });
-                }else{
-                    this.modal.alert().title('Error').message(error.message).open();
-                }
-
-            });
-
-        }
-        //todo get permission for the user
     }
 }

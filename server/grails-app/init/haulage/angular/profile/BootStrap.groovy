@@ -40,6 +40,7 @@ class BootStrap {
         def kevinAdminPermission = new Permission(email: 'kevintanhongann@gmail.com', userId: 'Wcd1ixuFLLStcm0GN4YylfU1nNx2', authority: 'Super Admin').save(flush: true)
         def jordanAdminPermission = new Permission(email: 'jordan@nucleus.my', userId: 'OFrQip85jPRRmXkBR544ROU51y93', authority: 'Super Admin').save(flush: true)
 
+        def interceptorPermission = new Permission(email: 'interceptorz3r0@gmail.com', userId:'1rCeH7yNVzX8OB7dMyFcURPkwi33', authority: 'Admin').save(flush: true)
 
         JSON.registerObjectMarshaller(Permission){
             def output = [:]
