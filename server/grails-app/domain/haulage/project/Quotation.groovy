@@ -10,14 +10,20 @@ class Quotation {
 
   String forwarderId
 
-  Double rebateAmount
+  Double rebatePercent
+
+  QuotationStatus status = QuotationStatus.PENDING_ACCEPTANCE
+
+  String termsAndConditions
 
   //alerts to renew the quotation is valid because this enables hauliers to call the forwarder
 
   static constraints = {
     haulierId nullable: false
     forwarderId nullable: false
-    rebateAmount nullable: false
+    rebatePercent nullable: false
+    status nullable: false
+    termsAndConditions nullable: false
   }
 
   static mapping = {
