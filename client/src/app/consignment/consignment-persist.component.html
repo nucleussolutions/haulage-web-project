@@ -1,79 +1,89 @@
-<div  role="navigation">
-  <ul class="nav nav-pills">
-    <li class="nav-item"><a [routerLink]="['/index']" class="home nav-link">Home</a></li>
-    <li class="nav-item"><a [routerLink]="['/consignment','list']" class="list nav-link">Consignment List</a></li>
-  </ul>
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/consignment','list']" class="list">Consignment List</a></li>
+    </ul>
 </div>
-
-<div class="row">
-
-  <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-    <div id="persist-consignment" class="content scaffold-edit" role="main">
-      <h1>{{create ? "Create" : "Edit"}} Consignment</h1>
-      <ul class="errors" role="alert" *ngIf="errors">
+<div id="persist-consignment" class="content scaffold-edit" role="main">
+    <h1>{{create ? "Create" : "Edit"}} Consignment</h1>
+    <ul class="errors" role="alert" *ngIf="errors">
         <li *ngFor="let error of errors">{{error.message}}</li>
-      </ul>
+    </ul>
 
-      <form name="save{className}" (ngSubmit)="save()">
+    <form name="save{className}" (ngSubmit)="save()">
         <fieldset class="form">
-          <fieldset class="form">
-            <div class="form-group">
-              <label for="containerNo">Container No
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="containerNo" id="containerNo" [(ngModel)]="consignment.containerNo" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="name">Name
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="name" id="name" [(ngModel)]="consignment.name" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="type">Type
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="type" id="type" [(ngModel)]="consignment.type" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="pickupLadenDropoff">Pickup Laden Dropoff
-                <span class="required-indicator">*</span>
-              </label>
-              <select required="" name="pickupLadenDropoff" id="pickupLadenDropoff" [(ngModel)]="consignment.pickupLadenDropoff" class="form-control">
-                <option *ngFor="let location of locationList" [value]="location.id" [selected]="consignment.pickupLadenDropoff?.id == location.id">
-                  {{location.toString()}}
-                </option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="acceptTime">Accept Time
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="acceptTime" id="acceptTime" type="date" placeholder="YYYY-MM-DD"
-                     [value]="consignment.acceptTime | date:'y-MM-dd'" (change)="consignment.acceptTime = $event.target.valueAsDate"/>
-            </div>
-            <div class="form-group">
-              <label for="consignmentCode">Consignment Code
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="consignmentCode" id="consignmentCode" [(ngModel)]="consignment.consignmentCode" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="size">Size
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="size" id="size" [(ngModel)]="consignment.size" type="text"/>
-            </div>
-          </fieldset>
+            <fieldset class="form">
+  <div class="fieldcontain required">
+    <label for="containerNo">Container No
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="containerNo" id="containerNo" [(ngModel)]="consignment.containerNo" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="name">Name
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="name" id="name" [(ngModel)]="consignment.name" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="type">Type
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="type" id="type" [(ngModel)]="consignment.type">
+      <option value="OT">OT</option>
+      <option value="FLAT_RACK">FLAT_RACK</option>
+      <option value="REEFER">REEFER</option>
+      <option value="HQ">HQ</option>
+      <option value="GP">GP</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
+    <label for="pickupLocation">Pickup Location
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="pickupLocation" id="pickupLocation" [(ngModel)]="consignment.pickupLocation">
+      <option *ngFor="let location of locationList" [value]="location.id" [selected]="consignment.pickupLocation?.id == location.id">{{location.toString()}}</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
+    <label for="ladenOrDropOffLocation">Laden Or Drop Off Location
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="ladenOrDropOffLocation" id="ladenOrDropOffLocation" [(ngModel)]="consignment.ladenOrDropOffLocation">
+      <option *ngFor="let location of locationList" [value]="location.id" [selected]="consignment.ladenOrDropOffLocation?.id == location.id">{{location.toString()}}</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
+    <label for="acceptTime">Accept Time
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="acceptTime" id="acceptTime" type="date" placeholder="YYYY-MM-DD" [value]="consignment.acceptTime | date:'y-MM-dd'" (change)="consignment.acceptTime = $event.target.valueAsDate" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="consignmentCode">Consignment Code
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="consignmentCode" id="consignmentCode" [(ngModel)]="consignment.consignmentCode" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="status">Status
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="status" id="status" [(ngModel)]="consignment.status">
+      <option value="READY_FOR_COLLECTION">READY_FOR_COLLECTION</option>
+      <option value="PENDING">PENDING</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
+    <label for="size">Size
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="size" id="size" [(ngModel)]="consignment.size" type="text" />
+  </div>
+</fieldset>
         </fieldset>
         <fieldset class="buttons">
-          <input type="submit" class="save btn btn-primary"
-                 [value]="create ? 'Save' : 'Update'"/>
+            <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" />
         </fieldset>
-      </form>
-    </div>    
-  </div>
-  
+    </form>
 </div>
-
-

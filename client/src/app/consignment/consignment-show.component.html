@@ -27,9 +27,15 @@
     </div>
   </li>
   <li class="fieldcontain">
-    <span id="pickupLadenDropoff-label" class="property-label">Pickup Laden Dropoff</span>
-    <div class="property-value" aria-labelledby="pickupLadenDropoff-label">
-      <a *ngIf="consignment.pickupLadenDropoff" [routerLink]="['/consignment','show', consignment.pickupLadenDropoff.id]">{{consignment.pickupLadenDropoff.toString()}}</a>
+    <span id="pickupLocation-label" class="property-label">Pickup Location</span>
+    <div class="property-value" aria-labelledby="pickupLocation-label">
+      <a *ngIf="consignment.pickupLocation" [routerLink]="['/consignment','show', consignment.pickupLocation.id]">{{consignment.pickupLocation.toString()}}</a>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="ladenOrDropOffLocation-label" class="property-label">Laden Or Drop Off Location</span>
+    <div class="property-value" aria-labelledby="ladenOrDropOffLocation-label">
+      <a *ngIf="consignment.ladenOrDropOffLocation" [routerLink]="['/consignment','show', consignment.ladenOrDropOffLocation.id]">{{consignment.ladenOrDropOffLocation.toString()}}</a>
     </div>
   </li>
   <li class="fieldcontain">
@@ -42,6 +48,12 @@
     <span id="consignmentCode-label" class="property-label">Consignment Code</span>
     <div class="property-value" aria-labelledby="consignmentCode-label">
       <span>{{consignment.consignmentCode}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="status-label" class="property-label">Status</span>
+    <div class="property-value" aria-labelledby="status-label">
+      <span>{{consignment.status}}</span>
     </div>
   </li>
   <li class="fieldcontain">

@@ -1,45 +1,36 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Consignment} from './consignment';
 import {ConsignmentService} from './consignment.service';
-import {CookieService} from "ngx-cookie";
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
-import { UserService } from 'app/user.service';
-import { Subscription } from 'rxjs/Subscription';
-
+import {UserService} from "../user.service";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'consignment-persist',
-  templateUrl: './consignment-show.component.html',
-  providers: [UserService]
+  templateUrl: './consignment-show.component.html'
 })
 export class ConsignmentShowComponent implements OnInit, OnDestroy {
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
+    ngOnDestroy(): void {
+      this.subscription.unsubscribe();
+    }
 
   consignment = new Consignment();
 
-  private subscription: Subscription;
+    private subscription: Subscription;
 
-  private userObject: any;
+    private userObject: any;
 
-  constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private router: Router, private userService : UserService, private modal : Modal) {
+    constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private router: Router, private userService: UserService) {
     this.subscription = this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    });
+        this.userObject = response;
+    })
   }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.consignmentService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((consignment: Consignment) => {
         this.consignment = consignment;
-      }, error => {
-        this.modal.alert()
-            .title('Error')
-            .message(error)
-            .open();
       });
     });
   }
@@ -52,11 +43,6 @@ export class ConsignmentShowComponent implements OnInit, OnDestroy {
         } else {
           alert("Error occurred during delete");
         }
-      }, error => {
-          this.modal.alert()
-              .title('Error')
-              .message(error)
-              .open();
       });
     }
   }

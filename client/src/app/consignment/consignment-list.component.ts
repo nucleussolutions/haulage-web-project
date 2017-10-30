@@ -1,50 +1,31 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ConsignmentService} from './consignment.service';
 import {Consignment} from './consignment';
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
-import {CookieService} from "ngx-cookie";
-import { UserService } from 'app/user.service';
-import { Subscription } from 'rxjs/Subscription';
+import {Modal} from 'ngx-modialog/plugins/bootstrap';
+import {Router} from "@angular/router";
+import {UserService} from 'app/user.service';
 
 @Component({
-  selector: 'consignment-list',
-  templateUrl: './consignment-list.component.html',
-  providers: [UserService]
+    selector: 'consignment-list',
+    templateUrl: './consignment-list.component.html',
+    providers: [UserService]
 })
-export class ConsignmentListComponent implements OnInit, OnDestroy {
+export class ConsignmentListComponent implements OnInit {
+
+    consignmentList: Consignment[] = [];
+    private userObject : any;
 
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
+    constructor(private consignmentService: ConsignmentService, private modal: Modal, private router: Router, private userService: UserService) {
+    }
 
-  private userObject : any;
+    ngOnInit() {
+        this.userService.getUser().subscribe(response => {
+            this.userObject = response;
+            this.consignmentService.list(this.userObject.token, this.userObject.apiKey).subscribe((consignmentList: Consignment[]) => {
+                this.consignmentList = consignmentList;
+            });
+        });
 
-  private subscription : Subscription;
-
-  consignmentList: Consignment[] = [];
-
-  constructor(private consignmentService: ConsignmentService, private modal : Modal, private userService: UserService) {
-    this.subscription = this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    });
-  }
-
-  ngOnInit() {
-    this.consignmentService.list(this.userObject.token, this.userObject.apiKey).subscribe((consignmentList: Consignment[]) => {
-      this.consignmentList = consignmentList;
-    }, error => {
-      let message;
-
-      if(error.status === 401){
-        message = 'Unauthorized'
-      }else if(error.status === 500){
-        message = 'Internal server error';
-      }else if(error.status === 400){
-        message = 'Bad request';
-      }
-
-      this.modal.alert().title('Error').message(message).open();
-    });
-  }
+    }
 }
