@@ -2,11 +2,15 @@ package haulage.angular.profile
 
 import grails.converters.JSON
 import haulage.project.Company
+import haulage.project.Consignment
+import haulage.project.ConsignmentType
 import haulage.project.ForwarderInfo
 import haulage.project.HaulierInfo
 import haulage.project.Location
 import haulage.project.Permission
 import haulage.project.Pricing
+import haulage.project.RFTStatus
+import haulage.project.RFTType
 import haulage.project.TransportRequest
 import haulage.project.Vehicle
 
@@ -50,7 +54,47 @@ class BootStrap {
             return output
         }
 
-        def testRFT = new TransportRequest();
+        def consignments = []
+
+        def pickupLadenDropOff = new Location(name: 'asdasdalsdjk', address1: 'asdasdsad', address2: 'asdasdasd', lat: 3.12312323, lng: 31232139830, type: 'depot').save(flush: true)
+
+        consignments.add new Consignment(name: 'consignment 1', type: ConsignmentType.FLAT_RACK, acceptTime: new Date())
+        consignments.add new Consignment(name: 'consignment 2', type: ConsignmentType.GP, acceptTime: new Date())
+        consignments.add new Consignment(name: 'consignment 3', type: ConsignmentType.HQ, acceptTime: new Date())
+        consignments.add new Consignment(name: 'consignment 4', type: ConsignmentType.OT, acceptTime: new Date())
+
+        def testRFT = new TransportRequest()
+        testRFT.type = RFTType.DIRECT_IMPORT
+        testRFT.consignments = consignments
+        testRFT.status = RFTStatus.PENDING
+        testRFT.shippingAgent = 'asldsadjsdl'
+        testRFT.forwardingAgent = 'asdjsadlsadkdljk'
+        testRFT.hazardous = Boolean.TRUE
+        testRFT.dgCode = '123912-3'
+        testRFT.vesselEtaOrEtd = new Date()
+        testRFT.terminal = new Location(name: 'aksdsldjasd', address1: 'asdldsjasdl', address2: 'asdsadjlsadlksd', city: 'asdsdasd', state: 'asdskjd', country: 'askdjsldasd')
+        testRFT.temperature = 32.12
+        testRFT.containerRemarks = 'asldsadjldsjasd'
+        testRFT.orderRemarks = 'asdasdlkjasd'
+        testRFT.kOnekEightFormImgUrl = 'http://www.google.com'
+        testRFT.gatePassImgUrl = 'http://www.google.com'
+
+        testRFT.save(flush: true, failOnError: true)
+
+        def testRFT2 = new TransportRequest()
+        testRFT2.type = RFTType.NORMAL_IMPORT
+        testRFT2.status = RFTStatus.PENDING
+        testRFT2.shippingAgent = 'qowuewqewqoewe'
+        testRFT2.forwardingAgent = 'asldkasd;askds;'
+        testRFT2.hazardous = Boolean.TRUE
+        testRFT2.dgCode = '123912-3'
+        testRFT2.vesselEtaOrEtd = new Date()
+        testRFT2.terminal = new Location(name: 'aksdsldjasd', address1: 'asdldsjasdl', address2: 'asdsadjlsadlksd', city: 'asdsdasd', state: 'asdskjd', country: 'askdjsldasd')
+        testRFT2.temperature = 32.12
+
+
+        testRFT2.save(flush: true, failOnError: true)
+
 
     }
     def destroy = {

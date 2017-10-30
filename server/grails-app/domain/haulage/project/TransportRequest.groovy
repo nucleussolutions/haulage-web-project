@@ -36,7 +36,10 @@ class TransportRequest {
     //true false
     Boolean hazardous
 
+    //product name/description
     String productDesc
+
+    //or consignee
     String shipper
     String orderRemarks
     String containerRemarks

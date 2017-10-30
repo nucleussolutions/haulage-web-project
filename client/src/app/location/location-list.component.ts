@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LocationService} from './location.service';
 import {Location} from './location';
-import { CookieService } from 'ngx-cookie';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import {Router} from "@angular/router";
 import { UserService } from 'app/user.service';
@@ -16,11 +15,7 @@ export class LocationListComponent implements OnInit {
 
   locationList: Location[] = [];
 
-  private token : string;
-
-  private apiKey : string;
-
-  private userObject : any ;
+  private userObject : any;
 
   constructor(private locationService: LocationService, private modal : Modal, private router: Router, private userService: UserService) {
   }
@@ -34,8 +29,6 @@ export class LocationListComponent implements OnInit {
 
     this.userService.getUser().subscribe(response => {
       this.userObject = response;
-    }, error => {
-
     });
 
     this.locationService.list(this.userObject.token, this.userObject.apiKey).subscribe((locationList: Location[]) => {

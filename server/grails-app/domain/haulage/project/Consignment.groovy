@@ -12,13 +12,16 @@ class Consignment {
 
     //OT,Flat Rack,Reefer,HQ,GP
     ConsignmentType type
-    Location pickupLadenDropoff
+    Location pickupLocation
+
+    Location ladenOrDropOffLocation
+
     Date acceptTime
 
     //auto assign based on haulier code
     String consignmentCode
 
-    ConsignmentStatus status
+    ConsignmentStatus status = ConsignmentStatus.PENDING
 
     static belongsTo = [TransportRequest]
 
@@ -26,10 +29,10 @@ class Consignment {
         containerNo blank: false, nullable: false
         name blank: false, nullable: false
         type nullable: false, inList: ConsignmentType.values()*.id
-        pickupLadenDropoff nullable: false
+        pickupLocation nullable: false
+        ladenOrDropOffLocation nullable: false
         acceptTime nullable: false
         consignmentCode nullable: false
         status nullable: false, inList: ConsignmentStatus.values()*.id
     }
-
 }
