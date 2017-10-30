@@ -9,7 +9,8 @@ import { UserService } from 'app/user.service';
 
 @Component({
   selector: 'haulierInfo-persist',
-  templateUrl: './haulierInfo-show.component.html'
+  templateUrl: './haulierInfo-show.component.html',
+  providers:[UserService]
 })
 export class HaulierInfoShowComponent implements OnInit, OnDestroy {
 

@@ -25,7 +25,6 @@ class BootStrap {
 
         def haulierInfo1 = new HaulierInfo(userId: '12-03219-3123', company: company1, name: 'qwpeiwepwqiew').save(flush: true)
 
-        def forwarderInfo1 = new ForwarderInfo(userId: '12083123902-3', company: company2, name: 'asdl;asdkd;').save(flush: true)
 
         def location1 = new Location(name: 'North Port', city: 'petaling jaya', state: 'petaling jaya', country: 'malaysia', type: 'customer location', address1: 'ajsdlasdj', address2: 'aksdjsdjsald').save(flush: true)
         def location2 = new Location(name: 'North Port', city: 'petaling jaya', state: 'petaling jaya', country: 'malaysia', type: 'customer location', address1: 'jasdlkadjlas', address2: 'akjsdlasdjslad').save(flush: true)
@@ -47,6 +46,7 @@ class BootStrap {
         def jordanAdminPermission = new Permission(email: 'jordan@nucleus.my', userId: 'OFrQip85jPRRmXkBR544ROU51y93', authority: 'Super Admin', grantedBy: 'Wcd1ixuFLLStcm0GN4YylfU1nNx2').save(flush: true)
 
         def interceptorPermission = new Permission(email: 'interceptorz3r0@gmail.com', userId:'1rCeH7yNVzX8OB7dMyFcURPkwi33', authority: 'Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93').save(flush: true)
+
 
         JSON.registerObjectMarshaller(Permission){
             def output = [:]
@@ -128,6 +128,10 @@ class BootStrap {
         testRFT2.save(flush: true, failOnError: true)
 
 
+        def forwarderPermission = new Permission(email: 'kevin@kevin.com', userId: 'GWQOYWnAxxVPtnUODGCWe8cXllK2', authority: 'Manager', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93').save(flush: true, failOnError: true)
+
+
+        def forwarderInfo1 = new ForwarderInfo(userId: 'GWQOYWnAxxVPtnUODGCWe8cXllK2', company: company2, name: 'asdl;asdkd;').save(flush: true, failOnError: true)
     }
     def destroy = {
     }

@@ -1,8 +1,8 @@
-<div class="nav" role="navigation">
-    <ul>
-        <li><a [routerLink]="['/index']" class="home">Home</a></li>
-        <li><a class="list" [routerLink]="['/haulierInfo', 'list']" class="list">HaulierInfo List</a></li>
-        <li><a class="create" [routerLink]="['/haulierInfo', 'create']" class="create">New HaulierInfo</a></li>
+<div  role="navigation">
+    <ul class="nav nav-pills">
+        <li class="nav-item"><a [routerLink]="['/index']" class="home nav-link">Home</a></li>
+        <li class="nav-item"><a class="list" [routerLink]="['/haulierInfo', 'list']" class="list nav-link">HaulierInfo List</a></li>
+        <li *ngIf="permission?.authority == 'Super Admin'" class="nav-item"><a class="create" [routerLink]="['/haulierInfo', 'create']" class="create nav-link">New HaulierInfo</a></li>
     </ul>
 </div>
 <div class="row">
@@ -30,8 +30,8 @@
         </li>
       </ol>
 
-      <a class="btn btn-primary" [routerLink]="['/haulierInfo', 'edit', haulierInfo.id]">Edit</a>
-      <button class="btn btn-primary" type="button" (click)="destroy()">Delete</button>
+      <a *ngIf="permission?.authority == 'Super Admin'" class="btn btn-primary" [routerLink]="['/haulierInfo', 'edit', haulierInfo.id]">Edit</a>
+      <button *ngIf="permission?.authority == 'Super Admin'" class="btn btn-primary" type="button" (click)="destroy()">Delete</button>
 
     </div>
   </div>

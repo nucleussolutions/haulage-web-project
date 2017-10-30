@@ -8,7 +8,8 @@ import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'transportRequest-persist',
-  templateUrl: './transportRequest-show.component.html'
+  templateUrl: './transportRequest-show.component.html',
+  providers: [UserService]
 })
 export class TransportRequestShowComponent implements OnInit, OnDestroy {
 

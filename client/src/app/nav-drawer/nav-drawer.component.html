@@ -31,16 +31,16 @@
     <li>
       <a routerLinkActive="active" routerLink="/haulierInfo">Hauliers</a>
     </li>
-    <li>
+    <li *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
       <a routerLinkActive="active" routerLink="/forwarderInfo">Forwarders</a>
     </li>
-    <li>
+    <li *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
       <a routerLinkActive="active" routerLink="/quotation">Quotations</a>
     </li>
-    <li>
+    <li *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
       <a routerLinkActive="active" routerLink="/consignment">Consignment</a>
     </li>
-    <li>
+    <li *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
       <a routerLinkActive="active" routerLink="/vehicle">Vehicles</a>
     </li>
     <li>
