@@ -11,7 +11,7 @@ class Consignment {
     String size
 
     //OT,Flat Rack,Reefer,HQ,GP
-    ConsignmentType type
+    String type
     Location pickupLocation
 
     Location ladenOrDropOffLocation
@@ -21,7 +21,9 @@ class Consignment {
     //auto assign based on haulier code
     String consignmentCode
 
-    ConsignmentStatus status = ConsignmentStatus.PENDING
+    String status = ConsignmentStatus.PENDING.id
+
+    String taskType
 
     static belongsTo = [TransportRequest]
 
@@ -34,5 +36,6 @@ class Consignment {
         acceptTime nullable: false
         consignmentCode nullable: false
         status nullable: false, inList: ConsignmentStatus.values()*.id
+        taskType nullable:false, inList: ConsignmentTaskType.values()*.id
     }
 }

@@ -9,7 +9,7 @@ class TransportRequest {
     String containerVolume
 
     //uncouple import, direct import, uncouple export or direct export
-    RFTType type
+    String type
 
     //trailer or s/loader
     String equipment
@@ -56,7 +56,7 @@ class TransportRequest {
 
     Customer customer
 
-    RFTStatus status = RFTStatus.PENDING
+    String status = RFTStatus.PENDING
 
     static constraints = {
         containerVolume blank: false, nullable: false
@@ -86,7 +86,7 @@ class TransportRequest {
         kOnekEightFormImgUrl nullable: true
         gatePassImgUrl nullable: true
         bookingConfirmationImgUrl nullable: true
-        cmoImgUrl nullable: false
+        cmoImgUrl nullable: true
         consignments nullable: false
         forwarderId nullable: false
         customer nullable: false

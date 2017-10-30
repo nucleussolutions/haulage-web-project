@@ -75,6 +75,15 @@
     </select>
   </div>
   <div class="fieldcontain required">
+    <label for="taskType">Task Type
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="taskType" id="taskType" [(ngModel)]="consignment.taskType">
+      <option value="LADEN">LADEN</option>
+      <option value="DROP_OFF">DROP_OFF</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
     <label for="size">Size
       <span class="required-indicator">*</span>
     </label>

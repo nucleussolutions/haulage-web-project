@@ -11,19 +11,19 @@ import {Subscription} from "rxjs/Subscription";
 })
 export class ConsignmentShowComponent implements OnInit, OnDestroy {
 
-    ngOnDestroy(): void {
-      this.subscription.unsubscribe();
-    }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   consignment = new Consignment();
 
-    private subscription: Subscription;
+  private subscription: Subscription;
 
-    private userObject: any;
+  private userObject: any;
 
-    constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private router: Router, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private router: Router, private userService: UserService) {
     this.subscription = this.userService.getUser().subscribe(response => {
-        this.userObject = response;
+      this.userObject = response;
     })
   }
 
@@ -39,7 +39,7 @@ export class ConsignmentShowComponent implements OnInit, OnDestroy {
     if (confirm("Are you sure?")) {
       this.consignmentService.destroy(this.consignment, this.userObject.token, this.userObject.apiKey).subscribe((success: boolean) => {
         if (success) {
-          this.router.navigate(['/consignment','list']);
+          this.router.navigate(['/consignment', 'list']);
         } else {
           alert("Error occurred during delete");
         }
