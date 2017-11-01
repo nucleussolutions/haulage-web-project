@@ -7,58 +7,69 @@ import {LocationService} from '../location/location.service';
 import {Location} from '../location/location';
 import {Subscription} from "rxjs/Subscription";
 import {UserService} from "../user.service";
+import {PermissionService} from "../permission/permission.service";
+import {Modal} from 'ngx-modialog/plugins/bootstrap';
 
 @Component({
-    selector: 'consignment-persist',
-    templateUrl: './consignment-persist.component.html',
-    providers: [UserService]
+  selector: 'consignment-persist',
+  templateUrl: './consignment-persist.component.html',
+  providers: [UserService]
 })
 export class ConsignmentPersistComponent implements OnInit, OnDestroy {
 
-    ngOnDestroy(): void {
-        this.subscription.unsubscribe();
-    }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
-    consignment = new Consignment();
-    create = true;
-    errors: any[];
-    locationList: Location[];
+  consignment = new Consignment();
+  create = true;
+  errors: any[];
+  locationList: Location[];
 
-    private subscription: Subscription;
-    private userObject: any;
+  private subscription: Subscription;
+  private userObject: any;
 
 
+  constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private router: Router, private locationService: LocationService, private userService: UserService, private permissionService: PermissionService, private modal: Modal) {
+    this.subscription = this.userService.getUser().subscribe(response => {
+      this.userObject = response;
+    });
+  }
 
-    constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private router: Router, private locationService: LocationService, private userService: UserService) {
-        this.subscription = this.userService.getUser().subscribe(response => {
-            this.userObject = response;
-        });
-    }
+  ngOnInit() {
 
-    ngOnInit() {
+    this.permissionService.getByUserId(this.userObject.uid, this.userObject.token, this.userObject.apiKey).subscribe(permission => {
+      if (permission.authority == 'Super Admin' || permission.authority == 'Admin') {
         this.locationService.list(this.userObject.token, this.userObject.apiKey).subscribe((locationList: Location[]) => {
-            this.locationList = locationList;
+          this.locationList = locationList;
         });
         this.route.params.subscribe((params: Params) => {
-            if (params.hasOwnProperty('id')) {
-                this.consignmentService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((consignment: Consignment) => {
-                    this.create = false;
-                    this.consignment = consignment;
-                });
-            }
+          if (params.hasOwnProperty('id')) {
+            this.consignmentService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((consignment: Consignment) => {
+              this.create = false;
+              this.consignment = consignment;
+            });
+          }
         });
-    }
+      } else {
+        const dialog = this.modal.alert().title('Error').message('Unauthorized').open();
+        dialog.then(value => {
+          this.router.navigate(['/index']);
+        });
+      }
+    });
+  }
 
-    save() {
-        this.consignmentService.save(this.consignment, this.userObject.token, this.userObject.apiKey).subscribe((consignment: Consignment) => {
-            this.router.navigate(['/consignment', 'show', consignment.id]);
-        }, (res: Response) => {
-            const json = res.json();
-            if (json.hasOwnProperty('message')) {
-                this.errors = [json];
-            } else {
-                this.errors = json._embedded.errors;
-            }
-        });
-    }
+  save() {
+    this.consignmentService.save(this.consignment, this.userObject.token, this.userObject.apiKey).subscribe((consignment: Consignment) => {
+      this.router.navigate(['/consignment', 'show', consignment.id]);
+    }, (res: Response) => {
+      const json = res.json();
+      if (json.hasOwnProperty('message')) {
+        this.errors = [json];
+      } else {
+        this.errors = json._embedded.errors;
+      }
+    });
+  }
 }

@@ -21,7 +21,6 @@ export class ConsignmentListComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.userService.getUser().subscribe(response => {
       this.userObject = response;
 
@@ -31,11 +30,12 @@ export class ConsignmentListComponent implements OnInit {
             this.consignmentList = consignmentList;
           });
         }else{
-          let dialog = this.modal.alert().title('Error').message('UnAuthorized').isBlocking(true).open();
-
+          const dialog = this.modal.alert().title('Error').message('UnAuthorized').isBlocking(true).open();
+          dialog.then(value => {
+            this.router.navigate(['/index']);
+          });
         }
       });
     });
-
   }
 }
