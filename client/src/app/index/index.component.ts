@@ -14,82 +14,82 @@ import {Permission} from "../permission/permission";
 
 
 @Component({
-    selector: 'app-index',
-    templateUrl: './index.component.html',
-    styleUrls: ['./index.component.css'],
-    providers: [UserService],
+  selector: 'app-index',
+  templateUrl: './index.component.html',
+  styleUrls: ['./index.component.css'],
+  providers: [UserService],
 })
 export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
-    ngOnDestroy(): void {
-        this.subscription.unsubscribe();
-    }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
-    bsModalRef: BsModalRef;
+  bsModalRef: BsModalRef;
 
-    @ViewChild(NavDrawerComponent)
-    navDrawerComponent: NavDrawerComponent;
+  @ViewChild(NavDrawerComponent)
+  navDrawerComponent: NavDrawerComponent;
 
-    private userObject: any;
+  private userObject: any;
 
-    private subscription: Subscription;
+  private subscription: Subscription;
 
-    private permission: Permission;
+  private permission: Permission;
 
-    constructor(public modal: Modal, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private titleService: Title, private userService: UserService, private permissionService: PermissionService) {
+  constructor(public modal: Modal, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private titleService: Title, private userService: UserService, private permissionService: PermissionService) {
 
-        this.subscription = this.userService.getUser().subscribe(response => {
-            this.userObject = response;
-        });
+    this.subscription = this.userService.getUser().subscribe(response => {
+      this.userObject = response;
+    });
 
-        this.titleService.setTitle('Dashboard');
-    }
+    this.titleService.setTitle('Dashboard');
+  }
 
-    ngOnInit() {
-    }
+  ngOnInit() {
+  }
 
-    ngAfterViewInit() {
-        this.permissionService.getByUserId(this.userObject.uid, this.userObject.token, this.userObject.apiKey).subscribe(permission => {
-            this.permission = permission;
+  ngAfterViewInit() {
+    this.permissionService.getByUserId(this.userObject.uid, this.userObject.token, this.userObject.apiKey).subscribe(permission => {
+      this.permission = permission;
 
-            if(this.permission.authority !== 'Super Admin'){
-                //todo check if user exists in hauliers and forwarders table
-                this.userService.checkUserType(this.userObject.uid, this.userObject.token, this.userObject.apiKey).then(response => {
+      if (this.permission.authority !== 'Super Admin') {
+        //todo check if user exists in hauliers and forwarders table
+        this.userService.checkUserType(this.userObject.uid, this.userObject.token, this.userObject.apiKey).then(response => {
 
-                }, error => {
-                    if(error.status === 422){
-                        setTimeout(() => {
-                            if (this.userObject.token) {
-                                this.modal
-                                    .open(CreateProfileModalComponent, overlayConfigFactory({
-                                        isBlocking: false,
-                                        size: 'lg'
-                                    }, BSModalContext));
-                            }
-                        });
-                    }else{
-                        this.modal.alert().title('Error').message(error.message).open();
-                    }
-
-                });
-
-            }
         }, error => {
-            if(error.status == 400){
-                setTimeout(() => {
-                    if (this.userObject.token) {
-                        this.modal
-                            .open(CreateProfileModalComponent, overlayConfigFactory({
-                                isBlocking: false,
-                                size: 'lg'
-                            }, BSModalContext));
-                    }
-                });
-            }
-            console.log('NavDrawerComponent permissionService error '+error);
+          if (error.status === 422) {
+            setTimeout(() => {
+              if (this.userObject.token) {
+                this.modal
+                  .open(CreateProfileModalComponent, overlayConfigFactory({
+                    isBlocking: false,
+                    size: 'lg'
+                  }, BSModalContext));
+              }
+            });
+          } else {
+            this.modal.alert().title('Error').message(error.message).open();
+          }
+
         });
 
+      }
+    }, error => {
+      if (error.status == 400) {
+        setTimeout(() => {
+          if (this.userObject.token) {
+            this.modal
+              .open(CreateProfileModalComponent, overlayConfigFactory({
+                isBlocking: false,
+                size: 'lg'
+              }, BSModalContext));
+          }
+        });
+      }
+      console.log('NavDrawerComponent permissionService error ' + error);
+    });
 
-    }
+
+  }
 }
