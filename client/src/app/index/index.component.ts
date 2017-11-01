@@ -50,7 +50,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.permissionService.getByUserId(this.userObject.uid, this.userObject.token, this.userObject.apiKey).subscribe(permission => {
+    this.permissionService.getByUserId(this.userObject).subscribe(permission => {
       this.permission = permission;
 
       if (this.permission.authority !== 'Super Admin') {

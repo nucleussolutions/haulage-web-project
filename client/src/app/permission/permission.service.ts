@@ -57,22 +57,40 @@ export class PermissionService {
       .map((r: Response) => new Permission(r.json()));
   }
 
-  getByUserId(userId: string, token: string, apiKey: string): Observable<Permission> {
+  // getByUserId(userId: string, token: string, apiKey: string): Observable<Permission> {
+  //
+  //   let headers = new Headers({
+  //     'token': token,
+  //     'apiKey': apiKey
+  //   });
+  //
+  //   let options = new RequestOptions({
+  //     headers: headers
+  //   });
+  //
+  //     this.http.get(environment.serverUrl + '/api/permission?userId=' + userId, options).subscribe(response => {
+  //       console.log('getByUserId response '+response);
+  //     });
+  //
+  //   return this.http.get(environment.serverUrl + '/api/permission?userId=' + userId, options).map((r: Response) => new Permission(r.json()));
+  // }
+
+  getByUserId(userObject: any): Observable<Permission> {
 
     let headers = new Headers({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     let options = new RequestOptions({
       headers: headers
     });
 
-      this.http.get(environment.serverUrl + '/api/permission?userId=' + userId, options).subscribe(response => {
-        console.log('getByUserId response '+response);
-      });
+    this.http.get(environment.serverUrl + '/api/permission?userId=' + userObject.userId, options).subscribe(response => {
+      console.log('getByUserId response '+response);
+    });
 
-    return this.http.get(environment.serverUrl + '/api/permission?userId=' + userId, options).map((r: Response) => new Permission(r.json()));
+    return this.http.get(environment.serverUrl + '/api/permission?userId=' + userObject.userId, options).map((r: Response) => new Permission(r.json()));
   }
 
   save(permission: Permission, token: string, apiKey: string): Observable<Permission> {

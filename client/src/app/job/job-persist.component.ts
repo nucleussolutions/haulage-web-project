@@ -38,7 +38,7 @@ export class JobPersistComponent implements OnInit, OnDestroy {
         this.subscription = this.userService.getUser().subscribe(response => {
             this.userObject = response;
 
-            this.permissionService.getByUserId(this.userObject.uid, this.userObject.token, this.userObject.apiKey).subscribe(permission => {
+            this.permissionService.getByUserId(this.userObject).subscribe(permission => {
                 this.permission = permission;
             }, error => {
                 console.log('JobPersistComponent error'+error);

@@ -86,7 +86,6 @@ export class UserService {
         console.log('currentUser ' + currentUser);
         let cookieObjects = this.cookieService.getAll();
         console.log('cookieObjects ' + cookieObjects);
-        // let merged = Object.assign(this.firebaseAuth.auth.currentUser, this.cookieService.getAll());
         return Observable.of(cookieObjects);
     }
 
