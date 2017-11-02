@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
 import {PermissionService} from "../permission/permission.service";
 import {Subscription} from 'rxjs/Subscription';
 import {Permission} from "../permission/permission";

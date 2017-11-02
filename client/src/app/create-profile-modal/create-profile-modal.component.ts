@@ -109,7 +109,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuar
         } else if (formData.value.usertype === 'Manager') {
             let forwarderInfo = new ForwarderInfo();
 
-            forwarderInfo.userId = this.userObject.userId;
+            forwarderInfo.userId = this.userObject.uid;
             forwarderInfo.company = company;
             forwarderInfo.name = formData.value.name;
 

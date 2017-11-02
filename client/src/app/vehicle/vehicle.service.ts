@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, RequestOptions, RequestMethod, Request, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Vehicle} from './vehicle';
 import {Subject} from 'rxjs/Subject';
@@ -8,27 +7,26 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 import {environment} from "../../environments/environment";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable()
 export class VehicleService {
 
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
   }
 
   list(token: string, apiKey : string): Observable<Vehicle[]> {
     let subject = new Subject<Vehicle[]>();
 
-    let headers = new Headers({
+    let headers = new HttpHeaders({
       'token': token,
       'apiKey': apiKey
     });
 
-    let options = new RequestOptions({
-      headers : headers
-    });
-
-    this.http.get(environment.serverUrl + '/vehicle', options)
+    this.http.get(environment.serverUrl + '/vehicle', {
+      headers: headers
+    })
       .map((r: Response) => r.json())
         .catch(err => {
             subject.error(err);
@@ -41,14 +39,13 @@ export class VehicleService {
   }
 
   get(id: number, token: string, apiKey: string): Observable<Vehicle> {
-    let headers = new Headers({
+    let headers = new HttpHeaders({
       'token': token,
       'apiKey': apiKey
     });
-    let options = new RequestOptions({
-      headers : headers
-    });
-    return this.http.get(environment.serverUrl + '/vehicle/'+id, options)
+    return this.http.get(environment.serverUrl + '/vehicle/'+id, {
+      headers: headers
+    })
       .map((r: Response) => new Vehicle(r.json())).catch(err => {
             if (err.status === 401) {
                 return Observable.throw(new Error('Unauthorized'));
@@ -59,22 +56,31 @@ export class VehicleService {
   }
 
   save(vehicle: Vehicle, token: string, apiKey: string): Observable<Vehicle> {
-    const requestOptions = new RequestOptions();
+    // const requestOptions = new RequestOptions();
+
+    let requestMethodStr;
+    let url;
+
     if (vehicle.id) {
-      requestOptions.method = RequestMethod.Put;
-      requestOptions.url = environment.serverUrl + '/vehicle/' + vehicle.id;
+      // requestOptions.method = RequestMethod.Put;
+      requestMethodStr = 'PUT';
+      url = environment.serverUrl + '/vehicle/' + vehicle.id;
     } else {
-      requestOptions.method = RequestMethod.Post;
-      requestOptions.url = environment.serverUrl + '/vehicle';
+      // requestOptions.method = RequestMethod.Post;
+      requestMethodStr = 'POST';
+      url = environment.serverUrl + '/vehicle';
     }
-    requestOptions.body = JSON.stringify(vehicle);
-    requestOptions.headers = new Headers({
+    let body = JSON.stringify(vehicle);
+    let headers = new HttpHeaders({
       "Content-Type": "application/json",
       'token' : token,
       'apiKey': apiKey
     });
 
-    return this.http.request(new Request(requestOptions))
+    return this.http.request(requestMethodStr, url, {
+      headers: headers,
+      body: body
+    })
       .map((r: Response) => new Vehicle(r.json())).catch(err => {
             if (err.status === 401) {
                 return Observable.throw(new Error('Unauthorized'));
@@ -86,15 +92,14 @@ export class VehicleService {
 
   destroy(vehicle: Vehicle, token : string, apiKey : string): Observable<boolean> {
 
-    let headers = new Headers({
+    let headers = new HttpHeaders({
       'token': token,
       'apiKey': apiKey
     });
-    let options = new RequestOptions({
-      headers : headers
-    });
 
-    return this.http.delete(environment.serverUrl + '/vehicle/' + vehicle.id).map((res: Response) => res.ok).catch(() => {
+    return this.http.delete(environment.serverUrl + '/vehicle/' + vehicle.id, {
+      headers: headers
+    }).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
   }

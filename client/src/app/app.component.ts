@@ -20,6 +20,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        console.log('AppComponent ngAfterViewInit i dont know what this does');
+
     }
 }

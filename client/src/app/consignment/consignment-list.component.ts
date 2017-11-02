@@ -12,27 +12,25 @@ import {Subscription} from "rxjs/Subscription";
   templateUrl: './consignment-list.component.html',
   providers: [UserService]
 })
-export class ConsignmentListComponent implements OnInit, OnDestroy {
+export class ConsignmentListComponent implements OnInit {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 
   consignmentList: Consignment[] = [];
-
-  private subscription : Subscription;
 
   constructor(private consignmentService: ConsignmentService, private modal: Modal, private router: Router, private userService: UserService, private permissionService: PermissionService) {
   }
 
   ngOnInit() {
-    this.subscription.add(this.userService.getUser().subscribe(userObject => {
+    console.log('ConsignmentListComponent onInit');
+    this.userService.getUser().subscribe(userObject => {
       this.checkPermissions(userObject);
-    }));
+    });
   }
 
   checkPermissions(userObject : any) : void {
-    this.subscription.add(this.permissionService.getByUserId(userObject).subscribe(permission => {
+    this.permissionService.getByUserId(userObject).subscribe(permission => {
       if(permission.authority == 'Super Admin' || permission.authority == 'Admin'){
         this.consignmentService.list(userObject.token, userObject.apiKey).subscribe((consignmentList: Consignment[]) => {
           this.consignmentList = consignmentList;
@@ -43,6 +41,6 @@ export class ConsignmentListComponent implements OnInit, OnDestroy {
           this.router.navigate(['/index']);
         });
       }
-    }));
+    })
   }
 }

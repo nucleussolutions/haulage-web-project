@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, RequestOptions, RequestMethod, Request, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {TransportRequest} from './transportRequest';
 import {Subject} from 'rxjs/Subject';
@@ -8,27 +7,25 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';
 import {environment} from "../../environments/environment";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable()
 export class TransportRequestService {
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
   }
 
   list(token : string, apiKey : string): Observable<TransportRequest[]> {
     let subject = new Subject<TransportRequest[]>();
 
-    let headers = new Headers({
+    let headers = new HttpHeaders({
       'token': token,
       'apiKey': apiKey
     });
 
-    let options = new RequestOptions({
-      headers : headers
-    });
-
-    this.http.get(environment.serverUrl + '/transportRequest', options)
-      .map((r: Response) => r.json())
+    this.http.get(environment.serverUrl + '/transportRequest', {
+      headers: headers
+    })
         .catch(err => {
             subject.error(err);
             return subject.asObservable();
@@ -41,16 +38,14 @@ export class TransportRequestService {
 
   get(id: number, token: string, apiKey : string): Observable<TransportRequest> {
 
-    let headers = new Headers({
+    let headers = new HttpHeaders({
       'token': token,
       'apiKey': apiKey
     });
 
-    let options = new RequestOptions({
-      headers : headers
-    });
-
-    return this.http.get(environment.serverUrl + '/transportRequest/'+id, options)
+    return this.http.get(environment.serverUrl + '/transportRequest/'+id, {
+      headers: headers
+    })
       .map((r: Response) => new TransportRequest(r.json())).catch(err => {
             if (err.status === 401) {
                 return Observable.throw('Unauthorized');
@@ -61,22 +56,32 @@ export class TransportRequestService {
   }
 
   save(transportRequest: TransportRequest, token: string, apiKey : string): Observable<TransportRequest> {
-    const requestOptions = new RequestOptions();
+    // const requestOptions = new RequestOptions();
+
+    let requestMethodStr;
+
+    let url;
+
     if (transportRequest.id) {
-      requestOptions.method = RequestMethod.Put;
-      requestOptions.url = environment.serverUrl + '/transportRequest/' + transportRequest.id;
+      // requestOptions.method = RequestMethod.Put;
+      requestMethodStr = 'PUT';
+      url = environment.serverUrl + '/transportRequest/' + transportRequest.id;
     } else {
-      requestOptions.method = RequestMethod.Post;
-      requestOptions.url = environment.serverUrl + '/transportRequest';
+      // requestOptions.method = RequestMethod.Post;
+      requestMethodStr = 'POST';
+      url = environment.serverUrl + '/transportRequest';
     }
-    requestOptions.body = JSON.stringify(transportRequest);
-    requestOptions.headers = new Headers({
+    let body = JSON.stringify(transportRequest);
+    let headers = new HttpHeaders({
       "Content-Type": "application/json",
       'token': token,
       'apiKey': apiKey
     });
 
-    return this.http.request(new Request(requestOptions))
+    return this.http.request(requestMethodStr, url, {
+      headers: headers,
+      body: body
+    })
       .map((r: Response) => new TransportRequest(r.json())).catch(err => {
             if (err.status === 401) {
                 return Observable.throw('Unauthorized');
@@ -88,16 +93,14 @@ export class TransportRequestService {
 
   destroy(transportRequest: TransportRequest, token: string, apiKey : string): Observable<boolean> {
 
-    let headers = new Headers({
+    let headers = new HttpHeaders({
       'token': token,
       'apiKey': apiKey
     });
 
-    let options = new RequestOptions({
-      headers : headers
-    });
-
-    return this.http.delete(environment.serverUrl + '/transportRequest/' + transportRequest.id, options).map((res: Response) => res.ok).catch(() => {
+    return this.http.delete(environment.serverUrl + '/transportRequest/' + transportRequest.id, {
+      headers: headers
+    }).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
   }

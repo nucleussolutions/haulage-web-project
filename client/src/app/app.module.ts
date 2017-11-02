@@ -3,7 +3,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {IndexComponent} from './index/index.component';
@@ -44,8 +43,10 @@ import {PermissionModule} from './permission/permission.module';
 import {JobModule} from './job/job.module';
 import {CreateConsignmentModalComponent} from './create-consignment-modal/create-consignment-modal.component';
 import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
-import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {PermissionsInterceptor} from "./permissions-interceptor";
+import {PermissionService} from "./permission/permission.service";
+import {UserService} from "./user.service";
 
 
 @NgModule({
@@ -73,7 +74,7 @@ import {PermissionsInterceptor} from "./permissions-interceptor";
     BrowserModule,
     CookieModule.forRoot(),
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     AppRoutingModule,
     NgbModule.forRoot(),
     FormsModule,
@@ -100,11 +101,7 @@ import {PermissionsInterceptor} from "./permissions-interceptor";
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  }, NavService, {
-    provide: HTTP_INTERCEPTORS,
-    useClass: PermissionsInterceptor,
-    multi: true
-  }],
+  }, NavService],
   bootstrap: [AppComponent, NavDrawerComponent]
 })
 export class AppModule {
