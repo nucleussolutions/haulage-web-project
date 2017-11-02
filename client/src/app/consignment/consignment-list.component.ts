@@ -34,6 +34,8 @@ export class ConsignmentListComponent implements OnInit {
       if(permission.authority == 'Super Admin' || permission.authority == 'Admin'){
         this.consignmentService.list(userObject.token, userObject.apiKey).subscribe((consignmentList: Consignment[]) => {
           this.consignmentList = consignmentList;
+        }, error => {
+          this.handleError(error);
         });
       }else{
         const dialog = this.modal.alert().title('Error').message('UnAuthorized').isBlocking(true).open();
@@ -41,6 +43,26 @@ export class ConsignmentListComponent implements OnInit {
           this.router.navigate(['/index']);
         });
       }
-    })
+    }, error2 => {
+      this.handleError(error2);
+    });
+  }
+
+  private handleError(error) {
+    let message;
+
+    if (error.status === 401) {
+      message = 'Unauthorized';
+    } else if (error.status === 500) {
+      message = "Internal server error";
+    } else if (error.status === 400) {
+      message = 'Bad request';
+    }
+
+    const dialog = this.modal.alert().isBlocking(true).title('Error').message(message).open();
+
+    dialog.then(value => {
+      this.router.navigate(['/login']);
+    });
   }
 }
