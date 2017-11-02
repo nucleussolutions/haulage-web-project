@@ -33,12 +33,15 @@ export class ConsignmentPersistComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private router: Router, private locationService: LocationService, private userService: UserService, private permissionService: PermissionService, private modal: Modal) {
     this.subscription = this.userService.getUser().subscribe(response => {
       this.userObject = response;
+      this.checkPermissions();
     });
   }
 
   ngOnInit() {
+  }
 
-    this.permissionService.getByUserId(this.userObject.uid, this.userObject.token, this.userObject.apiKey).subscribe(permission => {
+  private checkPermissions() {
+    this.permissionService.getByUserId(this.userObject).subscribe(permission => {
       if (permission.authority == 'Super Admin' || permission.authority == 'Admin') {
         this.locationService.list(this.userObject.token, this.userObject.apiKey).subscribe((locationList: Location[]) => {
           this.locationList = locationList;

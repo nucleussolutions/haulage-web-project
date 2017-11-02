@@ -7,12 +7,14 @@ import {ForgetPasswordComponent} from "./forget-password/forget-password.compone
 import {ResetPasswordComponent} from "./reset-password/reset-password.component";
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {ChangePasswordComponent} from "./change-password/change-password.component";
+import {UnauthorizedComponent} from "./unauthorized/unauthorized.component";
 
 const appRoutes: Routes = [
     {path: 'forget-password', component: ForgetPasswordComponent},
     {path: 'change-password', component: ChangePasswordComponent},
     {path: 'reset-password', component: ResetPasswordComponent},
     {path: 'register', component: RegisterComponent},
+    {path: 'unauthorized', component: UnauthorizedComponent},
     {path: 'login', component: LoginComponent},
     {
         path: 'index', component: IndexComponent, children:[

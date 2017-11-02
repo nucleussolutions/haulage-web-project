@@ -6,37 +6,47 @@ import {UserService} from "../user.service";
 import {PermissionService} from "../permission/permission.service";
 
 @Component({
-    selector: 'job-list',
-    templateUrl: './job-list.component.html',
-    providers: [UserService]
+  selector: 'job-list',
+  templateUrl: './job-list.component.html',
+  providers: [UserService]
 })
 export class JobListComponent implements OnInit, OnDestroy {
 
-    ngOnDestroy(): void {
-        this.subscription.unsubscribe();
-    }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
-    jobList: Job[] = [];
+  jobList: Job[] = [];
 
-    private subscription: Subscription;
+  private subscription: Subscription;
 
-    private userObject: any;
+  private userObject: any;
 
-    private permission : any;
+  private permission: any;
 
-    constructor(private jobService: JobService, private userService: UserService, private permissionService: PermissionService) {
-        this.subscription = this.userService.getUser().subscribe(response => {
-            this.userObject = response;
+  constructor(private jobService: JobService, private userService: UserService, private permissionService: PermissionService) {
+    this.subscription.add(this.userService.getUser().subscribe(response => {
+      this.userObject = response;
+      this.checkPermissions();
+    }));
+  }
 
-            this.permissionService.getByUserId(this.userObject.uid, this.userObject.token, this.userObject.apiKey).subscribe(permission => {
-                this.permission = permission;
-            });
-        });
-    }
+  checkPermissions(): void {
+    this.subscription.add(this.permissionService.getByUserId(this.userObject).subscribe(permission => {
+      this.permission = permission;
+      if(this.permission.authority == 'Super Admin' || this.permission.authority == 'Admin'){
+        this.listJobs();
+      }
+    }));
+  }
 
-    ngOnInit() {
-        this.jobService.list(this.userObject.token, this.userObject.apiKey).subscribe((jobList: Job[]) => {
-            this.jobList = jobList;
-        });
-    }
+  listJobs() : void {
+    this.jobService.list(this.userObject.token, this.userObject.apiKey).subscribe((jobList: Job[]) => {
+      this.jobList = jobList;
+    });
+  }
+
+  ngOnInit() {
+
+  }
 }
