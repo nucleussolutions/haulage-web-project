@@ -1,16 +1,18 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DriverInfoService } from './driverInfo.service';
-import { DriverInfo } from './driverInfo';
-import { Title } from "@angular/platform-browser";
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
-import { Subscription } from 'rxjs/Subscription';
-import { UserService } from 'app/user.service';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {DriverInfoService} from './driverInfo.service';
+import {DriverInfo} from './driverInfo';
+import {Title} from "@angular/platform-browser";
+import {Modal} from 'ngx-modialog/plugins/bootstrap';
+import {Subscription} from 'rxjs/Subscription';
+import {UserService} from 'app/user.service';
+import {PermissionService} from "../permission/permission.service";
+import {Router} from "@angular/router";
 
 
 @Component({
   selector: 'driverInfo-list',
   templateUrl: './driverInfo-list.component.html',
-    providers: [UserService]
+  providers: [UserService]
 })
 export class DriverInfoListComponent implements OnInit, OnDestroy {
 
@@ -24,7 +26,7 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(private driverInfoService: DriverInfoService, private titleService: Title, private modal: Modal, private userService: UserService) {
+  constructor(private driverInfoService: DriverInfoService, private titleService: Title, private modal: Modal, private userService: UserService, private permissionService: PermissionService, private router: Router) {
     this.titleService.setTitle('Drivers');
     this.subscription = this.userService.getUser().subscribe(response => {
       this.userObject = response;
@@ -32,6 +34,20 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    this.permissionService.getByUserId(this.userObject).subscribe(permission => {
+      if(permission.authority == 'Manager' || permission.authority == 'User'){
+        //redirect to index page
+        this.modal.alert().title('Error').message('Unauthorized').open();
+        this.router.navigate(['/index']);
+      }else{
+        this.listDrivers();
+      }
+    });
+
+  }
+
+  private listDrivers() {
     this.driverInfoService.list(this.userObject.token, this.userObject.apiKey).subscribe((driverInfoList: DriverInfo[]) => {
       this.driverInfoList = driverInfoList;
     }, error => {

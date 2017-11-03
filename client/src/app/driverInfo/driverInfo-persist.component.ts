@@ -3,9 +3,10 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DriverInfo } from './driverInfo';
 import { DriverInfoService } from './driverInfo.service';
 import { Response } from "@angular/http";
-import { CookieService } from 'ngx-cookie';
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
+import {PermissionService} from "../permission/permission.service";
+import {Modal} from 'ngx-modialog/plugins/bootstrap';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class DriverInfoPersistComponent implements OnInit {
 
   private userObject : any;
 
-  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private router: Router, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private router: Router, private userService: UserService, private permissionService: PermissionService, private modal : Modal) {
     this.subscription = this.userService.getUser().subscribe(response => {
       this.userObject = response;
     });
@@ -31,12 +32,18 @@ export class DriverInfoPersistComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.route.params.subscribe((params: Params) => {
-      if (params.hasOwnProperty('id')) {
-        this.driverInfoService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((driverInfo: DriverInfo) => {
-          this.create = false;
-          this.driverInfo = driverInfo;
+    this.permissionService.getByUserId(this.userObject).subscribe(permission => {
+      if(permission.authority == 'Manager' || permission.authority == 'User'){
+        this.modal.alert().title('Error').message('Unauthorized').open();
+        this.router.navigate(['/index']);
+      }else{
+        this.route.params.subscribe((params: Params) => {
+          if (params.hasOwnProperty('id')) {
+            this.driverInfoService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((driverInfo: DriverInfo) => {
+              this.create = false;
+              this.driverInfo = driverInfo;
+            });
+          }
         });
       }
     });
