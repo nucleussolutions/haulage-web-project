@@ -16,7 +16,7 @@ class Location {
     Double lat
     Double lng
 
-    //customer location, depot, and another one is...
+    //terminal, depot and customer location
     String type
 
     static constraints = {

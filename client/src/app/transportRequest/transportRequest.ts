@@ -14,7 +14,6 @@ export class TransportRequest {
   vesselName: string;
   voyageNo: string;
   vesselEtaOrEtd: any;
-  polPod: string;
   shippingAgent: string;
   forwardingAgent: string;
   operatorCode: string;
@@ -34,6 +33,10 @@ export class TransportRequest {
   consignments: Consignment[];
   forwarderId: string;
   customer: Customer;
+  status: string;
+  portOfLoading: string;
+  portOfDischarge: string;
+  pickupOrDropoffEmptyDepoh: Location;
 
   constructor (object?: any) {
     if (object) {
@@ -51,6 +54,11 @@ export class TransportRequest {
       if (object.hasOwnProperty('customer')) {
         this.customer = new Customer(object['customer']);
         delete object['customer'];
+      }
+      
+      if (object.hasOwnProperty('pickupOrDropoffEmptyDepoh')) {
+        this.pickupOrDropoffEmptyDepoh = new Location(object['pickupOrDropoffEmptyDepoh']);
+        delete object['pickupOrDropoffEmptyDepoh'];
       }
       
       for (var prop in object) {

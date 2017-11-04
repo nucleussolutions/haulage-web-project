@@ -27,18 +27,6 @@
     </div>
   </li>
   <li class="fieldcontain">
-    <span id="pickupLocation-label" class="property-label">Pickup Location</span>
-    <div class="property-value" aria-labelledby="pickupLocation-label">
-      <a *ngIf="consignment.pickupLocation" [routerLink]="['/consignment','show', consignment.pickupLocation.id]">{{consignment.pickupLocation.toString()}}</a>
-    </div>
-  </li>
-  <li class="fieldcontain">
-    <span id="ladenOrDropOffLocation-label" class="property-label">Laden Or Drop Off Location</span>
-    <div class="property-value" aria-labelledby="ladenOrDropOffLocation-label">
-      <a *ngIf="consignment.ladenOrDropOffLocation" [routerLink]="['/consignment','show', consignment.ladenOrDropOffLocation.id]">{{consignment.ladenOrDropOffLocation.toString()}}</a>
-    </div>
-  </li>
-  <li class="fieldcontain">
     <span id="acceptTime-label" class="property-label">Accept Time</span>
     <div class="property-value" aria-labelledby="acceptTime-label">
       <span>{{consignment.acceptTime | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>

@@ -44,7 +44,6 @@ import {JobModule} from './job/job.module';
 import {CreateConsignmentModalComponent} from './create-consignment-modal/create-consignment-modal.component';
 import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {PermissionsInterceptor} from "./permissions-interceptor";
 import {PermissionService} from "./permission/permission.service";
 import {UserService} from "./user.service";
 

@@ -1,280 +1,248 @@
-<div  role="navigation">
-  <ul class="nav nav-pills">
-    <li class="nav-item"><a [routerLink]="['/index']" class="home">Home</a></li>
-    <li class="nav-item"><a [routerLink]="['/transportRequest','list']" class="list">TransportRequest List</a></li>
-  </ul>
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/transportRequest','list']" class="list">TransportRequest List</a></li>
+    </ul>
 </div>
-
-<div class="row">
-
-  <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-    <div id="persist-transportRequest" class="content scaffold-edit" role="main">
-      <h1>{{create ? "Create" : "Edit"}} TransportRequest</h1>
-      <ul class="errors" role="alert" *ngIf="errors">
+<div id="persist-transportRequest" class="content scaffold-edit" role="main">
+    <h1>{{create ? "Create" : "Edit"}} TransportRequest</h1>
+    <ul class="errors" role="alert" *ngIf="errors">
         <li *ngFor="let error of errors">{{error.message}}</li>
-      </ul>
+    </ul>
 
-      <form name="save{className}" (ngSubmit)="save()">
+    <form name="save{className}" (ngSubmit)="save()">
         <fieldset class="form">
-          <fieldset class="form">
-            <div class="form-group">
-              <label for="containerVolume">Container Volume
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="containerVolume" id="containerVolume" [(ngModel)]="transportRequest.containerVolume"
-                     type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="type">Type
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="type" id="type" [(ngModel)]="transportRequest.type" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="equipment">Equipment</label>
-              <input class="form-control" name="equipment" id="equipment" [(ngModel)]="transportRequest.equipment" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="bookingRefNo">Booking Ref No</label>
-              <input class="form-control" name="bookingRefNo" id="bookingRefNo" [(ngModel)]="transportRequest.bookingRefNo" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="otherRefNo">Other Ref No</label>
-              <input class="form-control" name="otherRefNo" id="otherRefNo" [(ngModel)]="transportRequest.otherRefNo" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="terminal">Terminal
-                <span class="required-indicator">*</span>
-              </label>
-              <select required="" name="terminal" id="terminal" [(ngModel)]="transportRequest.terminal">
-                <option *ngFor="let location of locationList" [value]="location.id" [selected]="transportRequest.terminal?.id == location.id">
-                  {{location.toString()}}
-                </option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="vesselName">Vessel Name
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="vesselName" id="vesselName" [(ngModel)]="transportRequest.vesselName" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="voyageNo">Voyage No
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="voyageNo" id="voyageNo" [(ngModel)]="transportRequest.voyageNo" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="vesselEtaOrEtd">Vessel Eta Or Etd
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="vesselEtaOrEtd" id="vesselEtaOrEtd" type="date" placeholder="YYYY-MM-DD"
-                     [value]="transportRequest.vesselEtaOrEtd | date:'y-MM-dd'" (change)="transportRequest.vesselEtaOrEtd = $event.target.valueAsDate"/>
-            </div>
-            <div class="form-group">
-              <label for="polPod">Pol Pod
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="polPod" id="polPod" [(ngModel)]="transportRequest.polPod" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="shippingAgent">Shipping Agent
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="shippingAgent" id="shippingAgent" [(ngModel)]="transportRequest.shippingAgent" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="forwardingAgent">Forwarding Agent
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="forwardingAgent" id="forwardingAgent" [(ngModel)]="transportRequest.forwardingAgent"
-                     type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="operatorCode">Operator Code</label>
-              <input class="form-control" name="operatorCode" id="operatorCode" [(ngModel)]="transportRequest.operatorCode" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="hazardous">Hazardous</label>
-              <input name="hazardous" id="hazardous" [(ngModel)]="transportRequest.hazardous" type="checkbox"/>
-            </div>
-            <div class="form-group">
-              <label for="grossWeight">Gross Weight
-                <span class="required-indicator">*</span>
-              </label>
-              <input required="" name="grossWeight" id="grossWeight" [(ngModel)]="transportRequest.grossWeight" type="number" step="any"/>
-            </div>
-            <div class="form-group">
-              <label for="overDimension">Over Dimension</label>
-              <input name="overDimension" id="overDimension" [(ngModel)]="transportRequest.overDimension" type="checkbox"/>
-            </div>
-            <div class="form-group">
-              <label for="temperature">Temperature</label>
-              <input class="form-control" name="temperature" id="temperature" [(ngModel)]="transportRequest.temperature" type="number" step="any"/>
-            </div>
-            <div class="form-group">
-              <label for="productDesc">Product Desc
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="productDesc" id="productDesc" [(ngModel)]="transportRequest.productDesc" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="shipper">Shipper
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="shipper" id="shipper" [(ngModel)]="transportRequest.shipper" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="orderRemarks">Order Remarks</label>
-              <input class="form-control" name="orderRemarks" id="orderRemarks" [(ngModel)]="transportRequest.orderRemarks" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="containerRemarks">Container Remarks</label>
-              <input class="form-control" name="containerRemarks" id="containerRemarks" [(ngModel)]="transportRequest.containerRemarks" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="dgCode">Dg Code
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="dgCode" id="dgCode" [(ngModel)]="transportRequest.dgCode" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="kOnekEightFormImgUrl">K Onek Eight Form Img Url</label>
-              <input name="kOnekEightFormImgUrl" id="kOnekEightFormImgUrl" [(ngModel)]="transportRequest.kOnekEightFormImgUrl" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="gatePassImgUrl">Gate Pass Img Url</label>
-              <input type="file">
-              <input name="gatePassImgUrl" id="gatePassImgUrl" [(ngModel)]="transportRequest.gatePassImgUrl" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="bookingConfirmationImgUrl">Booking Confirmation Img Url</label>
-              <input type="file">
-              <!-- <input name="bookingConfirmationImgUrl" id="bookingConfirmationImgUrl" [(ngModel)]="transportRequest.bookingConfirmationImgUrl" type="text"/> -->
-            </div>
-            <div class="form-group">
-              <label for="cmoImgUrl">Cmo Img Url
-                <span class="required-indicator">*</span>
-              </label>
-              <input required="" name="cmoImgUrl" id="cmoImgUrl" [(ngModel)]="transportRequest.cmoImgUrl" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="consignments">Consignments
-                <span class="required-indicator">*</span>
-              </label>
-              <select required="" name="consignments" id="consignments" [(ngModel)]="transportRequest.consignments" multiple="">
-                <option *ngFor="let consignment of consignmentList" [value]="consignment.id" [selected]="transportRequest.consignments?.id == consignment.id">
-                  {{consignment.toString()}}
-                </option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="forwarderId">Forwarder Id
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="forwarderId" id="forwarderId" [(ngModel)]="transportRequest.forwarderId" type="text"/>
-            </div>
-            <fieldset class="embedded customer">
-              <legend>Customer</legend>
-              <div class="form-group">
-                <label for="customer.phone">Phone
-                  <span class="required-indicator">*</span>
-                </label>
-                <input class="form-control" required="" name="customer.phone" id="customer.phone" [(ngModel)]="transportRequest.customer.phone"
-                       type="text"/>
-              </div>
-              <div class="form-group">
-                <label for="customer.address1">Address1
-                  <span class="required-indicator">*</span>
-                </label>
-                <input class="form-control" required="" name="customer.address1" id="customer.address1" [(ngModel)]="transportRequest.customer.address1"
-                       type="text"/>
-              </div>
-              <div class="form-group">
-                <label for="customer.address2">Address2
-                  <span class="required-indicator">*</span>
-                </label>
-                <input class="form-control" required="" name="customer.address2" id="customer.address2" [(ngModel)]="transportRequest.customer.address2"
-                       type="text"/>
-              </div>
-              <div class="form-group">
-                <label for="customer.city">City
-                  <span class="required-indicator">*</span>
-                </label>
-                <input class="form-control" required="" name="customer.city" id="customer.city" [(ngModel)]="transportRequest.customer.city"
-                       type="text"/>
-              </div>
-              <div class="form-group">
-                <label for="customer.personInCharge">Person In Charge
-                  <span class="required-indicator">*</span>
-                </label>
-                <input class="form-control" required="" name="customer.personInCharge" id="customer.personInCharge"
-                       [(ngModel)]="transportRequest.customer.personInCharge" type="text"/>
-              </div>
-              <div class="form-group">
-                <label for="customer.companyName">Company Name
-                  <span class="required-indicator">*</span>
-                </label>
-                <input class="form-control" required="" name="customer.companyName" id="customer.companyName"
-                       [(ngModel)]="transportRequest.customer.companyName" type="text"/>
-              </div>
-              <div class="form-group">
-                <label for="customer.country">Country
-                  <span class="required-indicator">*</span>
-                </label>
-                <input class="form-control" required="" name="customer.country" id="customer.country" [(ngModel)]="transportRequest.customer.country" type="text"/>
-              </div>
-
-              <!-- Simple Select -->
-              <div class="form-group">
-                <label for="customer.state">State
-                  <span class="required-indicator">*</span>
-                </label>
-                <select class="form-control" name="customer.state" id="customer.state" [(ngModel)]="transportRequest.customer.state">
-                  <option  value="Johor">Johor</option>
-                  <option  value="Kedah">Kedah</option>
-                  <option  value="Kelantan">Kelantan</option>
-                  <option  value="Kuala Lumpur">Kuala Lumpur</option>
-                  <option  value="Negeri Sembilan">Negeri Sembilan</option>
-                  <option  value="Pahang">Pahang</option>
-                  <option  value="Melaka">Melaka</option>
-                  <option  value="Perak">Perak</option>
-                  <option  value="Perlis">Perlis</option>
-                  <option  value="Pulau Pinang">Pulau Pinang</option>
-                  <option  value="Sabah">Sabah</option>
-                  <option  value="Sarawak">Sarawak</option>
-                  <option  value="Selangor">Selangor</option>
-                  <option  value="Terengganu">Terengganu</option>
-                  <option  value="Wilayah Persekutuan – Labuan">Wilayah Persekutuan – Labuan</option>
-                </select>
-              </div>
-            </fieldset>
-          </fieldset>
+            <fieldset class="form">
+  <div class="fieldcontain required">
+    <label for="containerVolume">Container Volume
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="containerVolume" id="containerVolume" [(ngModel)]="transportRequest.containerVolume" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="type">Type
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="type" id="type" [(ngModel)]="transportRequest.type">
+      <option value="Direct Import">Direct Import</option>
+      <option value="Direct Export">Direct Export</option>
+      <option value="Uncouple Import">Uncouple Import</option>
+      <option value="Uncouple Export">Uncouple Export</option>
+    </select>
+  </div>
+  <div class="fieldcontain">
+    <label for="equipment">Equipment</label>
+    <input name="equipment" id="equipment" [(ngModel)]="transportRequest.equipment" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="bookingRefNo">Booking Ref No</label>
+    <input name="bookingRefNo" id="bookingRefNo" [(ngModel)]="transportRequest.bookingRefNo" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="otherRefNo">Other Ref No</label>
+    <input name="otherRefNo" id="otherRefNo" [(ngModel)]="transportRequest.otherRefNo" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="terminal">Terminal
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="terminal" id="terminal" [(ngModel)]="transportRequest.terminal">
+      <option *ngFor="let location of locationList" [value]="location.id" [selected]="transportRequest.terminal?.id == location.id">{{location.toString()}}</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
+    <label for="vesselName">Vessel Name
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="vesselName" id="vesselName" [(ngModel)]="transportRequest.vesselName" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="voyageNo">Voyage No
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="voyageNo" id="voyageNo" [(ngModel)]="transportRequest.voyageNo" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="vesselEtaOrEtd">Vessel Eta Or Etd
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="vesselEtaOrEtd" id="vesselEtaOrEtd" type="date" placeholder="YYYY-MM-DD" [value]="transportRequest.vesselEtaOrEtd | date:'y-MM-dd'" (change)="transportRequest.vesselEtaOrEtd = $event.target.valueAsDate" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="shippingAgent">Shipping Agent
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="shippingAgent" id="shippingAgent" [(ngModel)]="transportRequest.shippingAgent" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="forwardingAgent">Forwarding Agent
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="forwardingAgent" id="forwardingAgent" [(ngModel)]="transportRequest.forwardingAgent" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="operatorCode">Operator Code</label>
+    <input name="operatorCode" id="operatorCode" [(ngModel)]="transportRequest.operatorCode" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="hazardous">Hazardous</label>
+    <input name="hazardous" id="hazardous" [(ngModel)]="transportRequest.hazardous" type="checkbox" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="grossWeight">Gross Weight
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="grossWeight" id="grossWeight" [(ngModel)]="transportRequest.grossWeight" type="number" step="any" />
+  </div>
+  <div class="fieldcontain">
+    <label for="overDimension">Over Dimension</label>
+    <input name="overDimension" id="overDimension" [(ngModel)]="transportRequest.overDimension" type="checkbox" />
+  </div>
+  <div class="fieldcontain">
+    <label for="temperature">Temperature</label>
+    <input name="temperature" id="temperature" [(ngModel)]="transportRequest.temperature" type="number" step="any" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="productDesc">Product Desc
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="productDesc" id="productDesc" [(ngModel)]="transportRequest.productDesc" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="shipper">Shipper
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="shipper" id="shipper" [(ngModel)]="transportRequest.shipper" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="orderRemarks">Order Remarks</label>
+    <input name="orderRemarks" id="orderRemarks" [(ngModel)]="transportRequest.orderRemarks" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="containerRemarks">Container Remarks</label>
+    <input name="containerRemarks" id="containerRemarks" [(ngModel)]="transportRequest.containerRemarks" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="dgCode">Dg Code
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="dgCode" id="dgCode" [(ngModel)]="transportRequest.dgCode" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="kOnekEightFormImgUrl">K Onek Eight Form Img Url</label>
+    <input name="kOnekEightFormImgUrl" id="kOnekEightFormImgUrl" [(ngModel)]="transportRequest.kOnekEightFormImgUrl" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="gatePassImgUrl">Gate Pass Img Url</label>
+    <input name="gatePassImgUrl" id="gatePassImgUrl" [(ngModel)]="transportRequest.gatePassImgUrl" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="bookingConfirmationImgUrl">Booking Confirmation Img Url</label>
+    <input name="bookingConfirmationImgUrl" id="bookingConfirmationImgUrl" [(ngModel)]="transportRequest.bookingConfirmationImgUrl" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="cmoImgUrl">Cmo Img Url</label>
+    <input name="cmoImgUrl" id="cmoImgUrl" [(ngModel)]="transportRequest.cmoImgUrl" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="consignments">Consignments
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="consignments" id="consignments" [(ngModel)]="transportRequest.consignments" multiple="">
+      <option *ngFor="let consignment of consignmentList" [value]="consignment.id" [selected]="transportRequest.consignments?.id == consignment.id">{{consignment.toString()}}</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
+    <label for="forwarderId">Forwarder Id
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="forwarderId" id="forwarderId" [(ngModel)]="transportRequest.forwarderId" type="text" />
+  </div>
+  <fieldset class="embedded customer">
+    <legend>Customer</legend>
+    <div class="fieldcontain required">
+      <label for="customer.phone">Phone
+        <span class="required-indicator">*</span>
+      </label>
+      <input required="" name="customer.phone" id="customer.phone" [(ngModel)]="transportRequest.customer.phone" type="text" />
+    </div>
+    <div class="fieldcontain required">
+      <label for="customer.address1">Address1
+        <span class="required-indicator">*</span>
+      </label>
+      <input required="" name="customer.address1" id="customer.address1" [(ngModel)]="transportRequest.customer.address1" type="text" />
+    </div>
+    <div class="fieldcontain required">
+      <label for="customer.address2">Address2
+        <span class="required-indicator">*</span>
+      </label>
+      <input required="" name="customer.address2" id="customer.address2" [(ngModel)]="transportRequest.customer.address2" type="text" />
+    </div>
+    <div class="fieldcontain required">
+      <label for="customer.city">City
+        <span class="required-indicator">*</span>
+      </label>
+      <input required="" name="customer.city" id="customer.city" [(ngModel)]="transportRequest.customer.city" type="text" />
+    </div>
+    <div class="fieldcontain required">
+      <label for="customer.personInCharge">Person In Charge
+        <span class="required-indicator">*</span>
+      </label>
+      <input required="" name="customer.personInCharge" id="customer.personInCharge" [(ngModel)]="transportRequest.customer.personInCharge" type="text" />
+    </div>
+    <div class="fieldcontain required">
+      <label for="customer.companyName">Company Name
+        <span class="required-indicator">*</span>
+      </label>
+      <input required="" name="customer.companyName" id="customer.companyName" [(ngModel)]="transportRequest.customer.companyName" type="text" />
+    </div>
+    <div class="fieldcontain required">
+      <label for="customer.country">Country
+        <span class="required-indicator">*</span>
+      </label>
+      <input required="" name="customer.country" id="customer.country" [(ngModel)]="transportRequest.customer.country" type="text" />
+    </div>
+    <div class="fieldcontain required">
+      <label for="customer.state">State
+        <span class="required-indicator">*</span>
+      </label>
+      <input required="" name="customer.state" id="customer.state" [(ngModel)]="transportRequest.customer.state" type="text" />
+    </div>
+  </fieldset>
+  <div class="fieldcontain required">
+    <label for="status">Status
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="status" id="status" [(ngModel)]="transportRequest.status">
+      <option value="approved">approved</option>
+      <option value="rejected">rejected</option>
+      <option value="pending">pending</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
+    <label for="portOfLoading">Port Of Loading
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="portOfLoading" id="portOfLoading" [(ngModel)]="transportRequest.portOfLoading" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="portOfDischarge">Port Of Discharge
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="portOfDischarge" id="portOfDischarge" [(ngModel)]="transportRequest.portOfDischarge" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="pickupOrDropoffEmptyDepoh">Pickup Or Dropoff Empty Depoh
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="pickupOrDropoffEmptyDepoh" id="pickupOrDropoffEmptyDepoh" [(ngModel)]="transportRequest.pickupOrDropoffEmptyDepoh">
+      <option *ngFor="let location of locationList" [value]="location.id" [selected]="transportRequest.pickupOrDropoffEmptyDepoh?.id == location.id">{{location.toString()}}</option>
+    </select>
+  </div>
+</fieldset>
         </fieldset>
         <fieldset class="buttons">
-          <input class="btn btn-primary" type="submit"
-                 [value]="create ? 'Save' : 'Update'"/>
+            <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" />
         </fieldset>
-      </form>
-    </div>
-  </div>
-
-
-  <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-
-  </div>
-
-  <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-
-  </div>
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <h2>Consignments</h2>
-
-    <ng2-smart-table [settings]="settings" [source]="data"></ng2-smart-table>
-
-  </div>
-
+    </form>
 </div>
-
-

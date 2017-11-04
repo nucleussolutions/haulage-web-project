@@ -31,26 +31,10 @@
     </label>
     <select required="" name="type" id="type" [(ngModel)]="consignment.type">
       <option value="OT">OT</option>
-      <option value="FLAT_RACK">FLAT_RACK</option>
-      <option value="REEFER">REEFER</option>
+      <option value="Flat Rack">Flat Rack</option>
+      <option value="Reefer">Reefer</option>
       <option value="HQ">HQ</option>
       <option value="GP">GP</option>
-    </select>
-  </div>
-  <div class="fieldcontain required">
-    <label for="pickupLocation">Pickup Location
-      <span class="required-indicator">*</span>
-    </label>
-    <select required="" name="pickupLocation" id="pickupLocation" [(ngModel)]="consignment.pickupLocation">
-      <option *ngFor="let location of locationList" [value]="location.id" [selected]="consignment.pickupLocation?.id == location.id">{{location.toString()}}</option>
-    </select>
-  </div>
-  <div class="fieldcontain required">
-    <label for="ladenOrDropOffLocation">Laden Or Drop Off Location
-      <span class="required-indicator">*</span>
-    </label>
-    <select required="" name="ladenOrDropOffLocation" id="ladenOrDropOffLocation" [(ngModel)]="consignment.ladenOrDropOffLocation">
-      <option *ngFor="let location of locationList" [value]="location.id" [selected]="consignment.ladenOrDropOffLocation?.id == location.id">{{location.toString()}}</option>
     </select>
   </div>
   <div class="fieldcontain required">
@@ -70,8 +54,10 @@
       <span class="required-indicator">*</span>
     </label>
     <select required="" name="status" id="status" [(ngModel)]="consignment.status">
-      <option value="READY_FOR_COLLECTION">READY_FOR_COLLECTION</option>
-      <option value="PENDING">PENDING</option>
+      <option value="Ready for Collection">Ready for Collection</option>
+      <option value="Pending">Pending</option>
+      <option value="Container Damaged">Container Damaged</option>
+      <option value="Enroute to Depot">Enroute to Depot</option>
     </select>
   </div>
   <div class="fieldcontain required">
@@ -79,8 +65,8 @@
       <span class="required-indicator">*</span>
     </label>
     <select required="" name="taskType" id="taskType" [(ngModel)]="consignment.taskType">
-      <option value="LADEN">LADEN</option>
-      <option value="DROP_OFF">DROP_OFF</option>
+      <option value="Laden">Laden</option>
+      <option value="Drop Off">Drop Off</option>
     </select>
   </div>
   <div class="fieldcontain required">

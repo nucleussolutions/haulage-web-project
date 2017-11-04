@@ -13,9 +13,9 @@
       <th>Container No</th>
       <th>Name</th>
       <th>Type</th>
-      <th>Pickup Location</th>
-      <th>Laden Or Drop Off Location</th>
       <th>Accept Time</th>
+      <th>Consignment Code</th>
+      <th>Status</th>
     </tr>
   </thead>
   <tbody>
@@ -33,13 +33,13 @@
         <span>{{consignment.type}}</span>
       </td>
       <td>
-        <a *ngIf="consignment.pickupLocation" [routerLink]="['/consignment','show', consignment.pickupLocation.id]">{{consignment.pickupLocation.toString()}}</a>
-      </td>
-      <td>
-        <a *ngIf="consignment.ladenOrDropOffLocation" [routerLink]="['/consignment','show', consignment.ladenOrDropOffLocation.id]">{{consignment.ladenOrDropOffLocation.toString()}}</a>
-      </td>
-      <td>
         <span>{{consignment.acceptTime | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+      </td>
+      <td>
+        <span>{{consignment.consignmentCode}}</span>
+      </td>
+      <td>
+        <span>{{consignment.status}}</span>
       </td>
     </tr>
   </tbody>

@@ -26,8 +26,6 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  bsModalRef: BsModalRef;
-
   @ViewChild(NavDrawerComponent)
   navDrawerComponent: NavDrawerComponent;
 
@@ -39,9 +37,6 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(public modal: Modal, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private titleService: Title, private userService: UserService, private permissionService: PermissionService) {
 
-    this.subscription = this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    });
 
     this.titleService.setTitle('Dashboard');
   }
@@ -50,6 +45,13 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+
+    this.subscription = this.userService.getUser()
+      .flatMap(userObject => this.permissionService.getByUserId(userObject))
+      .subscribe(permission => {
+
+      });
+
     this.permissionService.getByUserId(this.userObject).subscribe(permission => {
       this.permission = permission;
 

@@ -63,12 +63,6 @@
     </div>
   </li>
   <li class="fieldcontain">
-    <span id="polPod-label" class="property-label">Pol Pod</span>
-    <div class="property-value" aria-labelledby="polPod-label">
-      <span>{{transportRequest.polPod}}</span>
-    </div>
-  </li>
-  <li class="fieldcontain">
     <span id="shippingAgent-label" class="property-label">Shipping Agent</span>
     <div class="property-value" aria-labelledby="shippingAgent-label">
       <span>{{transportRequest.shippingAgent}}</span>
@@ -231,6 +225,30 @@
       </div>
     </li>
   </fieldset>
+  <li class="fieldcontain">
+    <span id="status-label" class="property-label">Status</span>
+    <div class="property-value" aria-labelledby="status-label">
+      <span>{{transportRequest.status}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="portOfLoading-label" class="property-label">Port Of Loading</span>
+    <div class="property-value" aria-labelledby="portOfLoading-label">
+      <span>{{transportRequest.portOfLoading}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="portOfDischarge-label" class="property-label">Port Of Discharge</span>
+    <div class="property-value" aria-labelledby="portOfDischarge-label">
+      <span>{{transportRequest.portOfDischarge}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="pickupOrDropoffEmptyDepoh-label" class="property-label">Pickup Or Dropoff Empty Depoh</span>
+    <div class="property-value" aria-labelledby="pickupOrDropoffEmptyDepoh-label">
+      <a *ngIf="transportRequest.pickupOrDropoffEmptyDepoh" [routerLink]="['/transportRequest','show', transportRequest.pickupOrDropoffEmptyDepoh.id]">{{transportRequest.pickupOrDropoffEmptyDepoh.toString()}}</a>
+    </div>
+  </li>
 </ol>
 
     <a class="edit" [routerLink]="['/transportRequest', 'edit', transportRequest.id]">Edit</a>

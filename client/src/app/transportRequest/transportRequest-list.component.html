@@ -1,13 +1,13 @@
-<div  role="navigation">
-  <ul class="nav nav-pills">
-    <li class="nav-item"><a [routerLink]="['/index']" class="home">Home</a></li>
-    <li><a [routerLink]="['/transportRequest','create']" class="create">New TransportRequest</a></li>
-  </ul>
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/transportRequest','create']" class="create">New TransportRequest</a></li>
+    </ul>
 </div>
 <div id="list-transportRequest" class="content scaffold-list" role="main">
-  <h1>TransportRequest List</h1>
-  <div class="table-responsive"><table class="table">
-    <thead>
+    <h1>TransportRequest List</h1>
+    <table>
+  <thead>
     <tr>
       <th>Id</th>
       <th>Container Volume</th>
@@ -17,8 +17,8 @@
       <th>Other Ref No</th>
       <th>Terminal</th>
     </tr>
-    </thead>
-    <tbody>
+  </thead>
+  <tbody>
     <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let transportRequest of transportRequestList; let e = even;">
       <td>
         <a [routerLink]="['/transportRequest','show',transportRequest.id]">{{transportRequest.id}}</a>
@@ -39,10 +39,9 @@
         <span>{{transportRequest.otherRefNo}}</span>
       </td>
       <td>
-        <a *ngIf="transportRequest.terminal"
-           [routerLink]="['/transportRequest','show', transportRequest.terminal.id]">{{transportRequest.terminal.toString()}}</a>
+        <a *ngIf="transportRequest.terminal" [routerLink]="['/transportRequest','show', transportRequest.terminal.id]">{{transportRequest.terminal.toString()}}</a>
       </td>
     </tr>
-    </tbody>
-  </table></div>
+  </tbody>
+</table>
 </div>

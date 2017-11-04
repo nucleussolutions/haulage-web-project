@@ -22,8 +22,9 @@ class TransportRequest {
     String vesselName
     String voyageNo
 
-    //mundra/port klang
-    Location polPod
+    String portOfLoading
+
+    String portOfDischarge
 
     String shippingAgent
     String forwardingAgent
@@ -58,6 +59,8 @@ class TransportRequest {
 
     String status = RFTStatus.PENDING
 
+    Location pickupOrDropoffEmptyDepoh
+
     static constraints = {
         containerVolume blank: false, nullable: false
         type nullable: false, inList: RFTType.values()*.id
@@ -68,7 +71,6 @@ class TransportRequest {
         vesselName blank: false, nullable: false
         voyageNo blank: false, nullable: false
         vesselEtaOrEtd nullable: false
-        polPod nullable: false
         shippingAgent nullable: false
         forwardingAgent nullable: false
         operatorCode blank: true
@@ -91,6 +93,11 @@ class TransportRequest {
         forwarderId nullable: false
         customer nullable: false
         status nullable: false, inList: RFTStatus.values()*.id
+
+        portOfLoading nullable: false
+        portOfDischarge nullable: false
+
+        pickupOrDropoffEmptyDepoh nullable: false
     }
 
     static embedded = ['customer']

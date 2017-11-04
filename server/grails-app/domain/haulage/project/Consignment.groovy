@@ -12,9 +12,6 @@ class Consignment {
 
     //OT,Flat Rack,Reefer,HQ,GP
     String type
-    Location pickupLocation
-
-    Location ladenOrDropOffLocation
 
     Date acceptTime
 
@@ -31,8 +28,6 @@ class Consignment {
         containerNo blank: false, nullable: false
         name blank: false, nullable: false
         type nullable: false, inList: ConsignmentType.values()*.id
-        pickupLocation nullable: false
-        ladenOrDropOffLocation nullable: false
         acceptTime nullable: false
         consignmentCode nullable: false
         status nullable: false, inList: ConsignmentStatus.values()*.id

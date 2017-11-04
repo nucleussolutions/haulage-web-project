@@ -91,16 +91,18 @@ class BootStrap {
         testRFT.otherRefNo = '12321309128390'
         testRFT.shipper = 'asdadasd'
         testRFT.forwarderId = 'qwowqeiowqeiq'
-        testRFT.polPod = new Location(name: 'aksdsldjasd', address1: 'asdldsjasdl', address2: 'asdsadjlsadlksd', city: 'asdsdasd', state: 'asdskjd', country: 'askdjsldasd', type: 'depot')
         testRFT.containerVolume = '12321321038'
         testRFT.voyageNo = '123213123'
         testRFT.vesselName = '1232131208'
+        testRFT.portOfLoading = 'asdasdadasd'
+        testRFT.portOfDischarge = 'asdasdad'
+        testRFT.pickupOrDropoffEmptyDepoh = new Location(name: 'aksdsldjasd', address1: 'asdldsjasdl', address2: 'asdsadjlsadlksd', city: 'asdsdasd', state: 'asdskjd', country: 'askdjsldasd', type: 'depot')
 
         testRFT.save(flush: true, failOnError: true)
 
         def testRFT2 = new TransportRequest()
         testRFT2.consignments = consignments
-        testRFT2.type = RFTType.NORMAL_IMPORT.id
+        testRFT2.type = RFTType.DIRECT_IMPORT.id
         testRFT2.status = RFTStatus.PENDING.id
         testRFT2.shippingAgent = 'qowuewqewqoewe'
         testRFT2.forwardingAgent = 'asldkasd;askds;'
@@ -118,12 +120,15 @@ class BootStrap {
         testRFT2.otherRefNo = '12321309128390'
         testRFT2.shipper = 'asdadasd'
         testRFT2.forwarderId = 'qwowqeiowqeiq'
-        testRFT2.polPod = new Location(name: 'aksdsldjasd', address1: 'asdldsjasdl', address2: 'asdsadjlsadlksd', city: 'asdsdasd', state: 'asdskjd', country: 'askdjsldasd', type: 'depot')
         testRFT2.containerVolume = '12321321038'
         testRFT2.kOnekEightFormImgUrl = 'http://www.google.com'
         testRFT2.gatePassImgUrl = 'http://www.google.com'
         testRFT2.voyageNo = '123213123'
         testRFT2.vesselName = '1232131208'
+        testRFT2.portOfLoading = 'asdasdadasd'
+        testRFT2.portOfDischarge = 'asdasdad'
+        testRFT2.pickupOrDropoffEmptyDepoh = new Location(name: 'aksdsldjasd', address1: 'asdldsjasdl', address2: 'asdsadjlsadlksd', city: 'asdsdasd', state: 'asdskjd', country: 'askdjsldasd', type: 'depot')
+
 
         testRFT2.save(flush: true, failOnError: true)
 

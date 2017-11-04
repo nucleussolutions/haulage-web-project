@@ -23,7 +23,7 @@ export class VehiclePersistComponent implements OnInit {
   constructor(private route: ActivatedRoute, private vehicleService: VehicleService, private router: Router, private userService: UserService, private permissionService: PermissionService) {
     this.userService.getUser().subscribe(userObject => {
       this.userObject = userObject;
-    })
+    });
   }
 
   ngOnInit() {
@@ -31,7 +31,7 @@ export class VehiclePersistComponent implements OnInit {
 
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
-        this.vehicleService.get(+params['id'], this.token, this.apiKey).subscribe((vehicle: Vehicle) => {
+        this.vehicleService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((vehicle: Vehicle) => {
           this.create = false;
           this.vehicle = vehicle;
         });
@@ -40,7 +40,7 @@ export class VehiclePersistComponent implements OnInit {
   }
 
   save() {
-    this.vehicleService.save(this.vehicle, this.token, this.apiKey).subscribe((vehicle: Vehicle) => {
+    this.vehicleService.save(this.vehicle, this.userObject.token, this.userObject.apiKey).subscribe((vehicle: Vehicle) => {
       this.router.navigate(['/vehicle', 'show', vehicle.id]);
     }, (res: Response) => {
       const json = res.json();
