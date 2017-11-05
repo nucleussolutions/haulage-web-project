@@ -26,6 +26,7 @@ export class PermissionService {
     this.http.get(environment.serverUrl + '/permission', {
       headers: headers
     })
+      .map((r: Response) => r.json())
       .catch(err => {
         subject.error(err);
         return subject.asObservable();
@@ -95,7 +96,7 @@ export class PermissionService {
       headers: headers,
       body: body
     })
-      .catch(err => {
+      .map((r: Response) => new Permission(r.json())).catch(err => {
         if (err.status === 401) {
           return Observable.throw(new Error('Unauthorized'));
         } else if (err.status === 500) {
