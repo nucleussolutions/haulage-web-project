@@ -15,13 +15,13 @@ export class PricingService {
   constructor(private http: HttpClient) {
   }
 
-  list(token: string, apiKey: string): Observable<Pricing[]> {
+  list(userObject:any): Observable<Pricing[]> {
     let subject = new Subject<Pricing[]>();
 
 
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     this.http.get(environment.serverUrl + '/pricing', {

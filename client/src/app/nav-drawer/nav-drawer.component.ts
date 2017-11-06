@@ -6,54 +6,48 @@ import {UserService} from 'app/user.service';
 
 
 @Component({
-    selector: 'app-nav-drawer',
-    templateUrl: './nav-drawer.component.html',
-    styleUrls: ['./nav-drawer.component.css'],
-    providers: [UserService]
+  selector: 'app-nav-drawer',
+  templateUrl: './nav-drawer.component.html',
+  styleUrls: ['./nav-drawer.component.css'],
+  providers: [UserService]
 })
 export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
 
-    }
+  }
 
-    ngOnDestroy(): void {
-        this.subscription.unsubscribe();
-    }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
-    subscription: Subscription;
+  subscription: Subscription;
 
-    private permission: Permission;
+  private permission: Permission;
 
-    private userObject : any;
+  private userObject: any;
 
-    constructor(private permissionService: PermissionService, private userService: UserService) {
-        this.executeSubscription();
-        this.userService.loginState$.subscribe(loggedIn => {
-            console.log('NavDrawerComponent loginstate subscribe ' + loggedIn);
-            this.executeSubscription();
-        });
-    }
+  constructor(private permissionService: PermissionService, private userService: UserService) {
+  }
 
-    ngOnInit() {
-        //use the permission service to get the permission of the user based on the userId
+  ngOnInit() {
+    //use the permission service to get the permission of the user based on the userId
+    console.log('NavDrawerComponent OnInit');
 
-        this.permissionService.getByUserId(this.userObject).subscribe(permission => {
-            this.permission = permission;
-        }, error => {
-            console.log('NavDrawerComponent permissionService error ' + error);
-        });
-    }
+    this.subscription = this.userService.getUser().subscribe(userObject => {
+      this.userObject = userObject;
+    }, error => {
+      console.log('NavDrawerComponent failed to subscribe to getUser ' + error);
+    });
 
-    executeSubscription() {
-        this.subscription = this.userService.getUser().subscribe(response => {
-            this.userObject = response;
-        }, error => {
-            console.log('NavDrawerComponent failed to subscribe to getUser ' + error);
-        });
-    }
+    this.permissionService.getByUserId(this.userObject).subscribe(permission => {
+      this.permission = permission;
+    }, error => {
+      console.log('NavDrawerComponent permissionService error ' + error);
+    });
+  }
 
-    logout() {
-        this.userService.logout();
-    }
+  logout() {
+    this.userService.logout();
+  }
 }

@@ -16,30 +16,15 @@ export class PricingListComponent implements OnInit {
 
   pricingList: Pricing[] = [];
 
-  private userObject: any;
-
   constructor(private pricingService: PricingService, private modal: Modal, private titleService: Title, private router: Router, private userService: UserService) {
     this.titleService.setTitle('Pricing List');
   }
 
   ngOnInit() {
-
-    this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    }, error => {
-
-    });
-
-    this.userService.loginState$.subscribe(loggedIn => {
-
-    });
-
-    this.pricingService.list(this.userObject.token, this.userObject.apiKey).subscribe((pricingList: Pricing[]) => {
+    this.userService.getUser().flatMap(userObject => this.pricingService.list(userObject)).subscribe((pricingList: Pricing[]) => {
       this.pricingList = pricingList;
     }, error => {
-
       let message;
-
       if (error.status === 401) {
         message = 'Unauthorized';
       } else if (error.status === 500) {

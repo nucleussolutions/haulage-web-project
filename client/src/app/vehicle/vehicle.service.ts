@@ -16,18 +16,17 @@ export class VehicleService {
   constructor(private http: HttpClient) {
   }
 
-  list(token: string, apiKey : string): Observable<Vehicle[]> {
+  list(userObject: any): Observable<Vehicle[]> {
     let subject = new Subject<Vehicle[]>();
 
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     this.http.get(environment.serverUrl + '/vehicle', {
       headers: headers
     })
-      .map((r: Response) => r.json())
         .catch(err => {
             subject.error(err);
             return subject.asObservable();
@@ -38,15 +37,15 @@ export class VehicleService {
     return subject.asObservable();
   }
 
-  get(id: number, token: string, apiKey: string): Observable<Vehicle> {
+  get(id: number, userObject: any): Observable<Vehicle> {
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
     return this.http.get(environment.serverUrl + '/vehicle/'+id, {
       headers: headers
     })
-      .map((r: Response) => new Vehicle(r.json())).catch(err => {
+      .map((r: Response) => new Vehicle(r)).catch(err => {
             if (err.status === 401) {
                 return Observable.throw(new Error('Unauthorized'));
             }else if(err.status === 500){
@@ -55,7 +54,7 @@ export class VehicleService {
         });
   }
 
-  save(vehicle: Vehicle, token: string, apiKey: string): Observable<Vehicle> {
+  save(vehicle: Vehicle, userObject: any): Observable<Vehicle> {
     // const requestOptions = new RequestOptions();
 
     let requestMethodStr;
@@ -72,16 +71,16 @@ export class VehicleService {
     }
     let body = JSON.stringify(vehicle);
     let headers = new HttpHeaders({
-      "Content-Type": "application/json",
-      'token' : token,
-      'apiKey': apiKey
+      "Content-Type": "appzlication/json",
+      'token' : userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.request(requestMethodStr, url, {
       headers: headers,
       body: body
     })
-      .map((r: Response) => new Vehicle(r.json())).catch(err => {
+      .map((r: Response) => new Vehicle(r)).catch(err => {
             if (err.status === 401) {
                 return Observable.throw(new Error('Unauthorized'));
             }else if(err.status === 500){
@@ -90,11 +89,10 @@ export class VehicleService {
         });
   }
 
-  destroy(vehicle: Vehicle, token : string, apiKey : string): Observable<boolean> {
-
+  destroy(vehicle: Vehicle, userObject: any): Observable<boolean> {
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.delete(environment.serverUrl + '/vehicle/' + vehicle.id, {

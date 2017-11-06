@@ -31,7 +31,7 @@ export class VehiclePersistComponent implements OnInit {
 
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
-        this.vehicleService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((vehicle: Vehicle) => {
+        this.vehicleService.get(+params['id'], this.userObject).subscribe((vehicle: Vehicle) => {
           this.create = false;
           this.vehicle = vehicle;
         });
@@ -40,7 +40,7 @@ export class VehiclePersistComponent implements OnInit {
   }
 
   save() {
-    this.vehicleService.save(this.vehicle, this.userObject.token, this.userObject.apiKey).subscribe((vehicle: Vehicle) => {
+    this.vehicleService.save(this.vehicle, this.userObject).subscribe((vehicle: Vehicle) => {
       this.router.navigate(['/vehicle', 'show', vehicle.id]);
     }, (res: Response) => {
       const json = res.json();

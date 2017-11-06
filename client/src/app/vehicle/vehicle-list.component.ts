@@ -22,19 +22,15 @@ export class VehicleListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private userObject: any;
-
   constructor(private vehicleService: VehicleService, private userService: UserService, private modal: Modal, private titleService: Title) {
 
     this.titleService.setTitle('Vehicles');
 
-    this.subscription = this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    });
+
   }
 
   ngOnInit() {
-    this.vehicleService.list(this.userObject.token, this.userObject.apiKey).subscribe((vehicleList: Vehicle[]) => {
+    this.subscription = this.userService.getUser().flatMap(userObject => this.vehicleService.list(userObject)).subscribe((vehicleList: Vehicle[]) => {
       this.vehicleList = vehicleList;
     }, error => {
       let message;
@@ -46,6 +42,8 @@ export class VehicleListComponent implements OnInit, OnDestroy {
       } else if (error.status === 400) {
         message = 'Bad request';
       }
+
+      console.log('error.status '+error.status);
 
       const dialog = this.modal.alert().title('Error').message(message).open();
 

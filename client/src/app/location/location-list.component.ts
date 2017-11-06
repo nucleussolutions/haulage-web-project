@@ -28,11 +28,6 @@ export class LocationListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.userService.loginState$.subscribe(loggedIn => {
-
-    }, error => {
-
-    });
 
     this.subscription = this.userService.getUser().subscribe(response => {
       this.userObject = response;
