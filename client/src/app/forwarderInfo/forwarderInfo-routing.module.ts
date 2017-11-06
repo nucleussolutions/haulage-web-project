@@ -8,8 +8,8 @@ import {RestrictUserPermissionGuard} from "../restrict-user-permission-guard";
 const routes: Routes = [
   {path: 'forwarderInfo', redirectTo: 'forwarderInfo/list', pathMatch: 'full'},
   {path: 'forwarderInfo/list', canActivate: [RestrictUserPermissionGuard],  component: ForwarderInfoListComponent},
-  {path: 'forwarderInfo/create', canActivate: [], component: ForwarderInfoPersistComponent},
-  {path: 'forwarderInfo/edit/:id', canActivate: [], component: ForwarderInfoPersistComponent},
+  {path: 'forwarderInfo/create', canActivate: [RestrictUserPermissionGuard], component: ForwarderInfoPersistComponent},
+  {path: 'forwarderInfo/edit/:id', canActivate: [RestrictUserPermissionGuard], component: ForwarderInfoPersistComponent},
   {path: 'forwarderInfo/show/:id', canActivate: [], component: ForwarderInfoShowComponent},
 ];
 
