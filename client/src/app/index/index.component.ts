@@ -39,7 +39,10 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
 
     this.subscription = this.userService.getUser()
-      .flatMap(userObject => this.permissionService.getByUserId(userObject))
+      .flatMap(userObject => {
+        this.userObject = userObject;
+        return this.permissionService.getByUserId(userObject);
+      })
       .subscribe(permission => {
         if (permission.authority !== 'Super Admin') {
           // check if user exists in hauliers and forwarders table

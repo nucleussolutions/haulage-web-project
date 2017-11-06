@@ -53,7 +53,7 @@ export class JobPersistComponent implements OnInit, OnDestroy {
         });
         this.route.params.subscribe((params: Params) => {
             if (params.hasOwnProperty('id')) {
-                this.jobService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((job: Job) => {
+                this.jobService.get(+params['id'], this.userObject).subscribe((job: Job) => {
                     this.create = false;
                     this.job = job;
                 });
@@ -62,7 +62,7 @@ export class JobPersistComponent implements OnInit, OnDestroy {
     }
 
     save() {
-        this.jobService.save(this.job, this.userObject.token, this.userObject.apiKey).subscribe((job: Job) => {
+        this.jobService.save(this.job, this.userObject).subscribe((job: Job) => {
             this.router.navigate(['/job', 'show', job.id]);
         }, (res: Response) => {
             const json = res.json();

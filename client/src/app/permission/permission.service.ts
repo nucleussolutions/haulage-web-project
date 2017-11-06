@@ -15,12 +15,12 @@ export class PermissionService {
   constructor(private http: HttpClient) {
   }
 
-  list(token: string, apiKey: string): Observable<Permission[]> {
+  list(userObject: any): Observable<Permission[]> {
     let subject = new Subject<Permission[]>();
 
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     this.http.get(environment.serverUrl + '/permission', {
@@ -36,17 +36,17 @@ export class PermissionService {
     return subject.asObservable();
   }
 
-  get(id: number, token: string, apiKey: string): Observable<Permission> {
+  get(id: number, userObject:any): Observable<Permission> {
 
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.get(environment.serverUrl + '/permission/' + id, {
       headers: headers
     })
-      .map((r: Response) => new Permission(r.json()));
+      .map((r: Response) => new Permission(r));
   }
 
   getByUserId(userObject: any): Observable<Permission> {
@@ -67,14 +67,9 @@ export class PermissionService {
     }).map((r: Response) => new Permission(r));
   }
 
-  save(permission: Permission, token: string, apiKey: string): Observable<Permission> {
-    // const requestOptions = new RequestOptions();
-
+  save(permission: Permission, userObject: any): Observable<Permission> {
     let requestMethodStr;
-
     let url;
-
-
     if (permission.id) {
       // requestOptions.method = RequestMethod.Put;
       requestMethodStr = 'PUT';
@@ -87,8 +82,8 @@ export class PermissionService {
     let body = JSON.stringify(permission);
     let headers = new HttpHeaders({
       "Content-Type": "application/json",
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.request(requestMethodStr, url, {
@@ -98,11 +93,11 @@ export class PermissionService {
       .map((r: Response) => new Permission(r));
   }
 
-  destroy(permission: Permission, token: string, apiKey: string): Observable<boolean> {
+  destroy(permission: Permission, userObject:any): Observable<boolean> {
 
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.delete(environment.serverUrl + '/permission/' + permission.id, {

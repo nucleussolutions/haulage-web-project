@@ -22,31 +22,14 @@ export class JobListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  private permission: any;
 
-  constructor(private jobService: JobService, private userService: UserService, private permissionService: PermissionService) {
-    this.subscription.add(this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-      this.checkPermissions();
-    }));
-  }
+  constructor(private jobService: JobService, private userService: UserService) {
 
-  checkPermissions(): void {
-    this.subscription.add(this.permissionService.getByUserId(this.userObject).subscribe(permission => {
-      this.permission = permission;
-      if(this.permission.authority == 'Super Admin' || this.permission.authority == 'Admin'){
-        this.listJobs();
-      }
-    }));
-  }
-
-  listJobs() : void {
-    this.jobService.list(this.userObject.token, this.userObject.apiKey).subscribe((jobList: Job[]) => {
-      this.jobList = jobList;
-    });
   }
 
   ngOnInit() {
-
+    this.userService.getUser().flatMap(userObject => this.jobService.list(this.userObject)).subscribe((jobList: Job[]) => {
+      this.jobList = jobList;
+    });
   }
 }

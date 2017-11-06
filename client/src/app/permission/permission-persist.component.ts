@@ -24,20 +24,13 @@ export class PermissionPersistComponent implements OnInit, OnDestroy {
   create = true;
   errors: any[];
 
-  private token : string;
-
-  private apiKey : string;
-
-  private response : any;
+  private userObject : any;
 
   private subscription : Subscription;
 
-
   constructor(private route: ActivatedRoute, private permissionService: PermissionService, private userService: UserService, private router: Router, private modal : Modal, private titleService: Title) {
     this.subscription = this.userService.getUser().subscribe(response => {
-      this.response = response;
-      this.token = this.response.token;
-      this.apiKey = this.response.apiKey;
+      this.userObject = response;
     });
 
     this.titleService.setTitle('Create Permission');
@@ -46,7 +39,7 @@ export class PermissionPersistComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
-        this.permissionService.get(+params['id'], this.token, this.apiKey).subscribe((permission: Permission) => {
+        this.permissionService.get(+params['id'], this.userObject).subscribe((permission: Permission) => {
           this.create = false;
           this.permission = permission;
         });
@@ -55,7 +48,7 @@ export class PermissionPersistComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    this.permissionService.save(this.permission, this.token, this.apiKey).subscribe((permission: Permission) => {
+    this.permissionService.save(this.permission, this.userObject).subscribe((permission: Permission) => {
       this.router.navigate(['/permission', 'show', permission.id]);
     }, (res: Response) => {
       const json = res.json();

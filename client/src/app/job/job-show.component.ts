@@ -31,7 +31,7 @@ export class JobShowComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.route.params.subscribe((params: Params) => {
-            this.jobService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((job: Job) => {
+            this.jobService.get(+params['id'], this.userObject).subscribe((job: Job) => {
                 this.job = job;
             });
         });
@@ -39,7 +39,7 @@ export class JobShowComponent implements OnInit, OnDestroy {
 
     destroy() {
         if (confirm("Are you sure?")) {
-            this.jobService.destroy(this.job, this.userObject.token, this.userObject.apiKey).subscribe((success: boolean) => {
+            this.jobService.destroy(this.job, this.userObject).subscribe((success: boolean) => {
                 if (success) {
                     this.router.navigate(['/job', 'list']);
                 } else {

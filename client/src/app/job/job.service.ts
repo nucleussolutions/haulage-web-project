@@ -13,12 +13,12 @@ export class JobService {
   constructor(private http: HttpClient) {
   }
 
-  list(token: string, apiKey: string): Observable<Job[]> {
+  list(userObject:any): Observable<Job[]> {
     let subject = new Subject<Job[]>();
 
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     this.http.get(environment.serverUrl + '/job', {
@@ -30,10 +30,10 @@ export class JobService {
     return subject.asObservable();
   }
 
-  get(id: number, token: string, apiKey: string): Observable<Job> {
+  get(id: number, userObject:any): Observable<Job> {
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.get(environment.serverUrl + '/job/' + id, {
@@ -42,7 +42,7 @@ export class JobService {
       .map((r: Response) => new Job(r.json()));
   }
 
-  save(job: Job, token: string, apiKey: string): Observable<Job> {
+  save(job: Job, userObject:any): Observable<Job> {
     // const requestOptions = new RequestOptions();
 
     let requestMethodStr;
@@ -60,8 +60,8 @@ export class JobService {
     let body = JSON.stringify(job);
     let headers = new HttpHeaders({
       "Content-Type": "application/json",
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.request(requestMethodStr, url, {
@@ -71,10 +71,10 @@ export class JobService {
       .map((r: Response) => new Job(r.json()));
   }
 
-  destroy(job: Job, token: string, apiKey: string): Observable<boolean> {
+  destroy(job: Job, userObject:any): Observable<boolean> {
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.delete(environment.serverUrl + '/job/' + job.id, {

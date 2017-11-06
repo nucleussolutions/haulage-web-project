@@ -30,7 +30,7 @@ export class PermissionShowComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.permissionService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((permission: Permission) => {
+      this.permissionService.get(+params['id'], this.userObject).subscribe((permission: Permission) => {
         this.permission = permission;
       });
     }, error => {
@@ -40,7 +40,7 @@ export class PermissionShowComponent implements OnInit, OnDestroy {
 
   destroy() {
     if (confirm("Are you sure?")) {
-      this.permissionService.destroy(this.permission, this.userObject.token, this.userObject.apiKey).subscribe((success: boolean) => {
+      this.permissionService.destroy(this.permission, this.userObject).subscribe((success: boolean) => {
         if (success) {
           this.router.navigate(['/permission', 'list']);
         } else {
