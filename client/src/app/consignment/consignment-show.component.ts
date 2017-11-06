@@ -29,7 +29,7 @@ export class ConsignmentShowComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.consignmentService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((consignment: Consignment) => {
+      this.consignmentService.get(+params['id'], this.userObject).subscribe((consignment: Consignment) => {
         this.consignment = consignment;
       });
     });
@@ -37,7 +37,7 @@ export class ConsignmentShowComponent implements OnInit, OnDestroy {
 
   destroy() {
     if (confirm("Are you sure?")) {
-      this.consignmentService.destroy(this.consignment, this.userObject.token, this.userObject.apiKey).subscribe((success: boolean) => {
+      this.consignmentService.destroy(this.consignment, this.userObject).subscribe((success: boolean) => {
         if (success) {
           this.router.navigate(['/consignment', 'list']);
         } else {

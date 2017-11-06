@@ -37,6 +37,7 @@
     "ngx-cookie": "^1.0.0",
     "ngx-flash-messages": "^1.0.4",
     "ngx-modialog": "^3.0.4",
+    "ngx-pagination": "^3.0.3",
     "rxjs": "^5.4.3",
     "zone.js": "^0.8.17"
   },

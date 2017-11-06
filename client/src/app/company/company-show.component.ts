@@ -23,7 +23,7 @@ export class CompanyShowComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.companyService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((company: Company) => {
+      this.companyService.get(+params['id'], this.userObject).subscribe((company: Company) => {
         this.company = company;
       });
     });
@@ -31,7 +31,7 @@ export class CompanyShowComponent implements OnInit {
 
   destroy() {
     if (confirm("Are you sure?")) {
-      this.companyService.destroy(this.company, this.userObject.token, this.userObject.apiKey).subscribe((success: boolean) => {
+      this.companyService.destroy(this.company, this.userObject).subscribe((success: boolean) => {
         if (success) {
           this.router.navigate(['/company', 'list']);
         } else {

@@ -24,33 +24,26 @@ export class DriverInfoPersistComponent implements OnInit {
 
   private userObject : any;
 
-  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private router: Router, private userService: UserService, private permissionService: PermissionService, private modal : Modal) {
-    this.subscription = this.userService.getUser().subscribe(response => {
-      this.userObject = response;
+  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private router: Router, private userService: UserService, private modal: Modal) {
+    this.subscription = this.userService.getUser().subscribe(userObject => {
+      this.userObject = userObject;
     });
 
   }
 
   ngOnInit() {
-    this.permissionService.getByUserId(this.userObject).subscribe(permission => {
-      if(permission.authority == 'Manager' || permission.authority == 'User'){
-        this.modal.alert().title('Error').message('Unauthorized').open();
-        this.router.navigate(['/index']);
-      }else{
-        this.route.params.subscribe((params: Params) => {
-          if (params.hasOwnProperty('id')) {
-            this.driverInfoService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((driverInfo: DriverInfo) => {
-              this.create = false;
-              this.driverInfo = driverInfo;
-            });
-          }
+    this.route.params.subscribe((params: Params) => {
+      if (params.hasOwnProperty('id')) {
+        this.driverInfoService.get(+params['id'], this.userObject).subscribe((driverInfo: DriverInfo) => {
+          this.create = false;
+          this.driverInfo = driverInfo;
         });
       }
     });
   }
 
   save() {
-    this.driverInfoService.save(this.driverInfo, this.userObject.token, this.userObject.apiKey).subscribe((driverInfo: DriverInfo) => {
+    this.driverInfoService.save(this.driverInfo, this.userObject).subscribe((driverInfo: DriverInfo) => {
       this.router.navigate(['/driverInfo', 'show', driverInfo.id]);
     }, (res: Response) => {
       const json = res.json();

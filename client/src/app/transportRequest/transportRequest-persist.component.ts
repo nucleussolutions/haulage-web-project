@@ -58,15 +58,15 @@ export class TransportRequestPersistComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.locationService.list(this.userObject.token, this.userObject.apiKey).subscribe((locationList: Location[]) => {
+        this.locationService.list(this.userObject).subscribe((locationList: Location[]) => {
             this.locationList = locationList;
         });
         this.transportRequest.hazardous = false;
         this.transportRequest.overDimension = false;
-        this.consignmentService.list(this.userObject.token, this.userObject.apiKey).subscribe((consignmentList: Consignment[]) => {
+        this.consignmentService.list(this.userObject).subscribe((consignmentList: Consignment[]) => {
             this.consignmentList = consignmentList;
         });
-        this.customerService.list(this.userObject.token, this.userObject.apiKey).subscribe((customerList: Customer[]) => {
+        this.customerService.list(this.userObject).subscribe((customerList: Customer[]) => {
             this.customerList = customerList;
         });
         this.route.params.subscribe((params: Params) => {
@@ -77,9 +77,6 @@ export class TransportRequestPersistComponent implements OnInit {
                 });
             }
         });
-
-
-
     }
 
     save() {

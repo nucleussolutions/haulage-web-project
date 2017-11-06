@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Http, Response, RequestOptions, RequestMethod, Request, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import { Permission } from './permission';
-import { Subject } from 'rxjs/Subject';
+import {Injectable} from '@angular/core';
+import {Response} from '@angular/http';
+import {Observable} from 'rxjs/Observable';
+import {Permission} from './permission';
+import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
-import { environment } from 'environments/environment';
+import {environment} from 'environments/environment';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable()
@@ -26,7 +26,6 @@ export class PermissionService {
     this.http.get(environment.serverUrl + '/permission', {
       headers: headers
     })
-      .map((r: Response) => r.json())
       .catch(err => {
         subject.error(err);
         return subject.asObservable();
@@ -65,7 +64,7 @@ export class PermissionService {
 
     return this.http.get(environment.serverUrl + '/api/permission?userId=' + userObject.uid, {
       headers: headers
-    }).map((r: Response) => new Permission(r.json()));
+    }).map((r: Response) => new Permission(r));
   }
 
   save(permission: Permission, token: string, apiKey: string): Observable<Permission> {
@@ -96,13 +95,7 @@ export class PermissionService {
       headers: headers,
       body: body
     })
-      .map((r: Response) => new Permission(r.json())).catch(err => {
-        if (err.status === 401) {
-          return Observable.throw(new Error('Unauthorized'));
-        } else if (err.status === 500) {
-          return Observable.throw(new Error('Internal server error'));
-        }
-      });
+      .map((r: Response) => new Permission(r));
   }
 
   destroy(permission: Permission, token: string, apiKey: string): Observable<boolean> {

@@ -29,7 +29,7 @@ export class CompanyPersistComponent implements OnInit {
 
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
-        this.companyService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((company: Company) => {
+        this.companyService.get(+params['id'], this.userObject).subscribe((company: Company) => {
           this.create = false;
           this.company = company;
         });
@@ -38,7 +38,7 @@ export class CompanyPersistComponent implements OnInit {
   }
 
   save() {
-    this.companyService.save(this.company, this.userObject.token, this.userObject.apiKey).subscribe((company: Company) => {
+    this.companyService.save(this.company, this.userObject).subscribe((company: Company) => {
       this.router.navigate(['/company', 'show', company.id]);
     }, (res: Response) => {
       const json = res.json();

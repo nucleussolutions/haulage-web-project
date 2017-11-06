@@ -43,12 +43,12 @@ export class ConsignmentPersistComponent implements OnInit, OnDestroy {
   private checkPermissions() {
     this.permissionService.getByUserId(this.userObject).subscribe(permission => {
       if (permission.authority == 'Super Admin' || permission.authority == 'Admin') {
-        this.locationService.list(this.userObject.token, this.userObject.apiKey).subscribe((locationList: Location[]) => {
+        this.locationService.list(this.userObject).subscribe((locationList: Location[]) => {
           this.locationList = locationList;
         });
         this.route.params.subscribe((params: Params) => {
           if (params.hasOwnProperty('id')) {
-            this.consignmentService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((consignment: Consignment) => {
+            this.consignmentService.get(+params['id'], this.userObject).subscribe((consignment: Consignment) => {
               this.create = false;
               this.consignment = consignment;
             });
@@ -64,7 +64,7 @@ export class ConsignmentPersistComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    this.consignmentService.save(this.consignment, this.userObject.token, this.userObject.apiKey).subscribe((consignment: Consignment) => {
+    this.consignmentService.save(this.consignment, this.userObject).subscribe((consignment: Consignment) => {
       this.router.navigate(['/consignment', 'show', consignment.id]);
     }, (res: Response) => {
       const json = res.json();

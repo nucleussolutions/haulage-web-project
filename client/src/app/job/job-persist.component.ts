@@ -48,7 +48,7 @@ export class JobPersistComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.consignmentService.list(this.userObject.token, this.userObject.apiKey).subscribe((consignmentList: Consignment[]) => {
+        this.consignmentService.list(this.userObject).subscribe((consignmentList: Consignment[]) => {
             this.consignmentList = consignmentList;
         });
         this.route.params.subscribe((params: Params) => {

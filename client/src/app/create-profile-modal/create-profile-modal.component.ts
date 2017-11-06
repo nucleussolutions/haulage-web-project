@@ -91,7 +91,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuar
             haulierInfo.userId = this.userObject.uid;
             haulierInfo.company = company;
 
-            this.haulierInfoService.save(haulierInfo, this.userObject.token, this.userObject.apiKey).subscribe(response => {
+            this.haulierInfoService.save(haulierInfo, this.userObject).subscribe(response => {
                 console.log('haulier service save response ' + JSON.stringify(response));
 
                 let responseStr = JSON.stringify(response);
@@ -113,7 +113,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuar
             forwarderInfo.company = company;
             forwarderInfo.name = formData.value.name;
 
-            this.forwarderInfoService.save(forwarderInfo, this.userObject.token, this.userObject.apiKey).subscribe(response => {
+            this.forwarderInfoService.save(forwarderInfo, this.userObject).subscribe(response => {
                 console.log('forwarder service save response ' + JSON.stringify(response));
 
                 let responseStr = JSON.stringify(response);

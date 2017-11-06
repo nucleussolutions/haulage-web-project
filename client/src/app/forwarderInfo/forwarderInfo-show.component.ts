@@ -32,7 +32,7 @@ export class ForwarderInfoShowComponent implements OnInit, OnDestroy {
     this.subscription = this.userService.getUser().subscribe(response => {
       this.userObject = response;
       this.route.params.subscribe((params: Params) => {
-        this.forwarderInfoService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((forwarderInfo: ForwarderInfo) => {
+        this.forwarderInfoService.get(+params['id'], this.userObject).subscribe((forwarderInfo: ForwarderInfo) => {
           this.forwarderInfo = forwarderInfo;
         });
       });
@@ -41,7 +41,7 @@ export class ForwarderInfoShowComponent implements OnInit, OnDestroy {
 
   destroy() {
     if (confirm("Are you sure?")) {
-      this.forwarderInfoService.destroy(this.forwarderInfo, this.userObject.token, this.userObject.apiKey).subscribe((success: boolean) => {
+      this.forwarderInfoService.destroy(this.forwarderInfo, this.userObject).subscribe((success: boolean) => {
         if (success) {
           this.router.navigate(['/forwarderInfo', 'list']);
         } else {

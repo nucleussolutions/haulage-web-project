@@ -4,6 +4,8 @@ import {TransportRequestListComponent} from './transportRequest-list.component';
 import {TransportRequestPersistComponent} from './transportRequest-persist.component';
 import {TransportRequestShowComponent} from './transportRequest-show.component';
 import {SuperAdminAndAdminPermissionGuard} from "../superadmin-and-admin-permissionguard";
+import {UserService} from "../user.service";
+import {PermissionService} from "../permission/permission.service";
 
 const routes: Routes = [
   {path: 'transportRequest', redirectTo: 'transportRequest/list', pathMatch: 'full'},
@@ -15,6 +17,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [UserService, PermissionService, SuperAdminAndAdminPermissionGuard]
 })
 export class TransportRequestRoutingModule {}

@@ -36,10 +36,10 @@ export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.companyService.list(this.userObject.token, this.userObject.apiKey).subscribe((companyList: Company[]) => { this.companyList = companyList; });
+    this.companyService.list(this.userObject).subscribe((companyList: Company[]) => { this.companyList = companyList; });
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
-        this.forwarderInfoService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((forwarderInfo: ForwarderInfo) => {
+        this.forwarderInfoService.get(+params['id'], this.userObject).subscribe((forwarderInfo: ForwarderInfo) => {
           this.create = false;
           this.forwarderInfo = forwarderInfo;
         });
@@ -48,7 +48,7 @@ export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    this.forwarderInfoService.save(this.forwarderInfo, this.userObject.token, this.userObject.apiKey).subscribe((forwarderInfo: ForwarderInfo) => {
+    this.forwarderInfoService.save(this.forwarderInfo, this.userObject).subscribe((forwarderInfo: ForwarderInfo) => {
       this.router.navigate(['/forwarderInfo', 'show', forwarderInfo.id]);
     }, (res: Response) => {
       const json = res.json();

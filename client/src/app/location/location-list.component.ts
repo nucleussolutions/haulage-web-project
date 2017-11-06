@@ -40,7 +40,7 @@ export class LocationListComponent implements OnInit, OnDestroy {
 
     this.permissionService.getByUserId(this.userObject).subscribe(permission => {
       if (permission.authority == 'Super Admin' || permission.authority == 'Admin') {
-        this.locationService.list(this.userObject.token, this.userObject.apiKey).subscribe((locationList: Location[]) => {
+        this.locationService.list(this.userObject).subscribe((locationList: Location[]) => {
           this.locationList = locationList;
         }, error => {
           let message;

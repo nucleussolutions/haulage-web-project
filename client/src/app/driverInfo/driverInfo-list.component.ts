@@ -22,33 +22,14 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
 
   driverInfoList: DriverInfo[] = [];
 
-  private userObject: any;
-
   private subscription: Subscription;
 
-  constructor(private driverInfoService: DriverInfoService, private titleService: Title, private modal: Modal, private userService: UserService, private permissionService: PermissionService, private router: Router) {
+  constructor(private driverInfoService: DriverInfoService, private titleService: Title, private modal: Modal, private userService: UserService) {
     this.titleService.setTitle('Drivers');
-    this.subscription = this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    })
   }
 
   ngOnInit() {
-
-    this.permissionService.getByUserId(this.userObject).subscribe(permission => {
-      if(permission.authority == 'Manager' || permission.authority == 'User'){
-        //redirect to index page
-        this.modal.alert().title('Error').message('Unauthorized').open();
-        this.router.navigate(['/index']);
-      }else{
-        this.listDrivers();
-      }
-    });
-
-  }
-
-  private listDrivers() {
-    this.driverInfoService.list(this.userObject.token, this.userObject.apiKey).subscribe((driverInfoList: DriverInfo[]) => {
+    this.subscription = this.userService.getUser().flatMap(userObject => this.driverInfoService.list(userObject)).subscribe((driverInfoList: DriverInfo[]) => {
       this.driverInfoList = driverInfoList;
     }, error => {
 
@@ -63,7 +44,6 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
       }
 
       this.modal.alert().title('Error').message(message).open();
-
     });
   }
 }

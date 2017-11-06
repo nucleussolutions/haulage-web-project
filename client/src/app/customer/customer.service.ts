@@ -14,12 +14,12 @@ export class CustomerService {
   constructor(private http: Http) {
   }
 
-  list(token : string, apiKey: string): Observable<Customer[]> {
+  list(userObject: any): Observable<Customer[]> {
     let subject = new Subject<Customer[]>();
 
     let headers = new Headers({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     let options = new RequestOptions({
@@ -27,7 +27,6 @@ export class CustomerService {
     });
 
     this.http.get(environment.serverUrl + '/customer', options)
-      .map((r: Response) => r.json())
         .catch(err => {
             if (err.status === 401) {
                 return Observable.throw('Unauthorized');
@@ -53,7 +52,7 @@ export class CustomerService {
     });
 
     return this.http.get(environment.serverUrl + '/customer/'+id, options)
-      .map((r: Response) => new Customer(r.json())).catch(err => {
+      .map((r: Response) => new Customer(r)).catch(err => {
             if (err.status === 401) {
                 return Observable.throw('Unauthorized');
             }else if(err.status === 500){
@@ -79,7 +78,7 @@ export class CustomerService {
     });
 
     return this.http.request(new Request(requestOptions))
-      .map((r: Response) => new Customer(r.json())).catch(err => {
+      .map((r: Response) => new Customer(r)).catch(err => {
             if (err.status === 401) {
                 return Observable.throw('Unauthorized');
             }else if(err.status === 500){

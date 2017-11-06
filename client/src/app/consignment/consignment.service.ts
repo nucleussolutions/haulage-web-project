@@ -15,12 +15,12 @@ export class ConsignmentService {
   constructor(private http: HttpClient) {
   }
 
-  list(token, apiKey): Observable<Consignment[]> {
+  list(userObject : any): Observable<Consignment[]> {
     let subject = new Subject<Consignment[]>();
 
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     this.http.get(environment.serverUrl + '/consignment', {
@@ -32,14 +32,15 @@ export class ConsignmentService {
     return subject.asObservable();
   }
 
-  get(id: number, token: string, apiKey: string): Observable<Consignment> {
+  get(id: number, userObject:any): Observable<Consignment> {
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
-
-    return this.http.get(environment.serverUrl + '/consignment/' + id,)
+    return this.http.get(environment.serverUrl + '/consignment/' + id, {
+      headers: headers
+    })
       .map((r: Response) => new Consignment(r.json())).catch(err => {
         if (err.status === 401) {
           return Observable.throw('Unauthorized');
@@ -49,25 +50,21 @@ export class ConsignmentService {
       });
   }
 
-  save(consignment: Consignment, token: string, apiKey: string): Observable<Consignment> {
-    // const requestOptions = new RequestOptions();
-
+  save(consignment: Consignment, userObject: any): Observable<Consignment> {
     let requestMethodStr;
     let url;
 
     if (consignment.id) {
-      // requestOptions.method = RequestMethod.Put;
       requestMethodStr = 'PUT';
       url = environment.serverUrl + '/consignment/' + consignment.id;
     } else {
-      // requestOptions.method = RequestMethod.Post;
       requestMethodStr = 'POST';
       url = environment.serverUrl + '/consignment';
     }
     let body = JSON.stringify(consignment);
     let headers = new HttpHeaders({
-      "Content-Type": "application/json", 'token': token,
-      'apiKey': apiKey
+      "Content-Type": "application/json", 'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.request(requestMethodStr, url, {
@@ -83,10 +80,10 @@ export class ConsignmentService {
       });
   }
 
-  destroy(consignment: Consignment, token: string, apiKey: string): Observable<boolean> {
+  destroy(consignment: Consignment, userObject: any): Observable<boolean> {
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.delete(environment.serverUrl + '/consignment/' + consignment.id, {

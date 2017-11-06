@@ -32,7 +32,7 @@ export class DriverInfoShowComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.driverInfoService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((driverInfo: DriverInfo) => {
+      this.driverInfoService.get(+params['id'], this.userObject).subscribe((driverInfo: DriverInfo) => {
         this.driverInfo = driverInfo;
       }, error => {
         this.modal.alert().title('Error').message(error).open();
@@ -43,7 +43,7 @@ export class DriverInfoShowComponent implements OnInit, OnDestroy {
 
   destroy() {
     if (confirm("Are you sure?")) {
-      this.driverInfoService.destroy(this.driverInfo, this.userObject.token, this.userObject.apiKey).subscribe((success: boolean) => {
+      this.driverInfoService.destroy(this.driverInfo, this.userObject).subscribe((success: boolean) => {
         if (success) {
           this.router.navigate(['/driverInfo', 'list']);
         } else {

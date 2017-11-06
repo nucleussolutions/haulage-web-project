@@ -32,7 +32,7 @@ export class HaulierInfoShowComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.haulierInfoService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((haulierInfo: HaulierInfo) => {
+      this.haulierInfoService.get(+params['id'], this.userObject).subscribe((haulierInfo: HaulierInfo) => {
         this.haulierInfo = haulierInfo;
       });
     });
@@ -40,7 +40,7 @@ export class HaulierInfoShowComponent implements OnInit, OnDestroy {
 
   destroy() {
     if (confirm("Are you sure?")) {
-      this.haulierInfoService.destroy(this.haulierInfo, this.userObject.token, this.userObject.apiKey).subscribe((success: boolean) => {
+      this.haulierInfoService.destroy(this.haulierInfo, this.userObject).subscribe((success: boolean) => {
         if (success) {
           this.router.navigate(['/haulierInfo', 'list']);
         } else {

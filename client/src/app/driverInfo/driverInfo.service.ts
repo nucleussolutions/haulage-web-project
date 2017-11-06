@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { DriverInfo } from './driverInfo';
-import { Subject } from 'rxjs/Subject';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {DriverInfo} from './driverInfo';
+import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
-import { environment } from "../../environments/environment";
+import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable()
@@ -16,74 +16,68 @@ export class DriverInfoService {
   constructor(private http: HttpClient) {
   }
 
-  list(token: string, apiKey: string): Observable<DriverInfo[]> {
+  list(userObject: any): Observable<DriverInfo[]> {
     let subject = new Subject<DriverInfo[]>();
 
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
-
-
 
     this.http.get(environment.serverUrl + '/driverInfo', {
       headers: headers
     })
-        .catch(err => {
-          subject.error(err);
-          return subject.asObservable();
-        })
+      .catch(err => {
+        subject.error(err);
+        return subject.asObservable();
+      })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new DriverInfo(item)))
       });
     return subject.asObservable();
   }
 
-  get(id: number, token: string, apiKey: string): Observable<DriverInfo> {
+  get(id: number, userObject: any): Observable<DriverInfo> {
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.get(environment.serverUrl + '/driverInfo/' + id, {
       headers: headers
     })
-      .map((r: Response) => new DriverInfo(r.json()));
+      .map((r: Response) => new DriverInfo(r));
   }
 
-  save(driverInfo: DriverInfo, token: string, apiKey: string): Observable<DriverInfo> {
-    // const requestOptions = new RequestOptions();
-
+  save(driverInfo: DriverInfo, userObject: any): Observable<DriverInfo> {
     let requestMethodStr;
     let url;
 
     if (driverInfo.id) {
-      // requestOptions.method = RequestMethod.Put;
       requestMethodStr = 'PUT';
       url = environment.serverUrl + '/driverInfo/' + driverInfo.id;
     } else {
-      // requestOptions.method = RequestMethod.Post;
       requestMethodStr = 'POST';
       url = environment.serverUrl + '/driverInfo';
     }
     let body = JSON.stringify(driverInfo);
     let headers = new HttpHeaders({
       "Content-Type": "application/json",
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.request(requestMethodStr, url, {
       headers: headers,
       body: body
     })
-      .map((r: Response) => new DriverInfo(r.json()));
+      .map((r: Response) => new DriverInfo(r));
   }
 
-  destroy(driverInfo: DriverInfo, token: string, apiKey: string): Observable<boolean> {
+  destroy(driverInfo: DriverInfo, userObject: any): Observable<boolean> {
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.delete(environment.serverUrl + '/driverInfo/' + driverInfo.id, {

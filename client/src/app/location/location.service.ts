@@ -15,12 +15,12 @@ export class LocationService {
   constructor(private http: Http) {
   }
 
-  list(token, apiKey): Observable<Location[]> {
+  list(userObject: any): Observable<Location[]> {
     let subject = new Subject<Location[]>();
 
     let headers = new Headers({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     let options = new RequestOptions({

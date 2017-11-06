@@ -32,10 +32,10 @@ export class HaulierInfoPersistComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.companyService.list(this.userObject.token, this.userObject.apiKey).subscribe((companyList: Company[]) => { this.companyList = companyList; });
+    this.companyService.list(this.userObject).subscribe((companyList: Company[]) => { this.companyList = companyList; });
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
-        this.haulierInfoService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((haulierInfo: HaulierInfo) => {
+        this.haulierInfoService.get(+params['id'], this.userObject).subscribe((haulierInfo: HaulierInfo) => {
           this.create = false;
           this.haulierInfo = haulierInfo;
         });
@@ -44,7 +44,7 @@ export class HaulierInfoPersistComponent implements OnInit {
   }
 
   save() {
-    this.haulierInfoService.save(this.haulierInfo, this.userObject.token, this.userObject.apiKey).subscribe((haulierInfo: HaulierInfo) => {
+    this.haulierInfoService.save(this.haulierInfo, this.userObject).subscribe((haulierInfo: HaulierInfo) => {
       this.router.navigate(['/haulierInfo', 'show', haulierInfo.id]);
     }, (res: Response) => {
       const json = res.json();

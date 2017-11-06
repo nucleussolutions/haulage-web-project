@@ -16,17 +16,17 @@ export class ForwarderInfoService {
   constructor(private http: HttpClient) {
   }
 
-  list(token: string, apiKey: string): Observable<ForwarderInfo[]> {
+  list(userObject: any): Observable<ForwarderInfo[]> {
     let subject = new Subject<ForwarderInfo[]>();
 
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     this.http.get(environment.serverUrl + '/forwarderInfo', {
       headers: headers
-    }).map((r: Response) => r.json())
+    })
       .catch(err => {
         subject.error(err);
         return subject.asObservable();
@@ -37,26 +37,20 @@ export class ForwarderInfoService {
     return subject.asObservable();
   }
 
-  get(id: number, token: string, apiKey: string): Observable<ForwarderInfo> {
+  get(id: number, userObject:any): Observable<ForwarderInfo> {
 
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.get(environment.serverUrl + '/forwarderInfo/' + id, {
       headers: headers
     })
-      .map((r: Response) => new ForwarderInfo(r.json())).catch(err => {
-        if (err.status === 401) {
-          return Observable.throw(new Error('Unauthorized'));
-        } else if (err.status === 500) {
-          return Observable.throw(new Error('Internal server error'));
-        }
-      });
+      .map((r: Response) => new ForwarderInfo(r));
   }
 
-  save(forwarderInfo: ForwarderInfo, token: string, apiKey: string): Observable<ForwarderInfo> {
+  save(forwarderInfo: ForwarderInfo, userObject: any): Observable<ForwarderInfo> {
     let requestMethodStr;
     let url;
     if (forwarderInfo.id) {
@@ -69,8 +63,8 @@ export class ForwarderInfoService {
     let body = JSON.stringify(forwarderInfo);
     let headers = new HttpHeaders({
       "Content-Type": "application/json",
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.request(requestMethodStr, url, {
@@ -86,10 +80,10 @@ export class ForwarderInfoService {
       });
   }
 
-  destroy(forwarderInfo: ForwarderInfo, token: string, apiKey: string): Observable<boolean> {
+  destroy(forwarderInfo: ForwarderInfo, userObject: any): Observable<boolean> {
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.delete(environment.serverUrl + '/forwarderInfo/' + forwarderInfo.id, {

@@ -25,26 +25,11 @@ export class ConsignmentListComponent implements OnInit {
   ngOnInit() {
     console.log('ConsignmentListComponent onInit');
     this.userService.getUser().subscribe(userObject => {
-      this.checkPermissions(userObject);
-    });
-  }
-
-  checkPermissions(userObject : any) : void {
-    this.permissionService.getByUserId(userObject).subscribe(permission => {
-      if(permission.authority == 'Super Admin' || permission.authority == 'Admin'){
-        this.consignmentService.list(userObject.token, userObject.apiKey).subscribe((consignmentList: Consignment[]) => {
-          this.consignmentList = consignmentList;
-        }, error => {
-          this.handleError(error);
-        });
-      }else{
-        const dialog = this.modal.alert().title('Error').message('UnAuthorized').isBlocking(true).open();
-        dialog.then(value => {
-          this.router.navigate(['/index']);
-        });
-      }
-    }, error2 => {
-      this.handleError(error2);
+      this.consignmentService.list(userObject).subscribe((consignmentList: Consignment[]) => {
+        this.consignmentList = consignmentList;
+      }, error => {
+        this.handleError(error);
+      });
     });
   }
 
