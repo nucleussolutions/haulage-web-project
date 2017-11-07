@@ -1,16 +1,20 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, RequestOptions, RequestMethod, Request, Headers} from '@angular/http';
 import {Observable} from "rxjs/Observable";
-import {Subject} from "rxjs/Subject";
 import {environment} from "../environments/environment";
 import {AngularFireAuth} from 'angularfire2/auth';
 import {CookieService} from 'ngx-cookie';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Subject} from "rxjs/Subject";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class UserService {
 
-  constructor(private http: Http, private firebaseAuth: AngularFireAuth, private cookieService: CookieService) {
+  private userObjectUpdatedSource = new BehaviorSubject<Boolean>(false);
+
+  userObjectUpdated$ = this.userObjectUpdatedSource.asObservable();
+
+  constructor(private http: HttpClient, private firebaseAuth: AngularFireAuth, private cookieService: CookieService) {
   }
 
   register(email: string, password: string) {
@@ -28,6 +32,9 @@ export class UserService {
         this.cookieService.put('refreshToken', response.stsTokenManager.refreshToken);
         this.cookieService.put('token', response.stsTokenManager.accessToken);
         this.cookieService.put('expiresIn', response.stsTokenManager.expiresIn);
+
+        this.userObjectUpdatedSource.next(true);
+
         this.firebaseAuth.auth.currentUser.sendEmailVerification().then(verificationResponse => {
           console.log('verification email sent');
         }, error => {
@@ -55,6 +62,8 @@ export class UserService {
         this.cookieService.put('refreshToken', response.stsTokenManager.refreshToken);
         this.cookieService.put('token', response.stsTokenManager.accessToken);
         this.cookieService.put('expiresIn', response.stsTokenManager.expiresIn);
+
+        this.userObjectUpdatedSource.next(true);
         //todo store information in cookie so that it can be accessed by the ui
         resolve(response);
       }, error => {
@@ -64,10 +73,10 @@ export class UserService {
   }
 
   logout() {
+    this.userObjectUpdatedSource.next(false);
+    this.cookieService.removeAll();
     return new Promise((resolve, reject) => {
       this.firebaseAuth.auth.signOut().then(response => {
-        //todo remove all the cookies data
-        this.cookieService.removeAll();
         resolve(response);
       }, error => {
         reject(error);
@@ -76,8 +85,6 @@ export class UserService {
   }
 
   getUser() {
-    // let currentUser = this.firebaseAuth.auth.currentUser;
-    // console.log('currentUser ' + JSON.stringify(currentUser));
     let cookieObjects = this.cookieService.getAll();
     console.log('cookieObjects ' + cookieObjects);
     return Observable.of(cookieObjects);
@@ -116,17 +123,15 @@ export class UserService {
 
   checkUserType(userId: string, token: string, apiKey: string) {
 
-    let headers = new Headers({
+    let headers = new HttpHeaders({
       'token': token,
       'apiKey': apiKey
     });
 
-    let options = new RequestOptions({
-      headers: headers
-    });
-
     return new Promise((resolve, reject) => {
-      this.http.get(environment.serverUrl + '/api/usertype?userId=' + userId, options).subscribe(response => {
+      this.http.get(environment.serverUrl + '/api/usertype?userId=' + userId, {
+        headers: headers
+      }).subscribe(response => {
         resolve(response);
       }, error => {
         reject(error);

@@ -18,7 +18,7 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
   }
 
   subscription: Subscription;
@@ -28,22 +28,33 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
   private userObject: any;
 
   constructor(private permissionService: PermissionService, private userService: UserService) {
+    this.userService.userObjectUpdated$.subscribe(value => {
+      console.log('user updated loggedIn '+value);
+      if(!value){
+        this.userObject = null;
+      }
+    });
   }
 
   ngOnInit() {
     //use the permission service to get the permission of the user based on the userId
     console.log('NavDrawerComponent OnInit');
 
-    this.subscription = this.userService.getUser().subscribe(userObject => {
-      this.userObject = userObject;
-    }, error => {
-      console.log('NavDrawerComponent failed to subscribe to getUser ' + error);
-    });
+    this.executeSubscription();
 
     this.permissionService.getByUserId(this.userObject).subscribe(permission => {
       this.permission = permission;
     }, error => {
       console.log('NavDrawerComponent permissionService error ' + error);
+    });
+  }
+
+  executeSubscription(){
+    this.subscription = this.userService.getUser().subscribe(userObject => {
+      this.userObject = userObject;
+      console.log('getUser subscription '+JSON.stringify(this.userObject));
+    }, error => {
+      console.log('NavDrawerComponent failed to subscribe to getUser ' + error);
     });
   }
 
