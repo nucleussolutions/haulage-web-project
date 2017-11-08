@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {TransportRequest} from './transportRequest';
 import {TransportRequestService} from './transportRequest.service';
@@ -16,7 +16,10 @@ import {UserService} from "../user.service";
   templateUrl: './transportRequest-persist.component.html',
   providers: [UserService]
 })
-export class TransportRequestPersistComponent implements OnInit {
+export class TransportRequestPersistComponent implements OnInit, OnDestroy {
+
+  ngOnDestroy(): void {
+  }
 
   transportRequest = new TransportRequest();
   create = true;
@@ -45,6 +48,7 @@ export class TransportRequestPersistComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.transportRequest.customer = new Customer();
     this.locationService.list(this.userObject).subscribe((locationList: Location[]) => { this.locationList = locationList; });
     this.transportRequest.hazardous = false;
     this.transportRequest.overDimension = false;

@@ -249,11 +249,13 @@
 
 
       </fieldset>
+      <div>
+        <ngx-datatable
+            [rows]="rows"
+            [columns]="columns">
+        </ngx-datatable>
+      </div>
 
-      <ngx-datatable
-          [rows]="rows"
-          [columns]="columns">
-      </ngx-datatable>
 
     </fieldset>
     <fieldset class="buttons">

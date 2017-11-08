@@ -44,6 +44,8 @@ import {JobModule} from './job/job.module';
 import {CreateConsignmentModalComponent} from './create-consignment-modal/create-consignment-modal.component';
 import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
 import {HttpClientModule} from "@angular/common/http";
+import {HttpModule} from "@angular/http";
+import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 
 
 @NgModule({
@@ -71,6 +73,7 @@ import {HttpClientModule} from "@angular/common/http";
     BrowserModule,
     CookieModule.forRoot(),
     FormsModule,
+    HttpModule,
     HttpClientModule,
     AppRoutingModule,
     NgbModule.forRoot(),
@@ -93,7 +96,7 @@ import {HttpClientModule} from "@angular/common/http";
     FlashMessagesModule,
     PermissionModule,
     JobModule,
-    
+    NgxDatatableModule
   ],
   exports: [ReactiveFormsModule],
   providers: [{

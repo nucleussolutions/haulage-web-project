@@ -46,13 +46,7 @@ export class TransportRequestService {
     return this.http.get(environment.serverUrl + '/transportRequest/' + id, {
       headers: headers
     })
-      .map((r: Response) => new TransportRequest(r.json())).catch(err => {
-        if (err.status === 401) {
-          return Observable.throw('Unauthorized');
-        } else if (err.status === 500) {
-          return Observable.throw('Internal server error');
-        }
-      });
+      .map((r: Response) => new TransportRequest(r));
   }
 
   save(transportRequest: TransportRequest, userObject: any): Observable<TransportRequest> {
@@ -82,13 +76,7 @@ export class TransportRequestService {
       headers: headers,
       body: body
     })
-      .map((r: Response) => new TransportRequest(r.json())).catch(err => {
-        if (err.status === 401) {
-          return Observable.throw('Unauthorized');
-        } else if (err.status === 500) {
-          return Observable.throw('Internal server error');
-        }
-      });
+      .map((r: Response) => new TransportRequest(r));
   }
 
   destroy(transportRequest: TransportRequest, userObject: any): Observable<boolean> {
