@@ -5,6 +5,7 @@ import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { Title } from '@angular/platform-browser';
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
+import { PermissionService } from 'app/permission/permission.service';
 
 
 @Component({
@@ -20,12 +21,14 @@ export class TransportRequestListComponent implements OnInit {
 
     private userObject: any;
 
-    constructor(private transportRequestService: TransportRequestService, private userService: UserService, private modal: Modal, private titleService: Title) {
+    private permission: any;
+
+    constructor(private transportRequestService: TransportRequestService, private userService: UserService, private modal: Modal, private titleService: Title, private permissionService: PermissionService) {
         this.titleService.setTitle('Transport Request List');
 
-        this.subscription = this.userService.getUser().subscribe(response => {
-            this.userObject = response;
-        })
+        this.subscription = this.userService.getUser().flatMap(userObject => this.permissionService.getByUserId(userObject)).subscribe(permission => {
+            this.permission = permission;
+        });
     }
 
     ngOnInit() {

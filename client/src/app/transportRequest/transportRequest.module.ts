@@ -12,7 +12,8 @@ import {TransportRequestPersistComponent} from './transportRequest-persist.compo
 import {LocationModule} from '../location/location.module';
 import {ConsignmentModule} from '../consignment/consignment.module';
 import {CustomerModule} from '../customer/customer.module';
-import {Ng2SmartTableModule} from "ng2-smart-table";
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+
 
 @NgModule({
     declarations: [

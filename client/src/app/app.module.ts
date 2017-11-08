@@ -46,6 +46,7 @@ import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {PermissionService} from "./permission/permission.service";
 import {UserService} from "./user.service";
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 
 @NgModule({
@@ -94,7 +95,8 @@ import {UserService} from "./user.service";
     AngularFireAuthModule,
     FlashMessagesModule,
     PermissionModule,
-    JobModule
+    JobModule,
+    
   ],
   exports: [ReactiveFormsModule],
   providers: [{

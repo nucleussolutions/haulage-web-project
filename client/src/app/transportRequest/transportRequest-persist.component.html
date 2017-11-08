@@ -239,6 +239,9 @@
       <option *ngFor="let location of locationList" [value]="location.id" [selected]="transportRequest.pickupOrDropoffEmptyDepoh?.id == location.id">{{location.toString()}}</option>
     </select>
   </div>
+
+  <ng2-smart-table [settings]="settings" [source]="data"></ng2-smart-table>
+
 </fieldset>
         </fieldset>
         <fieldset class="buttons">

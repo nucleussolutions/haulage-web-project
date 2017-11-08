@@ -1,7 +1,7 @@
 <div class="nav" role="navigation">
     <ul>
         <li><a [routerLink]="['/index']" class="home">Home</a></li>
-        <li><a [routerLink]="['/consignment','create']" class="create">New Consignment</a></li>
+        <li *ngIf="permission?.authority == 'Super Admin'"><a [routerLink]="['/consignment','create']" class="create">New Consignment</a></li>
     </ul>
 </div>
 <div id="list-consignment" class="content scaffold-list" role="main">

@@ -6,6 +6,7 @@ import {CookieService} from 'ngx-cookie';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Subject} from "rxjs/Subject";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import 'rxjs/add/operator/publish';
 
 @Injectable()
 export class UserService {
@@ -86,7 +87,7 @@ export class UserService {
 
   getUser() {
     let cookieObjects = this.cookieService.getAll();
-    console.log('cookieObjects ' + cookieObjects);
+    console.log('cookieObjects ' + JSON.stringify(cookieObjects));
     return Observable.of(cookieObjects);
   }
 
