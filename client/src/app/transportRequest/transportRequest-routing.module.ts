@@ -6,18 +6,19 @@ import {TransportRequestShowComponent} from './transportRequest-show.component';
 import {SuperAdminAndAdminPermissionGuard} from "../superadmin-and-admin-permissionguard";
 import {UserService} from "../user.service";
 import {PermissionService} from "../permission/permission.service";
+import {SuperAdminAndManagerPermissionGuard} from "../superadmin-and-manager-permission-guard";
 
 const routes: Routes = [
   {path: 'transportRequest', redirectTo: 'transportRequest/list', pathMatch: 'full'},
   {path: 'transportRequest/list', component: TransportRequestListComponent},
-  {path: 'transportRequest/create', canActivate:[SuperAdminAndAdminPermissionGuard], component: TransportRequestPersistComponent},
-  {path: 'transportRequest/edit/:id', canActivate: [SuperAdminAndAdminPermissionGuard], component: TransportRequestPersistComponent},
+  {path: 'transportRequest/create', canActivate:[SuperAdminAndManagerPermissionGuard], component: TransportRequestPersistComponent},
+  {path: 'transportRequest/edit/:id', canActivate: [SuperAdminAndManagerPermissionGuard], component: TransportRequestPersistComponent},
   {path: 'transportRequest/show/:id', component: TransportRequestShowComponent},
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [UserService, PermissionService, SuperAdminAndAdminPermissionGuard]
+  providers: [UserService, PermissionService, SuperAdminAndManagerPermissionGuard]
 })
 export class TransportRequestRoutingModule {}

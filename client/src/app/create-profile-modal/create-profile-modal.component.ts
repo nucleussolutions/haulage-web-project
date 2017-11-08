@@ -20,6 +20,14 @@ import {Subscription} from 'rxjs/Subscription';
 })
 export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuard, ModalComponent<CreateProfileModalContext> {
 
+  beforeClose(): boolean | Promise<boolean>{
+    return false;
+  }
+
+  beforeDismiss(): boolean | Promise<boolean>{
+    return false;
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

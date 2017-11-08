@@ -15,47 +15,47 @@ export class TransportRequestService {
   constructor(private http: HttpClient) {
   }
 
-  list(token : string, apiKey : string): Observable<TransportRequest[]> {
+  list(userObject: any): Observable<TransportRequest[]> {
     let subject = new Subject<TransportRequest[]>();
 
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     this.http.get(environment.serverUrl + '/transportRequest', {
       headers: headers
     })
-        .catch(err => {
-            subject.error(err);
-            return subject.asObservable();
-        })
+      .catch(err => {
+        subject.error(err);
+        return subject.asObservable();
+      })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new TransportRequest(item)))
       });
     return subject.asObservable();
   }
 
-  get(id: number, token: string, apiKey : string): Observable<TransportRequest> {
+  get(id: number, userObject: any): Observable<TransportRequest> {
 
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
-    return this.http.get(environment.serverUrl + '/transportRequest/'+id, {
+    return this.http.get(environment.serverUrl + '/transportRequest/' + id, {
       headers: headers
     })
       .map((r: Response) => new TransportRequest(r.json())).catch(err => {
-            if (err.status === 401) {
-                return Observable.throw('Unauthorized');
-            }else if(err.status === 500){
-                return Observable.throw('Internal server error');
-            }
-        });
+        if (err.status === 401) {
+          return Observable.throw('Unauthorized');
+        } else if (err.status === 500) {
+          return Observable.throw('Internal server error');
+        }
+      });
   }
 
-  save(transportRequest: TransportRequest, token: string, apiKey : string): Observable<TransportRequest> {
+  save(transportRequest: TransportRequest, userObject: any): Observable<TransportRequest> {
     // const requestOptions = new RequestOptions();
 
     let requestMethodStr;
@@ -74,8 +74,8 @@ export class TransportRequestService {
     let body = JSON.stringify(transportRequest);
     let headers = new HttpHeaders({
       "Content-Type": "application/json",
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.request(requestMethodStr, url, {
@@ -83,19 +83,19 @@ export class TransportRequestService {
       body: body
     })
       .map((r: Response) => new TransportRequest(r.json())).catch(err => {
-            if (err.status === 401) {
-                return Observable.throw('Unauthorized');
-            }else if(err.status === 500){
-                return Observable.throw('Internal server error');
-            }
-        });
+        if (err.status === 401) {
+          return Observable.throw('Unauthorized');
+        } else if (err.status === 500) {
+          return Observable.throw('Internal server error');
+        }
+      });
   }
 
-  destroy(transportRequest: TransportRequest, token: string, apiKey : string): Observable<boolean> {
+  destroy(transportRequest: TransportRequest, userObject: any): Observable<boolean> {
 
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.delete(environment.serverUrl + '/transportRequest/' + transportRequest.id, {

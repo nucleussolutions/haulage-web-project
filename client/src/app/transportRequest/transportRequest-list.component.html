@@ -1,7 +1,7 @@
 <div class="nav" role="navigation">
     <ul>
         <li><a [routerLink]="['/index']" class="home">Home</a></li>
-        <li *ngIf="permission?.authority == 'Super Admin' || permission?.authority == 'Admin'"><a [routerLink]="['/transportRequest','create']" class="create">New TransportRequest</a></li>
+        <li *ngIf="permission?.authority == 'Manager' || permission?.authority == 'Super Admin'"><a [routerLink]="['/transportRequest','create']" class="create">New TransportRequest</a></li>
     </ul>
 </div>
 <div id="list-transportRequest" class="content scaffold-list" role="main">

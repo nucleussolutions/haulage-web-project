@@ -3,15 +3,13 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {TransportRequest} from './transportRequest';
 import {TransportRequestService} from './transportRequest.service';
 import {Response} from "@angular/http";
-import {LocationService} from '../location/location.service';
-import {Location} from '../location/location';
-import {ConsignmentService} from '../consignment/consignment.service';
-import {Consignment} from '../consignment/consignment';
-import {CustomerService} from '../customer/customer.service';
-import {Customer} from '../customer/customer';
-import {CookieService} from 'ngx-cookie';
-import {UserService} from 'app/user.service';
-import {Subscription} from 'rxjs/Subscription';
+import { ConsignmentService } from '../consignment/consignment.service';
+import { Consignment } from '../consignment/consignment';
+import { CustomerService } from '../customer/customer.service';
+import { Customer } from '../customer/customer';
+import { LocationService } from '../location/location.service';
+import { Location } from '../location/location';
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'transportRequest-persist',
@@ -27,77 +25,34 @@ export class TransportRequestPersistComponent implements OnInit {
   consignmentList: Consignment[];
   customerList: Customer[];
 
-  private subscription: Subscription;
+  private userObject:any;
 
-  private userObject: any;
+  rows = [
+    { name: 'Austin', gender: 'Male', company: 'Swimlane' },
+    { name: 'Dany', gender: 'Male', company: 'KFC' },
+    { name: 'Molly', gender: 'Female', company: 'Burger King' },
+  ];
+  columns = [
+    { prop: 'name' },
+    { name: 'Gender' },
+    { name: 'Company' }
+  ];
 
-  settings : any;
-
-  data: any;
-
-  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private locationService: LocationService, private consignmentService: ConsignmentService, private customerService: CustomerService, private userService: UserService) {
-
-    this.settings = {
-      columns: {
-        id: {
-          title: 'ID'
-        },
-        name: {
-          title: 'Full Name'
-        },
-        username: {
-          title: 'User Name'
-        },
-        email: {
-          title: 'Email'
-        }
-      }
-    };
-
-    this.data = [
-      {
-        id: 1,
-        name: "Leanne Graham",
-        username: "Bret",
-        email: "Sincere@april.biz"
-      },
-      {
-        id: 2,
-        name: "Ervin Howell",
-        username: "Antonette",
-        email: "Shanna@melissa.tv"
-      },
-
-      // ... list of items
-
-      {
-        id: 11,
-        name: "Nicholas DuBuque",
-        username: "Nicholas.Stanton",
-        email: "Rey.Padberg@rosamond.biz"
-      }
-    ];
-
-    this.subscription = this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    });
+  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService) {
+    this.userService.getUser().subscribe(userObject => {
+      this.userObject = userObject;
+    })
   }
 
   ngOnInit() {
-    this.locationService.list(this.userObject).subscribe((locationList: Location[]) => {
-      this.locationList = locationList;
-    });
+    this.locationService.list(this.userObject).subscribe((locationList: Location[]) => { this.locationList = locationList; });
     this.transportRequest.hazardous = false;
     this.transportRequest.overDimension = false;
-    this.consignmentService.list(this.userObject).subscribe((consignmentList: Consignment[]) => {
-      this.consignmentList = consignmentList;
-    });
-    this.customerService.list(this.userObject).subscribe((customerList: Customer[]) => {
-      this.customerList = customerList;
-    });
+    this.consignmentService.list(this.userObject).subscribe((consignmentList: Consignment[]) => { this.consignmentList = consignmentList; });
+    this.customerService.list(this.userObject).subscribe((customerList: Customer[]) => { this.customerList = customerList; });
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
-        this.transportRequestService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((transportRequest: TransportRequest) => {
+        this.transportRequestService.get(+params['id'], this.userObject).subscribe((transportRequest: TransportRequest) => {
           this.create = false;
           this.transportRequest = transportRequest;
         });
@@ -106,7 +61,7 @@ export class TransportRequestPersistComponent implements OnInit {
   }
 
   save() {
-    this.transportRequestService.save(this.transportRequest, this.userObject.token, this.userObject.apiKey).subscribe((transportRequest: TransportRequest) => {
+    this.transportRequestService.save(this.transportRequest, this.userObject).subscribe((transportRequest: TransportRequest) => {
       this.router.navigate(['/transportRequest', 'show', transportRequest.id]);
     }, (res: Response) => {
       const json = res.json();

@@ -31,7 +31,7 @@ export class TransportRequestShowComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.transportRequestService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((transportRequest: TransportRequest) => {
+      this.transportRequestService.get(+params['id'], this.userObject).subscribe((transportRequest: TransportRequest) => {
         this.transportRequest = transportRequest;
       });
     });
@@ -39,7 +39,7 @@ export class TransportRequestShowComponent implements OnInit, OnDestroy {
 
   destroy() {
     if (confirm("Are you sure?")) {
-      this.transportRequestService.destroy(this.transportRequest, this.userObject.token, this.userObject.apiKey).subscribe((success: boolean) => {
+      this.transportRequestService.destroy(this.transportRequest, this.userObject).subscribe((success: boolean) => {
         if (success) {
           this.router.navigate(['/transportRequest', 'list']);
         } else {

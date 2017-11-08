@@ -3,7 +3,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {IndexComponent} from './index/index.component';
 import {AppComponent} from './app.component';
@@ -43,10 +43,7 @@ import {PermissionModule} from './permission/permission.module';
 import {JobModule} from './job/job.module';
 import {CreateConsignmentModalComponent} from './create-consignment-modal/create-consignment-modal.component';
 import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {PermissionService} from "./permission/permission.service";
-import {UserService} from "./user.service";
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({

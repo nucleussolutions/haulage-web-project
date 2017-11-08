@@ -12,27 +12,27 @@ import {TransportRequestPersistComponent} from './transportRequest-persist.compo
 import {LocationModule} from '../location/location.module';
 import {ConsignmentModule} from '../consignment/consignment.module';
 import {CustomerModule} from '../customer/customer.module';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 
 
 @NgModule({
-    declarations: [
-        TransportRequestListComponent,
-        TransportRequestPersistComponent,
-        TransportRequestShowComponent
-    ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        TransportRequestRoutingModule,
-        LocationModule,
-        ConsignmentModule,
-        CustomerModule,
-        Ng2SmartTableModule
-    ],
-    providers: [
-        TransportRequestService
-    ]
+  declarations: [
+    TransportRequestListComponent,
+    TransportRequestPersistComponent,
+    TransportRequestShowComponent
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    TransportRequestRoutingModule,
+    LocationModule,
+    ConsignmentModule,
+    CustomerModule,
+    NgxDatatableModule
+  ],
+  providers: [
+    TransportRequestService
+  ]
 })
 export class TransportRequestModule {
 }

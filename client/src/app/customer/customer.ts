@@ -3,7 +3,14 @@
 export class Customer {
   id: number;
 
-  
+  companyName: string;
+  personInCharge: string;
+  phone: string;
+  address1: string;
+  address2: string;
+  city: string;
+  state: string;
+  country: string;
 
   constructor (object?: any) {
     if (object) {
