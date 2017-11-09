@@ -7,7 +7,8 @@ import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'consignment-persist',
-  templateUrl: './consignment-show.component.html'
+  templateUrl: './consignment-show.component.html',
+  providers: [UserService]
 })
 export class ConsignmentShowComponent implements OnInit, OnDestroy {
 

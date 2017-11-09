@@ -10,6 +10,7 @@ import { Customer } from '../customer/customer';
 import { LocationService } from '../location/location.service';
 import { Location } from '../location/location';
 import {UserService} from "../user.service";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'transportRequest-persist',
@@ -26,20 +27,19 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
   errors: any[];
   locationList: Location[];
   consignmentList: Consignment[];
-  customerList: Customer[];
 
   private userObject:any;
 
-  rows = [
-    { name: 'Austin', gender: 'Male', company: 'Swimlane' },
-    { name: 'Dany', gender: 'Male', company: 'KFC' },
-    { name: 'Molly', gender: 'Female', company: 'Burger King' },
-  ];
   columns = [
-    { prop: 'name' },
-    { name: 'Gender' },
-    { name: 'Company' }
+    { prop: 'Container No.' },
+    { name: 'Name' },
+    { name: 'Size' },
+    {name: 'Type'},
+    {name: 'Accept Time'},
+    {name : 'Task Type'},
   ];
+
+  private subscription: Subscription;
 
   constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService) {
     this.userService.getUser().subscribe(userObject => {
@@ -52,16 +52,17 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
     this.locationService.list(this.userObject).subscribe((locationList: Location[]) => { this.locationList = locationList; });
     this.transportRequest.hazardous = false;
     this.transportRequest.overDimension = false;
-    this.consignmentService.list(this.userObject).subscribe((consignmentList: Consignment[]) => { this.consignmentList = consignmentList; });
-    this.customerService.list(this.userObject).subscribe((customerList: Customer[]) => { this.customerList = customerList; });
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
         this.transportRequestService.get(+params['id'], this.userObject).subscribe((transportRequest: TransportRequest) => {
           this.create = false;
           this.transportRequest = transportRequest;
+          //todo use this data to display consignments in the ui if it's for edit
         });
       }
     });
+
+
   }
 
   save() {

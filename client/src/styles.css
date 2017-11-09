@@ -1,3 +1,7 @@
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/themes/bootstrap.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+
 /*
  * Base structure
  */
@@ -103,3 +107,4 @@ body {
     display: inline-block;
     border-radius: 50%;
 }
+

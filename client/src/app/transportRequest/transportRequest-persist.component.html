@@ -249,12 +249,25 @@
 
 
       </fieldset>
-      <div>
-        <ngx-datatable
-            [rows]="rows"
-            [columns]="columns">
-        </ngx-datatable>
-      </div>
+
+      <fieldset>
+        <legend>Consignments</legend>
+        <div class="table-responsive">
+          <ngx-datatable
+              class="bootstrap"
+              [rows]="transportRequest.consignments"
+              [loadingIndicator]="loadingIndicator"
+              [columns]="columns"
+              [columnMode]="'force'"
+              [headerHeight]="40"
+              [footerHeight]="40"
+              [limit]="10"
+              [rowHeight]="'auto'"
+              [reorderable]="reorderable">
+          </ngx-datatable>
+        </div>
+      </fieldset>
+
 
 
     </fieldset>

@@ -41,13 +41,18 @@ export class ConsignmentService {
     return this.http.get(environment.serverUrl + '/consignment/' + id, {
       headers: headers
     })
-      .map((r: Response) => new Consignment(r.json())).catch(err => {
-        if (err.status === 401) {
-          return Observable.throw('Unauthorized');
-        } else if (err.status === 500) {
-          return Observable.throw('Internal server error');
-        }
-      });
+      .map((r: Response) => new Consignment(r));
+  }
+
+  getByRFTId(rftId : string, userObject: any): Observable<Consignment>{
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    return this.http.get(environment.serverUrl + '/consignment?rftId='+rftId, {
+      headers: headers
+    }).map((r: Response) => new Consignment(r));
   }
 
   save(consignment: Consignment, userObject: any): Observable<Consignment> {
