@@ -1,14 +1,12 @@
-import {Component, OnInit, AfterViewInit, ChangeDetectorRef, AfterViewChecked, OnDestroy} from '@angular/core';
-import {BSModalContext} from "ngx-modialog/plugins/bootstrap";
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {BSModalContext, Modal} from "ngx-modialog/plugins/bootstrap";
 import {CloseGuard, DialogRef, ModalComponent} from "ngx-modialog";
 import {HaulierInfoService} from "../haulierInfo/haulierInfo.service";
 import {ForwarderInfoService} from "../forwarderInfo/forwarderInfo.service";
-import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
-import {CookieService} from "ngx-cookie";
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ForwarderInfo} from "../forwarderInfo/forwarderInfo";
 import {Company} from "../company/company";
 import {HaulierInfo} from "../haulierInfo/haulierInfo";
-import {Modal} from 'ngx-modialog/plugins/bootstrap';
 import {UserService} from 'app/user.service';
 import {Subscription} from 'rxjs/Subscription';
 

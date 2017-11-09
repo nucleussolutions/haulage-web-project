@@ -15,7 +15,7 @@ export class Location {
 
   constructor (object?: any) {
     if (object) {
-      
+
       for (var prop in object) {
         this[prop] = object[prop];
       }
@@ -24,6 +24,6 @@ export class Location {
   }
 
   toString(): string {
-    return 'haulage.project.Location : ' + (this.id ? this.id : '(unsaved)');
+    return name;
   }
 }

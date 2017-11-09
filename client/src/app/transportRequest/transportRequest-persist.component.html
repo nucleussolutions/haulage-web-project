@@ -252,7 +252,6 @@
 
       <fieldset>
         <legend>Consignments</legend>
-        <div class="table-responsive">
           <ngx-datatable
               class="bootstrap"
               [rows]="transportRequest.consignments"
@@ -265,7 +264,11 @@
               [rowHeight]="'auto'"
               [reorderable]="reorderable">
           </ngx-datatable>
-        </div>
+        <button (click)="onAddConsignmentClick($event)">Add Consignment</button>
+
+        <ngx-datatable>
+            
+        </ngx-datatable>
       </fieldset>
 
 

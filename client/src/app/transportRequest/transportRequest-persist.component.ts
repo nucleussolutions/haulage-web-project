@@ -11,6 +11,11 @@ import { LocationService } from '../location/location.service';
 import { Location } from '../location/location';
 import {UserService} from "../user.service";
 import {Subscription} from "rxjs/Subscription";
+import {BSModalContext, Modal} from 'ngx-modialog/plugins/bootstrap';
+import {ConsignmentPersistComponent} from "../consignment/consignment-persist.component";
+import {overlayConfigFactory} from "ngx-modialog";
+import {CreateConsignmentModalComponent} from "../create-consignment-modal/create-consignment-modal.component";
+
 
 @Component({
   selector: 'transportRequest-persist',
@@ -20,6 +25,7 @@ import {Subscription} from "rxjs/Subscription";
 export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   transportRequest = new TransportRequest();
@@ -41,10 +47,10 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService) {
-    this.userService.getUser().subscribe(userObject => {
+  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService, private modal : Modal) {
+    this.subscription = this.userService.getUser().subscribe(userObject => {
       this.userObject = userObject;
-    })
+    });
   }
 
   ngOnInit() {
@@ -57,11 +63,12 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
         this.transportRequestService.get(+params['id'], this.userObject).subscribe((transportRequest: TransportRequest) => {
           this.create = false;
           this.transportRequest = transportRequest;
+
+          console.log('transportRequest '+JSON.stringify(this.transportRequest));
           //todo use this data to display consignments in the ui if it's for edit
         });
       }
     });
-
 
   }
 
@@ -76,5 +83,16 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
         this.errors = json._embedded.errors;
       }
     });
+  }
+
+  onAddConsignmentClick(){
+    this.modal.open(CreateConsignmentModalComponent, overlayConfigFactory({
+      isBlocking: false,
+      size: 'lg'
+    }, BSModalContext));
+  }
+
+  addConsignment(consignment:Consignment){
+
   }
 }

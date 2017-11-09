@@ -1,3 +1,79 @@
-<p>
-  create-consignment-modal works!
-</p>
+<div id="persist-consignment" class="content scaffold-edit" role="main">
+
+  <h1>{{create ? "Create" : "Edit"}} Consignment</h1>
+  <ul class="errors" role="alert" *ngIf="errors">
+    <li *ngFor="let error of errors">{{error.message}}</li>
+  </ul>
+
+  <form name="save{className}" (ngSubmit)="addConsignment(consignment)">
+    <fieldset class="form">
+      <fieldset class="form">
+        <div class="fieldcontain required">
+          <label for="containerNo">Container No
+            <span class="required-indicator">*</span>
+          </label>
+          <input required="" name="containerNo" id="containerNo" [(ngModel)]="consignment.containerNo" type="text" />
+        </div>
+        <div class="fieldcontain required">
+          <label for="name">Name
+            <span class="required-indicator">*</span>
+          </label>
+          <input required="" name="name" id="name" [(ngModel)]="consignment.name" type="text" />
+        </div>
+        <div class="fieldcontain required">
+          <label for="type">Type
+            <span class="required-indicator">*</span>
+          </label>
+          <select required="" name="type" id="type" [(ngModel)]="consignment.type">
+            <option value="OT">OT</option>
+            <option value="Flat Rack">Flat Rack</option>
+            <option value="Reefer">Reefer</option>
+            <option value="HQ">HQ</option>
+            <option value="GP">GP</option>
+          </select>
+        </div>
+        <div class="fieldcontain required">
+          <label for="acceptTime">Accept Time
+            <span class="required-indicator">*</span>
+          </label>
+          <input required="" name="acceptTime" id="acceptTime" type="date" placeholder="YYYY-MM-DD" [value]="consignment.acceptTime | date:'y-MM-dd'" (change)="consignment.acceptTime = $event.target.valueAsDate" />
+        </div>
+        <div class="fieldcontain required">
+          <label for="consignmentCode">Consignment Code
+            <span class="required-indicator">*</span>
+          </label>
+          <input required="" name="consignmentCode" id="consignmentCode" [(ngModel)]="consignment.consignmentCode" type="text" />
+        </div>
+        <div class="fieldcontain required">
+          <label for="status">Status
+            <span class="required-indicator">*</span>
+          </label>
+          <select required="" name="status" id="status" [(ngModel)]="consignment.status">
+            <option value="Ready for Collection">Ready for Collection</option>
+            <option value="Pending">Pending</option>
+            <option value="Container Damaged">Container Damaged</option>
+            <option value="Enroute to Depot">Enroute to Depot</option>
+          </select>
+        </div>
+        <div class="fieldcontain required">
+          <label for="taskType">Task Type
+            <span class="required-indicator">*</span>
+          </label>
+          <select required="" name="taskType" id="taskType" [(ngModel)]="consignment.taskType">
+            <option value="Laden">Laden</option>
+            <option value="Drop Off">Drop Off</option>
+          </select>
+        </div>
+        <div class="fieldcontain required">
+          <label for="size">Size
+            <span class="required-indicator">*</span>
+          </label>
+          <input required="" name="size" id="size" [(ngModel)]="consignment.size" type="text" />
+        </div>
+      </fieldset>
+    </fieldset>
+    <fieldset class="buttons">
+      <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" />
+    </fieldset>
+  </form>
+</div>
