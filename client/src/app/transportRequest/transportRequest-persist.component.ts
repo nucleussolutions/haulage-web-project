@@ -3,12 +3,12 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {TransportRequest} from './transportRequest';
 import {TransportRequestService} from './transportRequest.service';
 import {Response} from "@angular/http";
-import { ConsignmentService } from '../consignment/consignment.service';
-import { Consignment } from '../consignment/consignment';
-import { CustomerService } from '../customer/customer.service';
-import { Customer } from '../customer/customer';
-import { LocationService } from '../location/location.service';
-import { Location } from '../location/location';
+import {ConsignmentService} from '../consignment/consignment.service';
+import {Consignment} from '../consignment/consignment';
+import {CustomerService} from '../customer/customer.service';
+import {Customer} from '../customer/customer';
+import {LocationService} from '../location/location.service';
+import {Location} from '../location/location';
 import {UserService} from "../user.service";
 import {Subscription} from "rxjs/Subscription";
 import {BSModalContext, Modal} from 'ngx-modialog/plugins/bootstrap';
@@ -34,20 +34,20 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
   locationList: Location[];
   consignmentList: Consignment[];
 
-  private userObject:any;
+  private userObject: any;
 
   columns = [
-    { prop: 'Container No.' },
-    { name: 'Name' },
-    { name: 'Size' },
+    {prop: 'Container No.'},
+    {name: 'Name'},
+    {name: 'Size'},
     {name: 'Type'},
     {name: 'Accept Time'},
-    {name : 'Task Type'},
+    {name: 'Task Type'},
   ];
 
   private subscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService, private modal : Modal) {
+  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService, private modal: Modal) {
     this.subscription = this.userService.getUser().subscribe(userObject => {
       this.userObject = userObject;
     });
@@ -55,7 +55,9 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.transportRequest.customer = new Customer();
-    this.locationService.list(this.userObject).subscribe((locationList: Location[]) => { this.locationList = locationList; });
+    this.locationService.list(this.userObject).subscribe((locationList: Location[]) => {
+      this.locationList = locationList;
+    });
     this.transportRequest.hazardous = false;
     this.transportRequest.overDimension = false;
     this.route.params.subscribe((params: Params) => {
@@ -64,7 +66,8 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
           this.create = false;
           this.transportRequest = transportRequest;
 
-          console.log('transportRequest '+JSON.stringify(this.transportRequest));
+          this.consignmentList = this.transportRequest.consignments;
+          console.log('transportRequest ' + JSON.stringify(this.transportRequest));
           //todo use this data to display consignments in the ui if it's for edit
         });
       }
@@ -85,14 +88,20 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
     });
   }
 
-  onAddConsignmentClick(){
+  onAddConsignmentClick() {
     this.modal.open(CreateConsignmentModalComponent, overlayConfigFactory({
       isBlocking: false,
-      size: 'lg'
+      size: 'md'
     }, BSModalContext));
   }
 
-  addConsignment(consignment:Consignment){
-
+  addConsignment(consignment: Consignment) {
+    //add into the list of consignments
+    this.consignmentList.push(consignment);
   }
+
+  deleteConsignment(){
+    this.consignmentList.pop();
+  }
+
 }

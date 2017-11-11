@@ -46,6 +46,8 @@ import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
 import {HttpClientModule} from "@angular/common/http";
 import {HttpModule} from "@angular/http";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
+import { HelpComponent } from './help/help.component';
+import { ReportingComponent } from './reporting/reporting.component';
 
 
 @NgModule({
@@ -67,8 +69,10 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
     VerifyEmailComponent,
     CreateConsignmentModalComponent,
     UnauthorizedComponent,
+    HelpComponent,
+    ReportingComponent,
   ],
-  entryComponents: [CreateProfileModalComponent],
+  entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent],
   imports: [
     BrowserModule,
     CookieModule.forRoot(),

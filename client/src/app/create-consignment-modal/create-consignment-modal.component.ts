@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
 import {Consignment} from "../consignment/consignment";
 import {CloseGuard, DialogRef, ModalComponent} from "ngx-modialog";
 import {BSModalContext} from "ngx-modialog/plugins/bootstrap";
@@ -14,6 +13,8 @@ export class CreateConsignmentModalComponent implements OnInit, CloseGuard, Moda
   context: BSModalContext;
 
   consignment = new Consignment();
+
+  create = true;
 
   beforeClose(): boolean | Promise<boolean>{
     return false;
@@ -33,8 +34,4 @@ export class CreateConsignmentModalComponent implements OnInit, CloseGuard, Moda
 
   }
 
-  save(){
-    //todo send an event to the transport persist component to add to the
-
-  }
 }

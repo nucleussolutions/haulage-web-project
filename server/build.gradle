@@ -64,6 +64,7 @@ dependencies {
     compile "org.grails.plugins:angular-scaffolding:2.0.0.RC2"
     compile 'org.grails.plugins:http-builder-helper:1.1.0'
     // compile 'org.grails.plugins:rx-gorm-rest-client:1.0.0.RELEASE'
+    compile 'org.grails.plugins:wkhtmltopdf:1.0.0.RC7'
 }
 
 bootRun {

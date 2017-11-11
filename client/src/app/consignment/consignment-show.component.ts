@@ -48,4 +48,9 @@ export class ConsignmentShowComponent implements OnInit, OnDestroy {
     }
   }
 
+  printConsignmentNote(){
+    //todo send consignment details for the backend to produce a consignment note in the form of pdf
+
+  }
+
 }

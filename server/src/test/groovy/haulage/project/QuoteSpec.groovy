@@ -3,7 +3,7 @@ package haulage.project
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class QuotationSpec extends Specification implements DomainUnitTest<Quotation> {
+class QuoteSpec extends Specification implements DomainUnitTest<Quote> {
 
     def setup() {
     }

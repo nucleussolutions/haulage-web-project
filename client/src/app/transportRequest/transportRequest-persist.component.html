@@ -262,9 +262,11 @@
               [footerHeight]="40"
               [limit]="10"
               [rowHeight]="'auto'"
+              [selectionType]="'single'"
               [reorderable]="reorderable">
           </ngx-datatable>
         <button (click)="onAddConsignmentClick($event)">Add Consignment</button>
+        <button (click)="onEditConsignmentClick($event)">Edit Consignment</button>
 
         <ngx-datatable>
             
