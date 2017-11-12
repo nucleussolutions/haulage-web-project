@@ -91,6 +91,17 @@
           <label for="hazardous">Hazardous</label>
           <input name="hazardous" id="hazardous" [(ngModel)]="transportRequest.hazardous" type="checkbox"/>
         </div>
+
+        <div class="fieldcontain">
+          <label>Back to Back</label>
+          <input name="backToBack" id="backToBack" [ngModel]="transportRequest.backToBack" type="checkbox" />
+        </div>
+
+        <div class="fieldcontain">
+          <label>Tongkang</label>
+          <input name="openCargoBoat" id="openCargoBoat" [ngModel]="transportRequest.openCargoBoat" type="checkbox" />
+        </div>
+
         <div class="fieldcontain required">
           <label for="grossWeight">Gross Weight
             <span class="required-indicator">*</span>

@@ -61,6 +61,14 @@ class TransportRequest {
 
     Location pickupOrDropoffEmptyDepoh
 
+
+    //can do back to back shipment, somehow needs to generify the name of this variable
+    Boolean backToBack
+
+
+    //can do open cargo boat/ or local term as tongkang, somehow needs to generify the name of this variable
+    Boolean openCargoBoat
+
     static constraints = {
         containerVolume blank: false, nullable: false
         type nullable: false, inList: RFTType.values()*.id
@@ -98,6 +106,9 @@ class TransportRequest {
         portOfDischarge nullable: false
 
         pickupOrDropoffEmptyDepoh nullable: false
+
+        backToBack nullable: false
+        openCargoBoat nullable: false
     }
 
     static embedded = ['customer']

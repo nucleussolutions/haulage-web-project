@@ -37,6 +37,8 @@ export class TransportRequest {
   portOfLoading: string;
   portOfDischarge: string;
   pickupOrDropoffEmptyDepoh: Location;
+  backToBack: boolean;
+  openCargoBoat: boolean;
 
   constructor (object?: any) {
     if (object) {
