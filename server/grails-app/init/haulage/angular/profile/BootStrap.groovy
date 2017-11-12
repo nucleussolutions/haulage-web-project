@@ -97,6 +97,8 @@ class BootStrap {
         testRFT.portOfLoading = 'asdasdadasd'
         testRFT.portOfDischarge = 'asdasdad'
         testRFT.pickupOrDropoffEmptyDepoh = new Location(name: 'aksdsldjasd', address1: 'asdldsjasdl', address2: 'asdsadjlsadlksd', city: 'asdsdasd', state: 'asdskjd', country: 'askdjsldasd', type: 'depot')
+        testRFT.backToBack = true
+        testRFT.openCargoBoat = true
 
         testRFT.save(flush: true, failOnError: true)
 
@@ -128,7 +130,8 @@ class BootStrap {
         testRFT2.portOfLoading = 'asdasdadasd'
         testRFT2.portOfDischarge = 'asdasdad'
         testRFT2.pickupOrDropoffEmptyDepoh = new Location(name: 'aksdsldjasd', address1: 'asdldsjasdl', address2: 'asdsadjlsadlksd', city: 'asdsdasd', state: 'asdskjd', country: 'askdjsldasd', type: 'depot')
-
+        testRFT2.backToBack = true
+        testRFT2.openCargoBoat = true
 
         testRFT2.save(flush: true, failOnError: true)
 
