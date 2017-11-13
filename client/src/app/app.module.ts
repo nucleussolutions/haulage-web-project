@@ -48,6 +48,7 @@ import {HttpModule} from "@angular/http";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import { HelpComponent } from './help/help.component';
 import { ReportingComponent } from './reporting/reporting.component';
+import { QuoteModule } from './quote/quote.module';
 
 
 @NgModule({
@@ -100,8 +101,9 @@ import { ReportingComponent } from './reporting/reporting.component';
     FlashMessagesModule,
     PermissionModule,
     JobModule,
-    NgxDatatableModule
-  ],
+    NgxDatatableModule,
+    QuoteModule
+],
   exports: [ReactiveFormsModule],
   providers: [{
     provide: LocationStrategy,

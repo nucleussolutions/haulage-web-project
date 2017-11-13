@@ -1,0 +1,71 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/quote','list']" class="list">Quote List</a></li>
+    </ul>
+</div>
+<div id="persist-quote" class="content scaffold-edit" role="main">
+    <h1>{{create ? "Create" : "Edit"}} Quote</h1>
+    <ul class="errors" role="alert" *ngIf="errors">
+        <li *ngFor="let error of errors">{{error.message}}</li>
+    </ul>
+
+    <form name="save{className}" (ngSubmit)="save()">
+        <fieldset class="form">
+            <fieldset class="form">
+  <div class="fieldcontain required">
+    <label for="haulierId">Haulier Id
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="haulierId" id="haulierId" [(ngModel)]="quote.haulierId" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="forwarderId">Forwarder Id
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="forwarderId" id="forwarderId" [(ngModel)]="quote.forwarderId" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="status">Status
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="status" id="status" [(ngModel)]="quote.status">
+      <option value="Accepted">Accepted</option>
+      <option value="Pending Acceptance">Pending Acceptance</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
+    <label for="code">Code
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="code" id="code" [(ngModel)]="quote.code" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="terms">Terms
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="terms" id="terms" [(ngModel)]="quote.terms" multiple="">
+      <option *ngFor="let termAndCondition of termAndConditionList" [value]="termAndCondition.id" [selected]="quote.terms?.id == termAndCondition.id">{{termAndCondition.toString()}}</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
+    <label for="items">Items
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="items" id="items" [(ngModel)]="quote.items" multiple="">
+      <option *ngFor="let quoteItem of quoteItemList" [value]="quoteItem.id" [selected]="quote.items?.id == quoteItem.id">{{quoteItem.toString()}}</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
+    <label for="endDate">End Date
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="endDate" id="endDate" type="date" placeholder="YYYY-MM-DD" [value]="quote.endDate | date:'y-MM-dd'" (change)="quote.endDate = $event.target.valueAsDate" />
+  </div>
+</fieldset>
+        </fieldset>
+        <fieldset class="buttons">
+            <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" />
+        </fieldset>
+    </form>
+</div>

@@ -100,7 +100,7 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
     this.consignmentList.push(consignment);
   }
 
-  deleteConsignment(){
+  deleteConsignment(id: number){
     this.consignmentList.pop();
   }
 

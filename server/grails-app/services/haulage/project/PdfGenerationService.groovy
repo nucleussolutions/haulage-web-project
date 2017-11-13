@@ -15,16 +15,16 @@ class PdfGenerationService {
 
   def generateConsignmentNote(Consignment consignment){
     //todo generate consignment
-    def byte[] pdfData = wkhtmltoxService.makePdf(
-            view: "/pdf/someGspTemplate",
-            model: [someInstance: someInstance],
-            header: "/pdf/someHeader",
-            footer: "/pdf/someFooter",
-            marginLeft: 20,
-            marginTop: 35,
-            marginBottom: 20,
-            marginRight: 20,
-            headerSpacing: 10)
+//    def byte[] pdfData = wkhtmltoxService.makePdf(
+//            view: "/pdf/someGspTemplate",
+//            model: [someInstance: someInstance],
+//            header: "/pdf/someHeader",
+//            footer: "/pdf/someFooter",
+//            marginLeft: 20,
+//            marginTop: 35,
+//            marginBottom: 20,
+//            marginRight: 20,
+//            headerSpacing: 10)
 
 
     // DO Something e.g. send as mail
