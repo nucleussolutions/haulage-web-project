@@ -33,7 +33,7 @@ export class LocationShowComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.locationService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((location: Location) => {
+      this.locationService.get(+params['id'], this.userObject).subscribe((location: Location) => {
         this.location = location;
       });
     }, error => {
@@ -43,7 +43,7 @@ export class LocationShowComponent implements OnInit, OnDestroy {
 
   destroy() {
     if (confirm("Are you sure?")) {
-      this.locationService.destroy(this.location, this.userObject.token, this.userObject.apiKey).subscribe((success: boolean) => {
+      this.locationService.destroy(this.location, this.userObject).subscribe((success: boolean) => {
         if (success) {
           this.router.navigate(['/location','list']);
         } else {

@@ -33,7 +33,7 @@ export class QuotePersistComponent implements OnInit {
     });
 
     this.termAndConditionService.list(this.userObject).subscribe((termAndConditionList: TermAndCondition[]) => { this.termAndConditionList = termAndConditionList; });
-    this.quoteItemService.list().subscribe((quoteItemList: QuoteItem[]) => { this.quoteItemList = quoteItemList; });
+    this.quoteItemService.list(this.userObject).subscribe((quoteItemList: QuoteItem[]) => { this.quoteItemList = quoteItemList; });
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
         this.quoteService.get(+params['id'], this.userObject).subscribe((quote: Quote) => {
