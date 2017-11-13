@@ -1,24 +1,26 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, RequestOptions, RequestMethod, Request, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {QuoteItem} from './quoteItem';
 import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
+import {environment} from "../../environments/environment";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable()
 export class QuoteItemService {
 
-  private baseUrl = 'http://localhost:8080/';
-
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
   }
 
-  list(): Observable<QuoteItem[]> {
+  list(userObject: any): Observable<QuoteItem[]> {
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
     let subject = new Subject<QuoteItem[]>();
-    this.http.get(this.baseUrl + 'quoteItem')
-      .map((r: Response) => r.json())
+    this.http.get(environment.serverUrl + '/quoteItem')
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new QuoteItem(item)))
       });
@@ -26,28 +28,42 @@ export class QuoteItemService {
   }
 
   get(id: number): Observable<QuoteItem> {
-    return this.http.get(this.baseUrl + 'quoteItem/'+id)
-      .map((r: Response) => new QuoteItem(r.json()));
+    //todo
+    return this.http.get(environment.serverUrl + '/quoteItem/'+id)
+      .map((r: Response) => new QuoteItem(r));
   }
 
-  save(quoteItem: QuoteItem): Observable<QuoteItem> {
-    const requestOptions = new RequestOptions();
-    if (quoteItem.id) {
-      requestOptions.method = RequestMethod.Put;
-      requestOptions.url = this.baseUrl + 'quoteItem/' + quoteItem.id;
-    } else {
-      requestOptions.method = RequestMethod.Post;
-      requestOptions.url = this.baseUrl + 'quoteItem';
-    }
-    requestOptions.body = JSON.stringify(quoteItem);
-    requestOptions.headers = new Headers({"Content-Type": "application/json"});
+  save(quoteItem: QuoteItem, userObject: any): Observable<QuoteItem> {
 
-    return this.http.request(new Request(requestOptions))
-      .map((r: Response) => new QuoteItem(r.json()));
+    let requestMethodStr;
+
+    let url;
+
+    if (quoteItem.id) {
+      // requestOptions.method = RequestMethod.Put;
+      requestMethodStr = 'PUT';
+      url = environment.serverUrl + '/quoteItem/' + quoteItem.id;
+    } else {
+      requestMethodStr = 'POST';
+      url = environment.serverUrl + '/quoteItem';
+    }
+    let body = JSON.stringify(quoteItem);
+    let headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    return this.http.request(requestMethodStr, url, {
+      body:body,
+      headers: headers
+    })
+      .map((r: Response) => new QuoteItem(r));
   }
 
   destroy(quoteItem: QuoteItem): Observable<boolean> {
-    return this.http.delete(this.baseUrl + 'quoteItem/' + quoteItem.id).map((res: Response) => res.ok).catch(() => {
+    //todo
+    return this.http.delete(environment.serverUrl + '/quoteItem/' + quoteItem.id).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
   }

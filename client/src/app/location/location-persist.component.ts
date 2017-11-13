@@ -37,7 +37,7 @@ export class LocationPersistComponent implements OnInit, OnDestroy {
 
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
-        this.locationService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((location: Location) => {
+        this.locationService.get(+params['id'], this.userObject).subscribe((location: Location) => {
           this.create = false;
           this.location = location;
         });
@@ -46,7 +46,7 @@ export class LocationPersistComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    this.locationService.save(this.location, this.userObject.token, this.userObject.apiKey).subscribe((location: Location) => {
+    this.locationService.save(this.location, this.userObject).subscribe((location: Location) => {
       this.router.navigate(['/location', 'show', location.id]);
     }, (res: Response) => {
       const json = res.json();

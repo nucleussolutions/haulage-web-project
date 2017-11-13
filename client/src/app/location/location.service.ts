@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, RequestOptions, RequestMethod, Request, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Location} from './location';
 import {Subject} from 'rxjs/Subject';
@@ -7,98 +6,85 @@ import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
-import { environment } from 'environments/environment';
+import {environment} from 'environments/environment';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable()
 export class LocationService {
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
   }
 
   list(userObject: any): Observable<Location[]> {
     let subject = new Subject<Location[]>();
 
-    let headers = new Headers({
+    let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
 
-    let options = new RequestOptions({
-      headers : headers
-    });
-
-    this.http.get(environment.serverUrl + '/location', options)
-      .map((r: Response) => r.json())
-        .catch(err => {
-            subject.error(err);
-            return subject.asObservable();
-        })
+    this.http.get(environment.serverUrl + '/location', {
+      headers: headers
+    })
+      .catch(err => {
+        subject.error(err);
+        return subject.asObservable();
+      })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new Location(item)))
       });
     return subject.asObservable();
   }
 
-  get(id: number, token : string, apiKey : string): Observable<Location> {
+  get(id: number, userObject: any): Observable<Location> {
 
-      let headers = new Headers({
-          'token': token,
-          'apiKey': apiKey
-      });
-
-      let options = new RequestOptions({
-          headers: headers
-      });
-
-    return this.http.get(environment.serverUrl + '/location/'+id, options)
-      .map((r: Response) => new Location(r.json())).catch(err => {
-            if (err.status === 401) {
-                return Observable.throw(new Error('Unauthorized'));
-            }else if(err.status === 500){
-                return Observable.throw(new Error('Internal server error'));
-            }
-        });
-  }
-
-  save(location: Location, token : string, apiKey : string): Observable<Location> {
-    const requestOptions = new RequestOptions();
-    if (location.id) {
-      requestOptions.method = RequestMethod.Put;
-      requestOptions.url = environment.serverUrl + '/location/' + location.id;
-    } else {
-      requestOptions.method = RequestMethod.Post;
-      requestOptions.url = environment.serverUrl + '/location';
-    }
-    requestOptions.body = JSON.stringify(location);
-    requestOptions.headers = new Headers({
-        "Content-Type": "application/json",
-        'token' : token,
-        'apiKey': apiKey
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
     });
 
-    return this.http.request(new Request(requestOptions))
-      .map((r: Response) => new Location(r.json())).catch(err => {
-            if (err.status === 401) {
-                return Observable.throw('Unauthorized');
-            }else if(err.status === 500){
-                return Observable.throw('Internal server error');
-            }
-        });
+    return this.http.get(environment.serverUrl + '/location/' + id, {
+      headers: headers
+    })
+      .map((r: Response) => new Location(r));
   }
 
-  destroy(location: Location, token:string, apiKey : string): Observable<boolean> {
+  save(location: Location, userObject: any): Observable<Location> {
+    let requestMethodStr;
+    let url;
+    if (location.id) {
+      // requestOptions.method = RequestMethod.Put;
+      requestMethodStr = 'PUT';
+      url = environment.serverUrl + '/location/' + location.id;
+    } else {
+      // requestOptions.method = RequestMethod.Post;
+      requestMethodStr = 'POST';
+      url = environment.serverUrl + '/location';
+    }
+    let body = JSON.stringify(location);
+    let headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
 
-      let headers = new Headers({
-          'token': token,
-          'apiKey': apiKey
-      });
+    return this.http.request(requestMethodStr, url, {
+      headers: headers,
+      body: body
+    })
+      .map((r: Response) => new Location(r));
+  }
 
-      let options = new RequestOptions({
-          headers : headers
-      });
+  destroy(location: Location, userObject: any): Observable<boolean> {
 
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
 
-      return this.http.delete(environment.serverUrl + '/location/' + location.id, options).map((res: Response) => res.ok).catch(() => {
+    return this.http.delete(environment.serverUrl + '/location/' + location.id, {
+      headers: headers
+    }).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
   }

@@ -1,53 +1,81 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, RequestOptions, RequestMethod, Request, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {TermAndCondition} from './termAndCondition';
 import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {environment} from "../../environments/environment";
 
 @Injectable()
 export class TermAndConditionService {
 
-  private baseUrl = 'http://localhost:8080/';
-
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
   }
 
-  list(): Observable<TermAndCondition[]> {
+  list(userObject: any): Observable<TermAndCondition[]> {
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
     let subject = new Subject<TermAndCondition[]>();
-    this.http.get(this.baseUrl + 'termAndCondition')
-      .map((r: Response) => r.json())
+    this.http.get(environment.serverUrl + '/termAndCondition', {
+      headers: headers
+    })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new TermAndCondition(item)))
       });
     return subject.asObservable();
   }
 
-  get(id: number): Observable<TermAndCondition> {
-    return this.http.get(this.baseUrl + 'termAndCondition/'+id)
-      .map((r: Response) => new TermAndCondition(r.json()));
+  get(id: number, userObject: any): Observable<TermAndCondition> {
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+    return this.http.get(environment.serverUrl + '/termAndCondition/'+id, {
+      headers: headers
+    })
+      .map((r: Response) => new TermAndCondition(r));
   }
 
-  save(termAndCondition: TermAndCondition): Observable<TermAndCondition> {
-    const requestOptions = new RequestOptions();
+  save(termAndCondition: TermAndCondition, userObject: any): Observable<TermAndCondition> {
+
+    let requestMethodStr;
+    let url;
+
     if (termAndCondition.id) {
-      requestOptions.method = RequestMethod.Put;
-      requestOptions.url = this.baseUrl + 'termAndCondition/' + termAndCondition.id;
+      requestMethodStr = 'PUT';
+      url = environment.serverUrl + '/termAndCondition/' + termAndCondition.id;
     } else {
-      requestOptions.method = RequestMethod.Post;
-      requestOptions.url = this.baseUrl + 'termAndCondition';
+      requestMethodStr = 'POST';
+      url = environment.serverUrl + '/termAndCondition';
     }
-    requestOptions.body = JSON.stringify(termAndCondition);
-    requestOptions.headers = new Headers({"Content-Type": "application/json"});
+    let body = JSON.stringify(termAndCondition);
+    let headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
 
-    return this.http.request(new Request(requestOptions))
-      .map((r: Response) => new TermAndCondition(r.json()));
+    return this.http.request(requestMethodStr, url, {
+      body: body,
+      headers: headers
+    })
+      .map((r: Response) => new TermAndCondition(r));
   }
 
-  destroy(termAndCondition: TermAndCondition): Observable<boolean> {
-    return this.http.delete(this.baseUrl + 'termAndCondition/' + termAndCondition.id).map((res: Response) => res.ok).catch(() => {
+  destroy(termAndCondition: TermAndCondition, userObject: any): Observable<boolean> {
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    return this.http.delete(environment.serverUrl + '/termAndCondition/' + termAndCondition.id).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
   }

@@ -7,10 +7,12 @@ import { TermAndConditionService } from '../termAndCondition/termAndCondition.se
 import { TermAndCondition } from '../termAndCondition/termAndCondition';
 import { QuoteItemService } from '../quoteItem/quoteItem.service';
 import { QuoteItem } from '../quoteItem/quoteItem';
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'quote-persist',
-  templateUrl: './quote-persist.component.html'
+  templateUrl: './quote-persist.component.html',
+  providers: [UserService]
 })
 export class QuotePersistComponent implements OnInit {
 
@@ -20,14 +22,21 @@ export class QuotePersistComponent implements OnInit {
   termAndConditionList: TermAndCondition[];
   quoteItemList: QuoteItem[];
 
-  constructor(private route: ActivatedRoute, private quoteService: QuoteService, private router: Router, private termAndConditionService: TermAndConditionService, private quoteItemService: QuoteItemService) {}
+  private userObject: any;
+
+  constructor(private route: ActivatedRoute, private quoteService: QuoteService, private router: Router, private termAndConditionService: TermAndConditionService, private quoteItemService: QuoteItemService, private userService: UserService) {}
 
   ngOnInit() {
-    this.termAndConditionService.list().subscribe((termAndConditionList: TermAndCondition[]) => { this.termAndConditionList = termAndConditionList; });
+
+    this.userService.getUser().subscribe(userObject => {
+      this.userObject = userObject;
+    });
+
+    this.termAndConditionService.list(this.userObject).subscribe((termAndConditionList: TermAndCondition[]) => { this.termAndConditionList = termAndConditionList; });
     this.quoteItemService.list().subscribe((quoteItemList: QuoteItem[]) => { this.quoteItemList = quoteItemList; });
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
-        this.quoteService.get(+params['id']).subscribe((quote: Quote) => {
+        this.quoteService.get(+params['id'], this.userObject).subscribe((quote: Quote) => {
           this.create = false;
           this.quote = quote;
         });
@@ -36,7 +45,7 @@ export class QuotePersistComponent implements OnInit {
   }
 
   save() {
-    this.quoteService.save(this.quote).subscribe((quote: Quote) => {
+    this.quoteService.save(this.quote, this.userObject).subscribe((quote: Quote) => {
       this.router.navigate(['/quote', 'show', quote.id]);
     }, (res: Response) => {
       const json = res.json();
