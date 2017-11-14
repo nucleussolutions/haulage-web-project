@@ -3,11 +3,12 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Quote} from './quote';
 import {QuoteService} from './quote.service';
 import {Response} from "@angular/http";
-import { TermAndConditionService } from '../termAndCondition/termAndCondition.service';
-import { TermAndCondition } from '../termAndCondition/termAndCondition';
-import { QuoteItemService } from '../quoteItem/quoteItem.service';
-import { QuoteItem } from '../quoteItem/quoteItem';
+import {TermAndConditionService} from '../termAndCondition/termAndCondition.service';
+import {TermAndCondition} from '../termAndCondition/termAndCondition';
+import {QuoteItemService} from '../quoteItem/quoteItem.service';
+import {QuoteItem} from '../quoteItem/quoteItem';
 import {UserService} from "../user.service";
+import {PermissionService} from "../permission/permission.service";
 
 @Component({
   selector: 'quote-persist',
@@ -24,7 +25,8 @@ export class QuotePersistComponent implements OnInit {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private quoteService: QuoteService, private router: Router, private termAndConditionService: TermAndConditionService, private quoteItemService: QuoteItemService, private userService: UserService) {}
+  constructor(private route: ActivatedRoute, private quoteService: QuoteService, private router: Router, private termAndConditionService: TermAndConditionService, private quoteItemService: QuoteItemService, private userService: UserService, private permissionService: PermissionService) {
+  }
 
   ngOnInit() {
 
@@ -32,8 +34,12 @@ export class QuotePersistComponent implements OnInit {
       this.userObject = userObject;
     });
 
-    this.termAndConditionService.list(this.userObject).subscribe((termAndConditionList: TermAndCondition[]) => { this.termAndConditionList = termAndConditionList; });
-    this.quoteItemService.list(this.userObject).subscribe((quoteItemList: QuoteItem[]) => { this.quoteItemList = quoteItemList; });
+    this.termAndConditionService.list(this.userObject).subscribe((termAndConditionList: TermAndCondition[]) => {
+      this.termAndConditionList = termAndConditionList;
+    });
+    this.quoteItemService.list(this.userObject).subscribe((quoteItemList: QuoteItem[]) => {
+      this.quoteItemList = quoteItemList;
+    });
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
         this.quoteService.get(+params['id'], this.userObject).subscribe((quote: Quote) => {

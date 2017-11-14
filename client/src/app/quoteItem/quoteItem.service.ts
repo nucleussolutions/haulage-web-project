@@ -20,16 +20,26 @@ export class QuoteItemService {
       'apiKey': userObject.apiKey
     });
     let subject = new Subject<QuoteItem[]>();
-    this.http.get(environment.serverUrl + '/quoteItem')
+    this.http.get(environment.serverUrl + '/quoteItem', {
+      headers: headers
+    })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new QuoteItem(item)))
       });
     return subject.asObservable();
   }
 
-  get(id: number): Observable<QuoteItem> {
+  get(id: number, userObject: any): Observable<QuoteItem> {
     //todo
-    return this.http.get(environment.serverUrl + '/quoteItem/'+id)
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    return this.http.get(environment.serverUrl + '/quoteItem/'+id, {
+      headers: headers
+    })
       .map((r: Response) => new QuoteItem(r));
   }
 
@@ -61,9 +71,17 @@ export class QuoteItemService {
       .map((r: Response) => new QuoteItem(r));
   }
 
-  destroy(quoteItem: QuoteItem): Observable<boolean> {
+  destroy(quoteItem: QuoteItem, userObject: any): Observable<boolean> {
     //todo
-    return this.http.delete(environment.serverUrl + '/quoteItem/' + quoteItem.id).map((res: Response) => res.ok).catch(() => {
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    return this.http.delete(environment.serverUrl + '/quoteItem/' + quoteItem.id, {
+      headers: headers
+    }).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
   }

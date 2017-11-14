@@ -43,20 +43,13 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
     //use the permission service to get the permission of the user based on the userId
     console.log('NavDrawerComponent OnInit');
 
-    this.executeSubscription();
-
-    this.permissionService.getByUserId(this.userObject).subscribe(permission => {
+    this.subscription = this.userService.getUser().flatMap(userObject => {
+      this.userObject = userObject;
+      return this.permissionService.getByUserId(this.userObject);
+    }).subscribe(permission => {
       this.permission = permission;
     }, error => {
       console.log('NavDrawerComponent permissionService error ' + error);
-    });
-  }
-
-  executeSubscription(){
-    this.subscription = this.userService.getUser().subscribe(userObject => {
-      this.userObject = userObject;
-     }, error => {
-      console.log('NavDrawerComponent failed to subscribe to getUser ' + error);
     });
   }
 

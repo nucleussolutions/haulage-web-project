@@ -22,7 +22,7 @@ export class QuoteService {
     });
 
     let subject = new Subject<Quote[]>();
-    this.http.get(environment.serverUrl + 'quote', {
+    this.http.get(environment.serverUrl + '/quote', {
       headers: headers
     })
       .subscribe((json: any[]) => {
@@ -33,9 +33,14 @@ export class QuoteService {
 
   get(id: number, userObject: any): Observable<Quote> {
 
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
 
-
-    return this.http.get(environment.serverUrl + 'quote/' + id)
+    return this.http.get(environment.serverUrl + '/quote/' + id, {
+      headers: headers
+    })
       .map((r: Response) => new Quote(r.json()));
   }
 
@@ -46,10 +51,10 @@ export class QuoteService {
 
     if (quote.id) {
       requestMethodStr = 'PUT';
-      url = environment.serverUrl + 'quote/' + quote.id;
+      url = environment.serverUrl + '/quote/' + quote.id;
     } else {
       requestMethodStr = 'POST';
-      url = environment.serverUrl + 'quote';
+      url = environment.serverUrl + '/quote';
     }
     let body = JSON.stringify(quote);
     let headers = new HttpHeaders({
@@ -70,7 +75,7 @@ export class QuoteService {
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
-    return this.http.delete(environment.serverUrl + 'quote/' + quote.id, {
+    return this.http.delete(environment.serverUrl + '/quote/' + quote.id, {
       headers: headers
     }).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);

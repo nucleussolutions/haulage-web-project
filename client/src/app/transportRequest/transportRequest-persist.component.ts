@@ -78,12 +78,11 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
   save() {
     this.transportRequestService.save(this.transportRequest, this.userObject).subscribe((transportRequest: TransportRequest) => {
       this.router.navigate(['/transportRequest', 'show', transportRequest.id]);
-    }, (res: Response) => {
-      const json = res.json();
+    }, (json: Response) => {
       if (json.hasOwnProperty('message')) {
         this.errors = [json];
       } else {
-        this.errors = json._embedded.errors;
+        // this.errors = json;
       }
     });
   }
@@ -93,15 +92,6 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
       isBlocking: false,
       size: 'md'
     }, BSModalContext));
-  }
-
-  addConsignment(consignment: Consignment) {
-    //add into the list of consignments
-    this.consignmentList.push(consignment);
-  }
-
-  deleteConsignment(id: number){
-    this.consignmentList.pop();
   }
 
 }

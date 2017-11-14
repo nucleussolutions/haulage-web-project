@@ -34,4 +34,13 @@ export class CreateConsignmentModalComponent implements OnInit, CloseGuard, Moda
 
   }
 
+  addConsignment(consignment: Consignment){
+    //todo shoot an event to the parent, which is the transportrequest persist component to add consignment
+
+  }
+
+  deleteConsignment(id: number){
+    //todo
+  }
+
 }
