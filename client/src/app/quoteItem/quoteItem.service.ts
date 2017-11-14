@@ -30,7 +30,6 @@ export class QuoteItemService {
   }
 
   get(id: number, userObject: any): Observable<QuoteItem> {
-    //todo
 
     let headers = new HttpHeaders({
       'token': userObject.token,
@@ -72,7 +71,6 @@ export class QuoteItemService {
   }
 
   destroy(quoteItem: QuoteItem, userObject: any): Observable<boolean> {
-    //todo
 
     let headers = new HttpHeaders({
       'token': userObject.token,

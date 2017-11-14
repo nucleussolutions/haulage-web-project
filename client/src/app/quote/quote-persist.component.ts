@@ -30,9 +30,14 @@ export class QuotePersistComponent implements OnInit {
 
   ngOnInit() {
 
+
     this.userService.getUser().subscribe(userObject => {
       this.userObject = userObject;
     });
+
+    this.permissionService.getByUserId(this.userObject).subscribe(permission => {
+    });
+
 
     this.termAndConditionService.list(this.userObject).subscribe((termAndConditionList: TermAndCondition[]) => {
       this.termAndConditionList = termAndConditionList;

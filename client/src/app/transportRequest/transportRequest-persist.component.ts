@@ -15,6 +15,8 @@ import {BSModalContext, Modal} from 'ngx-modialog/plugins/bootstrap';
 import {ConsignmentPersistComponent} from "../consignment/consignment-persist.component";
 import {overlayConfigFactory} from "ngx-modialog";
 import {CreateConsignmentModalComponent} from "../create-consignment-modal/create-consignment-modal.component";
+import {PermissionService} from "../permission/permission.service";
+import {Permission} from "../permission/permission";
 
 
 @Component({
@@ -47,13 +49,20 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService, private modal: Modal) {
+  private permission: Permission;
+
+  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService, private modal: Modal, private permissionService: PermissionService) {
     this.subscription = this.userService.getUser().subscribe(userObject => {
       this.userObject = userObject;
     });
   }
 
   ngOnInit() {
+
+    this.permissionService.getByUserId(this.userObject).subscribe(permission => {
+      this.permission = permission;
+    });
+
     this.transportRequest.customer = new Customer();
     this.locationService.list(this.userObject).subscribe((locationList: Location[]) => {
       this.locationList = locationList;
