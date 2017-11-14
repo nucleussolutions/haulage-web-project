@@ -4,7 +4,9 @@ import {UserService} from "./user.service";
 import {PermissionService} from "./permission/permission.service";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
+import {Injectable} from "@angular/core";
 
+@Injectable()
 export class RestrictUserPermissionGuard implements CanActivate {
 
   constructor(private userService: UserService, private permissionService: PermissionService) {
@@ -13,15 +15,10 @@ export class RestrictUserPermissionGuard implements CanActivate {
 
   //restricts drivers from logging into the system
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.userService.getUser().flatMap(userObject => this.permissionService.getByUserId(userObject)).flatMap(permission => {
-      if(permission.authority !== 'User'){
-        return Observable.of(true);
-      }else{
-        return Observable.of(false);
-      }
-    }).catch(error => {
-      console.log('RestrictUserPermissionGuard error '+error);
-      return Observable.of(false);
+    return new Promise(resolve => {
+      this.userService.getUser().flatMap(userObject => this.permissionService.getByUserId(userObject)).subscribe(permission => {
+        resolve(permission.authority !== 'User');
+      });
     });
   }
 }

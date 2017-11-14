@@ -1,4 +1,4 @@
-<form name="addConsignment{className}" (ngSubmit)="addConsignment(consignment)">
+<form name="addConsignment{className}" (ngSubmit)="addConsignment()">
 
 
   <div id="persist-consignment" class="content scaffold-edit row" role="main">
@@ -38,7 +38,8 @@
           <label for="acceptTime">Accept Time
             <span class="required-indicator">*</span>
           </label>
-          <input class="form-control" required="" name="acceptTime" id="acceptTime" type="date" placeholder="YYYY-MM-DD" [value]="consignment.acceptTime | date:'y-MM-dd'"
+          <input class="form-control" required="" name="acceptTime" id="acceptTime" type="date" placeholder="YYYY-MM-DD"
+                 [value]="consignment.acceptTime | date:'y-MM-dd'"
                  (change)="consignment.acceptTime = $event.target.valueAsDate"/>
         </div>
         <div class="form-group">

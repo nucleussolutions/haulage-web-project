@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Consignment} from "../consignment/consignment";
 import {CloseGuard, DialogRef, ModalComponent} from "ngx-modialog";
 import {BSModalContext} from "ngx-modialog/plugins/bootstrap";
@@ -12,9 +12,12 @@ export class CreateConsignmentModalComponent implements OnInit, CloseGuard, Moda
 
   context: BSModalContext;
 
+  @Input()
   consignment = new Consignment();
 
   create = true;
+
+  @Output() onAddConsignment = new EventEmitter<Consignment>();
 
   beforeClose(): boolean | Promise<boolean>{
     return false;
@@ -34,9 +37,11 @@ export class CreateConsignmentModalComponent implements OnInit, CloseGuard, Moda
 
   }
 
-  addConsignment(consignment: Consignment){
+  addConsignment(){
     //todo shoot an event to the parent, which is the transportrequest persist component to add consignment
-
+    console.log('addConsignment');
+    this.onAddConsignment.emit(this.consignment);
+    this.dialog.dismiss();
   }
 
   deleteConsignment(id: number){

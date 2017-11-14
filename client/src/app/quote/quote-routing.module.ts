@@ -5,6 +5,8 @@ import {QuotePersistComponent} from './quote-persist.component';
 import {QuoteShowComponent} from './quote-show.component';
 import {SuperAdminAndManagerPermissionGuard} from "../superadmin-and-manager-permission-guard";
 import {RestrictUserPermissionGuard} from "../restrict-user-permission-guard";
+import {UserService} from "../user.service";
+import {PermissionService} from "../permission/permission.service";
 
 const routes: Routes = [
   {path: 'quote', redirectTo: 'quote/list', pathMatch: 'full'},
@@ -16,6 +18,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [UserService, PermissionService, RestrictUserPermissionGuard, SuperAdminAndManagerPermissionGuard]
 })
 export class QuoteRoutingModule {}

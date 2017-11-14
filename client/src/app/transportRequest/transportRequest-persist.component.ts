@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {TransportRequest} from './transportRequest';
 import {TransportRequestService} from './transportRequest.service';
@@ -28,6 +28,11 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  onAddConsignment(consignment: Consignment) {
+    this.consignmentList.push(consignment);
+    console.log('consignmentList '+this.consignmentList);
   }
 
   transportRequest = new TransportRequest();
@@ -81,6 +86,9 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
         });
       }
     });
+
+
+
 
   }
 
