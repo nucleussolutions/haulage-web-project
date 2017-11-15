@@ -105,6 +105,8 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
         console.log('result '+consignment);
         //this adds another consignment into the list of consignments
         this.consignmentList.push(consignment);
+      }, error => {
+        // console.log('error '+error);
       });
 
     }, error => {
