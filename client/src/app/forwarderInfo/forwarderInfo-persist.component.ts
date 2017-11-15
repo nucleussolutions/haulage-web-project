@@ -5,14 +5,12 @@ import {ForwarderInfoService} from './forwarderInfo.service';
 import {Response} from "@angular/http";
 import { CompanyService } from '../company/company.service';
 import { Company } from '../company/company';
-import { CookieService } from 'ngx-cookie';
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'forwarderInfo-persist',
   templateUrl: './forwarderInfo-persist.component.html',
-  providers: [UserService]
 })
 export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
 

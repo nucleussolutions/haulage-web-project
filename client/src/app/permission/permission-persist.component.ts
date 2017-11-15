@@ -12,7 +12,6 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'permission-persist',
   templateUrl: './permission-persist.component.html',
-  providers: [UserService]
 })
 export class PermissionPersistComponent implements OnInit, OnDestroy {
 

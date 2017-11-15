@@ -11,7 +11,6 @@ import {PermissionService} from 'app/permission/permission.service';
 @Component({
   selector: 'transportRequest-list',
   templateUrl: './transportRequest-list.component.html',
-  providers: [UserService]
 })
 export class TransportRequestListComponent implements OnInit {
 

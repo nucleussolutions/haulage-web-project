@@ -12,7 +12,6 @@ import {Permission} from "../permission/permission";
 @Component({
   selector: 'haulierInfo-list',
   templateUrl: './haulierInfo-list.component.html',
-  providers: [UserService]
 })
 export class HaulierInfoListComponent implements OnInit {
 

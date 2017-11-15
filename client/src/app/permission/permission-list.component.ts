@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PermissionService } from './permission.service';
 import { Permission } from './permission';
-import { CookieService } from 'ngx-cookie';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { Router } from '@angular/router';
 import { UserService } from 'app/user.service';
@@ -9,7 +8,6 @@ import { UserService } from 'app/user.service';
 @Component({
   selector: 'permission-list',
   templateUrl: './permission-list.component.html',
-  providers: [UserService]
 })
 export class PermissionListComponent implements OnInit {
 

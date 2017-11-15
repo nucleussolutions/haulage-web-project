@@ -2,13 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Vehicle} from './vehicle';
 import {VehicleService} from './vehicle.service';
-import { CookieService } from 'ngx-cookie';
 import {UserService} from "../user.service";
 
 @Component({
   selector: 'vehicle-persist',
   templateUrl: './vehicle-show.component.html',
-  providers: [UserService]
 })
 export class VehicleShowComponent implements OnInit {
 

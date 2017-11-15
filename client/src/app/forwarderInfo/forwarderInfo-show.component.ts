@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ForwarderInfo } from './forwarderInfo';
 import { ForwarderInfoService } from './forwarderInfo.service';
-import { CookieService } from 'ngx-cookie';
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -10,7 +9,6 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'forwarderInfo-persist',
   templateUrl: './forwarderInfo-show.component.html',
-  providers: [UserService]
 })
 export class ForwarderInfoShowComponent implements OnInit, OnDestroy {
 

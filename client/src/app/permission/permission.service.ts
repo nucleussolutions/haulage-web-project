@@ -56,12 +56,6 @@ export class PermissionService {
       'apiKey': userObject.apiKey
     });
 
-    this.http.get(environment.serverUrl + '/api/permission?userId=' + userObject.uid, {
-      headers: headers
-    }).subscribe(response => {
-      console.log('getByUserId response '+response);
-    });
-
     return this.http.get(environment.serverUrl + '/api/permission?userId=' + userObject.uid, {
       headers: headers
     }).map((r: Response) => new Permission(r));
@@ -71,11 +65,9 @@ export class PermissionService {
     let requestMethodStr;
     let url;
     if (permission.id) {
-      // requestOptions.method = RequestMethod.Put;
       requestMethodStr = 'PUT';
       url = environment.serverUrl + '/permission/' + permission.id;
     } else {
-      // requestOptions.method = RequestMethod.Post;
       requestMethodStr = 'POST';
       url = environment.serverUrl + '/permission';
     }

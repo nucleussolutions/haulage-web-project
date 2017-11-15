@@ -4,7 +4,6 @@ import { Pricing } from './pricing';
 import { PricingService } from './pricing.service';
 import { Response } from "@angular/http";
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
-import { CookieService } from "ngx-cookie";
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -12,7 +11,6 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'pricing-persist',
   templateUrl: './pricing-persist.component.html',
-  providers: [UserService]
 })
 export class PricingPersistComponent implements OnInit, OnDestroy {
 

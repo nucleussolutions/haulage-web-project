@@ -10,7 +10,6 @@ import {Subscription} from "rxjs/Subscription";
 @Component({
   selector: 'consignment-list',
   templateUrl: './consignment-list.component.html',
-  providers: [UserService]
 })
 export class ConsignmentListComponent implements OnInit {
 

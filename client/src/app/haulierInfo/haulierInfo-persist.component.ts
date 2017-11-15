@@ -5,7 +5,6 @@ import {HaulierInfoService} from './haulierInfo.service';
 import {Response} from "@angular/http";
 import { CompanyService } from '../company/company.service';
 import { Company } from '../company/company';
-import { CookieService } from 'ngx-cookie';
 import { Subscription } from 'rxjs/Subscription';
 import { UserService } from 'app/user.service';
 

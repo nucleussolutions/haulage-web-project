@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DriverInfo } from './driverInfo';
 import { DriverInfoService } from './driverInfo.service';
-import { CookieService } from 'ngx-cookie';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { Subscription } from 'rxjs/Subscription';
 import { UserService } from 'app/user.service';
@@ -10,7 +9,6 @@ import { UserService } from 'app/user.service';
 @Component({
   selector: 'driverInfo-persist',
   templateUrl: './driverInfo-show.component.html',
-  providers: [UserService]
 })
 export class DriverInfoShowComponent implements OnInit, OnDestroy {
 

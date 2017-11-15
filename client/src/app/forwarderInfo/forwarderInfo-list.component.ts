@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ForwarderInfoService} from './forwarderInfo.service';
 import {ForwarderInfo} from './forwarderInfo';
-import {CookieService} from 'ngx-cookie';
 import {Modal} from 'ngx-modialog/plugins/bootstrap';
 import {Title} from '@angular/platform-browser';
 import {Subscription} from 'rxjs/Subscription';
@@ -11,7 +10,6 @@ import {UserService} from 'app/user.service';
 @Component({
   selector: 'forwarderInfo-list',
   templateUrl: './forwarderInfo-list.component.html',
-  providers: [UserService]
 })
 export class ForwarderInfoListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {

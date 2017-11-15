@@ -10,7 +10,6 @@ import {Subscription} from "rxjs/Subscription";
 @Component({
   selector: 'location-list',
   templateUrl: './location-list.component.html',
-  providers: [UserService]
 })
 export class LocationListComponent implements OnInit, OnDestroy {
 

@@ -10,7 +10,6 @@ import { UserService } from 'app/user.service';
 @Component({
   selector: 'pricing-list',
   templateUrl: './pricing-list.component.html',
-  providers: [UserService]
 })
 export class PricingListComponent implements OnInit {
 

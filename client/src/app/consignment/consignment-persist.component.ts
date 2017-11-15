@@ -13,7 +13,6 @@ import {Modal} from 'ngx-modialog/plugins/bootstrap';
 @Component({
   selector: 'consignment-persist',
   templateUrl: './consignment-persist.component.html',
-  providers: [UserService]
 })
 export class ConsignmentPersistComponent implements OnInit, OnDestroy {
 

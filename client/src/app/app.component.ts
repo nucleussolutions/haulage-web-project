@@ -1,25 +1,23 @@
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
-import { CookieService } from 'ngx-cookie';
-import { Subscription } from 'rxjs/Subscription';
-import { NavDrawerComponent } from 'app/nav-drawer/nav-drawer.component';
-import { IndexComponent } from 'app/index/index.component';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {UserService} from "./user.service";
 
 @Component({
-    selector: 'app',
-    templateUrl: './app.component.html',
+  selector: 'app',
+  templateUrl: './app.component.html',
+  providers: [UserService]
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
-    constructor() {
-    }
+  constructor() {
+  }
 
-    ngOnInit(): void {
-    }
+  ngOnInit(): void {
+  }
 
-    ngOnDestroy(): void {
-    }
+  ngOnDestroy(): void {
+  }
 
-    ngAfterViewInit() {
+  ngAfterViewInit() {
 
-    }
+  }
 }

@@ -13,7 +13,6 @@ import {PermissionService} from "../permission/permission.service";
 @Component({
   selector: 'quote-persist',
   templateUrl: './quote-persist.component.html',
-  providers: [UserService]
 })
 export class QuotePersistComponent implements OnInit {
 

@@ -3,7 +3,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Location } from './location';
 import { LocationService } from './location.service';
 import { Response } from "@angular/http";
-import { CookieService } from "ngx-cookie";
 import { Subscription } from 'rxjs/Subscription';
 import { UserService } from 'app/user.service';
 
@@ -11,7 +10,6 @@ import { UserService } from 'app/user.service';
 @Component({
   selector: 'location-persist',
   templateUrl: './location-persist.component.html',
-  providers: [UserService]
 })
 export class LocationPersistComponent implements OnInit, OnDestroy {
 

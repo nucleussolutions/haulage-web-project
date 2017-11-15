@@ -5,14 +5,12 @@ import { DriverInfoService } from './driverInfo.service';
 import { Response } from "@angular/http";
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
-import {PermissionService} from "../permission/permission.service";
 import {Modal} from 'ngx-modialog/plugins/bootstrap';
 
 
 @Component({
   selector: 'driverInfo-persist',
   templateUrl: './driverInfo-persist.component.html',
-  providers: [UserService]
 })
 export class DriverInfoPersistComponent implements OnInit {
 

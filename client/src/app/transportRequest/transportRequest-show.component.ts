@@ -2,14 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TransportRequest } from './transportRequest';
 import { TransportRequestService } from './transportRequest.service';
-import { CookieService } from 'ngx-cookie';
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'transportRequest-persist',
   templateUrl: './transportRequest-show.component.html',
-  providers: [UserService]
 })
 export class TransportRequestShowComponent implements OnInit, OnDestroy {
 

@@ -7,7 +7,6 @@ import {UserService} from "../user.service";
 @Component({
   selector: 'quote-persist',
   templateUrl: './quote-show.component.html',
-  providers: [UserService]
 })
 export class QuoteShowComponent implements OnInit {
 

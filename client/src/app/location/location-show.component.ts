@@ -2,7 +2,6 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Location} from './location';
 import {LocationService} from './location.service';
-import {CookieService} from "ngx-cookie";
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -10,7 +9,6 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'location-persist',
   templateUrl: './location-show.component.html',
-  providers: [UserService]
 })
 export class LocationShowComponent implements OnInit, OnDestroy {
 

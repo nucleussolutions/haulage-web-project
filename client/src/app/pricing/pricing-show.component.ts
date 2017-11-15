@@ -10,7 +10,6 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'pricing-persist',
   templateUrl: './pricing-show.component.html',
-  providers: [UserService]
 })
 export class PricingShowComponent implements OnInit {
 

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {TransportRequest} from './transportRequest';
 import {TransportRequestService} from './transportRequest.service';
@@ -12,17 +12,17 @@ import {Location} from '../location/location';
 import {UserService} from "../user.service";
 import {Subscription} from "rxjs/Subscription";
 import {BSModalContext, Modal} from 'ngx-modialog/plugins/bootstrap';
-import {ConsignmentPersistComponent} from "../consignment/consignment-persist.component";
 import {overlayConfigFactory} from "ngx-modialog";
 import {CreateConsignmentModalComponent} from "../create-consignment-modal/create-consignment-modal.component";
 import {PermissionService} from "../permission/permission.service";
 import {Permission} from "../permission/permission";
+import {CreateConsignmentEventService} from "../create-consignment-event.service";
 
 
 @Component({
   selector: 'transportRequest-persist',
   templateUrl: './transportRequest-persist.component.html',
-  providers: [UserService]
+  providers: [CreateConsignmentEventService]
 })
 export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
@@ -30,39 +30,28 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  onAddConsignment(consignment: Consignment) {
-    this.consignmentList.push(consignment);
-    console.log('consignmentList '+this.consignmentList);
-  }
-
   transportRequest = new TransportRequest();
   create = true;
   errors: any[];
   locationList: Location[];
+
   consignmentList: Consignment[];
 
   private userObject: any;
-
-  columns = [
-    {prop: 'Container No.'},
-    {name: 'Name'},
-    {name: 'Size'},
-    {name: 'Type'},
-    {name: 'Accept Time'},
-    {name: 'Task Type'},
-  ];
 
   private subscription: Subscription;
 
   private permission: Permission;
 
-  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService, private modal: Modal, private permissionService: PermissionService) {
+  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService, private modal: Modal, private permissionService: PermissionService, private createConsignmentEventService: CreateConsignmentEventService) {
     this.subscription = this.userService.getUser().subscribe(userObject => {
       this.userObject = userObject;
     });
+
   }
 
   ngOnInit() {
+    this.consignmentList = [];
 
     this.permissionService.getByUserId(this.userObject).subscribe(permission => {
       this.permission = permission;
@@ -86,10 +75,6 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
         });
       }
     });
-
-
-
-
   }
 
   save() {
@@ -105,10 +90,23 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
   }
 
   onAddConsignmentClick() {
-    this.modal.open(CreateConsignmentModalComponent, overlayConfigFactory({
+    const dialogRef = this.modal.open(CreateConsignmentModalComponent, overlayConfigFactory({
       isBlocking: false,
       size: 'md'
     }, BSModalContext));
-  }
 
+    this.createConsignmentEventService.consignmentCreated$.subscribe(consignment => {
+      console.log('consignment subscribed ' + consignment.name);
+      this.consignmentList.push(consignment);
+      console.log('consignmentList ' + this.consignmentList);
+    });
+
+    dialogRef.then(result => {
+      console.log('result ' + result);
+
+    }, error => {
+      console.log('reject ' + error);
+    });
+
+  }
 }

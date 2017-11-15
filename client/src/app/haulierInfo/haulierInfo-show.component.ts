@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HaulierInfo } from './haulierInfo';
 import { HaulierInfoService } from './haulierInfo.service';
-import { CookieService } from 'ngx-cookie';
 import { Subscription } from 'rxjs/Subscription';
 import { UserService } from 'app/user.service';
 
@@ -10,7 +9,6 @@ import { UserService } from 'app/user.service';
 @Component({
   selector: 'haulierInfo-persist',
   templateUrl: './haulierInfo-show.component.html',
-  providers:[UserService]
 })
 export class HaulierInfoShowComponent implements OnInit, OnDestroy {
 

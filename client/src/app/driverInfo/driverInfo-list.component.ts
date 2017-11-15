@@ -12,7 +12,6 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'driverInfo-list',
   templateUrl: './driverInfo-list.component.html',
-  providers: [UserService]
 })
 export class DriverInfoListComponent implements OnInit, OnDestroy {
 

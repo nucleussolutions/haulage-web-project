@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { VehicleService } from './vehicle.service';
 import { Vehicle } from './vehicle';
-import { CookieService } from 'ngx-cookie';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { Title } from "@angular/platform-browser";
 import { UserService } from 'app/user.service';
@@ -10,7 +9,6 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'vehicle-list',
   templateUrl: './vehicle-list.component.html',
-  providers: [UserService]
 })
 export class VehicleListComponent implements OnInit, OnDestroy {
 

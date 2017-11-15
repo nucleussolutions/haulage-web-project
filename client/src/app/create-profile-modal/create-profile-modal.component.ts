@@ -14,7 +14,6 @@ import {Subscription} from 'rxjs/Subscription';
   selector: 'app-create-profile-modal',
   templateUrl: './create-profile-modal.component.html',
   styleUrls: ['./create-profile-modal.component.css'],
-  providers: [UserService]
 })
 export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuard, ModalComponent<CreateProfileModalContext> {
 
