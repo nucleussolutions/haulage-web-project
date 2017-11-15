@@ -7,7 +7,7 @@ import {ReplaySubject} from "rxjs/ReplaySubject";
 @Injectable()
 export class CreateConsignmentEventService {
 
-  private consignmentCreatedSource = new Subject<Consignment>();
+  private consignmentCreatedSource = new ReplaySubject<Consignment>();
 
   private consignmentUpdatedSource = new BehaviorSubject<Consignment>(new Consignment());
 

@@ -39,7 +39,7 @@ export class CreateConsignmentModalComponent implements OnInit, CloseGuard, Moda
   addConsignment(){
     console.log('add consignment emit');
     this.createConsignmentEventService.createConsignment(this.consignment);
-    this.dialog.dismiss();
+    this.dialog.close(this.consignment);
   }
 
   deleteConsignment(id: number){

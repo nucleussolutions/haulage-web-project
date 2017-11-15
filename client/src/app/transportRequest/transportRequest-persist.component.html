@@ -60,36 +60,36 @@
               <label for="vesselName">Vessel Name
                 <span class="required-indicator">*</span>
               </label>
-              <input required="" name="vesselName" id="vesselName" [(ngModel)]="transportRequest.vesselName" type="text"/>
+              <input class="form-control" required="" name="vesselName" id="vesselName" [(ngModel)]="transportRequest.vesselName" type="text"/>
             </div>
             <div class="form-group required">
               <label for="voyageNo">Voyage No
                 <span class="required-indicator">*</span>
               </label>
-              <input required="" name="voyageNo" id="voyageNo" [(ngModel)]="transportRequest.voyageNo" type="text"/>
+              <input class="form-control" required="" name="voyageNo" id="voyageNo" [(ngModel)]="transportRequest.voyageNo" type="text"/>
             </div>
             <div class="form-group required">
               <label for="vesselEtaOrEtd">Vessel Eta Or Etd
                 <span class="required-indicator">*</span>
               </label>
-              <input required="" name="vesselEtaOrEtd" id="vesselEtaOrEtd" type="date" placeholder="YYYY-MM-DD"
+              <input class="form-control" required="" name="vesselEtaOrEtd" id="vesselEtaOrEtd" type="date" placeholder="YYYY-MM-DD"
                      [value]="transportRequest.vesselEtaOrEtd | date:'y-MM-dd'" (change)="transportRequest.vesselEtaOrEtd = $event.target.valueAsDate"/>
             </div>
             <div class="form-group required">
               <label for="shippingAgent">Shipping Agent
                 <span class="required-indicator">*</span>
               </label>
-              <input required="" name="shippingAgent" id="shippingAgent" [(ngModel)]="transportRequest.shippingAgent" type="text"/>
+              <input class="form-control" required="" name="shippingAgent" id="shippingAgent" [(ngModel)]="transportRequest.shippingAgent" type="text"/>
             </div>
             <div class="form-group required">
               <label for="forwardingAgent">Forwarding Agent
                 <span class="required-indicator">*</span>
               </label>
-              <input required="" name="forwardingAgent" id="forwardingAgent" [(ngModel)]="transportRequest.forwardingAgent" type="text"/>
+              <input class="form-control" required="" name="forwardingAgent" id="forwardingAgent" [(ngModel)]="transportRequest.forwardingAgent" type="text"/>
             </div>
             <div class="form-group">
               <label for="operatorCode">Operator Code</label>
-              <input name="operatorCode" id="operatorCode" [(ngModel)]="transportRequest.operatorCode" type="text"/>
+              <input class="form-control" name="operatorCode" id="operatorCode" [(ngModel)]="transportRequest.operatorCode" type="text"/>
             </div>
             <div class="form-group">
               <label for="hazardous">Hazardous</label>
@@ -110,45 +110,46 @@
               <label for="grossWeight">Gross Weight
                 <span class="required-indicator">*</span>
               </label>
-              <input required="" name="grossWeight" id="grossWeight" [(ngModel)]="transportRequest.grossWeight" type="number" step="any"/>
+              <input class="form-control" required="" name="grossWeight" id="grossWeight" [(ngModel)]="transportRequest.grossWeight" type="number" step="any"/>
             </div>
             <div class="form-group">
               <label for="overDimension">Over Dimension</label>
-              <input name="overDimension" id="overDimension" [(ngModel)]="transportRequest.overDimension" type="checkbox"/>
+              <input class="form-control" name="overDimension" id="overDimension" [(ngModel)]="transportRequest.overDimension" type="checkbox"/>
             </div>
             <div class="form-group">
               <label for="temperature">Temperature</label>
-              <input name="temperature" id="temperature" [(ngModel)]="transportRequest.temperature" type="number" step="any"/>
+              <input class="form-control" name="temperature" id="temperature" [(ngModel)]="transportRequest.temperature" type="number" step="any"/>
             </div>
             <div class="form-group required">
               <label for="productDesc">Product Desc
                 <span class="required-indicator">*</span>
               </label>
-              <input required="" name="productDesc" id="productDesc" [(ngModel)]="transportRequest.productDesc" type="text"/>
+              <input class="form-control" required="" name="productDesc" id="productDesc" [(ngModel)]="transportRequest.productDesc" type="text"/>
             </div>
             <div class="form-group required">
               <label for="shipper">Shipper
                 <span class="required-indicator">*</span>
               </label>
-              <input required="" name="shipper" id="shipper" [(ngModel)]="transportRequest.shipper" type="text"/>
+              <input class="form-control" required="" name="shipper" id="shipper" [(ngModel)]="transportRequest.shipper" type="text"/>
             </div>
             <div class="form-group">
               <label for="orderRemarks">Order Remarks</label>
-              <input name="orderRemarks" id="orderRemarks" [(ngModel)]="transportRequest.orderRemarks" type="text"/>
+              <input class="form-control" name="orderRemarks" id="orderRemarks" [(ngModel)]="transportRequest.orderRemarks" type="text"/>
             </div>
             <div class="form-group">
               <label for="containerRemarks">Container Remarks</label>
-              <input name="containerRemarks" id="containerRemarks" [(ngModel)]="transportRequest.containerRemarks" type="text"/>
+              <input class="form-control" name="containerRemarks" id="containerRemarks" [(ngModel)]="transportRequest.containerRemarks" type="text"/>
             </div>
             <div class="form-group required">
               <label for="dgCode">Dg Code
                 <span class="required-indicator">*</span>
               </label>
-              <input required="" name="dgCode" id="dgCode" [(ngModel)]="transportRequest.dgCode" type="text"/>
+              <input class="form-control" required="" name="dgCode" id="dgCode" [(ngModel)]="transportRequest.dgCode" type="text"/>
             </div>
             <div class="form-group">
               <label for="kOnekEightFormImgUrl">K Onek Eight Form Img Url</label>
               <input name="kOnekEightFormImgUrl" id="kOnekEightFormImgUrl" [(ngModel)]="transportRequest.kOnekEightFormImgUrl" type="text"/>
+              <input type="file" >
             </div>
             <div class="form-group">
               <label for="gatePassImgUrl">Gate Pass Img Url</label>

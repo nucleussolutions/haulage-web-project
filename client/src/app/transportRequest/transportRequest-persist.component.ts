@@ -93,7 +93,11 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
     const dialogRef = this.modal.open(CreateConsignmentModalComponent, overlayConfigFactory({
       isBlocking: false,
       size: 'md'
-    }, BSModalContext));
+    }, BSModalContext)).then(result => {
+      console.log('result ' + result);
+    }, error => {
+      console.log('reject ' + error);
+    });
 
     this.createConsignmentEventService.consignmentCreated$.subscribe(consignment => {
       console.log('consignment subscribed ' + consignment.name);
@@ -101,12 +105,7 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
       console.log('consignmentList ' + this.consignmentList);
     });
 
-    dialogRef.then(result => {
-      console.log('result ' + result);
 
-    }, error => {
-      console.log('reject ' + error);
-    });
 
   }
 }
