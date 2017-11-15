@@ -245,74 +245,46 @@
             [reorderable]="reorderable">
 
           <ngx-datatable-column name="Container No">
-            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="consignment.containerNo" let-row="consignment">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
             <span
                 title="Double click to edit"
-                (dblclick)="editing[rowIndex + '-name'] = true"
-                *ngIf="!editing[rowIndex + '-name']">
-              {{consignment.containerNo}}
+                >
+              {{consignmentList[rowIndex].containerNo}}
             </span>
-              <input
-                  autofocus
-                  (blur)="updateValue($event, 'name', rowIndex)"
-                  *ngIf="editing[rowIndex+ '-name']"
-                  type="text"
-                  [value]="consignment.containerNo"
-              />
+
             </ng-template>
           </ngx-datatable-column>
 
           <ngx-datatable-column name="Name">
-            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="consignment.name" let-row="consignment">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
             <span
                 title="Double click to edit"
-                (dblclick)="editing[rowIndex + '-name'] = true"
-                *ngIf="!editing[rowIndex + '-name']">
-              {{consignment.name}}
+                >
+              {{consignmentList[rowIndex].name}}
             </span>
-              <input
-                  autofocus
-                  (blur)="updateValue($event, 'name', rowIndex)"
-                  *ngIf="editing[rowIndex+ '-name']"
-                  type="text"
-                  [value]="consignment.name"
-              />
+
             </ng-template>
           </ngx-datatable-column>
 
           <ngx-datatable-column name="acceptTime">
-            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="consignment.acceptTime" let-row="consignment">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
             <span
                 title="Double click to edit"
-                (dblclick)="editing[rowIndex + '-name'] = true"
-                *ngIf="!editing[rowIndex + '-name']">
-              {{consignment.acceptTime}}
+                >
+              {{consignmentList[rowIndex].acceptTime}}
             </span>
-              <input
-                  autofocus
-                  (blur)="updateValue($event, 'name', rowIndex)"
-                  *ngIf="editing[rowIndex+ '-name']"
-                  type="text"
-                  [value]="consignment.acceptTime"
-              />
+
             </ng-template>
           </ngx-datatable-column>
 
           <ngx-datatable-column name="Code">
-            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="consignment.consignmentCode" let-row="consignment">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
             <span
                 title="Double click to edit"
-                (dblclick)="editing[rowIndex + '-name'] = true"
-                *ngIf="!editing[rowIndex + '-name']">
-              {{consignment.consignmentCode}}
+                >
+              {{consignmentList[rowIndex].consignmentCode}}
             </span>
-              <input
-                  autofocus
-                  (blur)="updateValue($event, 'name', rowIndex)"
-                  *ngIf="editing[rowIndex+ '-name']"
-                  type="text"
-                  [value]="consignment.consignmentCode"
-              />
+
             </ng-template>
           </ngx-datatable-column>
 

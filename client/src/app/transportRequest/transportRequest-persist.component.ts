@@ -70,6 +70,11 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
           this.transportRequest = transportRequest;
 
           this.consignmentList = this.transportRequest.consignments;
+
+          console.log('consignmentList '+JSON.stringify(this.consignmentList));
+          this.consignmentList.forEach(value => {
+            console.log(value.name);
+          });
           console.log('transportRequest ' + JSON.stringify(this.transportRequest));
           //todo use this data to display consignments in the ui if it's for edit
         });
@@ -93,19 +98,17 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
     const dialogRef = this.modal.open(CreateConsignmentModalComponent, overlayConfigFactory({
       isBlocking: false,
       size: 'md'
-    }, BSModalContext)).then(result => {
-      console.log('result ' + result);
+    }, BSModalContext)).then(dialogRef => {
+      console.log('dialogRef ' + dialogRef);
+
+      dialogRef.result.then(consignment => {
+        console.log('result '+consignment);
+        //this adds another consignment into the list of consignments
+        this.consignmentList.push(consignment);
+      });
+
     }, error => {
       console.log('reject ' + error);
     });
-
-    this.createConsignmentEventService.consignmentCreated$.subscribe(consignment => {
-      console.log('consignment subscribed ' + consignment.name);
-      this.consignmentList.push(consignment);
-      console.log('consignmentList ' + this.consignmentList);
-    });
-
-
-
   }
 }

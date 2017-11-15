@@ -56,6 +56,20 @@ class BootStrap {
             return output
         }
 
+        JSON.registerObjectMarshaller(Consignment){
+            def output = [:]
+            output['id'] = it.id
+            output['containerNo'] = it.containerNo
+            output['name'] = it.name
+            output['size'] = it.size
+            output['type'] = it.type
+            output['acceptTime'] = it.acceptTime
+            output['consignmentCode'] = it.consignmentCode
+            output['status'] = it.status
+            output['taskType'] = it.taskType
+            return output
+        }
+
         def consignments = []
 
         def pickupLadenDropOff = new Location(name: 'asdasdalsdjk', address1: 'asdasdsad', address2: 'asdasdasd', lat: 3.12312323, lng: 31232139830, type: 'depot', city: 'asdasdjasld', state: 'asldskjdlkasd', country: 'sadsadkjl').save(flush: true)
