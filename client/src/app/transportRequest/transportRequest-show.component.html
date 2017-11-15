@@ -252,6 +252,13 @@
     </li>
   </ol>
 
+  <!-- todo detect whether there are documents uploaded, then show progress by changing the width percentage -->
+  <div class="bs-component">
+    <div class="progress progress-striped active">
+      <div class="progress-bar" style="width: 45%"></div>
+    </div>
+  </div>
+
   <a class="edit" [routerLink]="['/transportRequest', 'edit', transportRequest.id]">Edit</a>
   <button type="button" (click)="destroy()">Delete</button>
 
