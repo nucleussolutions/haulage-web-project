@@ -48,6 +48,8 @@ class BootStrap {
         def interceptorPermission = new Permission(email: 'interceptorz3r0@gmail.com', userId:'1rCeH7yNVzX8OB7dMyFcURPkwi33', authority: 'Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93').save(flush: true)
 
 
+
+
         JSON.registerObjectMarshaller(Permission){
             def output = [:]
             output['userId'] = it.userId
@@ -69,6 +71,48 @@ class BootStrap {
             output['taskType'] = it.taskType
             return output
         }
+
+//        JSON.createNamedConfig('deep'){
+//
+//            JSON.registerObjectMarshaller(TransportRequest){
+//                def output = [:]
+//                output['id'] = it.id
+//                output['type'] = it.type
+//                output['equipment'] = it.equipment
+//                output['bookingRefNo'] = it.bookingRefNo
+//                output['otherRefNo'] = it.otherRefNo
+//                output['terminal'] = it.terminal
+//                output['vesselEtaOrEtd'] = it.vesselEtaOrEtd
+//                output['vesselName'] = it.vesselName
+//                output['voyageNo'] = it.voyageNo
+//                output['portOfLoading'] = it.portOfLoading
+//                output['portOfDischarge'] = it.portOfDischarge
+//                output['shippingAgent'] = it.shippingAgent
+//                output['forwardingAgent'] = it.forwardingAgent
+//                output['operatorCode'] = it.operatorCode
+//                output['grossWeight'] = it.grossWeight
+//                output['overDimension'] = it.overDimension
+//                output['temperature'] = it.temperature
+//                output['hazardous'] = it.hazardous
+//                output['productDesc'] = it.productDesc
+//                output['shipper'] = it.shipper
+//                output['orderRemarks'] = it.orderRemarks
+//                output['containerRemarks'] = it.containerRemarks
+//                output['dgCode'] = it.dgCode
+//                output['kOnekEightFormImgUrl'] = it.kOnekEightFormImgUrl
+//                output['gatePassImgUrl'] = it.gatePassImgUrl
+//                output['bookingConfirmationImgUrl'] = it.bookingConfirmationImgUrl
+//                output['cmoImgUrl'] = it.cmoImgUrl
+//                output['consignments'] = it.consignments
+//                output['forwarderId'] = it.forwarderId
+//                output['customer'] = it.customer
+//                output['status'] = it.status
+//                output['pickupOrDropoffEmptyDepoh'] = it.pickupOrDropoffEmptyDepoh
+//                output['backToBack'] = it.backToBack
+//                output['openCargoBoat'] = it.openCargoBoat
+//                return output
+//            }
+//        }
 
         def consignments = []
 

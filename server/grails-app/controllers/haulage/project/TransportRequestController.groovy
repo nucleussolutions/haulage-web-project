@@ -1,5 +1,6 @@
 package haulage.project
 
+import grails.converters.JSON
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
@@ -7,7 +8,7 @@ class TransportRequestController {
 
     TransportRequestService transportRequestService
 
-    static responseFormats = ['json', 'xml']
+    static responseFormats = ['json']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -16,7 +17,9 @@ class TransportRequestController {
     }
 
     def show(Long id) {
-        respond transportRequestService.get(id)
+        JSON.use('deep'){
+            render transportRequestService.get(id) as JSON
+        }
     }
 
     def save(TransportRequest transportRequest) {
