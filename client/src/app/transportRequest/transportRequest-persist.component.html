@@ -220,17 +220,6 @@
       <fieldset>
         <legend>Consignments</legend>
 
-        <div class="form-group required">
-          <label for="consignments">Consignments
-            <span class="required-indicator">*</span>
-          </label>
-          <select required="" name="consignments" id="consignments" [(ngModel)]="transportRequest.consignments" multiple="">
-            <option *ngFor="let consignment of consignmentList" [value]="consignment.id" [selected]="transportRequest.consignments?.id == consignment.id">
-              {{consignment.toString()}}
-            </option>
-          </select>
-        </div>
-
         <ngx-datatable
             class="bootstrap"
             [rows]="consignmentList"

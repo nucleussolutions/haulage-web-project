@@ -53,10 +53,15 @@
             <span class="required-indicator">*</span>
           </label>
           <select required="" name="status" id="status" [(ngModel)]="consignment.status">
-            <option value="Ready for Collection">Ready for Collection</option>
+            <option value="Ready to Collect">Ready to Collect</option>
             <option value="Pending">Pending</option>
             <option value="Container Damaged">Container Damaged</option>
             <option value="Enroute to Depot">Enroute to Depot</option>
+            <option value="Arrived at Customer Location">Arrived at Customer Location</option>
+            <option value="Uncouple at Customer Location">Uncouple at Customer Location</option>
+            <option value="Container Rejected">Container Rejected</option>
+            <option value="Loading at Customer Location">Loading at Customer Location</option>
+            <option value="Loading at Port">Loading at Port</option>
           </select>
         </div>
         <div class="form-group">

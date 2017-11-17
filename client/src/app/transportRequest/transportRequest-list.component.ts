@@ -6,13 +6,18 @@ import {Title} from '@angular/platform-browser';
 import {UserService} from 'app/user.service';
 import {Subscription} from 'rxjs/Subscription';
 import {PermissionService} from 'app/permission/permission.service';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 
 @Component({
   selector: 'transportRequest-list',
   templateUrl: './transportRequest-list.component.html',
 })
-export class TransportRequestListComponent implements OnInit {
+export class TransportRequestListComponent implements OnInit, OnDestroy {
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   transportRequestList: TransportRequest[] = [];
 
@@ -22,8 +27,6 @@ export class TransportRequestListComponent implements OnInit {
 
   constructor(private transportRequestService: TransportRequestService, private userService: UserService, private modal: Modal, private titleService: Title, private permissionService: PermissionService) {
     this.titleService.setTitle('Transport Request List');
-
-
   }
 
   ngOnInit() {
@@ -33,9 +36,6 @@ export class TransportRequestListComponent implements OnInit {
     }).subscribe(permission => {
       this.permission = permission;
     });
-
-
-
   }
 
   listTransportRequests(userObject: any){
