@@ -3,6 +3,7 @@ import {Consignment} from "../consignment/consignment";
 import {CloseGuard, DialogRef, ModalComponent} from "ngx-modialog";
 import {BSModalContext} from "ngx-modialog/plugins/bootstrap";
 import {CreateConsignmentEventService} from "../create-consignment-event.service";
+import {ConsignmentService} from "../consignment/consignment.service";
 
 @Component({
   selector: 'app-create-consignment-modal',
@@ -10,9 +11,9 @@ import {CreateConsignmentEventService} from "../create-consignment-event.service
   styleUrls: ['./create-consignment-modal.component.css'],
   providers: [CreateConsignmentEventService]
 })
-export class CreateConsignmentModalComponent implements OnInit, CloseGuard, ModalComponent<BSModalContext> {
+export class CreateConsignmentModalComponent implements OnInit, CloseGuard, ModalComponent<CustomModalContext> {
 
-  context: BSModalContext;
+  context: CustomModalContext;
 
   consignment: Consignment;
 
@@ -26,10 +27,15 @@ export class CreateConsignmentModalComponent implements OnInit, CloseGuard, Moda
     return false;
   }
 
-  constructor(public dialog: DialogRef<BSModalContext>, private createConsignmentEventService: CreateConsignmentEventService) {
+  constructor(public dialog: DialogRef<CustomModalContext>, private createConsignmentEventService: CreateConsignmentEventService, consignmentService: ConsignmentService) {
     this.context = dialog.context;
     dialog.setCloseGuard(this);
-    this.consignment = new Consignment();
+    if(!this.context.consignment){
+      this.consignment = new Consignment();
+    }else{
+      this.consignment = this.context.consignment;
+      this.create = false;
+    }
   }
 
   ngOnInit() {
@@ -46,4 +52,9 @@ export class CreateConsignmentModalComponent implements OnInit, CloseGuard, Moda
     //todo
   }
 
+}
+
+export class CustomModalContext extends BSModalContext {
+  public create: boolean;
+  public consignment: Consignment;
 }

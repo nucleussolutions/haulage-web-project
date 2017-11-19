@@ -217,72 +217,6 @@
     </div>
 
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-      <fieldset>
-        <legend>Consignments</legend>
-
-        <ngx-datatable
-            class="bootstrap"
-            [rows]="consignmentList"
-            [loadingIndicator]="loadingIndicator"
-            [columns]="columns"
-            [columnMode]="'force'"
-            [headerHeight]="40"
-            [footerHeight]="40"
-            [limit]="10"
-            [rowHeight]="'auto'"
-            [selectionType]="'single'"
-            [reorderable]="reorderable">
-
-          <ngx-datatable-column name="Container No">
-            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-            <span
-                title="Double click to edit"
-                >
-              {{consignmentList[rowIndex].containerNo}}
-            </span>
-
-            </ng-template>
-          </ngx-datatable-column>
-
-          <ngx-datatable-column name="Name">
-            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-            <span
-                title="Double click to edit"
-                >
-              {{consignmentList[rowIndex].name}}
-            </span>
-
-            </ng-template>
-          </ngx-datatable-column>
-
-          <ngx-datatable-column name="acceptTime">
-            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-            <span
-                title="Double click to edit"
-                >
-              {{consignmentList[rowIndex].acceptTime}}
-            </span>
-
-            </ng-template>
-          </ngx-datatable-column>
-
-          <ngx-datatable-column name="Code">
-            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-            <span
-                title="Double click to edit"
-                >
-              {{consignmentList[rowIndex].consignmentCode}}
-            </span>
-
-            </ng-template>
-          </ngx-datatable-column>
-
-        </ngx-datatable>
-        <button type="button" class="btn btn-primary" (click)="onAddConsignmentClick($event)">Add Consignment</button>
-        <button type="button" class="btn btn-primary" (click)="onEditConsignmentClick($event)">Edit Consignment</button>
-        <button type="button" class="btn btn-primary" (click)="onDeleteConsignmentClick($event)">Delete Consignment</button>
-
-      </fieldset>
 
       <fieldset class="embedded customer">
         <legend>Customer</legend>
@@ -334,6 +268,73 @@
           </label>
           <input class="form-control" required="" name="customer.state" id="customer.state" [(ngModel)]="transportRequest.customer.state" type="text"/>
         </div>
+      </fieldset>
+
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <fieldset>
+        <legend>Consignments</legend>
+
+        <ngx-datatable
+            class="bootstrap"
+            [rows]="consignmentList"
+            [loadingIndicator]="loadingIndicator"
+            [columns]="columns"
+            [columnMode]="'force'"
+            [headerHeight]="40"
+            [footerHeight]="40"
+            [limit]="10"
+            [rowHeight]="'auto'"
+            [selectionType]="'single'"
+            [selected]="selectedConsignment"
+            (select)='onSelect($event)'
+            [reorderable]="reorderable">
+
+          <ngx-datatable-column name="Container No">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span
+            >
+              {{consignmentList[rowIndex].containerNo}}
+            </span>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Name">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span
+            >
+              {{consignmentList[rowIndex].name}}
+            </span>
+
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="acceptTime">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span
+            >
+              {{consignmentList[rowIndex].acceptTime}}
+            </span>
+
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column name="Code">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span
+            >
+              {{consignmentList[rowIndex].consignmentCode}}
+            </span>
+
+            </ng-template>
+          </ngx-datatable-column>
+
+        </ngx-datatable>
+        <button type="button" class="btn btn-primary" (click)="onAddConsignmentClick($event)">Add Consignment</button>
+        <button type="button" class="btn btn-primary" (click)="onEditConsignmentClick($event)">Edit Consignment</button>
+        <button type="button" class="btn btn-primary" (click)="onDeleteConsignmentClick($event)">Delete Consignment</button>
+
       </fieldset>
 
     </div>

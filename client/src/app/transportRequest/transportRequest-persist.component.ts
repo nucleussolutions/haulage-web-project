@@ -53,6 +53,8 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.consignmentList = [];
 
+    //fixme simplify this mess
+
     this.permissionService.getByUserId(this.userObject).subscribe(permission => {
       this.permission = permission;
     });
@@ -71,7 +73,7 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
           this.consignmentList = this.transportRequest.consignments;
 
-          console.log('consignmentList '+JSON.stringify(this.consignmentList));
+          console.log('consignmentList ' + JSON.stringify(this.consignmentList));
           this.consignmentList.forEach(value => {
             console.log(value.name);
           });
@@ -102,7 +104,7 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
       console.log('dialogRef ' + dialogRef);
 
       dialogRef.result.then(consignment => {
-        console.log('result '+consignment);
+        console.log('result ' + consignment);
         //this adds another consignment into the list of consignments
         this.consignmentList.push(consignment);
       }, error => {
@@ -112,5 +114,42 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
     }, error => {
       console.log('reject ' + error);
     });
+  }
+
+  onDeleteConsignmentClick() {
+    const delDialogRef = this.modal.alert().title("Confirm Delete").message("Are you sure?").open();
+
+
+    delDialogRef.then(dialogRef => {
+      dialogRef.result.then()
+    });
+  }
+
+  onEditConsignmentClick(consignment: Consignment) {
+    // this.modal.open(CustomModal, overlayConfigFactory({ num1: 2, num2: 3 }, BSModalContext));
+    const dialogRef = this.modal.open(CreateConsignmentModalComponent, overlayConfigFactory({
+      isBlocking: false,
+      size: 'md',
+      consignment: new Consignment(this.selectedConsignment[0])
+    }, BSModalContext)).then(dialogRef => {
+      console.log('dialogRef ' + dialogRef);
+
+      dialogRef.result.then(consignment => {
+        console.log('result ' + consignment);
+        //this adds another consignment into the list of consignments
+        this.consignmentList.push(consignment);
+      }, error => {
+        // console.log('error '+error);
+      });
+
+    }, error => {
+      console.log('reject ' + error);
+    });
+  }
+
+  selectedConsignment = [];
+
+  onSelect({ selected }) {
+    console.log('Select Event', selected, this.selectedConsignment);
   }
 }
