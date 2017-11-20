@@ -57,7 +57,7 @@
         <span id="terminal-label" class="property-label">Terminal</span>
         <div class="property-value" aria-labelledby="terminal-label">
           <a *ngIf="transportRequest.terminal"
-             [routerLink]="['/transportRequest','show', transportRequest.terminal.id]">{{transportRequest.terminal.toString()}}</a>
+             [routerLink]="['/transportRequest','show', transportRequest.terminal.id]">{{transportRequest.terminal.name}}</a>
         </div>
       </li>
       <li class="fieldcontain">
@@ -311,7 +311,7 @@
       <li class="fieldcontain">
         <span id="pickupOrDropoffEmptyDepoh-label" class="property-label">Pickup Or Dropoff Empty Depoh</span>
         <div class="property-value" aria-labelledby="pickupOrDropoffEmptyDepoh-label">
-          <a *ngIf="transportRequest.pickupOrDropoffEmptyDepoh" [routerLink]="['/transportRequest','show', transportRequest.pickupOrDropoffEmptyDepoh.id]">{{transportRequest.pickupOrDropoffEmptyDepoh.toString()}}</a>
+          <a *ngIf="transportRequest.pickupOrDropoffEmptyDepoh" [routerLink]="['/transportRequest','show', transportRequest.pickupOrDropoffEmptyDepoh.id]">{{transportRequest.pickupOrDropoffEmptyDepoh.name}}</a>
         </div>
       </li>
     </ol>

@@ -1,35 +1,38 @@
-<div  role="navigation">
-    <ul class="nav nav-pills">
-        <li class="nav-item"><a [routerLink]="['/index']" class="home nav-link">Home</a></li>
-        <li *ngIf="permission?.authority == 'Super Admin'" class="nav-item"><a [routerLink]="['/haulierInfo','create']" class="create nav-link">New HaulierInfo</a></li>
-    </ul>
+<div role="navigation">
+  <ul class="nav nav-pills">
+    <li class="nav-item"><a [routerLink]="['/index']" class="home nav-link">Home</a></li>
+    <li *ngIf="permission?.authority == 'Super Admin'" class="nav-item"><a [routerLink]="['/haulierInfo','create']" class="create nav-link">New HaulierInfo</a>
+    </li>
+  </ul>
 </div>
 <div id="list-haulierInfo" class="content scaffold-list" role="main">
-    <h1>HaulierInfo List</h1>
-    <table class="table table-responsive">
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Company</th>
-      <th>User Id</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let haulierInfo of haulierInfoList; let e = even;">
-      <td>
-        <a [routerLink]="['/haulierInfo','show',haulierInfo.id]">{{haulierInfo.id}}</a>
-      </td>
-      <td>
-        <span>{{haulierInfo.name}}</span>
-      </td>
-      <td>
-        <a *ngIf="haulierInfo.company" [routerLink]="['/haulierInfo','show', haulierInfo.company.id]">{{haulierInfo.company.toString()}}</a>
-      </td>
-      <td>
-        <span>{{haulierInfo.userId}}</span>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <h1>HaulierInfo List</h1>
+  <div class="table-responsive">
+    <table class="table ">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Company</th>
+        <th>User Id</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let haulierInfo of haulierInfoList; let e = even;">
+        <td>
+          <a [routerLink]="['/haulierInfo','show',haulierInfo.id]">{{haulierInfo.id}}</a>
+        </td>
+        <td>
+          <span>{{haulierInfo.name}}</span>
+        </td>
+        <td>
+          <a *ngIf="haulierInfo.company" [routerLink]="['/haulierInfo','show', haulierInfo.company.id]">{{haulierInfo.company.toString()}}</a>
+        </td>
+        <td>
+          <span>{{haulierInfo.userId}}</span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

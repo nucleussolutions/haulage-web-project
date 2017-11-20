@@ -1,55 +1,57 @@
 <div class="nav" role="navigation">
-    <ul>
-        <li><a [routerLink]="['/index']" class="home">Home</a></li>
-        <li><a [routerLink]="['/quote','create']" class="create">New Quote</a></li>
-    </ul>
+  <ul>
+    <li><a [routerLink]="['/index']" class="home">Home</a></li>
+    <li><a [routerLink]="['/quote','create']" class="create">New Quote</a></li>
+  </ul>
 </div>
 <div id="list-quote" class="content scaffold-list" role="main">
-    <h1>Quote List</h1>
-    <table>
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Haulier Id</th>
-      <th>Forwarder Id</th>
-      <th>Status</th>
-      <th>Code</th>
-      <th>Terms</th>
-      <th>Items</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let quote of quoteList; let e = even;">
-      <td>
-        <a [routerLink]="['/quote','show',quote.id]">{{quote.id}}</a>
-      </td>
-      <td>
-        <span>{{quote.haulierId}}</span>
-      </td>
-      <td>
-        <span>{{quote.forwarderId}}</span>
-      </td>
-      <td>
-        <span>{{quote.status}}</span>
-      </td>
-      <td>
-        <span>{{quote.code}}</span>
-      </td>
-      <td>
-        <ul>
-          <li *ngFor="let termAndCondition of quote.terms">
-            <a [routerLink]="['/termAndCondition', 'show', termAndCondition.id]">{{termAndCondition.toString()}}</a>
-          </li>
-        </ul>
-      </td>
-      <td>
-        <ul>
-          <li *ngFor="let quoteItem of quote.items">
-            <a [routerLink]="['/quoteItem', 'show', quoteItem.id]">{{quoteItem.toString()}}</a>
-          </li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <h1>Quote List</h1>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Haulier Id</th>
+        <th>Forwarder Id</th>
+        <th>Status</th>
+        <th>Code</th>
+        <th>Terms</th>
+        <th>Items</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let quote of quoteList; let e = even;">
+        <td>
+          <a [routerLink]="['/quote','show',quote.id]">{{quote.id}}</a>
+        </td>
+        <td>
+          <span>{{quote.haulierId}}</span>
+        </td>
+        <td>
+          <span>{{quote.forwarderId}}</span>
+        </td>
+        <td>
+          <span>{{quote.status}}</span>
+        </td>
+        <td>
+          <span>{{quote.code}}</span>
+        </td>
+        <td>
+          <ul>
+            <li *ngFor="let termAndCondition of quote.terms">
+              <a [routerLink]="['/termAndCondition', 'show', termAndCondition.id]">{{termAndCondition.toString()}}</a>
+            </li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li *ngFor="let quoteItem of quote.items">
+              <a [routerLink]="['/quoteItem', 'show', quoteItem.id]">{{quoteItem.toString()}}</a>
+            </li>
+          </ul>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

@@ -17,7 +17,9 @@ import {CreateConsignmentModalComponent} from "../create-consignment-modal/creat
 import {PermissionService} from "../permission/permission.service";
 import {Permission} from "../permission/permission";
 import {CreateConsignmentEventService} from "../create-consignment-event.service";
-
+import {Observable} from "rxjs/Observable";
+import 'rxjs/add/observable/combineLatest';
+import {LoadingComponent} from "../loading/loading.component";
 
 @Component({
   selector: 'transportRequest-persist',
@@ -51,24 +53,23 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.consignmentList = [];
-
-    this.subscription = this.userService.getUser().subscribe(userObject => {
-      this.userObject = userObject;
-    });
-
-    //fixme simplify this mess
-    this.permissionService.getByUserId(this.userObject).subscribe(permission => {
-      this.permission = permission;
-    });
-
     this.transportRequest.customer = new Customer();
-    this.locationService.list(this.userObject).subscribe((locationList: Location[]) => {
-      this.locationList = locationList;
-      console.log('locationList ' + JSON.stringify(this.locationList));
-    });
     this.transportRequest.hazardous = false;
     this.transportRequest.overDimension = false;
-    this.route.params.subscribe((params: Params) => {
+
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).subscribe(response => {
+      this.userObject = response[0];
+      let params = response[1];
+
+      this.permissionService.getByUserId(this.userObject).subscribe(permission => {
+        this.permission = permission;
+      });
+
+      this.locationService.list(this.userObject).subscribe((locationList: Location[]) => {
+        this.locationList = locationList;
+        console.log('locationList ' + JSON.stringify(this.locationList));
+      });
+
       if (params.hasOwnProperty('id')) {
         this.transportRequestService.get(+params['id'], this.userObject).subscribe((transportRequest: TransportRequest) => {
           this.create = false;
@@ -88,15 +89,27 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    this.transportRequestService.save(this.transportRequest, this.userObject).subscribe((transportRequest: TransportRequest) => {
-      this.router.navigate(['/transportRequest', 'show', transportRequest.id]);
-    }, (json: Response) => {
-      if (json.hasOwnProperty('message')) {
-        this.errors = [json];
-      } else {
-        // this.errors = json;
-      }
+    let loadingDialogRef = this.modal.open(LoadingComponent, overlayConfigFactory({
+      isBlocking: false,
+      size: 'md',
+      message: 'Saving RFT...'
+    }, BSModalContext));
+
+    loadingDialogRef.then(dialogRef => {
+
+      //todo save rft
+      // this.transportRequestService.save(this.transportRequest, this.userObject).subscribe((transportRequest: TransportRequest) => {
+      //   this.router.navigate(['/transportRequest', 'show', transportRequest.id]);
+      // }, (json: Response) => {
+      //   if (json.hasOwnProperty('message')) {
+      //     this.errors = [json];
+      //   } else {
+      //     // this.errors = json;
+      //   }
+      // });
     });
+
+
   }
 
   onAddConsignmentClick() {
@@ -121,7 +134,7 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
   onDeleteConsignmentClick() {
     const delDialogRef = this.modal.alert().title("Confirm Delete").message("Are you sure?").okBtn(null).okBtnClass('hidden')
-      .addButton('btn btn-default', 'Accept', function (dialogFooter) {
+      .addButton('btn btn-primary', 'Accept', function (dialogFooter) {
         console.log('ok callback');
         dialogFooter.dialog.dismiss();
         //todo delete selected consignment from the list of consignments
@@ -132,17 +145,17 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
           //todo refresh the persist page again perhaps?
           this.consignmentList.forEach((value, index) => {
-            console.log('value '+value+ ' index '+index);
-            if(value == new Consignment(this.selectedConsignment[0])){
+            console.log('value ' + value + ' index ' + index);
+            if (value == new Consignment(this.selectedConsignment[0])) {
               this.consignmentList.splice(index, 1);
             }
           });
 
-          console.log('consignmentList count '+this.consignmentList.length);
+          console.log('consignmentList count ' + this.consignmentList.length);
         }
         return false;
       })
-      .addButton('btn btn-default', 'Cancel', function (dialogFooter) {
+      .addButton('btn btn-primary', 'Cancel', function (dialogFooter) {
         dialogFooter.dialog.dismiss();
         return false;
       })

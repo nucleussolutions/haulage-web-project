@@ -20,7 +20,8 @@
       "prefix": "app",
       "styles": [
         "../node_modules/bootswatch/paper/bootstrap.min.css",
-        "styles.css"
+        "styles.css",
+        "../node_modules/font-awesome/css/font-awesome.css"
       ],
       "scripts": [
         "../node_modules/bootstrap/dist/js/bootstrap.js"

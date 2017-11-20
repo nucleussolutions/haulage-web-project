@@ -49,6 +49,7 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import { HelpComponent } from './help/help.component';
 import { ReportingComponent } from './reporting/reporting.component';
 import { QuoteModule } from './quote/quote.module';
+import { LoadingComponent } from './loading/loading.component';
 
 
 @NgModule({
@@ -72,6 +73,7 @@ import { QuoteModule } from './quote/quote.module';
     UnauthorizedComponent,
     HelpComponent,
     ReportingComponent,
+    LoadingComponent,
   ],
   entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent],
   imports: [
