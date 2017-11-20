@@ -180,49 +180,49 @@
       <li class="fieldcontain">
         <span id="customer.phone-label" class="property-label">Phone</span>
         <div class="property-value" aria-labelledby="customer.phone-label">
-          <span>{{transportRequest.customer.phone}}</span>
+          <span>{{transportRequest.customer?.phone}}</span>
         </div>
       </li>
       <li class="fieldcontain">
         <span id="customer.address1-label" class="property-label">Address1</span>
         <div class="property-value" aria-labelledby="customer.address1-label">
-          <span>{{transportRequest.customer.address1}}</span>
+          <span>{{transportRequest.customer?.address1}}</span>
         </div>
       </li>
       <li class="fieldcontain">
         <span id="customer.address2-label" class="property-label">Address2</span>
         <div class="property-value" aria-labelledby="customer.address2-label">
-          <span>{{transportRequest.customer.address2}}</span>
+          <span>{{transportRequest.customer?.address2}}</span>
         </div>
       </li>
       <li class="fieldcontain">
         <span id="customer.city-label" class="property-label">City</span>
         <div class="property-value" aria-labelledby="customer.city-label">
-          <span>{{transportRequest.customer.city}}</span>
+          <span>{{transportRequest.customer?.city}}</span>
         </div>
       </li>
       <li class="fieldcontain">
         <span id="customer.personInCharge-label" class="property-label">Person In Charge</span>
         <div class="property-value" aria-labelledby="customer.personInCharge-label">
-          <span>{{transportRequest.customer.personInCharge}}</span>
+          <span>{{transportRequest.customer?.personInCharge}}</span>
         </div>
       </li>
       <li class="fieldcontain">
         <span id="customer.companyName-label" class="property-label">Company Name</span>
         <div class="property-value" aria-labelledby="customer.companyName-label">
-          <span>{{transportRequest.customer.companyName}}</span>
+          <span>{{transportRequest.customer?.companyName}}</span>
         </div>
       </li>
       <li class="fieldcontain">
         <span id="customer.country-label" class="property-label">Country</span>
         <div class="property-value" aria-labelledby="customer.country-label">
-          <span>{{transportRequest.customer.country}}</span>
+          <span>{{transportRequest.customer?.country}}</span>
         </div>
       </li>
       <li class="fieldcontain">
         <span id="customer.state-label" class="property-label">State</span>
         <div class="property-value" aria-labelledby="customer.state-label">
-          <span>{{transportRequest.customer.state}}</span>
+          <span>{{transportRequest.customer?.state}}</span>
         </div>
       </li>
     </fieldset>
@@ -259,7 +259,7 @@
     </div>
   </div>
 
-  <a class="edit" [routerLink]="['/transportRequest', 'edit', transportRequest.id]">Edit</a>
-  <button type="button" (click)="destroy()">Delete</button>
+  <a class="edit btn btn-primary" [routerLink]="['/transportRequest', 'edit', transportRequest.id]">Edit</a>
+  <button class="btn btn-danger" type="button" (click)="destroy()">Delete</button>
 
 </div>

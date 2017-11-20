@@ -24,6 +24,6 @@ export class Location {
   }
 
   toString(): string {
-    return name;
+    return 'haulage.project.Location : ' + (this.id ? this.id : '(unsaved)');
   }
 }

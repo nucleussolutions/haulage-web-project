@@ -4,6 +4,9 @@ import { TransportRequest } from './transportRequest';
 import { TransportRequestService } from './transportRequest.service';
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
+import {Observable} from "rxjs/Observable";
+import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/observable/combineLatest';
 
 @Component({
   selector: 'transportRequest-persist',
@@ -22,16 +25,17 @@ export class TransportRequestShowComponent implements OnInit, OnDestroy {
   private userObject: any;
 
   constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private userService: UserService) {
-    this.subscription = this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    });
+
   }
 
   ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
-      this.transportRequestService.get(+params['id'], this.userObject).subscribe((transportRequest: TransportRequest) => {
-        this.transportRequest = transportRequest;
-      });
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(response => {
+      console.log('forkJoin works');
+      this.userObject = response[0];
+      let params = response[1];
+      return this.transportRequestService.get(+params['id'], this.userObject);
+    }).subscribe((transportRequest: TransportRequest) => {
+      this.transportRequest = transportRequest;
     });
   }
 

@@ -43,18 +43,20 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
   private permission: Permission;
 
+  selectedConsignment = [];
+
   constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService, private modal: Modal, private permissionService: PermissionService, private createConsignmentEventService: CreateConsignmentEventService) {
-    this.subscription = this.userService.getUser().subscribe(userObject => {
-      this.userObject = userObject;
-    });
 
   }
 
   ngOnInit() {
     this.consignmentList = [];
 
-    //fixme simplify this mess
+    this.subscription = this.userService.getUser().subscribe(userObject => {
+      this.userObject = userObject;
+    });
 
+    //fixme simplify this mess
     this.permissionService.getByUserId(this.userObject).subscribe(permission => {
       this.permission = permission;
     });
@@ -62,6 +64,7 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
     this.transportRequest.customer = new Customer();
     this.locationService.list(this.userObject).subscribe((locationList: Location[]) => {
       this.locationList = locationList;
+      console.log('locationList ' + JSON.stringify(this.locationList));
     });
     this.transportRequest.hazardous = false;
     this.transportRequest.overDimension = false;
@@ -117,11 +120,37 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
   }
 
   onDeleteConsignmentClick() {
-    const delDialogRef = this.modal.alert().title("Confirm Delete").message("Are you sure?").open();
+    const delDialogRef = this.modal.alert().title("Confirm Delete").message("Are you sure?").okBtn(null).okBtnClass('hidden')
+      .addButton('btn btn-default', 'Accept', function (dialogFooter) {
+        console.log('ok callback');
+        dialogFooter.dialog.dismiss();
+        //todo delete selected consignment from the list of consignments
+        if (this.selectedConsignment) {
+          // this.consignmentService.destroy(this.selectedConsignment[0], this.userObject).subscribe(response => {
+          //   console.log('delete successful');
+          // });
 
+          //todo refresh the persist page again perhaps?
+          this.consignmentList.forEach((value, index) => {
+            console.log('value '+value+ ' index '+index);
+            if(value == new Consignment(this.selectedConsignment[0])){
+              this.consignmentList.splice(index, 1);
+            }
+          });
 
+          console.log('consignmentList count '+this.consignmentList.length);
+        }
+        return false;
+      })
+      .addButton('btn btn-default', 'Cancel', function (dialogFooter) {
+        dialogFooter.dialog.dismiss();
+        return false;
+      })
+      .open();
     delDialogRef.then(dialogRef => {
-      dialogRef.result.then()
+      dialogRef.result.then(result => {
+
+      });
     });
   }
 
@@ -147,9 +176,8 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
     });
   }
 
-  selectedConsignment = [];
 
-  onSelect({ selected }) {
+  onSelect({selected}) {
     console.log('Select Event', selected, this.selectedConsignment);
   }
 }
