@@ -2,7 +2,7 @@
   <ul>
     <li><a [routerLink]="['/index']" class="home">Home</a></li>
     <li><a class="list" [routerLink]="['/consignment', 'list']" class="list">Consignment List</a></li>
-    <li><a class="create" [routerLink]="['/consignment', 'create']" class="create">New Consignment</a></li>
+    <li *ngIf="permission?.authority == 'Super Admin'"><a class="create" [routerLink]="['/consignment', 'create']" class="create">New Consignment</a></li>
   </ul>
 </div>
 <div id="show-part" class="content scaffold-show" role="main">

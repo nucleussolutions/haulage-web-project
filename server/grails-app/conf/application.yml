@@ -14,7 +14,16 @@ grails:
     cors:
         enabled: true
         allowedOrigins: ["http://localhost:4200"]
-
+    plugin:
+        awssdk:
+            accessKey: {ACCESS_KEY} # Global default setting
+            secretKey: {SECRET_KEY} # Global default setting
+            region: us-east-1       # Global default setting
+            s3:
+                accessKey: {ACCESS_KEY} # (optional)
+                secretKey: {SECRET_KEY} # (optional)
+                region: eu-west-1       # (optional)
+                bucket: my-bucket       # (optional)
 info:
     app:
         name: '@info.app.name@'
@@ -97,7 +106,7 @@ environments:
             url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
     production:
         dataSource:
-            dbCreate: none
+            dbCreate: validate
             url: jdbc:h2:./prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
             properties:
                 jmxEnabled: true

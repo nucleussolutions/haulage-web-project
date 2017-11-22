@@ -13,3 +13,4 @@ build/
 out/
 
 bin/
+/grails-app/conf/application-production.yml

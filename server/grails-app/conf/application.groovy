@@ -21,15 +21,3 @@ grails.plugin.springsecurity.filterChain.chainMap = [
                 filters: 'JOINED_FILTERS,-anonymousAuthenticationFilter,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter'
         ]
 ]
-
-
-
-grails.plugin.springsecurity.rest.token.storage.jwt.useSignedJwt=true
-grails.plugin.springsecurity.rest.token.storage.jwt.expiration = 365*24*3600 // seconds
-//grails.plugin.springsecurity.rest.token.storage.jwt.secret = 'super secret passphrase'
-//def mysecret = RandomStringUtils.randomAlphanumeric(32)
-//println 'mysecret '+mysecret
-grails.plugin.springsecurity.rest.token.storage.jwt.secret = 'yFXjnyqIljnPPCiHQE4HzCYU01rKlYWN'
-
-grails.plugin.springsecurity.rest.token.validation.useBearerToken = false
-grails.plugin.springsecurity.rest.token.validation.headerName = 'JWT'

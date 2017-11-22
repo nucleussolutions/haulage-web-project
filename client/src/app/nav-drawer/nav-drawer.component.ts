@@ -3,6 +3,7 @@ import {PermissionService} from "../permission/permission.service";
 import {Subscription} from 'rxjs/Subscription';
 import {Permission} from "../permission/permission";
 import {UserService} from 'app/user.service';
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -27,7 +28,7 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private userObject: any;
 
-  constructor(private permissionService: PermissionService, private userService: UserService) {
+  constructor(private permissionService: PermissionService, private userService: UserService, private router: Router) {
 
   }
 

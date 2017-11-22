@@ -98,15 +98,15 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
     loadingDialogRef.then(dialogRef => {
 
       //todo save rft
-      // this.transportRequestService.save(this.transportRequest, this.userObject).subscribe((transportRequest: TransportRequest) => {
-      //   this.router.navigate(['/transportRequest', 'show', transportRequest.id]);
-      // }, (json: Response) => {
-      //   if (json.hasOwnProperty('message')) {
-      //     this.errors = [json];
-      //   } else {
-      //     // this.errors = json;
-      //   }
-      // });
+      this.transportRequestService.save(this.transportRequest, this.userObject).subscribe((transportRequest: TransportRequest) => {
+        this.router.navigate(['/transportRequest', 'show', transportRequest.id]);
+      }, (json: Response) => {
+        if (json.hasOwnProperty('message')) {
+          this.errors = [json];
+        } else {
+          // this.errors = json;
+        }
+      });
     });
 
 

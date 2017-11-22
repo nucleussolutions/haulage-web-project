@@ -16,16 +16,14 @@ group "haulage.angular.profile"
 
 apply plugin:"eclipse"
 apply plugin:"idea"
-//apply plugin:"war"
 apply plugin:"org.grails.grails-web"
 apply plugin:"org.grails.plugins.views-json"
 
 repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
-//    maven { url 'http://dl.bintray.com/agorapulse/libs' }
     maven { url "http://dl.bintray.com/bobbywarner/grails-plugins" }
-
+    maven { url 'http://dl.bintray.com/agorapulse/libs' }
 }
 
 dependencies {
@@ -65,6 +63,7 @@ dependencies {
     compile 'org.grails.plugins:http-builder-helper:1.1.0'
     // compile 'org.grails.plugins:rx-gorm-rest-client:1.0.0.RELEASE'
     compile 'org.grails.plugins:wkhtmltopdf:1.0.0.RC7'
+    compile 'org.grails.plugins:aws-sdk-s3:2.1.5'
 }
 
 bootRun {

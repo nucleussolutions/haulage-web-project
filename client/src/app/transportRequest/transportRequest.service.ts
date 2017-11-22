@@ -50,18 +50,15 @@ export class TransportRequestService {
   }
 
   save(transportRequest: TransportRequest, userObject: any): Observable<TransportRequest> {
-    // const requestOptions = new RequestOptions();
 
     let requestMethodStr;
 
     let url;
 
     if (transportRequest.id) {
-      // requestOptions.method = RequestMethod.Put;
       requestMethodStr = 'PUT';
       url = environment.serverUrl + '/transportRequest/' + transportRequest.id;
     } else {
-      // requestOptions.method = RequestMethod.Post;
       requestMethodStr = 'POST';
       url = environment.serverUrl + '/transportRequest';
     }

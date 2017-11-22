@@ -11,8 +11,12 @@ import haulage.project.HaulierInfo
 import haulage.project.Location
 import haulage.project.Permission
 import haulage.project.Pricing
+import haulage.project.QuotationStatus
+import haulage.project.Quote
+import haulage.project.QuoteItem
 import haulage.project.RFTStatus
 import haulage.project.RFTType
+import haulage.project.TermAndCondition
 import haulage.project.TransportRequest
 import haulage.project.Vehicle
 
@@ -72,47 +76,7 @@ class BootStrap {
             return output
         }
 
-//        JSON.createNamedConfig('deep'){
-//
-//            JSON.registerObjectMarshaller(TransportRequest){
-//                def output = [:]
-//                output['id'] = it.id
-//                output['type'] = it.type
-//                output['equipment'] = it.equipment
-//                output['bookingRefNo'] = it.bookingRefNo
-//                output['otherRefNo'] = it.otherRefNo
-//                output['terminal'] = it.terminal
-//                output['vesselEtaOrEtd'] = it.vesselEtaOrEtd
-//                output['vesselName'] = it.vesselName
-//                output['voyageNo'] = it.voyageNo
-//                output['portOfLoading'] = it.portOfLoading
-//                output['portOfDischarge'] = it.portOfDischarge
-//                output['shippingAgent'] = it.shippingAgent
-//                output['forwardingAgent'] = it.forwardingAgent
-//                output['operatorCode'] = it.operatorCode
-//                output['grossWeight'] = it.grossWeight
-//                output['overDimension'] = it.overDimension
-//                output['temperature'] = it.temperature
-//                output['hazardous'] = it.hazardous
-//                output['productDesc'] = it.productDesc
-//                output['shipper'] = it.shipper
-//                output['orderRemarks'] = it.orderRemarks
-//                output['containerRemarks'] = it.containerRemarks
-//                output['dgCode'] = it.dgCode
-//                output['kOnekEightFormImgUrl'] = it.kOnekEightFormImgUrl
-//                output['gatePassImgUrl'] = it.gatePassImgUrl
-//                output['bookingConfirmationImgUrl'] = it.bookingConfirmationImgUrl
-//                output['cmoImgUrl'] = it.cmoImgUrl
-//                output['consignments'] = it.consignments
-//                output['forwarderId'] = it.forwarderId
-//                output['customer'] = it.customer
-//                output['status'] = it.status
-//                output['pickupOrDropoffEmptyDepoh'] = it.pickupOrDropoffEmptyDepoh
-//                output['backToBack'] = it.backToBack
-//                output['openCargoBoat'] = it.openCargoBoat
-//                return output
-//            }
-//        }
+
 
         def consignments = []
 
@@ -198,6 +162,19 @@ class BootStrap {
 
 
         def forwarderInfo1 = new ForwarderInfo(userId: 'GWQOYWnAxxVPtnUODGCWe8cXllK2', company: company2, name: 'asdl;asdkd;').save(flush: true, failOnError: true)
+
+
+
+        def quoteItem1 = new QuoteItem(desc: 'desc 1', rebatePercent: 20, name: 'quote item 1')
+        def quoteItem2 = new QuoteItem(desc: 'desc 2', rebatePercent: 20, name: 'quote item 1')
+
+
+        def term1 = new TermAndCondition(desc: 'desc 1')
+        def term2 = new TermAndCondition(desc: 'desc 1')
+
+
+        def quote = new Quote(forwarderId: '1123083', haulierId: '123213210', status: QuotationStatus.PENDING_ACCEPTANCE.id, items: [quoteItem1, quoteItem2], terms: [term1, term2], code: '12312321', endDate: new Date()).save(flush: true, failOnError: true)
+
     }
     def destroy = {
     }
