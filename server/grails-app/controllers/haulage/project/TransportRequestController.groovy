@@ -2,6 +2,7 @@ package haulage.project
 
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import grails.converters.JSON
+import grails.core.GrailsApplication
 import grails.plugin.awssdk.s3.AmazonS3Service
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
@@ -11,6 +12,8 @@ class TransportRequestController {
     TransportRequestService transportRequestService
 
     AmazonS3Service s3Service
+
+    GrailsApplication grailsApplication
 
     static responseFormats = ['json']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -54,7 +57,13 @@ class TransportRequestController {
             s3Service.storeFile('haulage-dev', 'path to gatepass', gatePassImgFile, CannedAccessControlList.PublicRead)
         }
 
-        s3Service.storeFile('haulage-dev', 'path to booking confirmation image file', bookingConfirmationImgFile, CannedAccessControlList.PublicRead)
+        if(bookingConfirmationImgFile){
+            s3Service.storeFile('haulage-dev', 'path to booking confirmation image file', bookingConfirmationImgFile, CannedAccessControlList.PublicRead)
+        }
+
+        if(cmoImgFile){
+            s3Service.storeFile('haulage-dev', 'path to cmo image file', cmoImgFile, CannedAccessControlList.PublicRead)
+        }
 
         try {
             transportRequestService.save(transportRequest)
@@ -74,11 +83,27 @@ class TransportRequestController {
 
         def kOnekEightFormImgFile = params.kOnekEightFormImg
 
+        if(kOnekEightFormImgFile){
+            s3Service.storeFile('haulage-dev', 'path to kone', kOnekEightFormImgFile, CannedAccessControlList.PublicRead)
+        }
+
         def gatePassImgFile = params.gatePassImg
+
+        if(gatePassImgFile){
+            s3Service.storeFile('haulage-dev', 'path to gatepass', gatePassImgFile, CannedAccessControlList.PublicRead)
+        }
 
         def bookingConfirmationImgFile = params.bookingConfirmationImg
 
+        if(bookingConfirmationImgFile){
+            s3Service.storeFile('haulage-dev', 'path to booking comfirmation', bookingConfirmationImgFile, CannedAccessControlList.PublicRead)
+        }
+
         def cmoImgFile = params.cmoImg
+
+        if(cmoImgFile){
+            s3Service.storeFile('haulage-dev', 'path to cmo', cmoImgFile, CannedAccessControlList.PublicRead)
+        }
 
         try {
             transportRequestService.save(transportRequest)
