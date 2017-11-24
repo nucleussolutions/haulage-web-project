@@ -1,25 +1,26 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {TransportRequest} from './transportRequest';
-import {TransportRequestService} from './transportRequest.service';
-import {Response} from "@angular/http";
-import {ConsignmentService} from '../consignment/consignment.service';
-import {Consignment} from '../consignment/consignment';
-import {CustomerService} from '../customer/customer.service';
-import {Customer} from '../customer/customer';
-import {LocationService} from '../location/location.service';
-import {Location} from '../location/location';
-import {UserService} from "../user.service";
-import {Subscription} from "rxjs/Subscription";
-import {BSModalContext, Modal} from 'ngx-modialog/plugins/bootstrap';
-import {overlayConfigFactory} from "ngx-modialog";
-import {CreateConsignmentModalComponent} from "../create-consignment-modal/create-consignment-modal.component";
-import {PermissionService} from "../permission/permission.service";
-import {Permission} from "../permission/permission";
-import {CreateConsignmentEventService} from "../create-consignment-event.service";
-import {Observable} from "rxjs/Observable";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { TransportRequest } from './transportRequest';
+import { TransportRequestService } from './transportRequest.service';
+import { Response } from "@angular/http";
+import { ConsignmentService } from '../consignment/consignment.service';
+import { Consignment } from '../consignment/consignment';
+import { CustomerService } from '../customer/customer.service';
+import { Customer } from '../customer/customer';
+import { LocationService } from '../location/location.service';
+import { Location } from '../location/location';
+import { UserService } from "../user.service";
+import { Subscription } from "rxjs/Subscription";
+import { BSModalContext, Modal } from 'ngx-modialog/plugins/bootstrap';
+import { overlayConfigFactory } from "ngx-modialog";
+import { CreateConsignmentModalComponent } from "../create-consignment-modal/create-consignment-modal.component";
+import { PermissionService } from "../permission/permission.service";
+import { Permission } from "../permission/permission";
+import { CreateConsignmentEventService } from "../create-consignment-event.service";
+import { Observable } from "rxjs/Observable";
 import 'rxjs/add/observable/combineLatest';
-import {LoadingComponent} from "../loading/loading.component";
+import { LoadingComponent } from "../loading/loading.component";
+import {S3Service} from "../service/s3.service";
 
 @Component({
   selector: 'transportRequest-persist',
@@ -47,7 +48,15 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
   selectedConsignment = [];
 
-  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService, private modal: Modal, private permissionService: PermissionService, private createConsignmentEventService: CreateConsignmentEventService) {
+  cmoImg: File;
+
+  bookingConfirmationImg: File;
+
+  kOnekEightFormImg: File;
+
+  gatePassImg: File;
+
+  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService, private modal: Modal, private permissionService: PermissionService, private createConsignmentEventService: CreateConsignmentEventService, private s3Service: S3Service) {
 
   }
 
@@ -96,6 +105,26 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
     }, BSModalContext));
 
     loadingDialogRef.then(dialogRef => {
+
+
+
+      this.s3Service.addkOnekEightFile(this.kOnekEightFormImg).then(response => {
+
+      }, error => {
+
+      });
+
+      this.s3Service.addBookingConfirmationFile(this.bookingConfirmationImg).then(response => {
+
+      }, error => {
+
+      });
+
+      this.s3Service.addCmoFile(this.cmoImg).then(response => {
+
+      }, error => {
+
+      });
 
       //todo save rft
       this.transportRequestService.save(this.transportRequest, this.userObject).subscribe((transportRequest: TransportRequest) => {
@@ -190,7 +219,7 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
   }
 
 
-  onSelect({selected}) {
+  onSelect({ selected }) {
     console.log('Select Event', selected, this.selectedConsignment);
   }
 }

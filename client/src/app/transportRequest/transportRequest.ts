@@ -42,27 +42,27 @@ export class TransportRequest {
 
   constructor (object?: any) {
     if (object) {
-      
+
       if (object.hasOwnProperty('terminal')) {
         this.terminal = new Location(object['terminal']);
         delete object['terminal'];
       }
-      
+
       if (object.hasOwnProperty('consignments')) {
         this.consignments = object['consignments'].map((obj: any) => { return new Consignment(obj); });
         delete object['consignments'];
       }
-      
+
       if (object.hasOwnProperty('customer')) {
         this.customer = new Customer(object['customer']);
         delete object['customer'];
       }
-      
+
       if (object.hasOwnProperty('pickupOrDropoffEmptyDepoh')) {
         this.pickupOrDropoffEmptyDepoh = new Location(object['pickupOrDropoffEmptyDepoh']);
         delete object['pickupOrDropoffEmptyDepoh'];
       }
-      
+
       for (var prop in object) {
         this[prop] = object[prop];
       }

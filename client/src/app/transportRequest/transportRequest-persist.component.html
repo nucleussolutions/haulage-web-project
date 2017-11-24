@@ -147,26 +147,22 @@
               <input class="form-control" required="" name="dgCode" id="dgCode" [(ngModel)]="transportRequest.dgCode" type="text"/>
             </div>
             <div class="form-group">
-              <label for="kOnekEightFormImgUrl">K Onek Eight Form Img Url</label>
-              <input name="kOnekEightFormImgUrl" id="kOnekEightFormImgUrl" [(ngModel)]="transportRequest.kOnekEightFormImgUrl" type="text"/>
-              <input type="file" >
+              <label for="kOnekEightFormImg">K Onek Eight Form Img Url</label>
+              <input type="file" id="kOnekEightFormImg" [ngModel]="kOnekEightFormImg" >
             </div>
             <div class="form-group">
-              <label for="gatePassImgUrl">Gate Pass Img Url</label>
-              <input name="gatePassImgUrl" id="gatePassImgUrl" [(ngModel)]="transportRequest.gatePassImgUrl" type="text"/>
-              <input type="file" >
+              <label for="gatePassImg">Gate Pass Img Url</label>
+              <input type="file" id="gatePassImg" [ngModel]="gatePassImg" >
 
             </div>
             <div class="form-group">
-              <label for="bookingConfirmationImgUrl">Booking Confirmation Img Url</label>
-              <input name="bookingConfirmationImgUrl" id="bookingConfirmationImgUrl" [(ngModel)]="transportRequest.bookingConfirmationImgUrl" type="text"/>
-              <input type="file" >
+              <label for="bookingConfirmationImg">Booking Confirmation Img Url</label>
+              <input id="bookingConfirmationImg" type="file" [ngModel]="bookingConfirmationImg" >
 
             </div>
             <div class="form-group">
-              <label for="cmoImgUrl">Cmo Img Url</label>
-              <input name="cmoImgUrl" id="cmoImgUrl" [(ngModel)]="transportRequest.cmoImgUrl" type="text"/>
-              <input type="file" >
+              <label for="cmoImg">Cmo Img Url</label>
+              <input id="cmoImg" type="file" [ngModel]="cmoImg" >
             </div>
 
             <div class="form-group required">

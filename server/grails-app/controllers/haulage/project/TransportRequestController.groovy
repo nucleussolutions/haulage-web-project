@@ -1,17 +1,13 @@
 package haulage.project
 
-import com.amazonaws.services.s3.model.CannedAccessControlList
 import grails.converters.JSON
 import grails.core.GrailsApplication
-import grails.plugin.awssdk.s3.AmazonS3Service
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
 class TransportRequestController {
 
     TransportRequestService transportRequestService
-
-    AmazonS3Service s3Service
 
     GrailsApplication grailsApplication
 
@@ -35,36 +31,6 @@ class TransportRequestController {
             return
         }
 
-        File kOnekEightFormImgFile = params.kOnekEightFormImg
-
-        File gatePassImgFile = params.gatePassImg
-
-        File bookingConfirmationImgFile = params.bookingConfirmationImg
-
-        File cmoImgFile = params.cmoImg
-
-        def bucketNames = s3Service.listBucketNames()
-
-        if(!bucketNames.contains('haulage-dev')){
-            s3Service.createBucket('haulage-dev', 'us-east')
-        }
-
-        if(kOnekEightFormImgFile){
-            s3Service.storeFile('haulage-dev', 'path to kone', kOnekEightFormImgFile, CannedAccessControlList.PublicRead)
-        }
-
-        if(gatePassImgFile){
-            s3Service.storeFile('haulage-dev', 'path to gatepass', gatePassImgFile, CannedAccessControlList.PublicRead)
-        }
-
-        if(bookingConfirmationImgFile){
-            s3Service.storeFile('haulage-dev', 'path to booking confirmation image file', bookingConfirmationImgFile, CannedAccessControlList.PublicRead)
-        }
-
-        if(cmoImgFile){
-            s3Service.storeFile('haulage-dev', 'path to cmo image file', cmoImgFile, CannedAccessControlList.PublicRead)
-        }
-
         try {
             transportRequestService.save(transportRequest)
         } catch (ValidationException e) {
@@ -79,30 +45,6 @@ class TransportRequestController {
         if (transportRequest == null) {
             render status: NOT_FOUND
             return
-        }
-
-        def kOnekEightFormImgFile = params.kOnekEightFormImg
-
-        if(kOnekEightFormImgFile){
-            s3Service.storeFile('haulage-dev', 'path to kone', kOnekEightFormImgFile, CannedAccessControlList.PublicRead)
-        }
-
-        def gatePassImgFile = params.gatePassImg
-
-        if(gatePassImgFile){
-            s3Service.storeFile('haulage-dev', 'path to gatepass', gatePassImgFile, CannedAccessControlList.PublicRead)
-        }
-
-        def bookingConfirmationImgFile = params.bookingConfirmationImg
-
-        if(bookingConfirmationImgFile){
-            s3Service.storeFile('haulage-dev', 'path to booking comfirmation', bookingConfirmationImgFile, CannedAccessControlList.PublicRead)
-        }
-
-        def cmoImgFile = params.cmoImg
-
-        if(cmoImgFile){
-            s3Service.storeFile('haulage-dev', 'path to cmo', cmoImgFile, CannedAccessControlList.PublicRead)
         }
 
         try {
