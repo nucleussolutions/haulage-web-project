@@ -63,8 +63,11 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.consignmentList = [];
     this.transportRequest.customer = new Customer();
+    this.transportRequest.customer.country = 'Malaysia';
     this.transportRequest.hazardous = false;
     this.transportRequest.overDimension = false;
+
+
 
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).subscribe(response => {
       this.userObject = response[0];
@@ -72,6 +75,8 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
       this.permissionService.getByUserId(this.userObject).subscribe(permission => {
         this.permission = permission;
+
+
       });
 
       this.locationService.list(this.userObject).subscribe((locationList: Location[]) => {
@@ -91,8 +96,12 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
             console.log(value.name);
           });
           console.log('transportRequest ' + JSON.stringify(this.transportRequest));
-          //todo use this data to display consignments in the ui if it's for edit
         });
+      }
+
+      if(this.permission.authority == 'Manager' && this.transportRequest.forwarderId === null){
+        //check permissions before setting this
+        this.transportRequest.forwarderId = this.userObject.uid;
       }
     });
   }
@@ -106,27 +115,30 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
     loadingDialogRef.then(dialogRef => {
 
+      if(this.kOnekEightFormImg){
+        this.s3Service.addkOnekEightFile(this.kOnekEightFormImg).subscribe(data => {
+          console.log('kOnekEightFormImg data '+data);
+        });
+      }
 
+      if(this.bookingConfirmationImg){
+        this.s3Service.addBookingConfirmationFile(this.bookingConfirmationImg).subscribe(data => {
+          console.log('bookingConfirmationImg data '+data);
+        });
+      }
 
-      this.s3Service.addkOnekEightFile(this.kOnekEightFormImg).then(response => {
+      if(this.cmoImg){
+        this.s3Service.addCmoFile(this.cmoImg).subscribe(data => {
+          console.log('cmoImg data '+data);
+        });
+      }
 
-      }, error => {
+      if(this.gatePassImg){
+        this.s3Service.addGatePassFile(this.gatePassImg).subscribe(data => {
+          console.log('gatePassImg data '+data);
+        });
+      }
 
-      });
-
-      this.s3Service.addBookingConfirmationFile(this.bookingConfirmationImg).then(response => {
-
-      }, error => {
-
-      });
-
-      this.s3Service.addCmoFile(this.cmoImg).then(response => {
-
-      }, error => {
-
-      });
-
-      //todo save rft
       this.transportRequestService.save(this.transportRequest, this.userObject).subscribe((transportRequest: TransportRequest) => {
         this.router.navigate(['/transportRequest', 'show', transportRequest.id]);
       }, (json: Response) => {

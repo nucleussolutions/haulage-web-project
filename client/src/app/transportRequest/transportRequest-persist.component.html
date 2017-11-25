@@ -147,30 +147,24 @@
               <input class="form-control" required="" name="dgCode" id="dgCode" [(ngModel)]="transportRequest.dgCode" type="text"/>
             </div>
             <div class="form-group">
-              <label for="kOnekEightFormImg">K Onek Eight Form Img Url</label>
-              <input type="file" id="kOnekEightFormImg" [ngModel]="kOnekEightFormImg" >
+              <label for="kOnekEightFormImg">Upload K1 K8 Form</label>
+              <input type="file" id="kOnekEightFormImg" [ngModel]="kOnekEightFormImg">
             </div>
             <div class="form-group">
-              <label for="gatePassImg">Gate Pass Img Url</label>
-              <input type="file" id="gatePassImg" [ngModel]="gatePassImg" >
+              <label for="gatePassImg">Upload Gate Pass</label>
+              <input type="file" id="gatePassImg" [ngModel]="gatePassImg">
 
             </div>
             <div class="form-group">
-              <label for="bookingConfirmationImg">Booking Confirmation Img Url</label>
-              <input id="bookingConfirmationImg" type="file" [ngModel]="bookingConfirmationImg" >
+              <label for="bookingConfirmationImg">Booking Confirmation</label>
+              <input id="bookingConfirmationImg" type="file" [ngModel]="bookingConfirmationImg">
 
             </div>
             <div class="form-group">
-              <label for="cmoImg">Cmo Img Url</label>
-              <input id="cmoImg" type="file" [ngModel]="cmoImg" >
+              <label for="cmoImg">CMO Form</label>
+              <input id="cmoImg" type="file" [ngModel]="cmoImg">
             </div>
 
-            <div class="form-group required">
-              <label for="forwarderId">Forwarder Id
-                <span class="required-indicator">*</span>
-              </label>
-              <input required="" name="forwarderId" id="forwarderId" [(ngModel)]="transportRequest.forwarderId" type="text"/>
-            </div>
             <div class="form-group required">
               <label for="status">Status
                 <span class="required-indicator">*</span>
@@ -200,14 +194,13 @@
               <select class="form-control" required="" name="pickupOrDropoffEmptyDepoh" id="pickupOrDropoffEmptyDepoh"
                       [(ngModel)]="transportRequest.pickupOrDropoffEmptyDepoh">
                 <option *ngFor="let location of locationList" [value]="location.id" [selected]="transportRequest.pickupOrDropoffEmptyDepoh?.id == location.id">
-                  {{location.toString()}}
+                  {{location.name}}
                 </option>
               </select>
             </div>
 
 
           </fieldset>
-
 
 
         </fieldset>
@@ -249,13 +242,15 @@
           <label for="customer.personInCharge">Person In Charge
             <span class="required-indicator">*</span>
           </label>
-          <input class="form-control" required="" name="customer.personInCharge" id="customer.personInCharge" [(ngModel)]="transportRequest.customer.personInCharge" type="text"/>
+          <input class="form-control" required="" name="customer.personInCharge" id="customer.personInCharge"
+                 [(ngModel)]="transportRequest.customer.personInCharge" type="text"/>
         </div>
         <div class="form-group required">
           <label for="customer.companyName">Company Name
             <span class="required-indicator">*</span>
           </label>
-          <input class="form-control" required="" name="customer.companyName" id="customer.companyName" [(ngModel)]="transportRequest.customer.companyName" type="text"/>
+          <input class="form-control" required="" name="customer.companyName" id="customer.companyName" [(ngModel)]="transportRequest.customer.companyName"
+                 type="text"/>
         </div>
         <div class="form-group required">
           <label for="customer.country">Country
@@ -267,10 +262,25 @@
           <label for="customer.state">State
             <span class="required-indicator">*</span>
           </label>
-          <input class="form-control" required="" name="customer.state" id="customer.state" [(ngModel)]="transportRequest.customer.state" type="text"/>
+          <select class="form-control" name="customer.state" id="customer.state" [(ngModel)]="transportRequest.customer.state">
+            <option value="Johor">Johor</option>
+            <option value="Kedah">Kedah</option>
+            <option value="Kelantan">Kelantan</option>
+            <option value="Kuala Lumpur">Kuala Lumpur</option>
+            <option value="Negeri Sembilan">Negeri Sembilan</option>
+            <option value="Pahang">Pahang</option>
+            <option value="Melaka">Melaka</option>
+            <option value="Perak">Perak</option>
+            <option value="Perlis">Perlis</option>
+            <option value="Pulau Pinang">Pulau Pinang</option>
+            <option value="Sabah">Sabah</option>
+            <option value="Sarawak">Sarawak</option>
+            <option value="Selangor">Selangor</option>
+            <option value="Terengganu">Terengganu</option>
+            <option value="Wilayah Persekutuan – Labuan">Wilayah Persekutuan – Labuan</option>
+          </select>
         </div>
       </fieldset>
-
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
