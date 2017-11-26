@@ -325,7 +325,7 @@
             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
             <span
             >
-              {{consignmentList[rowIndex].acceptTime}}
+              {{consignmentList[rowIndex].acceptTime | date:'y-MM-dd'}}
             </span>
 
             </ng-template>
