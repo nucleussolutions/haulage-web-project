@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TransportRequest } from './transportRequest';
 import { TransportRequestService } from './transportRequest.service';
-import { Response } from "@angular/http";
 import { ConsignmentService } from '../consignment/consignment.service';
 import { Consignment } from '../consignment/consignment';
 import { CustomerService } from '../customer/customer.service';

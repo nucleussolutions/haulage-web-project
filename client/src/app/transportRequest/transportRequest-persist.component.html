@@ -8,7 +8,6 @@
 <div class="row">
   <h1>{{create ? "Create" : "Edit"}} TransportRequest</h1>
   <form name="save{className}" (ngSubmit)="save()">
-
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
       <div id="persist-transportRequest" class="content scaffold-edit" role="main">
         <ul class="errors" role="alert" *ngIf="errors">
@@ -75,95 +74,7 @@
               <input class="form-control" required="" name="vesselEtaOrEtd" id="vesselEtaOrEtd" type="date" placeholder="YYYY-MM-DD"
                      [value]="transportRequest.vesselEtaOrEtd | date:'y-MM-dd'" (change)="transportRequest.vesselEtaOrEtd = $event.target.valueAsDate"/>
             </div>
-            <div class="form-group required">
-              <label for="shippingAgent">Shipping Agent
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="shippingAgent" id="shippingAgent" [(ngModel)]="transportRequest.shippingAgent" type="text"/>
-            </div>
-            <div class="form-group required">
-              <label for="forwardingAgent">Forwarding Agent
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="forwardingAgent" id="forwardingAgent" [(ngModel)]="transportRequest.forwardingAgent" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="operatorCode">Operator Code</label>
-              <input class="form-control" name="operatorCode" id="operatorCode" [(ngModel)]="transportRequest.operatorCode" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="hazardous">Hazardous</label>
-              <input name="hazardous" id="hazardous" [(ngModel)]="transportRequest.hazardous" type="checkbox"/>
-            </div>
 
-            <div class="form-group">
-              <label>Back to Back</label>
-              <input name="backToBack" id="backToBack" [ngModel]="transportRequest.backToBack" type="checkbox"/>
-            </div>
-
-            <div class="form-group">
-              <label>Tongkang</label>
-              <input name="openCargoBoat" id="openCargoBoat" [ngModel]="transportRequest.openCargoBoat" type="checkbox"/>
-            </div>
-
-            <div class="form-group required">
-              <label for="grossWeight">Gross Weight
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="grossWeight" id="grossWeight" [(ngModel)]="transportRequest.grossWeight" type="number" step="any"/>
-            </div>
-            <div class="form-group">
-              <label for="overDimension">Over Dimension</label>
-              <input class="form-control" name="overDimension" id="overDimension" [(ngModel)]="transportRequest.overDimension" type="checkbox"/>
-            </div>
-            <div class="form-group">
-              <label for="temperature">Temperature</label>
-              <input class="form-control" name="temperature" id="temperature" [(ngModel)]="transportRequest.temperature" type="number" step="any"/>
-            </div>
-            <div class="form-group required">
-              <label for="productDesc">Product Desc
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="productDesc" id="productDesc" [(ngModel)]="transportRequest.productDesc" type="text"/>
-            </div>
-            <div class="form-group required">
-              <label for="shipper">Shipper
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="shipper" id="shipper" [(ngModel)]="transportRequest.shipper" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="orderRemarks">Order Remarks</label>
-              <input class="form-control" name="orderRemarks" id="orderRemarks" [(ngModel)]="transportRequest.orderRemarks" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="containerRemarks">Container Remarks</label>
-              <input class="form-control" name="containerRemarks" id="containerRemarks" [(ngModel)]="transportRequest.containerRemarks" type="text"/>
-            </div>
-            <div class="form-group required">
-              <label for="dgCode">Dg Code
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="dgCode" id="dgCode" [(ngModel)]="transportRequest.dgCode" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="kOnekEightFormImg">Upload K1 K8 Form</label>
-              <input type="file" id="kOnekEightFormImg" [ngModel]="kOnekEightFormImg">
-            </div>
-            <div class="form-group">
-              <label for="gatePassImg">Upload Gate Pass</label>
-              <input type="file" id="gatePassImg" [ngModel]="gatePassImg">
-
-            </div>
-            <div class="form-group">
-              <label for="bookingConfirmationImg">Booking Confirmation</label>
-              <input id="bookingConfirmationImg" type="file" [ngModel]="bookingConfirmationImg">
-
-            </div>
-            <div class="form-group">
-              <label for="cmoImg">CMO Form</label>
-              <input id="cmoImg" type="file" [ngModel]="cmoImg">
-            </div>
 
             <div class="form-group required">
               <label for="status">Status
@@ -203,9 +114,6 @@
           </fieldset>
 
 
-        </fieldset>
-        <fieldset class="buttons">
-          <input type="submit" class="save btn btn-primary" [value]="create ? 'Save' : 'Update'"/>
         </fieldset>
       </div>
     </div>
@@ -349,6 +257,108 @@
       </fieldset>
 
     </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+      <div class="form-group required">
+        <label for="shippingAgent">Shipping Agent
+          <span class="required-indicator">*</span>
+        </label>
+        <input class="form-control" required="" name="shippingAgent" id="shippingAgent" [(ngModel)]="transportRequest.shippingAgent" type="text"/>
+      </div>
+      <div class="form-group required">
+        <label for="forwardingAgent">Forwarding Agent
+          <span class="required-indicator">*</span>
+        </label>
+        <input class="form-control" required="" name="forwardingAgent" id="forwardingAgent" [(ngModel)]="transportRequest.forwardingAgent" type="text"/>
+      </div>
+      <div class="form-group">
+        <label for="operatorCode">Operator Code</label>
+        <input class="form-control" name="operatorCode" id="operatorCode" [(ngModel)]="transportRequest.operatorCode" type="text"/>
+      </div>
+      <div class="form-group">
+        <label for="hazardous">Hazardous</label>
+        <input name="hazardous" id="hazardous" [(ngModel)]="transportRequest.hazardous" type="checkbox"/>
+      </div>
+
+      <div class="form-group">
+        <label>Back to Back</label>
+        <input name="backToBack" id="backToBack" [ngModel]="transportRequest.backToBack" type="checkbox"/>
+      </div>
+
+      <div class="form-group">
+        <label>Tongkang</label>
+        <input name="openCargoBoat" id="openCargoBoat" [ngModel]="transportRequest.openCargoBoat" type="checkbox"/>
+      </div>
+
+      <div class="form-group required">
+        <label for="grossWeight">Gross Weight
+          <span class="required-indicator">*</span>
+        </label>
+        <input class="form-control" required="" name="grossWeight" id="grossWeight" [(ngModel)]="transportRequest.grossWeight" type="number" step="any"/>
+      </div>
+      <div class="form-group">
+        <label for="overDimension">Over Dimension</label>
+        <input class="form-control" name="overDimension" id="overDimension" [(ngModel)]="transportRequest.overDimension" type="checkbox"/>
+      </div>
+      <div class="form-group">
+        <label for="temperature">Temperature</label>
+        <input class="form-control" name="temperature" id="temperature" [(ngModel)]="transportRequest.temperature" type="number" step="any"/>
+      </div>
+
+
+      <fieldset class="buttons">
+        <input type="submit" class="save btn btn-primary" [value]="create ? 'Save' : 'Update'"/>
+      </fieldset>
+
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+      <div class="form-group required">
+        <label for="productDesc">Product Desc
+          <span class="required-indicator">*</span>
+        </label>
+        <input class="form-control" required="" name="productDesc" id="productDesc" [(ngModel)]="transportRequest.productDesc" type="text"/>
+      </div>
+      <div class="form-group required">
+        <label for="shipper">Shipper
+          <span class="required-indicator">*</span>
+        </label>
+        <input class="form-control" required="" name="shipper" id="shipper" [(ngModel)]="transportRequest.shipper" type="text"/>
+      </div>
+      <div class="form-group">
+        <label for="orderRemarks">Order Remarks</label>
+        <input class="form-control" name="orderRemarks" id="orderRemarks" [(ngModel)]="transportRequest.orderRemarks" type="text"/>
+      </div>
+      <div class="form-group">
+        <label for="containerRemarks">Container Remarks</label>
+        <input class="form-control" name="containerRemarks" id="containerRemarks" [(ngModel)]="transportRequest.containerRemarks" type="text"/>
+      </div>
+      <div class="form-group required">
+        <label for="dgCode">Dg Code
+          <span class="required-indicator">*</span>
+        </label>
+        <input class="form-control" required="" name="dgCode" id="dgCode" [(ngModel)]="transportRequest.dgCode" type="text"/>
+      </div>
+      <div class="form-group">
+        <label for="kOnekEightFormImg">Upload K1 K8 Form</label>
+        <input type="file" id="kOnekEightFormImg" [ngModel]="kOnekEightFormImg">
+      </div>
+      <div class="form-group">
+        <label for="gatePassImg">Upload Gate Pass</label>
+        <input type="file" id="gatePassImg" [ngModel]="gatePassImg">
+
+      </div>
+      <div class="form-group">
+        <label for="bookingConfirmationImg">Booking Confirmation</label>
+        <input id="bookingConfirmationImg" type="file" [ngModel]="bookingConfirmationImg">
+
+      </div>
+      <div class="form-group">
+        <label for="cmoImg">CMO Form</label>
+        <input id="cmoImg" type="file" [ngModel]="cmoImg">
+      </div>
+    </div>
+
   </form>
 </div>
 

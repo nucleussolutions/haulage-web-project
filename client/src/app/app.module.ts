@@ -75,7 +75,7 @@ import { LoadingComponent } from './loading/loading.component';
     ReportingComponent,
     LoadingComponent,
   ],
-  entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent],
+  entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent],
   imports: [
     BrowserModule,
     CookieModule.forRoot(),
