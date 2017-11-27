@@ -56,7 +56,7 @@ export class PermissionService {
       'apiKey': userObject.apiKey
     });
 
-    return this.http.get(environment.serverUrl + '/api/permission?userId=' + userObject.uid, {
+    return this.http.get(environment.serverUrl + '/permissionByUserId/' + userObject.uid, {
       headers: headers
     }).map((r: Response) => new Permission(r));
   }

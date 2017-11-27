@@ -74,8 +74,8 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
       this.permissionService.getByUserId(this.userObject).subscribe(permission => {
         this.permission = permission;
-
-
+      }, error => {
+        console.log('transportrequest persist permission error '+error);
       });
 
       this.locationService.list(this.userObject).subscribe((locationList: Location[]) => {

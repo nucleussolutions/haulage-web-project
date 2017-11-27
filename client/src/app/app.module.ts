@@ -3,7 +3,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {IndexComponent} from './index/index.component';
 import {AppComponent} from './app.component';
@@ -109,7 +109,7 @@ import { LoadingComponent } from './loading/loading.component';
   exports: [ReactiveFormsModule],
   providers: [{
     provide: LocationStrategy,
-    useClass: HashLocationStrategy
+    useClass: PathLocationStrategy
   }, NavService],
   bootstrap: [AppComponent, NavDrawerComponent]
 })

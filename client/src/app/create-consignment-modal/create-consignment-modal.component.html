@@ -77,7 +77,11 @@
           <label for="size">Size
             <span class="required-indicator">*</span>
           </label>
-          <input class="form-control" required="" name="size" id="size" [(ngModel)]="consignment.size" type="text"/>
+          <!--<input  type="text"/>-->
+          <select class="form-control" required="" name="size" id="size" [(ngModel)]="consignment.size">
+            <option value="20\'/40'">20'/40'</option>
+            <option value="20\'">20'</option>
+          </select>
         </div>
       </div>
 

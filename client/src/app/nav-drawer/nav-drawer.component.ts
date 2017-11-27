@@ -51,7 +51,6 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.permission = permission;
     }, error => {
       console.log('NavDrawerComponent permissionService error ' + error);
-      
     });
   }
 

@@ -9,7 +9,7 @@ class PermissionController {
     PermissionService permissionService
 
     static responseFormats = ['json', 'xml']
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE", getByUserId: "GET"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -63,22 +63,4 @@ class PermissionController {
         render status: NO_CONTENT
     }
 
-    def getByUserId(){
-        def userId = params.userId
-
-        println 'userId '+userId
-
-        if(!userId){
-            render([status: BAD_REQUEST, message : 'user id not found'])
-        }else{
-            def permission = Permission.findByUserId(userId)
-            if(!permission){
-                response.status = 400
-                render([message: 'user permission not found'])
-            }else{
-                respond permission, status: OK
-            }
-        }
-
-    }
 }

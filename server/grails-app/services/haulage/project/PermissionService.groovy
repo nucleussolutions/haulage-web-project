@@ -15,4 +15,5 @@ interface PermissionService {
 
     Permission save(Permission permission)
 
+    Permission findByUserId(String userId)
 }

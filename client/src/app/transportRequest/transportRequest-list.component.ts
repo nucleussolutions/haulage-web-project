@@ -32,9 +32,12 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.userService.getUser().flatMap(userObject => {
       this.listTransportRequests(userObject);
+      console.log('transport request list userobject '+JSON.stringify(userObject));
       return this.permissionService.getByUserId(userObject);
     }).subscribe(permission => {
       this.permission = permission;
+    }, error => {
+      console.log('transport request list permission error '+JSON.stringify(error));
     });
   }
 
