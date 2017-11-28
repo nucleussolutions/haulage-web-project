@@ -7,4 +7,10 @@ import grails.rest.*
 class Tariff {
 
     String desc
+    Location location
+
+    static constraints = {
+        desc nullable: false
+        location nullable: false
+    }
 }
