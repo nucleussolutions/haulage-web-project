@@ -5,7 +5,6 @@ import { Customer } from '../customer/customer';
 export class TransportRequest {
   id: number;
 
-  containerVolume: string;
   type: string;
   equipment: string;
   terminal: Location;

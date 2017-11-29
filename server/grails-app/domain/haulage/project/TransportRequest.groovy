@@ -6,8 +6,6 @@ import grails.rest.*
 @Resource(readOnly = false, formats = ['json', 'xml'])
 class TransportRequest {
 
-    String containerVolume
-
     //uncouple import, direct import, uncouple export or direct export
     String type
 
@@ -67,7 +65,6 @@ class TransportRequest {
     Boolean openCargoBoat
 
     static constraints = {
-        containerVolume blank: false, nullable: false
         type nullable: false, inList: RFTType.values()*.id
         equipment nullable: true
         terminal nullable: false

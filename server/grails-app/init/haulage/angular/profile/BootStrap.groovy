@@ -111,7 +111,6 @@ class BootStrap {
         testRFT.grossWeight = 32.2
         testRFT.shipper = 'asdadasd'
         testRFT.forwarderId = 'qwowqeiowqeiq'
-        testRFT.containerVolume = '12321321038'
         testRFT.voyageNo = '123213123'
         testRFT.vesselName = '1232131208'
         testRFT.portOfLoading = 'asdasdadasd'
@@ -140,7 +139,6 @@ class BootStrap {
         testRFT2.grossWeight = 32.2
         testRFT2.shipper = 'asdadasd'
         testRFT2.forwarderId = 'qwowqeiowqeiq'
-        testRFT2.containerVolume = '12321321038'
         testRFT2.kOnekEightFormImgUrl = 'http://www.google.com'
         testRFT2.gatePassImgUrl = 'http://www.google.com'
         testRFT2.voyageNo = '123213123'
