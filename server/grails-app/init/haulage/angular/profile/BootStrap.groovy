@@ -104,13 +104,11 @@ class BootStrap {
         testRFT.orderRemarks = 'asdasdlkjasd'
         testRFT.kOnekEightFormImgUrl = 'http://www.google.com'
         testRFT.gatePassImgUrl = 'http://www.google.com'
-        testRFT.bookingRefNo = 'asdjasldlsad'
         testRFT.customer = customer
         testRFT.overDimension = true
         testRFT.operatorCode = '12312308'
         testRFT.productDesc = '12p3128321093 aslkdjaskd'
         testRFT.grossWeight = 32.2
-        testRFT.otherRefNo = '12321309128390'
         testRFT.shipper = 'asdadasd'
         testRFT.forwarderId = 'qwowqeiowqeiq'
         testRFT.containerVolume = '12321321038'
@@ -135,13 +133,11 @@ class BootStrap {
         testRFT2.vesselEtaOrEtd = new Date()
         testRFT2.terminal = new Location(name: 'aksdsldjasd', address1: 'asdldsjasdl', address2: 'asdsadjlsadlksd', city: 'asdsdasd', state: 'asdskjd', country: 'askdjsldasd', type: 'depot')
         testRFT2.temperature = 32.12
-        testRFT2.bookingRefNo = 'asdjasldlsad'
         testRFT2.customer = customer
         testRFT2.overDimension = false
         testRFT2.operatorCode = '123021380123'
         testRFT2.productDesc = '12p3128321093 aslkdjaskd'
         testRFT2.grossWeight = 32.2
-        testRFT2.otherRefNo = '12321309128390'
         testRFT2.shipper = 'asdadasd'
         testRFT2.forwarderId = 'qwowqeiowqeiq'
         testRFT2.containerVolume = '12321321038'
