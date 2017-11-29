@@ -1,0 +1,52 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a class="list" [routerLink]="['/tariff', 'list']" class="list">Tariff List</a></li>
+        <li><a class="create" [routerLink]="['/tariff', 'create']" class="create">New Tariff</a></li>
+    </ul>
+</div>
+<div id="show-part" class="content scaffold-show" role="main">
+    <h1>Show Tariff</h1>
+    <ol class="property-list tariff">
+  <li class="fieldcontain">
+    <span id="desc-label" class="property-label">Desc</span>
+    <div class="property-value" aria-labelledby="desc-label">
+      <span>{{tariff.desc}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="location-label" class="property-label">Location</span>
+    <div class="property-value" aria-labelledby="location-label">
+      <a *ngIf="tariff.location" [routerLink]="['/tariff','show', tariff.location.id]">{{tariff.location.toString()}}</a>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="zone-label" class="property-label">Zone</span>
+    <div class="property-value" aria-labelledby="zone-label">
+      <span>{{tariff.zone}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="tollCharges-label" class="property-label">Toll Charges</span>
+    <div class="property-value" aria-labelledby="tollCharges-label">
+      <span>{{tariff.tollCharges}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="faf-label" class="property-label">Faf</span>
+    <div class="property-value" aria-labelledby="faf-label">
+      <span>{{tariff.faf}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="haulageCharges-label" class="property-label">Haulage Charges</span>
+    <div class="property-value" aria-labelledby="haulageCharges-label">
+      <span>{{tariff.haulageCharges}}</span>
+    </div>
+  </li>
+</ol>
+
+    <a class="edit" [routerLink]="['/tariff', 'edit', tariff.id]">Edit</a>
+    <button type="button" (click)="destroy()">Delete</button>
+
+</div>

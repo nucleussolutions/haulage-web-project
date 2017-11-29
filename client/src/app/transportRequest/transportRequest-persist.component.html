@@ -6,7 +6,7 @@
 </div>
 
 <div class="row">
-  <h1>{{create ? "Create" : "Edit"}} TransportRequest</h1>
+  <h1 class="col-xs-12">{{create ? "Create" : "Edit"}} RFT</h1>
   <form name="save{className}" (ngSubmit)="save()">
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
       <div id="persist-transportRequest" class="content scaffold-edit" role="main">
@@ -14,8 +14,13 @@
           <li *ngFor="let error of errors">{{error.message}}</li>
         </ul>
 
-        <fieldset class="form">
-          <fieldset class="form">
+
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Voyage Information</h3>
+          </div>
+
+          <div class="panel-body">
             <div class="form-group required">
               <label for="containerVolume">Container Volume
                 <span class="required-indicator">*</span>
@@ -26,7 +31,7 @@
               <label for="type">Type
                 <span class="required-indicator">*</span>
               </label>
-              <select required="" name="type" id="type" [(ngModel)]="transportRequest.type">
+              <select class="form-control" required="" name="type" id="type" [(ngModel)]="transportRequest.type">
                 <option value="Direct Import">Direct Import</option>
                 <option value="Direct Export">Direct Export</option>
                 <option value="Uncouple Import">Uncouple Import</option>
@@ -36,14 +41,6 @@
             <div class="form-group">
               <label for="equipment">Equipment</label>
               <input class="form-control" name="equipment" id="equipment" [(ngModel)]="transportRequest.equipment" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="bookingRefNo">Booking Ref No</label>
-              <input class="form-control" name="bookingRefNo" id="bookingRefNo" [(ngModel)]="transportRequest.bookingRefNo" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="otherRefNo">Other Ref No</label>
-              <input class="form-control" name="otherRefNo" id="otherRefNo" [(ngModel)]="transportRequest.otherRefNo" type="text"/>
             </div>
             <div class="form-group required">
               <label for="terminal">Terminal
@@ -109,153 +106,159 @@
                 </option>
               </select>
             </div>
-
-
-          </fieldset>
-
-
-        </fieldset>
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 
-      <fieldset class="embedded customer">
-        <legend>Customer</legend>
-        <div class="form-group required">
-          <label for="customer.phone">Phone
-            <span class="required-indicator">*</span>
-          </label>
-          <input class="form-control" required="" name="customer.phone" id="customer.phone" [(ngModel)]="transportRequest.customer.phone" type="text"/>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Customer</h3>
         </div>
-        <div class="form-group required">
-          <label for="customer.address1">Address1
-            <span class="required-indicator">*</span>
-          </label>
-          <input class="form-control" required="" name="customer.address1" id="customer.address1" [(ngModel)]="transportRequest.customer.address1" type="text"/>
+        <div class="panel-body">
+          <div class="form-group required">
+            <label for="customer.phone">Phone
+              <span class="required-indicator">*</span>
+            </label>
+            <input class="form-control" required="" name="customer.phone" id="customer.phone" [(ngModel)]="transportRequest.customer.phone" type="text"/>
+          </div>
+          <div class="form-group required">
+            <label for="customer.address1">Address1
+              <span class="required-indicator">*</span>
+            </label>
+            <input class="form-control" required="" name="customer.address1" id="customer.address1" [(ngModel)]="transportRequest.customer.address1"
+                   type="text"/>
+          </div>
+          <div class="form-group required">
+            <label for="customer.address2">Address2
+              <span class="required-indicator">*</span>
+            </label>
+            <input class="form-control" required="" name="customer.address2" id="customer.address2" [(ngModel)]="transportRequest.customer.address2"
+                   type="text"/>
+          </div>
+          <div class="form-group required">
+            <label for="customer.city">City
+              <span class="required-indicator">*</span>
+            </label>
+            <input class="form-control" required="" name="customer.city" id="customer.city" [(ngModel)]="transportRequest.customer.city" type="text"/>
+          </div>
+          <div class="form-group required">
+            <label for="customer.personInCharge">Person In Charge
+              <span class="required-indicator">*</span>
+            </label>
+            <input class="form-control" required="" name="customer.personInCharge" id="customer.personInCharge"
+                   [(ngModel)]="transportRequest.customer.personInCharge" type="text"/>
+          </div>
+          <div class="form-group required">
+            <label for="customer.companyName">Company Name
+              <span class="required-indicator">*</span>
+            </label>
+            <input class="form-control" required="" name="customer.companyName" id="customer.companyName" [(ngModel)]="transportRequest.customer.companyName"
+                   type="text"/>
+          </div>
+          <div class="form-group required">
+            <label for="customer.country">Country
+              <span class="required-indicator">*</span>
+            </label>
+            <input class="form-control" required="" name="customer.country" id="customer.country" [(ngModel)]="transportRequest.customer.country" type="text"/>
+          </div>
+          <div class="form-group required">
+            <label for="customer.state">State
+              <span class="required-indicator">*</span>
+            </label>
+            <select class="form-control" name="customer.state" id="customer.state" [(ngModel)]="transportRequest.customer.state">
+              <option value="Johor">Johor</option>
+              <option value="Kedah">Kedah</option>
+              <option value="Kelantan">Kelantan</option>
+              <option value="Kuala Lumpur">Kuala Lumpur</option>
+              <option value="Negeri Sembilan">Negeri Sembilan</option>
+              <option value="Pahang">Pahang</option>
+              <option value="Melaka">Melaka</option>
+              <option value="Perak">Perak</option>
+              <option value="Perlis">Perlis</option>
+              <option value="Pulau Pinang">Pulau Pinang</option>
+              <option value="Sabah">Sabah</option>
+              <option value="Sarawak">Sarawak</option>
+              <option value="Selangor">Selangor</option>
+              <option value="Terengganu">Terengganu</option>
+              <option value="Wilayah Persekutuan – Labuan">Wilayah Persekutuan – Labuan</option>
+            </select>
+          </div>
         </div>
-        <div class="form-group required">
-          <label for="customer.address2">Address2
-            <span class="required-indicator">*</span>
-          </label>
-          <input class="form-control" required="" name="customer.address2" id="customer.address2" [(ngModel)]="transportRequest.customer.address2" type="text"/>
-        </div>
-        <div class="form-group required">
-          <label for="customer.city">City
-            <span class="required-indicator">*</span>
-          </label>
-          <input class="form-control" required="" name="customer.city" id="customer.city" [(ngModel)]="transportRequest.customer.city" type="text"/>
-        </div>
-        <div class="form-group required">
-          <label for="customer.personInCharge">Person In Charge
-            <span class="required-indicator">*</span>
-          </label>
-          <input class="form-control" required="" name="customer.personInCharge" id="customer.personInCharge"
-                 [(ngModel)]="transportRequest.customer.personInCharge" type="text"/>
-        </div>
-        <div class="form-group required">
-          <label for="customer.companyName">Company Name
-            <span class="required-indicator">*</span>
-          </label>
-          <input class="form-control" required="" name="customer.companyName" id="customer.companyName" [(ngModel)]="transportRequest.customer.companyName"
-                 type="text"/>
-        </div>
-        <div class="form-group required">
-          <label for="customer.country">Country
-            <span class="required-indicator">*</span>
-          </label>
-          <input class="form-control" required="" name="customer.country" id="customer.country" [(ngModel)]="transportRequest.customer.country" type="text"/>
-        </div>
-        <div class="form-group required">
-          <label for="customer.state">State
-            <span class="required-indicator">*</span>
-          </label>
-          <select class="form-control" name="customer.state" id="customer.state" [(ngModel)]="transportRequest.customer.state">
-            <option value="Johor">Johor</option>
-            <option value="Kedah">Kedah</option>
-            <option value="Kelantan">Kelantan</option>
-            <option value="Kuala Lumpur">Kuala Lumpur</option>
-            <option value="Negeri Sembilan">Negeri Sembilan</option>
-            <option value="Pahang">Pahang</option>
-            <option value="Melaka">Melaka</option>
-            <option value="Perak">Perak</option>
-            <option value="Perlis">Perlis</option>
-            <option value="Pulau Pinang">Pulau Pinang</option>
-            <option value="Sabah">Sabah</option>
-            <option value="Sarawak">Sarawak</option>
-            <option value="Selangor">Selangor</option>
-            <option value="Terengganu">Terengganu</option>
-            <option value="Wilayah Persekutuan – Labuan">Wilayah Persekutuan – Labuan</option>
-          </select>
-        </div>
-      </fieldset>
+      </div>
+
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <fieldset>
-        <legend>Consignments</legend>
 
-        <ngx-datatable
-            class="bootstrap"
-            [rows]="consignmentList"
-            [loadingIndicator]="loadingIndicator"
-            [columns]="columns"
-            [columnMode]="'force'"
-            [headerHeight]="40"
-            [footerHeight]="40"
-            [limit]="10"
-            [rowHeight]="'auto'"
-            [selectionType]="'single'"
-            [selected]="selectedConsignment"
-            (select)='onSelect($event)'
-            [reorderable]="reorderable">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">Container Details</h3>
+        </div>
 
-          <ngx-datatable-column name="Container No">
-            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        <div class="panel-body">
+          <ngx-datatable
+              class="bootstrap"
+              [rows]="consignmentList"
+              [loadingIndicator]="loadingIndicator"
+              [columns]="columns"
+              [columnMode]="'force'"
+              [headerHeight]="40"
+              [footerHeight]="40"
+              [limit]="10"
+              [rowHeight]="'auto'"
+              [selectionType]="'single'"
+              [selected]="selectedConsignment"
+              (select)='onSelect($event)'
+              [reorderable]="reorderable">
+
+            <ngx-datatable-column name="Container No">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
             <span
             >
               {{consignmentList[rowIndex].containerNo}}
             </span>
-            </ng-template>
-          </ngx-datatable-column>
+              </ng-template>
+            </ngx-datatable-column>
 
-          <ngx-datatable-column name="Name">
-            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <ngx-datatable-column name="Name">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
             <span
             >
               {{consignmentList[rowIndex].name}}
             </span>
 
-            </ng-template>
-          </ngx-datatable-column>
+              </ng-template>
+            </ngx-datatable-column>
 
-          <ngx-datatable-column name="acceptTime">
-            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <ngx-datatable-column name="acceptTime">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
             <span
             >
               {{consignmentList[rowIndex].acceptTime | date:'y-MM-dd'}}
             </span>
 
-            </ng-template>
-          </ngx-datatable-column>
+              </ng-template>
+            </ngx-datatable-column>
 
-          <ngx-datatable-column name="Code">
-            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <ngx-datatable-column name="Code">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
             <span
             >
               {{consignmentList[rowIndex].consignmentCode}}
             </span>
 
-            </ng-template>
-          </ngx-datatable-column>
+              </ng-template>
+            </ngx-datatable-column>
 
-        </ngx-datatable>
-        <button type="button" class="btn btn-primary" (click)="onAddConsignmentClick($event)">Add Consignment</button>
-        <button type="button" class="btn btn-primary" (click)="onEditConsignmentClick($event)">Edit Consignment</button>
-        <button type="button" class="btn btn-primary" (click)="onDeleteConsignmentClick($event)">Delete Consignment</button>
-
-      </fieldset>
-
+          </ngx-datatable>
+          <button type="button" class="btn btn-primary" (click)="onAddConsignmentClick($event)">Add Consignment</button>
+          <button type="button" class="btn btn-primary" (click)="onEditConsignmentClick($event)">Edit Consignment</button>
+          <button type="button" class="btn btn-primary" (click)="onDeleteConsignmentClick($event)">Delete Consignment</button>
+        </div>
+      </div>
     </div>
 
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">

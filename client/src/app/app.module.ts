@@ -50,6 +50,7 @@ import { HelpComponent } from './help/help.component';
 import { ReportingComponent } from './reporting/reporting.component';
 import { QuoteModule } from './quote/quote.module';
 import { LoadingComponent } from './loading/loading.component';
+import { TariffModule } from './tariff/tariff.module';
 
 
 @NgModule({
@@ -104,7 +105,8 @@ import { LoadingComponent } from './loading/loading.component';
     PermissionModule,
     JobModule,
     NgxDatatableModule,
-    QuoteModule
+    QuoteModule,
+    TariffModule
 ],
   exports: [ReactiveFormsModule],
   providers: [{

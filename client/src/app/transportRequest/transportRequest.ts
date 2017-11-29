@@ -8,8 +8,6 @@ export class TransportRequest {
   containerVolume: string;
   type: string;
   equipment: string;
-  bookingRefNo: string;
-  otherRefNo: string;
   terminal: Location;
   vesselName: string;
   voyageNo: string;

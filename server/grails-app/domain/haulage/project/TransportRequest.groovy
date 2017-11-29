@@ -14,9 +14,6 @@ class TransportRequest {
     //trailer or s/loader
     String equipment
 
-    String bookingRefNo
-    String otherRefNo
-
     Location terminal
     Date vesselEtaOrEtd
     String vesselName
@@ -73,8 +70,6 @@ class TransportRequest {
         containerVolume blank: false, nullable: false
         type nullable: false, inList: RFTType.values()*.id
         equipment nullable: true
-        bookingRefNo blank: true
-        otherRefNo blank: true
         terminal nullable: false
         vesselName blank: false, nullable: false
         voyageNo blank: false, nullable: false

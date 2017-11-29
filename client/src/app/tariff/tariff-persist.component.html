@@ -1,0 +1,60 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/tariff','list']" class="list">Tariff List</a></li>
+    </ul>
+</div>
+<div id="persist-tariff" class="content scaffold-edit" role="main">
+    <h1>{{create ? "Create" : "Edit"}} Tariff</h1>
+    <ul class="errors" role="alert" *ngIf="errors">
+        <li *ngFor="let error of errors">{{error.message}}</li>
+    </ul>
+
+    <form name="save{className}" (ngSubmit)="save()">
+        <fieldset class="form">
+            <fieldset class="form">
+  <div class="fieldcontain required">
+    <label for="desc">Desc
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="desc" id="desc" [(ngModel)]="tariff.desc" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="location">Location
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="location" id="location" [(ngModel)]="tariff.location">
+      <option *ngFor="let location of locationList" [value]="location.id" [selected]="tariff.location?.id == location.id">{{location.toString()}}</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
+    <label for="zone">Zone
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="zone" id="zone" [(ngModel)]="tariff.zone" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="tollCharges">Toll Charges
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="tollCharges" id="tollCharges" [(ngModel)]="tariff.tollCharges" type="number" step="any" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="faf">Faf
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="faf" id="faf" [(ngModel)]="tariff.faf" type="number" step="any" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="haulageCharges">Haulage Charges
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="haulageCharges" id="haulageCharges" [(ngModel)]="tariff.haulageCharges" type="number" step="any" />
+  </div>
+</fieldset>
+        </fieldset>
+        <fieldset class="buttons">
+            <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" />
+        </fieldset>
+    </form>
+</div>

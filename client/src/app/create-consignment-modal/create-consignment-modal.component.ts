@@ -32,6 +32,7 @@ export class CreateConsignmentModalComponent implements OnInit, CloseGuard, Moda
     dialog.setCloseGuard(this);
     if(!this.context.consignment){
       this.consignment = new Consignment();
+      this.consignment.status = 'Pending';
     }else{
       this.consignment = this.context.consignment;
       this.create = false;
@@ -44,7 +45,12 @@ export class CreateConsignmentModalComponent implements OnInit, CloseGuard, Moda
 
   addConsignment(){
     console.log('add consignment emit');
-    this.createConsignmentEventService.createConsignment(this.consignment);
+
+    if(this.create == true){
+      this.createConsignmentEventService.createConsignment(this.consignment);
+    }else{
+      //todo edit existing consignment
+    }
     this.dialog.close(this.consignment);
   }
 

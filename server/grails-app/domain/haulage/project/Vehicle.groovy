@@ -13,6 +13,9 @@ class Vehicle {
     //prime mover or trailer
     String type
 
+    //prime mover type or trailer type
+    String subType
+
     //apparently there would be notifications on renewal dates sent to the hauliers
     Date roadTaxRenewalDate
 
@@ -49,6 +52,7 @@ class Vehicle {
         spadPermitExpiryDate nullable: false
         insuranceExpiryDate nullable: false
         userId nullable: false
+        subType nullable: true
     }
 
     static mapping = {
