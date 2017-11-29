@@ -43,6 +43,9 @@
     <li *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
       <a routerLinkActive="active" routerLink="/vehicle">Vehicles</a>
     </li>
+    <li *ngIf="permission?.authority === 'Super Admin'">
+      <a routerLink="/tariff" routerLinkActive="active">Tariff</a>
+    </li>
     <li>
       <a routerLinkActive="active" routerLink="/transportRequest">RFT / ROT</a>
     </li>
