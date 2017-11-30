@@ -51,6 +51,7 @@ import { ReportingComponent } from './reporting/reporting.component';
 import { QuoteModule } from './quote/quote.module';
 import { LoadingComponent } from './loading/loading.component';
 import { TariffModule } from './tariff/tariff.module';
+import { BillingComponent } from './billing/billing.component';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { TariffModule } from './tariff/tariff.module';
     HelpComponent,
     ReportingComponent,
     LoadingComponent,
+    BillingComponent,
   ],
   entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent],
   imports: [
