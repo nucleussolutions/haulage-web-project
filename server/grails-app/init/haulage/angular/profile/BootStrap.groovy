@@ -77,8 +77,6 @@ class BootStrap {
             return output
         }
 
-
-
         def consignments = []
 
         def pickupLadenDropOff = new Location(name: 'asdasdalsdjk', address1: 'asdasdsad', address2: 'asdasdasd', lat: 3.12312323, lng: 31232139830, type: 'depot', city: 'asdasdjasld', state: 'asldskjdlkasd', country: 'sadsadkjl').save(flush: true)

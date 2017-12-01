@@ -1,0 +1,8 @@
+import haulage.project.TransportRequest
+
+model {
+	Iterable<TransportRequest> transportRequestList
+}
+
+json tmpl.transportRequest(transportRequestList ?: [])
+

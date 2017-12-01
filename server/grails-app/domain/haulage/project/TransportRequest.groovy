@@ -3,7 +3,7 @@ package haulage.project
 
 import grails.rest.*
 
-@Resource(readOnly = false, formats = ['json', 'xml'])
+@Resource(readOnly = false, formats = ['json'])
 class TransportRequest {
 
     //uncouple import, direct import, uncouple export or direct export

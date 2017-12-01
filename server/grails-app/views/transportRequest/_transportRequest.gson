@@ -1,0 +1,7 @@
+import haulage.project.TransportRequest
+
+model {
+	TransportRequest transportRequest
+}
+
+json g.render(transportRequest, [resolveTemplate: false])

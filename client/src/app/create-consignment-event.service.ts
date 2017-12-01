@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Consignment} from "./consignment/consignment";
 import {Subject} from "rxjs/Subject";
@@ -19,12 +19,19 @@ export class CreateConsignmentEventService {
 
   }
 
-  createConsignment(consignment: Consignment){
+  createConsignment(consignment: Consignment) {
     this.consignmentCreatedSource.next(consignment);
   }
 
-  updateConsignment(consignment: Consignment){
+  updateConsignment(consignment: Consignment) {
     this.consignmentUpdatedSource.next(consignment);
   }
 
+  deleteConsignment(consignment: Consignment) {
+
+  }
+
+  editConsignment(consignment: Consignment) {
+
+  }
 }

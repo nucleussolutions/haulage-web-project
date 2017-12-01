@@ -34,14 +34,17 @@
             </div>
             <div class="form-group">
               <label for="equipment">Equipment</label>
-              <input class="form-control" name="equipment" id="equipment" [(ngModel)]="transportRequest.equipment" type="text"/>
+              <input class="form-control" name="equipment" id="equipment" [(ngModel)]="transportRequest.equipment"
+                     type="text"/>
             </div>
             <div class="form-group required">
               <label for="terminal">Terminal
                 <span class="required-indicator">*</span>
               </label>
-              <select class="form-control" required="" name="terminal" id="terminal" [(ngModel)]="transportRequest.terminal">
-                <option *ngFor="let location of locationList" [value]="location.id" [selected]="transportRequest.terminal?.id == location.id">
+              <select class="form-control" required="" name="terminal" id="terminal"
+                      [(ngModel)]="transportRequest.terminal">
+                <option *ngFor="let location of locationList" [value]="location.id"
+                        [selected]="transportRequest.terminal?.id == location.id">
                   {{location.name }}
                 </option>
               </select>
@@ -50,20 +53,24 @@
               <label for="vesselName">Vessel Name
                 <span class="required-indicator">*</span>
               </label>
-              <input class="form-control" required="" name="vesselName" id="vesselName" [(ngModel)]="transportRequest.vesselName" type="text"/>
+              <input class="form-control" required="" name="vesselName" id="vesselName"
+                     [(ngModel)]="transportRequest.vesselName" type="text"/>
             </div>
             <div class="form-group required">
               <label for="voyageNo">Voyage No
                 <span class="required-indicator">*</span>
               </label>
-              <input class="form-control" required="" name="voyageNo" id="voyageNo" [(ngModel)]="transportRequest.voyageNo" type="text"/>
+              <input class="form-control" required="" name="voyageNo" id="voyageNo"
+                     [(ngModel)]="transportRequest.voyageNo" type="text"/>
             </div>
             <div class="form-group required">
               <label for="vesselEtaOrEtd">Vessel Eta Or Etd
                 <span class="required-indicator">*</span>
               </label>
-              <input class="form-control" required="" name="vesselEtaOrEtd" id="vesselEtaOrEtd" type="date" placeholder="YYYY-MM-DD"
-                     [value]="transportRequest.vesselEtaOrEtd | date:'y-MM-dd'" (change)="transportRequest.vesselEtaOrEtd = $event.target.valueAsDate"/>
+              <input class="form-control" required="" name="vesselEtaOrEtd" id="vesselEtaOrEtd" type="date"
+                     placeholder="YYYY-MM-DD"
+                     [value]="transportRequest.vesselEtaOrEtd | date:'y-MM-dd'"
+                     (change)="transportRequest.vesselEtaOrEtd = $event.target.valueAsDate"/>
             </div>
 
 
@@ -81,13 +88,15 @@
               <label for="portOfLoading">Port Of Loading
                 <span class="required-indicator">*</span>
               </label>
-              <input class="form-control" required="" name="portOfLoading" id="portOfLoading" [(ngModel)]="transportRequest.portOfLoading" type="text"/>
+              <input class="form-control" required="" name="portOfLoading" id="portOfLoading"
+                     [(ngModel)]="transportRequest.portOfLoading" type="text"/>
             </div>
             <div class="form-group required">
               <label for="portOfDischarge">Port Of Discharge
                 <span class="required-indicator">*</span>
               </label>
-              <input class="form-control" required="" name="portOfDischarge" id="portOfDischarge" [(ngModel)]="transportRequest.portOfDischarge" type="text"/>
+              <input class="form-control" required="" name="portOfDischarge" id="portOfDischarge"
+                     [(ngModel)]="transportRequest.portOfDischarge" type="text"/>
             </div>
             <div class="form-group required">
               <label for="pickupOrDropoffEmptyDepoh">Pickup Or Dropoff Empty Depoh
@@ -95,7 +104,8 @@
               </label>
               <select class="form-control" required="" name="pickupOrDropoffEmptyDepoh" id="pickupOrDropoffEmptyDepoh"
                       [(ngModel)]="transportRequest.pickupOrDropoffEmptyDepoh">
-                <option *ngFor="let location of locationList" [value]="location.id" [selected]="transportRequest.pickupOrDropoffEmptyDepoh?.id == location.id">
+                <option *ngFor="let location of locationList" [value]="location.id"
+                        [selected]="transportRequest.pickupOrDropoffEmptyDepoh?.id == location.id">
                   {{location.name}}
                 </option>
               </select>
@@ -116,27 +126,31 @@
             <label for="customer.phone">Phone
               <span class="required-indicator">*</span>
             </label>
-            <input class="form-control" required="" name="customer.phone" id="customer.phone" [(ngModel)]="transportRequest.customer.phone" type="text"/>
+            <input class="form-control" required="" name="customer.phone" id="customer.phone"
+                   [(ngModel)]="transportRequest.customer.phone" type="text"/>
           </div>
           <div class="form-group required">
             <label for="customer.address1">Address1
               <span class="required-indicator">*</span>
             </label>
-            <input class="form-control" required="" name="customer.address1" id="customer.address1" [(ngModel)]="transportRequest.customer.address1"
+            <input class="form-control" required="" name="customer.address1" id="customer.address1"
+                   [(ngModel)]="transportRequest.customer.address1"
                    type="text"/>
           </div>
           <div class="form-group required">
             <label for="customer.address2">Address2
               <span class="required-indicator">*</span>
             </label>
-            <input class="form-control" required="" name="customer.address2" id="customer.address2" [(ngModel)]="transportRequest.customer.address2"
+            <input class="form-control" required="" name="customer.address2" id="customer.address2"
+                   [(ngModel)]="transportRequest.customer.address2"
                    type="text"/>
           </div>
           <div class="form-group required">
             <label for="customer.city">City
               <span class="required-indicator">*</span>
             </label>
-            <input class="form-control" required="" name="customer.city" id="customer.city" [(ngModel)]="transportRequest.customer.city" type="text"/>
+            <input class="form-control" required="" name="customer.city" id="customer.city"
+                   [(ngModel)]="transportRequest.customer.city" type="text"/>
           </div>
           <div class="form-group required">
             <label for="customer.personInCharge">Person In Charge
@@ -149,20 +163,23 @@
             <label for="customer.companyName">Company Name
               <span class="required-indicator">*</span>
             </label>
-            <input class="form-control" required="" name="customer.companyName" id="customer.companyName" [(ngModel)]="transportRequest.customer.companyName"
+            <input class="form-control" required="" name="customer.companyName" id="customer.companyName"
+                   [(ngModel)]="transportRequest.customer.companyName"
                    type="text"/>
           </div>
           <div class="form-group required">
             <label for="customer.country">Country
               <span class="required-indicator">*</span>
             </label>
-            <input class="form-control" required="" name="customer.country" id="customer.country" [(ngModel)]="transportRequest.customer.country" type="text"/>
+            <input class="form-control" required="" name="customer.country" id="customer.country"
+                   [(ngModel)]="transportRequest.customer.country" type="text"/>
           </div>
           <div class="form-group required">
             <label for="customer.state">State
               <span class="required-indicator">*</span>
             </label>
-            <select class="form-control" name="customer.state" id="customer.state" [(ngModel)]="transportRequest.customer.state">
+            <select class="form-control" name="customer.state" id="customer.state"
+                    [(ngModel)]="transportRequest.customer.state">
               <option value="Johor">Johor</option>
               <option value="Kedah">Kedah</option>
               <option value="Kelantan">Kelantan</option>
@@ -249,8 +266,10 @@
 
           </ngx-datatable>
           <button type="button" class="btn btn-primary" (click)="onAddConsignmentClick($event)">Add Consignment</button>
-          <button type="button" class="btn btn-primary" (click)="onEditConsignmentClick($event)">Edit Consignment</button>
-          <button type="button" class="btn btn-primary" (click)="onDeleteConsignmentClick($event)">Delete Consignment</button>
+          <button type="button" class="btn btn-primary" (click)="onEditConsignmentClick($event)">Edit Consignment
+          </button>
+          <button type="button" class="btn btn-primary" (click)="onDeleteConsignmentClick($event)">Delete Consignment
+          </button>
         </div>
       </div>
     </div>
@@ -260,17 +279,20 @@
         <label for="shippingAgent">Shipping Agent
           <span class="required-indicator">*</span>
         </label>
-        <input class="form-control" required="" name="shippingAgent" id="shippingAgent" [(ngModel)]="transportRequest.shippingAgent" type="text"/>
+        <input class="form-control" required="" name="shippingAgent" id="shippingAgent"
+               [(ngModel)]="transportRequest.shippingAgent" type="text"/>
       </div>
       <div class="form-group required">
         <label for="forwardingAgent">Forwarding Agent
           <span class="required-indicator">*</span>
         </label>
-        <input class="form-control" required="" name="forwardingAgent" id="forwardingAgent" [(ngModel)]="transportRequest.forwardingAgent" type="text"/>
+        <input class="form-control" required="" name="forwardingAgent" id="forwardingAgent"
+               [(ngModel)]="transportRequest.forwardingAgent" type="text"/>
       </div>
       <div class="form-group">
         <label for="operatorCode">Operator Code</label>
-        <input class="form-control" name="operatorCode" id="operatorCode" [(ngModel)]="transportRequest.operatorCode" type="text"/>
+        <input class="form-control" name="operatorCode" id="operatorCode" [(ngModel)]="transportRequest.operatorCode"
+               type="text"/>
       </div>
       <div class="form-group">
         <label for="hazardous">Hazardous</label>
@@ -291,15 +313,18 @@
         <label for="grossWeight">Gross Weight
           <span class="required-indicator">*</span>
         </label>
-        <input class="form-control" required="" name="grossWeight" id="grossWeight" [(ngModel)]="transportRequest.grossWeight" type="number" step="any"/>
+        <input class="form-control" required="" name="grossWeight" id="grossWeight"
+               [(ngModel)]="transportRequest.grossWeight" type="number" step="any"/>
       </div>
       <div class="form-group">
         <label for="overDimension">Over Dimension</label>
-        <input class="form-control" name="overDimension" id="overDimension" [(ngModel)]="transportRequest.overDimension" type="checkbox"/>
+        <input class="form-control" name="overDimension" id="overDimension" [(ngModel)]="transportRequest.overDimension"
+               type="checkbox"/>
       </div>
       <div class="form-group">
         <label for="temperature">Temperature</label>
-        <input class="form-control" name="temperature" id="temperature" [(ngModel)]="transportRequest.temperature" type="number" step="any"/>
+        <input class="form-control" name="temperature" id="temperature" [(ngModel)]="transportRequest.temperature"
+               type="number" step="any"/>
       </div>
 
 
@@ -314,27 +339,32 @@
         <label for="productDesc">Product Desc
           <span class="required-indicator">*</span>
         </label>
-        <input class="form-control" required="" name="productDesc" id="productDesc" [(ngModel)]="transportRequest.productDesc" type="text"/>
+        <input class="form-control" required="" name="productDesc" id="productDesc"
+               [(ngModel)]="transportRequest.productDesc" type="text"/>
       </div>
       <div class="form-group required">
         <label for="shipper">Shipper
           <span class="required-indicator">*</span>
         </label>
-        <input class="form-control" required="" name="shipper" id="shipper" [(ngModel)]="transportRequest.shipper" type="text"/>
+        <input class="form-control" required="" name="shipper" id="shipper" [(ngModel)]="transportRequest.shipper"
+               type="text"/>
       </div>
       <div class="form-group">
         <label for="orderRemarks">Order Remarks</label>
-        <input class="form-control" name="orderRemarks" id="orderRemarks" [(ngModel)]="transportRequest.orderRemarks" type="text"/>
+        <input class="form-control" name="orderRemarks" id="orderRemarks" [(ngModel)]="transportRequest.orderRemarks"
+               type="text"/>
       </div>
       <div class="form-group">
         <label for="containerRemarks">Container Remarks</label>
-        <input class="form-control" name="containerRemarks" id="containerRemarks" [(ngModel)]="transportRequest.containerRemarks" type="text"/>
+        <input class="form-control" name="containerRemarks" id="containerRemarks"
+               [(ngModel)]="transportRequest.containerRemarks" type="text"/>
       </div>
       <div class="form-group required">
         <label for="dgCode">Dg Code
           <span class="required-indicator">*</span>
         </label>
-        <input class="form-control" required="" name="dgCode" id="dgCode" [(ngModel)]="transportRequest.dgCode" type="text"/>
+        <input class="form-control" required="" name="dgCode" id="dgCode" [(ngModel)]="transportRequest.dgCode"
+               type="text"/>
       </div>
       <div *ngIf="transportRequest.type == 'Direct Import' || transportRequest.type == 'Uncouple Import'">
         <div class="form-group">
@@ -349,7 +379,8 @@
       <div *ngIf="transportRequest.type == 'Direct Export' || transportRequest.type == 'Uncouple Export'">
         <div class="form-group">
           <label for="bookingConfirmationImg">Booking Confirmation</label>
-          <input id="bookingConfirmationImg" name="bookingConfirmationImg" type="file" [ngModel]="bookingConfirmationImg">
+          <input id="bookingConfirmationImg" name="bookingConfirmationImg" type="file"
+                 [ngModel]="bookingConfirmationImg">
         </div>
         <div class="form-group">
           <label for="cmoImg">CMO Form</label>
