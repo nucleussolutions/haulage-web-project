@@ -339,21 +339,21 @@
       <div *ngIf="transportRequest.type == 'Direct Import' || transportRequest.type == 'Uncouple Import'">
         <div class="form-group">
           <label for="kOnekEightFormImg">Upload K1 K8 Form</label>
-          <input type="file" id="kOnekEightFormImg" [ngModel]="kOnekEightFormImg">
+          <input type="file" id="kOnekEightFormImg" name="kOnekEightFormImg" [ngModel]="kOnekEightFormImg">
         </div>
         <div class="form-group">
           <label for="gatePassImg">Upload Gate Pass</label>
-          <input type="file" id="gatePassImg" [ngModel]="gatePassImg">
+          <input type="file" id="gatePassImg" name="gatePassImg" [ngModel]="gatePassImg">
         </div>
       </div>
       <div *ngIf="transportRequest.type == 'Direct Export' || transportRequest.type == 'Uncouple Export'">
         <div class="form-group">
           <label for="bookingConfirmationImg">Booking Confirmation</label>
-          <input id="bookingConfirmationImg" type="file" [ngModel]="bookingConfirmationImg">
+          <input id="bookingConfirmationImg" name="bookingConfirmationImg" type="file" [ngModel]="bookingConfirmationImg">
         </div>
         <div class="form-group">
           <label for="cmoImg">CMO Form</label>
-          <input id="cmoImg" type="file" [ngModel]="cmoImg">
+          <input id="cmoImg" name="cmoImg" type="file" [ngModel]="cmoImg">
         </div>
 
         <div class="form-group">
