@@ -1,0 +1,8 @@
+import haulage.project.Permission
+
+model {
+	Iterable<Permission> permissionList
+}
+
+json tmpl.permission(permissionList ?: [])
+

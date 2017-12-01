@@ -52,31 +52,6 @@ class BootStrap {
 
         def interceptorPermission = new Permission(email: 'interceptorz3r0@gmail.com', userId:'1rCeH7yNVzX8OB7dMyFcURPkwi33', authority: 'Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93').save(flush: true)
 
-
-
-
-        JSON.registerObjectMarshaller(Permission){
-            def output = [:]
-            output['userId'] = it.userId
-            output['authority'] = it.authority
-            output['email'] = it.email
-            return output
-        }
-
-        JSON.registerObjectMarshaller(Consignment){
-            def output = [:]
-            output['id'] = it.id
-            output['containerNo'] = it.containerNo
-            output['name'] = it.name
-            output['size'] = it.size
-            output['type'] = it.type
-            output['acceptTime'] = it.acceptTime
-            output['consignmentCode'] = it.consignmentCode
-            output['status'] = it.status
-            output['taskType'] = it.taskType
-            return output
-        }
-
         def consignments = []
 
         def pickupLadenDropOff = new Location(name: 'asdasdalsdjk', address1: 'asdasdsad', address2: 'asdasdasd', lat: 3.12312323, lng: 31232139830, type: 'depot', city: 'asdasdjasld', state: 'asldskjdlkasd', country: 'sadsadkjl').save(flush: true)

@@ -1,0 +1,7 @@
+import haulage.project.Permission
+
+model {
+	Permission permission
+}
+
+json tmpl.permission(permission)
