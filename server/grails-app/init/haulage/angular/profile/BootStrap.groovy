@@ -171,7 +171,7 @@ class BootStrap {
         def quote = new Quote(forwarderId: '1123083', haulierId: '123213210', status: QuotationStatus.PENDING_ACCEPTANCE.id, items: [quoteItem1, quoteItem2], terms: [term1, term2], code: '12312321', endDate: new Date()).save(flush: true, failOnError: true)
 
 
-        def tariff = new Tariff(desc: 'desc 1', haulageCharges: 23.23, tollCharges: 23.23, faf: 23.23, zone: 'zone 1', location: location1).save(flush: true, failOnError)
+        def tariff = new Tariff(desc: 'desc 1', haulageCharges: 23.23, tollCharges: 23.23, faf: 23.23, zone: 'zone 1', location: location1).save(flush: true, failOnError: true)
 
     }
     def destroy = {
