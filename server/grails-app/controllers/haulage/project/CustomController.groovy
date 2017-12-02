@@ -1,9 +1,7 @@
 package haulage.project
 
-
-import grails.rest.*
-import grails.converters.*
-import static org.springframework.http.HttpStatus.*
+import static org.springframework.http.HttpStatus.NOT_FOUND
+import static org.springframework.http.HttpStatus.OK
 
 
 class CustomController {
@@ -33,7 +31,7 @@ class CustomController {
     if (!userId) {
       render([status: NOT_FOUND, message: 'user id not found'])
     } else {
-      List<Permission> permissions = Permission.findAllByGrantedBy(userId)
+      List<Permission> permissions = permissionService.findAllByGrantedBy(userId)
 
       if(!permissions){
         response.status = 400
