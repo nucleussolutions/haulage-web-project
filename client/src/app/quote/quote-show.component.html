@@ -37,7 +37,7 @@
     <div class="property-value" aria-labelledby="terms-label">
       <ul>
         <li *ngFor="let termAndCondition of quote.terms">
-          <a [routerLink]="['/termAndCondition', 'show', termAndCondition.id]">{{termAndCondition.toString()}}</a>
+          <a [routerLink]="['/termAndCondition', 'show', termAndCondition.id]">{{termAndCondition.desc}}</a>
         </li>
       </ul>
     </div>
@@ -47,7 +47,7 @@
     <div class="property-value" aria-labelledby="items-label">
       <ul>
         <li *ngFor="let quoteItem of quote.items">
-          <a [routerLink]="['/quoteItem', 'show', quoteItem.id]">{{quoteItem.toString()}}</a>
+          <a [routerLink]="['/quoteItem', 'show', quoteItem.id]">{{quoteItem.desc}}</a>
         </li>
       </ul>
     </div>
@@ -60,7 +60,7 @@
   </li>
 </ol>
 
-    <a class="edit" [routerLink]="['/quote', 'edit', quote.id]">Edit</a>
-    <button type="button" (click)="destroy()">Delete</button>
+    <a class="edit btn btn-primary" [routerLink]="['/quote', 'edit', quote.id]">Edit</a>
+    <button class="btn btn-danger" type="button" (click)="destroy()">Delete</button>
 
 </div>

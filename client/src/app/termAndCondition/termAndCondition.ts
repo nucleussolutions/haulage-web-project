@@ -1,13 +1,10 @@
-
-
 export class TermAndCondition {
   id: number;
+  desc: string;
 
-  
-
-  constructor (object?: any) {
+  constructor(object?: any) {
     if (object) {
-      
+
       for (var prop in object) {
         this[prop] = object[prop];
       }

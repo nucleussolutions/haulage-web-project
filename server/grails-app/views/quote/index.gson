@@ -1,0 +1,8 @@
+import haulage.project.Quote
+
+model {
+	Iterable<Quote> quoteList
+}
+
+json tmpl.quote(quoteList ?: [])
+

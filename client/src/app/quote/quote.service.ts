@@ -41,7 +41,7 @@ export class QuoteService {
     return this.http.get(environment.serverUrl + '/quote/' + id, {
       headers: headers
     })
-      .map((r: Response) => new Quote(r.json()));
+      .map((r: Response) => new Quote(r));
   }
 
   save(quote: Quote, userObject: any): Observable<Quote> {

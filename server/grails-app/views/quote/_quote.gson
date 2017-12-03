@@ -1,0 +1,7 @@
+import haulage.project.Quote
+
+model {
+	Quote quote
+}
+
+json g.render(quote, [resolveTemplate: false])

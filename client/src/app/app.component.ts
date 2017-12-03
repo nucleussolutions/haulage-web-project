@@ -23,6 +23,9 @@ import {trigger, state, style, transition, animate} from '@angular/animations';
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
+  menuState:string = 'out';
+
+
   constructor() {
   }
 
@@ -37,6 +40,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   toggleMenu(){
-
+// 1-line if statement that toggles the value:
+    this.menuState = this.menuState === 'out' ? 'in' : 'out';
+    console.log('menuState '+this.menuState);
   }
 }
