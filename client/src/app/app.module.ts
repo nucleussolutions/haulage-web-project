@@ -52,6 +52,7 @@ import { QuoteModule } from './quote/quote.module';
 import { LoadingComponent } from './loading/loading.component';
 import { TariffModule } from './tariff/tariff.module';
 import { BillingComponent } from './billing/billing.component';
+import { NotificationPaneComponent } from './notification-pane/notification-pane.component';
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import { BillingComponent } from './billing/billing.component';
     ReportingComponent,
     LoadingComponent,
     BillingComponent,
+    NotificationPaneComponent,
   ],
   entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent],
   imports: [
