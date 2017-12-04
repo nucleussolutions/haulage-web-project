@@ -1,29 +1,19 @@
 package haulage.angular.profile
 
-import grails.converters.JSON
-import haulage.project.Company
-import haulage.project.Consignment
-import haulage.project.ConsignmentTaskType
-import haulage.project.ConsignmentType
-import haulage.project.Customer
-import haulage.project.ForwarderInfo
-import haulage.project.HaulierInfo
-import haulage.project.Location
-import haulage.project.Permission
-import haulage.project.Pricing
-import haulage.project.QuotationStatus
-import haulage.project.Quote
-import haulage.project.QuoteItem
-import haulage.project.RFTStatus
-import haulage.project.RFTType
-import haulage.project.Tariff
-import haulage.project.TermAndCondition
-import haulage.project.TransportRequest
-import haulage.project.Vehicle
+import com.xlson.groovycsv.CsvParser
+import grails.core.GrailsApplication
+import groovyx.net.http.HTTPBuilder
+import haulage.project.*
+import org.springframework.beans.factory.annotation.Autowired
+import grails.config.Config
 
 class BootStrap {
 
+    @Autowired
+    GrailsApplication grailsApplication
+
     def init = { servletContext ->
+
         def company1 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'AGL', name: 'AGL Logistics', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '12932813901283')
 
         def company2 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'BGL', name: 'AGL Logistics', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '12932813901283')
@@ -31,10 +21,10 @@ class BootStrap {
         def haulierInfo1 = new HaulierInfo(userId: '12-03219-3123', company: company1, name: 'qwpeiwepwqiew').save(flush: true)
 
 
-        def location1 = new Location(name: 'North Port', city: 'petaling jaya', state: 'petaling jaya', country: 'malaysia', type: 'customer location', address1: 'ajsdlasdj', address2: 'aksdjsdjsald').save(flush: true)
-        def location2 = new Location(name: 'North Port', city: 'petaling jaya', state: 'petaling jaya', country: 'malaysia', type: 'customer location', address1: 'jasdlkadjlas', address2: 'akjsdlasdjslad').save(flush: true)
+        def location1 = new Location(name: 'North Port', city: 'petaling jaya', state: 'petaling jaya', country: 'malaysia', type: 'customer location', address1: 'ajsdlasdj', address2: 'aksdjsdjsald', formattedAddress: 'asasddasdsd', postalCode: '12323').save(flush: true)
+        def location2 = new Location(name: 'North Port', city: 'petaling jaya', state: 'petaling jaya', country: 'malaysia', type: 'customer location', address1: 'jasdlkadjlas', address2: 'akjsdlasdjslad', formattedAddress: 'asdadasdsad', postalCode: '123123').save(flush: true)
 
-        def primeMover1 = new Vehicle(type: 'primeMover', userId: '1231203901283', insuranceExpiryDate: new Date(), registrationNumber: '1290831208312').save(flush:true)
+        def primeMover1 = new Vehicle(type: 'primeMover', userId: '1231203901283', insuranceExpiryDate: new Date(), registrationNumber: '1290831208312').save(flush: true)
 
         def trailer1 = new Vehicle(type: 'trailer', userId: '1290312893128', registrationNumber: '128391238012', insuranceExpiryDate: new Date(), spadPermitExpiryDate: new Date(), puspakomExpiryDate: new Date()).save(flush: true)
 
@@ -50,7 +40,7 @@ class BootStrap {
         def kevinAdminPermission = new Permission(email: 'kevintanhongann@gmail.com', userId: 'Wcd1ixuFLLStcm0GN4YylfU1nNx2', authority: 'Super Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93').save(flush: true)
         def jordanAdminPermission = new Permission(email: 'jordan@nucleus.my', userId: 'OFrQip85jPRRmXkBR544ROU51y93', authority: 'Super Admin', grantedBy: 'Wcd1ixuFLLStcm0GN4YylfU1nNx2').save(flush: true)
 
-        def interceptorPermission = new Permission(email: 'interceptorz3r0@gmail.com', userId:'1rCeH7yNVzX8OB7dMyFcURPkwi33', authority: 'Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93').save(flush: true)
+        def interceptorPermission = new Permission(email: 'interceptorz3r0@gmail.com', userId: '1rCeH7yNVzX8OB7dMyFcURPkwi33', authority: 'Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93').save(flush: true)
 
         def consignments = []
 
@@ -72,7 +62,7 @@ class BootStrap {
         testRFT.hazardous = Boolean.TRUE
         testRFT.dgCode = '123912-3'
         testRFT.vesselEtaOrEtd = new Date()
-        testRFT.terminal = new Location(name: 'aksdsldjasd', address1: 'asdldsjasdl', address2: 'asdsadjlsadlksd', city: 'asdsdasd', state: 'asdskjd', country: 'askdjsldasd', type: 'depot')
+        testRFT.terminal = new Location(name: 'aksdsldjasd', address1: 'asdldsjasdl', address2: 'asdsadjlsadlksd', city: 'asdsdasd', state: 'asdskjd', country: 'askdjsldasd', type: 'depot', formattedAddress: 'asdlksajdlasd', postalCode: '123123')
         testRFT.temperature = 32.12
         testRFT.containerRemarks = 'asldsadjldsjasd'
         testRFT.orderRemarks = 'asdasdlkjasd'
@@ -89,7 +79,7 @@ class BootStrap {
         testRFT.vesselName = '1232131208'
         testRFT.portOfLoading = 'asdasdadasd'
         testRFT.portOfDischarge = 'asdasdad'
-        testRFT.pickupOrDropoffEmptyDepoh = new Location(name: 'aksdsldjasd', address1: 'asdldsjasdl', address2: 'asdsadjlsadlksd', city: 'asdsdasd', state: 'asdskjd', country: 'askdjsldasd', type: 'depot')
+        testRFT.pickupOrDropoffEmptyDepoh = new Location(name: 'aksdsldjasd', address1: 'asdldsjasdl', address2: 'asdsadjlsadlksd', city: 'asdsdasd', state: 'asdskjd', country: 'askdjsldasd', type: 'depot', formattedAddress: 'asdlksajdlasd', postalCode: '123123')
         testRFT.backToBack = true
         testRFT.openCargoBoat = true
 
@@ -104,7 +94,7 @@ class BootStrap {
         testRFT2.hazardous = Boolean.TRUE
         testRFT2.dgCode = '123912-3'
         testRFT2.vesselEtaOrEtd = new Date()
-        testRFT2.terminal = new Location(name: 'aksdsldjasd', address1: 'asdldsjasdl', address2: 'asdsadjlsadlksd', city: 'asdsdasd', state: 'asdskjd', country: 'askdjsldasd', type: 'depot')
+        testRFT2.terminal = new Location(name: 'aksdsldjasd', address1: 'asdldsjasdl', address2: 'asdsadjlsadlksd', city: 'asdsdasd', state: 'asdskjd', country: 'askdjsldasd', type: 'depot', formattedAddress: 'asdlksajdlasd', postalCode: '123123')
         testRFT2.temperature = 32.12
         testRFT2.customer = customer
         testRFT2.overDimension = false
@@ -119,7 +109,7 @@ class BootStrap {
         testRFT2.vesselName = '1232131208'
         testRFT2.portOfLoading = 'asdasdadasd'
         testRFT2.portOfDischarge = 'asdasdad'
-        testRFT2.pickupOrDropoffEmptyDepoh = new Location(name: 'aksdsldjasd', address1: 'asdldsjasdl', address2: 'asdsadjlsadlksd', city: 'asdsdasd', state: 'asdskjd', country: 'askdjsldasd', type: 'depot')
+        testRFT2.pickupOrDropoffEmptyDepoh = new Location(name: 'aksdsldjasd', address1: 'asdldsjasdl', address2: 'asdsadjlsadlksd', city: 'asdsdasd', state: 'asdskjd', country: 'askdjsldasd', type: 'depot', formattedAddress: 'asdlksajdlasd', postalCode: '123123')
         testRFT2.backToBack = true
         testRFT2.openCargoBoat = true
 
@@ -146,7 +136,41 @@ class BootStrap {
 
         def tariff = new Tariff(desc: 'desc 1', haulageCharges: 23.23, tollCharges: 23.23, faf: 23.23, zone: 'zone 1', location: location1).save(flush: true, failOnError: true)
 
+        //depot code, depot name, company name, mailing address, depot address, contact person, tel(hp), email address, remarks, lat, lng
+
+        parseCsvFile()
     }
     def destroy = {
+    }
+
+    def parseCsvFile() {
+//        File file=new File(filePath)
+        File file = new File(getClass().getResource('/resources/masterlist.csv').getPath())
+        def br = new BufferedReader(new FileReader(file))
+        def csvData = CsvParser.parseCsv(br)
+        def http = new HTTPBuilder("https://maps.googleapis.com")
+        csvData.each {
+
+            def location = new Location()
+            location.name = it[2]
+            location.lat = it[9] as Double
+            location.lng = it[10] as Double
+            location.mailingAddress = it[3]
+            location.formattedAddress = it[4]
+            location.address1 = ''
+            location.address2 = ''
+            http.get(path:'/maps/api/geocode/json', query: [latlng: it[9]+","+it[10], sensor: 'false', key: grailsApplication.config.getProperty('keys.googlemap-apikey')]){ resp, json ->
+                println json.results[0]
+
+                json.results[0].address_components.each { object ->
+                    if(object.types.contains('postal_code')){
+                        location.postalCode = object.short_name
+                    }
+                }
+            }
+            //http://maps.googleapis.com/maps/api/geocode/json?latlng=2.999222,101.391667&sensor=false
+//            def location = new Location(name: it[1], )
+            println it[0]
+        }
     }
 }
