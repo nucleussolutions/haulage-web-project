@@ -1,24 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { PermissionService } from './permission.service';
 import { Permission } from './permission';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { Router } from '@angular/router';
 import { UserService } from 'app/user.service';
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'permission-list',
   templateUrl: './permission-list.component.html',
 })
-export class PermissionListComponent implements OnInit {
+export class PermissionListComponent implements OnInit, OnDestroy{
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   permissionList: Permission[] = [];
+
+  private subscription: Subscription;
 
   constructor(private permissionService: PermissionService, private modal: Modal, private router: Router, private userService: UserService) {
   }
 
   ngOnInit() {
 
-    this.userService.getUser().flatMap(userObject => this.permissionService.list(userObject)).subscribe((permissionList: Permission[]) => {
+    this.subscription = this.userService.getUser().flatMap(userObject => this.permissionService.list(userObject)).subscribe((permissionList: Permission[]) => {
       this.permissionList = permissionList;
     }, error => {
       let message;

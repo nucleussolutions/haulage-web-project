@@ -1,0 +1,8 @@
+import haulage.project.Quote
+
+model {
+	Quote quote
+}
+
+json g.render(quote, [deep: true])
+//json tmpl.quote(quote)
