@@ -1,0 +1,7 @@
+import haulage.project.Subscription
+
+model {
+	Subscription subscription
+}
+
+json tmpl.subscription(subscription)

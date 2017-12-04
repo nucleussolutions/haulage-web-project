@@ -1,0 +1,8 @@
+import haulage.project.Tariff
+
+model {
+	Iterable<Tariff> tariffList
+}
+
+json tmpl.tariff(tariffList ?: [])
+

@@ -1,0 +1,8 @@
+import haulage.project.Subscription
+
+model {
+	Iterable<Subscription> subscriptionList
+}
+
+json tmpl.subscription(subscriptionList ?: [])
+

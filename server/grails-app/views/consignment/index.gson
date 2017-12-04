@@ -1,0 +1,8 @@
+import haulage.project.Consignment
+
+model {
+	Iterable<Consignment> consignmentList
+}
+
+json tmpl.consignment(consignmentList ?: [])
+

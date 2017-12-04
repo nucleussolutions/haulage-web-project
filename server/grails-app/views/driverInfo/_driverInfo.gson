@@ -1,0 +1,7 @@
+import haulage.project.DriverInfo
+
+model {
+	DriverInfo driverInfo
+}
+
+json g.render(driverInfo, [resolveTemplate: false])

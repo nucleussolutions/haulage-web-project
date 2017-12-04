@@ -1,0 +1,7 @@
+import haulage.project.Consignment
+
+model {
+	Consignment consignment
+}
+
+json g.render(consignment, [resolveTemplate: false])

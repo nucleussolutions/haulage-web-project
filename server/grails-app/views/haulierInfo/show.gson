@@ -1,0 +1,7 @@
+import haulage.project.HaulierInfo
+
+model {
+	HaulierInfo haulierInfo
+}
+
+json tmpl.haulierInfo(haulierInfo)

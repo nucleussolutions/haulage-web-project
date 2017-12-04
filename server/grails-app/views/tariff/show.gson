@@ -1,0 +1,7 @@
+import haulage.project.Tariff
+
+model {
+	Tariff tariff
+}
+
+json tmpl.tariff(tariff)

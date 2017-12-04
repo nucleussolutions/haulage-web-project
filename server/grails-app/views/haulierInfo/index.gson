@@ -1,0 +1,8 @@
+import haulage.project.HaulierInfo
+
+model {
+	Iterable<HaulierInfo> haulierInfoList
+}
+
+json tmpl.haulierInfo(haulierInfoList ?: [])
+

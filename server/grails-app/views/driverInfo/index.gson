@@ -1,0 +1,8 @@
+import haulage.project.DriverInfo
+
+model {
+	Iterable<DriverInfo> driverInfoList
+}
+
+json tmpl.driverInfo(driverInfoList ?: [])
+
