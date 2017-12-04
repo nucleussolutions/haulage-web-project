@@ -26,8 +26,8 @@ class Location {
 
     static constraints = {
         name blank: false, nullable: false
-        address1 blank: false, nullable: false
-        address2 blank: false, nullable: false
+        address1 nullable: true
+        address2 nullable: true
         mailingAddress nullable: true
         formattedAddress blank: false, nullable: false
         city blank: false, nullable: false
@@ -35,7 +35,7 @@ class Location {
         country blank: false, nullable: false
         lat nullable: true
         lng nullable: true
-        type nullable: false
+        type nullable: true
         postalCode nullable: false
     }
 }
