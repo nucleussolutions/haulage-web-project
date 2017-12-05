@@ -53,6 +53,10 @@ dependencies {
     runtime "com.h2database:h2"
     runtime "org.apache.tomcat:tomcat-jdbc"
     testCompile "org.grails:grails-gorm-testing-support"
+
+    //add json views testing library
+    testCompile "org.grails.plugins:views-json-testing-support"
+
     testCompile "org.grails.plugins:geb"
     testCompile "org.grails:grails-datastore-rest-client"
     testCompile "org.grails:grails-web-testing-support"

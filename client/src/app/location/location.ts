@@ -6,6 +6,8 @@ export class Location {
   name: string;
   address1: string;
   address2: string;
+  mailingAddress: string;
+  formattedAddress: string;
   city: string;
   state: string;
   country: string;

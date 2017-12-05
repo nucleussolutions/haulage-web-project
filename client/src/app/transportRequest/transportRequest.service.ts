@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/of';
 import {environment} from "../../environments/environment";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 
 @Injectable()
 export class TransportRequestService {
@@ -15,8 +15,11 @@ export class TransportRequestService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject: any): Observable<TransportRequest[]> {
+  list(userObject: any, page: number): Observable<TransportRequest[]> {
     let subject = new Subject<TransportRequest[]>();
+    let offset = page * 10;
+
+    let params = new HttpParams();
 
     let headers = new HttpHeaders({
       'token': userObject.token,
@@ -24,7 +27,8 @@ export class TransportRequestService {
     });
 
     this.http.get(environment.serverUrl + '/transportRequest', {
-      headers: headers
+      headers: headers,
+      params: params
     })
       .catch(err => {
         subject.error(err);

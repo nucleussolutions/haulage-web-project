@@ -21,8 +21,10 @@ export class TariffListComponent implements OnInit, OnDestroy {
   constructor(private tariffService: TariffService, private userService: UserService) { }
 
   ngOnInit() {
-    this.subscription = this.userService.getUser().flatMap(userObject => this.tariffService.list(userObject)).subscribe((tariffList: Tariff[]) => {
+    this.subscription = this.userService.getUser().flatMap(userObject => this.tariffService.list(userObject, 1)).subscribe((tariffList: Tariff[]) => {
       this.tariffList = tariffList;
     });
+
+    //todo support paging
   }
 }

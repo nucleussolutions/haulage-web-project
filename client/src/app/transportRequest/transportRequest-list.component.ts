@@ -39,10 +39,12 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
     }, error => {
       console.log('transport request list permission error '+JSON.stringify(error));
     });
+
+    //todo support paging
   }
 
   listTransportRequests(userObject: any){
-    this.transportRequestService.list(userObject).subscribe((transportRequestList: TransportRequest[]) => {
+    this.transportRequestService.list(userObject, 1).subscribe((transportRequestList: TransportRequest[]) => {
       this.transportRequestList = transportRequestList;
     }, error => {
 

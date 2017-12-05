@@ -2,7 +2,10 @@ import haulage.project.Quote
 
 model {
 	Iterable<Quote> quoteList
+	Integer total
 }
 
-json tmpl.quote(quoteList ?: [])
+json jsonapi.render(quoteList, [pagination: [total: total, resource: Quote]])
+
+//json tmpl.quote(quoteList ?: [])
 

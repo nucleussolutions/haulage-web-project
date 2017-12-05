@@ -1,88 +1,81 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {Quote} from './quote';
+import {Subscription} from './subscription';
 import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 
 @Injectable()
-export class QuoteService {
+export class SubscriptionService {
 
   constructor(private http: HttpClient) {
   }
 
-  list(userObject: any, page: number): Observable<Quote[]> {
+  list(userObject: any): Observable<Subscription[]> {
+    let subject = new Subject<Subscription[]>();
 
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
 
-    let offset = page * 10;
-
-    let params = new HttpParams();
-    params = params.append('offset', offset.toString());
-    params = params.append('max', '10');
-
-    let subject = new Subject<Quote[]>();
-    this.http.get(environment.serverUrl + '/quote', {
-      headers: headers,
-      params: params
+    this.http.get(environment.serverUrl + '/subscription', {
+      headers: headers
     })
       .subscribe((json: any[]) => {
-        subject.next(json.map((item: any) => new Quote(item)))
+        subject.next(json.map((item: any) => new Subscription(item)))
       });
     return subject.asObservable();
   }
 
-  get(id: number, userObject: any): Observable<Quote> {
+  get(id: number, userObject: any): Observable<Subscription> {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
 
-    return this.http.get(environment.serverUrl + '/quote/' + id, {
+    return this.http.get(environment.serverUrl + '/subscription/' + id, {
       headers: headers
     })
-      .map((r: Response) => new Quote(r));
+      .map((r: Response) => new Subscription(r));
   }
 
-  save(quote: Quote, userObject: any): Observable<Quote> {
+  save(subscription: Subscription, userObject: any): Observable<Subscription> {
     let requestMethodStr;
 
     let url;
 
-    if (quote.id) {
+    if (subscription.id) {
       requestMethodStr = 'PUT';
-      url = environment.serverUrl + '/quote/' + quote.id;
+      url = environment.serverUrl + '/subscription/' + subscription.id;
     } else {
       requestMethodStr = 'POST';
-      url = environment.serverUrl + '/quote';
+      url = environment.serverUrl + '/subscription';
     }
-    let body = JSON.stringify(quote);
+    let body = JSON.stringify(subscription);
     let headers = new HttpHeaders({
       "Content-Type": "application/json",
       'token': userObject.token,
-      'apiKey': userObject.apiKey,
+      'apiKey': userObject.apiKey
     });
 
     return this.http.request(requestMethodStr, url, {
       body: body,
       headers: headers
     })
-      .map((r: Response) => new Quote(r));
+      .map((r: Response) => new Subscription(r));
   }
 
-  destroy(quote: Quote, userObject: any): Observable<boolean> {
+  destroy(subscription: Subscription, userObject: any): Observable<boolean> {
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
-    return this.http.delete(environment.serverUrl + '/quote/' + quote.id, {
+    return this.http.delete(environment.serverUrl + '/subscription/' + subscription.id, {
       headers: headers
     }).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);

@@ -1,0 +1,35 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/subscription','create']" class="create">New Subscription</a></li>
+    </ul>
+</div>
+<div id="list-subscription" class="content scaffold-list" role="main">
+    <h1>Subscription List</h1>
+    <table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>User Id</th>
+      <th>Pricing</th>
+      <th>Monthly Recurring</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let subscription of subscriptionList; let e = even;">
+      <td>
+        <a [routerLink]="['/subscription','show',subscription.id]">{{subscription.id}}</a>
+      </td>
+      <td>
+        <span>{{subscription.userId}}</span>
+      </td>
+      <td>
+        <a *ngIf="subscription.pricing" [routerLink]="['/subscription','show', subscription.pricing.id]">{{subscription.pricing.toString()}}</a>
+      </td>
+      <td>
+        <span>{{subscription.monthlyRecurring}}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>

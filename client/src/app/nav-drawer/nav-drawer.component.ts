@@ -10,7 +10,6 @@ import {Router} from "@angular/router";
   selector: 'app-nav-drawer',
   templateUrl: './nav-drawer.component.html',
   styleUrls: ['./nav-drawer.component.css'],
-  providers: [UserService]
 })
 export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
 

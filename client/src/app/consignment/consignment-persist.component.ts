@@ -42,9 +42,11 @@ export class ConsignmentPersistComponent implements OnInit, OnDestroy {
   private checkPermissions() {
     this.permissionService.getByUserId(this.userObject).subscribe(permission => {
       if (permission.authority == 'Super Admin' || permission.authority == 'Admin') {
-        this.locationService.list(this.userObject).subscribe((locationList: Location[]) => {
-          this.locationList = locationList;
-        });
+
+        //todo this is not supposed to be done like this
+        // this.locationService.list(this.userObject, 1).subscribe((locationList: Location[]) => {
+        //   this.locationList = locationList;
+        // });
         this.route.params.subscribe((params: Params) => {
           if (params.hasOwnProperty('id')) {
             this.consignmentService.get(+params['id'], this.userObject).subscribe((consignment: Consignment) => {

@@ -7,7 +7,7 @@ import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import {environment} from 'environments/environment';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 
 @Injectable()
 export class PermissionService {
@@ -15,8 +15,12 @@ export class PermissionService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject: any): Observable<Permission[]> {
+  list(userObject: any, page: number): Observable<Permission[]> {
     let subject = new Subject<Permission[]>();
+    let offset = page * 10;
+    let params = new HttpParams();
+    params = params.append('offset', offset.toString());
+    params = params.append('max', '10');
 
     let headers = new HttpHeaders({
       'token': userObject.token,
@@ -24,7 +28,8 @@ export class PermissionService {
     });
 
     this.http.get(environment.serverUrl + '/permission', {
-      headers: headers
+      headers: headers,
+      params: params
     })
       .catch(err => {
         subject.error(err);

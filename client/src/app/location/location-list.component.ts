@@ -19,47 +19,48 @@ export class LocationListComponent implements OnInit, OnDestroy {
 
   locationList: Location[] = [];
 
-  private userObject: any;
-
   private subscription: Subscription;
+
+  private userObject: any;
 
   constructor(private locationService: LocationService, private modal: Modal, private router: Router, private userService: UserService, private permissionService: PermissionService) {
   }
 
   ngOnInit() {
-
-    this.subscription = this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    });
-
-    this.permissionService.getByUserId(this.userObject).subscribe(permission => {
+    this.subscription = this.userService.getUser().flatMap(userObject => {
+      this.userObject = userObject;
+      return this.permissionService.getByUserId(userObject);
+    }).subscribe(permission => {
       if (permission.authority == 'Super Admin' || permission.authority == 'Admin') {
-        this.locationService.list(this.userObject).subscribe((locationList: Location[]) => {
-          this.locationList = locationList;
-        }, error => {
-          let message;
-
-          if (error.status === 401) {
-            message = 'Unauthorized';
-          } else if (error.status === 500) {
-            message = "Internal server error";
-          } else if (error.status === 400) {
-            message = 'Bad request';
-          }
-
-          const dialog = this.modal.alert().isBlocking(true).title('Error').message(message).open();
-
-          dialog.then(value => {
-            this.router.navigate(['/login']);
-          });
-
-        });
+        this.callLocationlistApi(1);
       } else {
         const dialog = this.modal.prompt().title('Error').message('Unauthorized').open();
         dialog.then(value => {
           this.router.navigate(['/index']);
         })
       }
+    });
+  }
+
+  callLocationlistApi(page: number){
+    this.locationService.list(this.userObject, page).subscribe((locationList: Location[]) => {
+      this.locationList = locationList;
+    }, error => {
+      let message;
+
+      if (error.status === 401) {
+        message = 'Unauthorized';
+      } else if (error.status === 500) {
+        message = "Internal server error";
+      } else if (error.status === 400) {
+        message = 'Bad request';
+      }
+
+      const dialog = this.modal.alert().isBlocking(true).title('Error').message(message).open();
+
+      dialog.then(value => {
+        this.router.navigate(['/login']);
+      });
     });
   }
 }

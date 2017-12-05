@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 import {environment} from "../../environments/environment";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 
 @Injectable()
 export class DriverInfoService {
@@ -16,16 +16,21 @@ export class DriverInfoService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject: any): Observable<DriverInfo[]> {
+  list(userObject: any, page: number): Observable<DriverInfo[]> {
     let subject = new Subject<DriverInfo[]>();
+    let offset = page * 10;
 
+    let params = new HttpParams();
+    params = params.append('offset', offset.toString());
+    params = params.append('max', '10');
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
 
     this.http.get(environment.serverUrl + '/driverInfo', {
-      headers: headers
+      headers: headers,
+      params: params
     })
       .catch(err => {
         subject.error(err);

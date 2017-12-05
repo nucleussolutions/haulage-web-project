@@ -2,7 +2,9 @@ import haulage.project.TransportRequest
 
 model {
 	Iterable<TransportRequest> transportRequestList
+	Integer total
 }
 
-json tmpl.transportRequest(transportRequestList ?: [])
+json g.render(transportRequestList, [pagination: [total: total, resource: TransportRequest, max: 10], deep: true])
+//json tmpl.transportRequest(transportRequestList ?: [])
 

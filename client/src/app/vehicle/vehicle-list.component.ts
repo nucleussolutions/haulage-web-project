@@ -28,7 +28,7 @@ export class VehicleListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription = this.userService.getUser().flatMap(userObject => this.vehicleService.list(userObject)).subscribe((vehicleList: Vehicle[]) => {
+    this.subscription = this.userService.getUser().flatMap(userObject => this.vehicleService.list(userObject, 1)).subscribe((vehicleList: Vehicle[]) => {
       this.vehicleList = vehicleList;
     }, error => {
       let message;
@@ -46,5 +46,7 @@ export class VehicleListComponent implements OnInit, OnDestroy {
       const dialog = this.modal.alert().title('Error').message(message).open();
 
     });
+
+    //todo support paging
   }
 }

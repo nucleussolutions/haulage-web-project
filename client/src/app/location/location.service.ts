@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 import {environment} from 'environments/environment';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 
 @Injectable()
 export class LocationService {
@@ -15,8 +15,13 @@ export class LocationService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject: any): Observable<Location[]> {
+  list(userObject: any, page: number): Observable<Location[]> {
     let subject = new Subject<Location[]>();
+    let offset = page * 10;
+
+    let params = new HttpParams();
+    params = params.append('offset', offset.toString());
+    params = params.append('max', '10');
 
     let headers = new HttpHeaders({
       'token': userObject.token,
@@ -24,7 +29,8 @@ export class LocationService {
     });
 
     this.http.get(environment.serverUrl + '/location', {
-      headers: headers
+      headers: headers,
+      params: params
     })
       .catch(err => {
         subject.error(err);

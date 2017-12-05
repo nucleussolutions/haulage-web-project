@@ -1,4 +1,4 @@
-<div  role="navigation">
+<div role="navigation">
   <ul class="nav nav-pills">
     <li><a [routerLink]="['/index']" class="home">Home</a></li>
     <li><a class="list" [routerLink]="['/location', 'list']" class="list">Location List</a></li>
@@ -28,6 +28,18 @@
           <span id="address2-label" class="property-label">Address2</span>
           <div class="property-value" aria-labelledby="address2-label">
             <span>{{location.address2}}</span>
+          </div>
+        </li>
+        <li class="fieldcontain">
+          <span id="mailingAddress-label" class="property-label">Address2</span>
+          <div class="property-value" aria-labelledby="mailingAddress-label">
+            <span>{{location.mailingAddress}}</span>
+          </div>
+        </li>
+        <li class="fieldcontain">
+          <span id="formattedAddress-label" class="property-label">Address2</span>
+          <div class="property-value" aria-labelledby="formattedAddress-label">
+            <span>{{location.formattedAddress}}</span>
           </div>
         </li>
         <li class="fieldcontain">

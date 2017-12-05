@@ -7,7 +7,7 @@ import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import {environment} from "../../environments/environment";
-import {HttpClient, HttpHeaders, HttpRequest} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from "@angular/common/http";
 
 @Injectable()
 export class TariffService {
@@ -15,15 +15,21 @@ export class TariffService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject: any): Observable<Tariff[]> {
+  list(userObject: any, page: number): Observable<Tariff[]> {
     let subject = new Subject<Tariff[]>();
+    let offset = page * 10;
+
+    let params = new HttpParams();
+    params = params.append('offset', offset.toString());
+    params = params.append('max', '10');
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
 
     this.http.get(environment.serverUrl + '/tariff', {
-      headers: headers
+      headers: headers,
+      params: params
     })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new Tariff(item)))

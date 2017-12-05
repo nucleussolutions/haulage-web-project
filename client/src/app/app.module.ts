@@ -53,6 +53,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { TariffModule } from './tariff/tariff.module';
 import { BillingComponent } from './billing/billing.component';
 import { NotificationPaneComponent } from './notification-pane/notification-pane.component';
+import { SubscriptionModule } from './subscription/subscription.module';
 
 
 @NgModule({
@@ -110,7 +111,8 @@ import { NotificationPaneComponent } from './notification-pane/notification-pane
     JobModule,
     NgxDatatableModule,
     QuoteModule,
-    TariffModule
+    TariffModule,
+    SubscriptionModule
 ],
   exports: [ReactiveFormsModule],
   providers: [{

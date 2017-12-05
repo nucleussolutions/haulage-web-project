@@ -28,7 +28,7 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription = this.userService.getUser().flatMap(userObject => this.driverInfoService.list(userObject)).subscribe((driverInfoList: DriverInfo[]) => {
+    this.subscription = this.userService.getUser().flatMap(userObject => this.driverInfoService.list(userObject, 1)).subscribe((driverInfoList: DriverInfo[]) => {
       this.driverInfoList = driverInfoList;
     }, error => {
 
@@ -44,5 +44,7 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
 
       this.modal.alert().title('Error').message(message).open();
     });
+
+    //todo support paging
   }
 }

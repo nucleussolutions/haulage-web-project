@@ -1,0 +1,40 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/subscription','list']" class="list">Subscription List</a></li>
+    </ul>
+</div>
+<div id="persist-subscription" class="content scaffold-edit" role="main">
+    <h1>{{create ? "Create" : "Edit"}} Subscription</h1>
+    <ul class="errors" role="alert" *ngIf="errors">
+        <li *ngFor="let error of errors">{{error.message}}</li>
+    </ul>
+
+    <form name="save{className}" (ngSubmit)="save()">
+        <fieldset class="form">
+            <fieldset class="form">
+  <div class="fieldcontain required">
+    <label for="userId">User Id
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="userId" id="userId" [(ngModel)]="subscription.userId" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="pricing">Pricing
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="pricing" id="pricing" [(ngModel)]="subscription.pricing">
+      <option *ngFor="let pricing of pricingList" [value]="pricing.id" [selected]="subscription.pricing?.id == pricing.id">{{pricing.toString()}}</option>
+    </select>
+  </div>
+  <div class="fieldcontain">
+    <label for="monthlyRecurring">Monthly Recurring</label>
+    <input name="monthlyRecurring" id="monthlyRecurring" [(ngModel)]="subscription.monthlyRecurring" type="checkbox" />
+  </div>
+</fieldset>
+        </fieldset>
+        <fieldset class="buttons">
+            <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" />
+        </fieldset>
+    </form>
+</div>
