@@ -1,0 +1,7 @@
+import haulage.project.Location
+
+model {
+	Location location
+}
+
+json tmpl.location(location)

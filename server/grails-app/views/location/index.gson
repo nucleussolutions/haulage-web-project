@@ -1,0 +1,11 @@
+import haulage.project.Location
+
+model {
+  Iterable<Location> locationList
+  Integer total
+}
+
+json jsonapi.render(locationList, [pagination: [total: total, resource: Location, max: 10]])
+
+//json tmpl.location(locationList ?: [])
+

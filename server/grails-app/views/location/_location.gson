@@ -1,0 +1,7 @@
+import haulage.project.Location
+
+model {
+	Location location
+}
+
+json g.render(location, [resolveTemplate: false])

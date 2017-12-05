@@ -1,26 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { PricingService } from './pricing.service';
 import { Pricing } from './pricing';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UserService } from 'app/user.service';
+import {Subscription} from "rxjs/Subscription";
 
 
 @Component({
   selector: 'pricing-list',
   templateUrl: './pricing-list.component.html',
 })
-export class PricingListComponent implements OnInit {
+export class PricingListComponent implements OnInit, OnDestroy {
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   pricingList: Pricing[] = [];
+
+  private subscription: Subscription;
 
   constructor(private pricingService: PricingService, private modal: Modal, private titleService: Title, private router: Router, private userService: UserService) {
     this.titleService.setTitle('Pricing List');
   }
 
   ngOnInit() {
-    this.userService.getUser().flatMap(userObject => this.pricingService.list(userObject)).subscribe((pricingList: Pricing[]) => {
+    this.subscription = this.userService.getUser().flatMap(userObject => this.pricingService.list(userObject)).subscribe((pricingList: Pricing[]) => {
       this.pricingList = pricingList;
     }, error => {
       let message;

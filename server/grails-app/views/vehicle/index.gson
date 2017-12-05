@@ -1,0 +1,8 @@
+import haulage.project.Vehicle
+
+model {
+	Iterable<Vehicle> vehicleList
+}
+
+json tmpl.vehicle(vehicleList ?: [])
+

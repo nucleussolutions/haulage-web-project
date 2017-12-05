@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HaulierInfoService} from './haulierInfo.service';
 import {HaulierInfo} from './haulierInfo';
 import {Modal} from 'ngx-modialog/plugins/bootstrap';
@@ -7,17 +7,24 @@ import {Router} from '@angular/router';
 import {UserService} from 'app/user.service';
 import {PermissionService} from "../permission/permission.service";
 import {Permission} from "../permission/permission";
+import {Subscription} from "rxjs/Subscription";
 
 
 @Component({
   selector: 'haulierInfo-list',
   templateUrl: './haulierInfo-list.component.html',
 })
-export class HaulierInfoListComponent implements OnInit {
+export class HaulierInfoListComponent implements OnInit, OnDestroy {
+
+  ngOnDestroy(): void {
+
+  }
 
   haulierInfoList: HaulierInfo[] = [];
 
   private permission: Permission;
+
+  private subscription: Subscription;
 
   constructor(private haulierInfoService: HaulierInfoService, private modal: Modal, private titleService: Title, private router: Router, private userService: UserService, private permissionService: PermissionService) {
     this.titleService.setTitle('Hauliers');
