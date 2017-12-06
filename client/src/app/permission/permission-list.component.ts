@@ -25,7 +25,7 @@ export class PermissionListComponent implements OnInit, OnDestroy{
 
   ngOnInit() {
 
-    this.subscription = this.userService.getUser().flatMap(userObject => this.permissionService.list(userObject)).subscribe((permissionList: Permission[]) => {
+    this.subscription = this.userService.getUser().flatMap(userObject => this.permissionService.list(userObject, 1)).subscribe((permissionList: Permission[]) => {
       this.permissionList = permissionList;
     }, error => {
       let message;
@@ -46,5 +46,7 @@ export class PermissionListComponent implements OnInit, OnDestroy{
       });
     });
 
+
+    //todo support paging
   }
 }

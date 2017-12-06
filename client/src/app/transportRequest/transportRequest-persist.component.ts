@@ -84,7 +84,8 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
         console.log('transportrequest persist permission error '+error);
       });
 
-      this.locationService.list(this.userObject).subscribe((locationList: Location[]) => {
+      //todo this is supposed to be api for location by something
+      this.locationService.list(this.userObject, 1).subscribe((locationList: Location[]) => {
         this.locationList = locationList;
         console.log('locationList ' + JSON.stringify(this.locationList));
       });

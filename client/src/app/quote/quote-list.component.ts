@@ -22,8 +22,10 @@ export class QuoteListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription = this.userService.getUser().flatMap(userObject => this.quoteService.list(userObject)).subscribe((quoteList: Quote[]) => {
+    this.subscription = this.userService.getUser().flatMap(userObject => this.quoteService.list(userObject, 1)).subscribe((quoteList: Quote[]) => {
       this.quoteList = quoteList;
     });
+
+    //todo support paging
   }
 }

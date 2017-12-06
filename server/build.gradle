@@ -55,7 +55,7 @@ dependencies {
     testCompile "org.grails:grails-gorm-testing-support"
 
     //add json views testing library
-    testCompile "org.grails.plugins:views-json-testing-support"
+//    testCompile "org.grails.plugins:views-json-testing-support"
 
     testCompile "org.grails.plugins:geb"
     testCompile "org.grails:grails-datastore-rest-client"

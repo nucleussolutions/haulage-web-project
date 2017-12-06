@@ -37,7 +37,9 @@ export class TariffPersistComponent implements OnInit, OnDestroy {
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
       let userObject = result[0];
       let params = result[1];
-      this.locationService.list(userObject).subscribe((locationList: Location[]) => { this.locationList = locationList; });
+
+      //todo it's not supposed to be like this, think of another way
+      this.locationService.list(userObject, 1).subscribe((locationList: Location[]) => { this.locationList = locationList; });
       return this.tariffService.get(+params['id'], this.userObject);
     }).subscribe((tariff: Tariff) => {
       this.create = false;
