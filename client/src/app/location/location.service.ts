@@ -55,6 +55,18 @@ export class LocationService {
       .map((r: Response) => new Location(r));
   }
 
+  getByType(type: string, userObject: any): Observable<Location> {
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    return this.http.get(environment.serverUrl + '/location?type=' + type, {
+      headers: headers
+    })
+      .map((r: Response) => new Location(r));
+  }
+
   save(location: Location, userObject: any): Observable<Location> {
     let requestMethodStr;
     let url;
