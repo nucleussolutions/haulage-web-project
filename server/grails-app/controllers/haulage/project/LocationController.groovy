@@ -13,12 +13,4 @@ class LocationController extends RestfulController {
     LocationController() {
         super(Location)
     }
-
-    def getByType(){
-        if(params.type){
-            respond locationService.findByType(params.type as String)
-        }else{
-            respond status: HttpStatus.NOT_FOUND, message: 'location not found'
-        }
-    }
 }

@@ -61,7 +61,7 @@ export class LocationService {
       'apiKey': userObject.apiKey
     });
 
-    return this.http.get(environment.serverUrl + '/location?type=' + type, {
+    return this.http.get(environment.serverUrl + '/locationByType/' + type, {
       headers: headers
     })
       .map((r: Response) => new Location(r));

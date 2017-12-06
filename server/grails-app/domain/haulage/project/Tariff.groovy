@@ -10,15 +10,15 @@ class Tariff {
     Location location
     String zone
     BigDecimal tollCharges
-    BigDecimal faf
+    BigDecimal fafPercent
     BigDecimal haulageCharges
 
     static constraints = {
         desc nullable: false
-        location nullable: false
+        location nullable: true
         zone nullable: false
         tollCharges nullable: false
-        faf nullable: false
         haulageCharges nullable: false
+        fafPercent nullable: false
     }
 }

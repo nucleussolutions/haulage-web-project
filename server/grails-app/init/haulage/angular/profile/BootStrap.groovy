@@ -157,6 +157,7 @@ class BootStrap {
       location.lng = it[10] as Double
       location.mailingAddress = it[3]
       location.formattedAddress = it[4]
+      location.type = it[11]
       http.get(path: '/maps/api/geocode/json', query: [latlng: it[9] + "," + it[10], sensor: 'false', key: grailsApplication.config.getProperty('keys.googlemap-apikey')]) { resp, json ->
         println json.results[0]
         json.results[0].address_components.each { object ->
@@ -176,6 +177,24 @@ class BootStrap {
       //http://maps.googleapis.com/maps/api/geocode/json?latlng=2.999222,101.391667&sensor=false
 //            def location = new Location(name: it[1], )
       println it[0]
+    }
+  }
+
+
+  //faf percent 17.8 percent
+  //no, zone, location, description, haulage fee, toll charges, faf amount, total
+  def parseTariffCsv(){
+    File file = new File(getClass().getResource('/resources/tariff.csv').getPath())
+    def br = new BufferedReader(new FileReader(file))
+    def csvData = CsvParser.parseCsv(br)
+    csvData.each {
+      def tariff = new Tariff()
+      tariff.zone = it[1]
+      tariff.desc = it[2]
+      tariff.fafPercent = 17.8
+      tariff.haulageCharges = it[4] as BigDecimal
+      tariff.tollCharges = it[5] as BigDecimal
+      tariff.save(flush: true, failOnError: true)
     }
   }
 }
