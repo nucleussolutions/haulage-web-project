@@ -16,7 +16,7 @@ class UrlMappings {
 
         get "/permissionByUserId/${userId}"(controller: 'custom', action: 'permissionByUserId')
         get "/permissionByGrantedBy/${userId}"(controller: 'custom', action: 'permissionByGrantedBy')
-        get "/locationByType/"${type}(controller: 'custom', action: 'locationByType')
+        get "/locationByType/${type}"(controller: 'custom', action: 'locationByType')
         "/api/usertype"(controller: 'userType', action: 'checkUserExist', method: 'GET')
     }
 }
