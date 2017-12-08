@@ -40,7 +40,7 @@ export class PermissionListComponent implements OnInit, OnDestroy{
 
       const dialog = this.modal.alert().title('Error').message(message).open();
 
-      dialog.then(value => {
+      dialog.result.then(result => {
         //todo might need to navigate them back to login
         this.router.navigate(['/login']);
       });

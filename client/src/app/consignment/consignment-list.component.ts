@@ -45,7 +45,7 @@ export class ConsignmentListComponent implements OnInit {
 
     const dialog = this.modal.alert().isBlocking(true).title('Error').message(message).open();
 
-    dialog.then(value => {
+    dialog.result.then(result => {
       this.router.navigate(['/login']);
     });
   }

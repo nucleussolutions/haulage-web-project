@@ -115,8 +115,7 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
       message: 'Saving RFT...'
     }, BSModalContext));
 
-    loadingDialogRef.then(dialogRef => {
-
+    loadingDialogRef.result.then(result => {
       if(this.kOnekEightFormImg){
         this.s3Service.addkOnekEightFile(this.kOnekEightFormImg).subscribe(data => {
           console.log('kOnekEightFormImg data '+data);
@@ -151,27 +150,20 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
         }
       });
     });
-
-
   }
 
   onAddConsignmentClick() {
     const dialogRef = this.modal.open(CreateConsignmentModalComponent, overlayConfigFactory({
       isBlocking: false,
       size: 'md'
-    }, BSModalContext)).then(dialogRef => {
-      console.log('dialogRef ' + dialogRef);
+    }, BSModalContext));
 
-      dialogRef.result.then(consignment => {
-        console.log('result ' + consignment);
-        //this adds another consignment into the list of consignments
-        this.consignmentList.push(consignment);
-      }, error => {
-        // console.log('error '+error);
-      });
-
+    dialogRef.result.then(consignment => {
+      console.log('result ' + consignment);
+      //this adds another consignment into the list of consignments
+      this.consignmentList.push(consignment);
     }, error => {
-      console.log('reject ' + error);
+      // console.log('error '+error);
     });
   }
 
@@ -203,10 +195,8 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
         return false;
       })
       .open();
-    delDialogRef.then(dialogRef => {
-      dialogRef.result.then(result => {
+    delDialogRef.result.then(result => {
 
-      });
     });
   }
 
@@ -216,19 +206,14 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
       isBlocking: false,
       size: 'md',
       consignment: new Consignment(this.selectedConsignment[0])
-    }, BSModalContext)).then(dialogRef => {
-      console.log('dialogRef ' + dialogRef);
+    }, BSModalContext));
 
-      dialogRef.result.then(consignment => {
-        console.log('result ' + consignment);
-        //this adds another consignment into the list of consignments
-        this.consignmentList.push(consignment);
-      }, error => {
-        // console.log('error '+error);
-      });
-
+    dialogRef.result.then(consignment => {
+      console.log('result ' + consignment);
+      //this adds another consignment into the list of consignments
+      this.consignmentList.push(consignment);
     }, error => {
-      console.log('reject ' + error);
+      // console.log('error '+error);
     });
   }
 

@@ -35,7 +35,7 @@ export class LocationListComponent implements OnInit, OnDestroy {
         this.callLocationlistApi(1);
       } else {
         const dialog = this.modal.prompt().title('Error').message('Unauthorized').open();
-        dialog.then(value => {
+        dialog.result.then(result => {
           this.router.navigate(['/index']);
         })
       }
@@ -58,7 +58,7 @@ export class LocationListComponent implements OnInit, OnDestroy {
 
       const dialog = this.modal.alert().isBlocking(true).title('Error').message(message).open();
 
-      dialog.then(value => {
+      dialog.result.then(result => {
         this.router.navigate(['/login']);
       });
     });

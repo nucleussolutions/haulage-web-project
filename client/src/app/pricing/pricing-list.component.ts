@@ -41,7 +41,7 @@ export class PricingListComponent implements OnInit, OnDestroy {
 
       const dialog = this.modal.alert().title('Error').message(message).open();
 
-      dialog.then(value => {
+      dialog.result.then(result => {
         this.router.navigate(['/login']);
       });
     });

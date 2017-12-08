@@ -34,7 +34,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
       const dialog = this.modal.alert().isBlocking(true)
         .title('Error').message(error).open();
 
-      dialog.then(value => {
+      dialog.result.then(result => {
         this.router.navigate(['/login']);
       });
     });

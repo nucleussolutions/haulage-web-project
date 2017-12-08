@@ -57,7 +57,7 @@ export class ConsignmentPersistComponent implements OnInit, OnDestroy {
         });
       } else {
         const dialog = this.modal.alert().title('Error').message('Unauthorized').open();
-        dialog.then(value => {
+        dialog.result.then(result => {
           this.router.navigate(['/index']);
         });
       }
