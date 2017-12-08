@@ -7,6 +7,8 @@ import haulage.project.*
 import org.springframework.beans.factory.annotation.Autowired
 import grails.config.Config
 
+import java.text.DecimalFormat
+
 class BootStrap {
 
   @Autowired
@@ -133,12 +135,10 @@ class BootStrap {
 
     def quote = new Quote(forwarderId: '1123083', haulierId: '123213210', status: QuotationStatus.PENDING_ACCEPTANCE.id, items: [quoteItem1, quoteItem2], terms: [term1, term2], code: '12312321', endDate: new Date()).save(flush: true, failOnError: true)
 
-
-    def tariff = new Tariff(desc: 'desc 1', haulageCharges: 23.23, tollCharges: 23.23, faf: 23.23, zone: 'zone 1', location: location1).save(flush: true, failOnError: true)
-
     //depot code, depot name, company name, mailing address, depot address, contact person, tel(hp), email address, remarks, lat, lng
 
     parseCsvFile()
+    parseTariffCsv()
   }
   def destroy = {
   }
@@ -187,13 +187,17 @@ class BootStrap {
     File file = new File(getClass().getResource('/resources/tariff.csv').getPath())
     def br = new BufferedReader(new FileReader(file))
     def csvData = CsvParser.parseCsv(br)
+
+    DecimalFormat df = new DecimalFormat()
+    df.parseBigDecimal = true
+
     csvData.each {
       def tariff = new Tariff()
       tariff.zone = it[1]
       tariff.desc = it[2]
       tariff.fafPercent = 17.8
-      tariff.haulageCharges = it[4] as BigDecimal
-      tariff.tollCharges = it[5] as BigDecimal
+      tariff.haulageCharges = df.parse(String.valueOf(it[4]).trim())
+      tariff.tollCharges = df.parse(String.valueOf(it[5]).trim())
       tariff.save(flush: true, failOnError: true)
     }
   }
