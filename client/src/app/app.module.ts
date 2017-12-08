@@ -38,13 +38,11 @@ import {AngularFireModule} from "angularfire2";
 import {environment} from "environments/environment";
 import {AngularFireAuthModule} from "angularfire2/auth";
 import {VerifyEmailComponent} from './verify-email/verify-email.component';
-import {FlashMessagesModule} from "ngx-flash-messages";
 import {PermissionModule} from './permission/permission.module';
 import {JobModule} from './job/job.module';
 import {CreateConsignmentModalComponent} from './create-consignment-modal/create-consignment-modal.component';
 import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
 import {HttpClientModule} from "@angular/common/http";
-import {HttpModule} from "@angular/http";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import { HelpComponent } from './help/help.component';
 import { ReportingComponent } from './reporting/reporting.component';
@@ -86,7 +84,6 @@ import { SubscriptionModule } from './subscription/subscription.module';
     BrowserModule,
     CookieModule.forRoot(),
     FormsModule,
-    HttpModule,
     HttpClientModule,
     AppRoutingModule,
     NgbModule.forRoot(),
@@ -106,7 +103,6 @@ import { SubscriptionModule } from './subscription/subscription.module';
     BootstrapModalModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    FlashMessagesModule,
     PermissionModule,
     JobModule,
     NgxDatatableModule,
