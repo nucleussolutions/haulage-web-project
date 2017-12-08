@@ -4,10 +4,9 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {IndexComponent} from './index/index.component';
 import {AppComponent} from './app.component';
-import {NavComponent} from './nav/nav.component';
+// import {NavComponent} from './nav/nav.component';
 import {NavService} from './nav/nav.service';
 import {AppRoutingModule} from "./app-routing.module";
 import {NotFoundComponent} from './not-found/not-found.component';
@@ -57,7 +56,7 @@ import { SubscriptionModule } from './subscription/subscription.module';
 @NgModule({
   declarations: [
     AppComponent,
-    NavComponent,
+    // NavComponent,
     IndexComponent,
     NotFoundComponent,
     RegisterComponent,
@@ -86,7 +85,7 @@ import { SubscriptionModule } from './subscription/subscription.module';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    NgbModule.forRoot(),
+    // NgbModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     VehicleModule,
