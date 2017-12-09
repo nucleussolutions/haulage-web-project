@@ -2,10 +2,11 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {LocationService} from './location.service';
 import {Location} from './location';
 import {Modal} from 'ngx-modialog/plugins/bootstrap';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {UserService} from 'app/user.service';
 import {PermissionService} from "../permission/permission.service";
 import {Subscription} from "rxjs/Subscription";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'location-list',
@@ -23,16 +24,31 @@ export class LocationListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private locationService: LocationService, private modal: Modal, private router: Router, private userService: UserService, private permissionService: PermissionService) {
+  private page : number = 1;
+
+  constructor(private route: ActivatedRoute, private locationService: LocationService, private modal: Modal, private router: Router, private userService: UserService, private permissionService: PermissionService) {
+
   }
 
   ngOnInit() {
-    this.subscription = this.userService.getUser().flatMap(userObject => {
-      this.userObject = userObject;
+    this.route.params.subscribe((params: Params) => {
+      let pageNumber = params['page'];
+      console.log(pageNumber);
+    });
+
+    Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+      let userObject = result[0];
+      //if params doesnt exist, let api call, if there is, then proceed to call the api by page number
+      let params = result[1];
+
+      if(params['page']){
+        this.page = params['page'];
+      }
+
       return this.permissionService.getByUserId(userObject);
     }).subscribe(permission => {
       if (permission.authority == 'Super Admin' || permission.authority == 'Admin') {
-        this.callLocationlistApi(1);
+        this.callLocationListApi(page);
       } else {
         const dialog = this.modal.prompt().title('Error').message('Unauthorized').open();
         dialog.result.then(result => {
@@ -42,7 +58,7 @@ export class LocationListComponent implements OnInit, OnDestroy {
     });
   }
 
-  callLocationlistApi(page: number){
+  callLocationListApi(page: number){
     this.locationService.list(this.userObject, page).subscribe((locationList: Location[]) => {
       this.locationList = locationList;
     }, error => {
