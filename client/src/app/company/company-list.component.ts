@@ -1,10 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { CompanyService } from './company.service';
-import { Company } from './company';
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
-import { Router } from '@angular/router';
-import { UserService } from 'app/user.service';
+import {CompanyService} from './company.service';
+import {Company} from './company';
+import {Modal} from 'ngx-modialog/plugins/bootstrap';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UserService} from 'app/user.service';
 import {Subscription} from "rxjs/Subscription";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'company-list',
@@ -22,13 +23,20 @@ export class CompanyListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
+  private page: number = 1;
 
-  constructor(private companyService: CompanyService, private modal: Modal, private router: Router, private userService: UserService) {
+
+  constructor(private route: ActivatedRoute, private companyService: CompanyService, private modal: Modal, private router: Router, private userService: UserService) {
   }
 
   ngOnInit() {
 
-    this.subscription = this.userService.getUser().flatMap(userObject => this.companyService.list(userObject)).subscribe((companyList: Company[]) => {
+    Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+      let userObject = result[0];
+
+      let params = result[1];
+      return this.companyService.list(userObject);
+    }).subscribe((companyList: Company[]) => {
       this.companyList = companyList;
     }, error => {
       const dialog = this.modal.alert().isBlocking(true)

@@ -2,10 +2,11 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ConsignmentService} from './consignment.service';
 import {Consignment} from './consignment';
 import {Modal} from 'ngx-modialog/plugins/bootstrap';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from 'app/user.service';
 import {PermissionService} from "../permission/permission.service";
 import {Subscription} from "rxjs/Subscription";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'consignment-list',
@@ -18,17 +19,23 @@ export class ConsignmentListComponent implements OnInit {
 
   consignmentList: Consignment[] = [];
 
-  constructor(private consignmentService: ConsignmentService, private modal: Modal, private router: Router, private userService: UserService, private permissionService: PermissionService) {
+  private page: number = 1;
+
+  constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private modal: Modal, private router: Router, private userService: UserService, private permissionService: PermissionService) {
   }
 
   ngOnInit() {
-    console.log('ConsignmentListComponent onInit');
-    this.userService.getUser().subscribe(userObject => {
-      this.consignmentService.list(userObject).subscribe((consignmentList: Consignment[]) => {
-        this.consignmentList = consignmentList;
-      }, error => {
-        this.handleError(error);
-      });
+
+    Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+
+      let userObject = result[0];
+      let params = result[1];
+
+      return this.consignmentService.list(userObject);
+    }).subscribe((consignmentList: Consignment[]) => {
+      this.consignmentList = consignmentList;
+    }, error => {
+      this.handleError(error);
     });
   }
 
