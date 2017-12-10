@@ -31,7 +31,11 @@ export class ConsignmentListComponent implements OnInit {
       let userObject = result[0];
       let params = result[1];
 
-      return this.consignmentService.list(userObject);
+      if (params['page']) {
+        this.page = params['page'];
+      }
+
+      return this.consignmentService.list(userObject, this.page);
     }).subscribe((consignmentList: Consignment[]) => {
       this.consignmentList = consignmentList;
     }, error => {

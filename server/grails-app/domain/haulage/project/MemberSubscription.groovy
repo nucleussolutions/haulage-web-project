@@ -4,7 +4,7 @@ package haulage.project
 import grails.rest.*
 
 @Resource(readOnly = false, formats = ['json', 'xml'])
-class Subscription {
+class MemberSubscription {
 
     String userId
     Pricing pricing

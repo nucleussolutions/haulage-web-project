@@ -5,7 +5,7 @@ import {Subject} from 'rxjs/Subject';
 import {environment} from 'environments/environment';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 
 @Injectable()
 export class JobService {
@@ -13,8 +13,14 @@ export class JobService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject:any): Observable<Job[]> {
+  list(userObject:any, page: number): Observable<Job[]> {
     let subject = new Subject<Job[]>();
+
+    let offset = page * 10;
+
+    let params = new HttpParams();
+    params = params.append('offset', offset.toString());
+    params = params.append('max', '10');
 
     let headers = new HttpHeaders({
       'token': userObject.token,
@@ -22,7 +28,8 @@ export class JobService {
     });
 
     this.http.get(environment.serverUrl + '/job', {
-      headers: headers
+      headers: headers,
+      params: params
     })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new Job(item)))

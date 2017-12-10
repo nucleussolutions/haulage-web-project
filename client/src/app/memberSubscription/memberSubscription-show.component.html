@@ -1,34 +1,34 @@
 <div class="nav" role="navigation">
     <ul>
         <li><a [routerLink]="['/index']" class="home">Home</a></li>
-        <li><a class="list" [routerLink]="['/subscription', 'list']" class="list">Subscription List</a></li>
-        <li><a class="create" [routerLink]="['/subscription', 'create']" class="create">New Subscription</a></li>
+        <li><a class="list" [routerLink]="['/memberSubscription', 'list']" class="list">MemberSubscription List</a></li>
+        <li><a class="create" [routerLink]="['/memberSubscription', 'create']" class="create">New MemberSubscription</a></li>
     </ul>
 </div>
 <div id="show-part" class="content scaffold-show" role="main">
-    <h1>Show Subscription</h1>
-    <ol class="property-list subscription">
+    <h1>Show MemberSubscription</h1>
+    <ol class="property-list memberSubscription">
   <li class="fieldcontain">
     <span id="userId-label" class="property-label">User Id</span>
     <div class="property-value" aria-labelledby="userId-label">
-      <span>{{subscription.userId}}</span>
+      <span>{{memberSubscription.userId}}</span>
     </div>
   </li>
   <li class="fieldcontain">
     <span id="pricing-label" class="property-label">Pricing</span>
     <div class="property-value" aria-labelledby="pricing-label">
-      <a *ngIf="subscription.pricing" [routerLink]="['/subscription','show', subscription.pricing.id]">{{subscription.pricing.toString()}}</a>
+      <a *ngIf="memberSubscription.pricing" [routerLink]="['/memberSubscription','show', memberSubscription.pricing.id]">{{memberSubscription.pricing.toString()}}</a>
     </div>
   </li>
   <li class="fieldcontain">
     <span id="monthlyRecurring-label" class="property-label">Monthly Recurring</span>
     <div class="property-value" aria-labelledby="monthlyRecurring-label">
-      <span>{{subscription.monthlyRecurring}}</span>
+      <span>{{memberSubscription.monthlyRecurring}}</span>
     </div>
   </li>
 </ol>
 
-    <a class="edit" [routerLink]="['/subscription', 'edit', subscription.id]">Edit</a>
+    <a class="edit" [routerLink]="['/memberSubscription', 'edit', memberSubscription.id]">Edit</a>
     <button type="button" (click)="destroy()">Delete</button>
 
 </div>

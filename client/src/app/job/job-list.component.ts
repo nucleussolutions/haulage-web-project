@@ -4,6 +4,8 @@ import {Job} from './job';
 import {Subscription} from "rxjs/Subscription";
 import {UserService} from "../user.service";
 import {PermissionService} from "../permission/permission.service";
+import {ActivatedRoute} from "@angular/router";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'job-list',
@@ -20,12 +22,26 @@ export class JobListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(private jobService: JobService, private userService: UserService) {
+  private page : number = 1;
+
+  constructor(private route: ActivatedRoute, private jobService: JobService, private userService: UserService) {
 
   }
 
   ngOnInit() {
-    this.subscription = this.userService.getUser().flatMap(userObject => this.jobService.list(userObject)).subscribe((jobList: Job[]) => {
+
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+
+      let userObject = result[0];
+
+      let params = result[1];
+
+      if (params['page']) {
+        this.page = params['page'];
+      }
+
+      return this.jobService.list(userObject, this.page);
+    }).subscribe((jobList: Job[]) => {
       this.jobList = jobList;
     });
   }

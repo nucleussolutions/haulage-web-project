@@ -1,6 +1,6 @@
 import { Pricing } from '../pricing/pricing';
 
-export class Subscription {
+export class MemberSubscription {
   id: number;
 
   userId: string;
@@ -23,6 +23,6 @@ export class Subscription {
   }
 
   toString(): string {
-    return 'haulage.project.Subscription : ' + (this.id ? this.id : '(unsaved)');
+    return 'haulage.project.MemberSubscription : ' + (this.id ? this.id : '(unsaved)');
   }
 }

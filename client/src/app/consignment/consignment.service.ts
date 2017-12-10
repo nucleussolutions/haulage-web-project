@@ -6,7 +6,7 @@ import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import {environment} from "../../environments/environment";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 
 @Injectable()
 export class ConsignmentService {
@@ -15,8 +15,14 @@ export class ConsignmentService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject : any): Observable<Consignment[]> {
+  list(userObject: any, page: number): Observable<Consignment[]> {
     let subject = new Subject<Consignment[]>();
+
+    let offset = page * 10;
+
+    let params = new HttpParams();
+    params = params.append('offset', offset.toString());
+    params = params.append('max', '10');
 
     let headers = new HttpHeaders({
       'token': userObject.token,
@@ -24,15 +30,16 @@ export class ConsignmentService {
     });
 
     this.http.get(environment.serverUrl + '/consignment', {
-      headers: headers
+      headers: headers,
+      params: params
     })
-      .subscribe((json: any[]) => {
-        subject.next(json.map((item: any) => new Consignment(item)))
-      });
+        .subscribe((json: any[]) => {
+          subject.next(json.map((item: any) => new Consignment(item)))
+        });
     return subject.asObservable();
   }
 
-  get(id: number, userObject:any): Observable<Consignment> {
+  get(id: number, userObject: any): Observable<Consignment> {
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
@@ -41,16 +48,16 @@ export class ConsignmentService {
     return this.http.get(environment.serverUrl + '/consignment/' + id, {
       headers: headers
     })
-      .map((r: Response) => new Consignment(r));
+        .map((r: Response) => new Consignment(r));
   }
 
-  getByRFTId(rftId : string, userObject: any): Observable<Consignment>{
+  getByRFTId(rftId: string, userObject: any): Observable<Consignment> {
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
 
-    return this.http.get(environment.serverUrl + '/consignment?rftId='+rftId, {
+    return this.http.get(environment.serverUrl + '/consignment?rftId=' + rftId, {
       headers: headers
     }).map((r: Response) => new Consignment(r));
   }
@@ -76,13 +83,13 @@ export class ConsignmentService {
       headers: headers,
       body: body
     })
-      .map((r: Response) => new Consignment(r.json())).catch(err => {
-        if (err.status === 401) {
-          return Observable.throw('Unauthorized');
-        } else if (err.status === 500) {
-          return Observable.throw('Internal server error');
-        }
-      });
+        .map((r: Response) => new Consignment(r.json())).catch(err => {
+          if (err.status === 401) {
+            return Observable.throw('Unauthorized');
+          } else if (err.status === 500) {
+            return Observable.throw('Internal server error');
+          }
+        });
   }
 
   destroy(consignment: Consignment, userObject: any): Observable<boolean> {

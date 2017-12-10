@@ -1,7 +1,7 @@
-import haulage.project.Subscription
+import haulage.project.MemberSubscription
 
 model {
-	Iterable<Subscription> subscriptionList
+	Iterable<MemberSubscription> subscriptionList
 }
 
 json tmpl.subscription(subscriptionList ?: [])

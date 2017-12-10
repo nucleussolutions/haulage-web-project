@@ -51,6 +51,7 @@ import { TariffModule } from './tariff/tariff.module';
 import { BillingComponent } from './billing/billing.component';
 import { NotificationPaneComponent } from './notification-pane/notification-pane.component';
 import { SubscriptionModule } from './subscription/subscription.module';
+import { MemberSubscriptionModule } from './memberSubscription/memberSubscription.module';
 
 
 @NgModule({
@@ -85,7 +86,7 @@ import { SubscriptionModule } from './subscription/subscription.module';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    // NgbModule.forRoot(),
+    //NgbModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     VehicleModule,
@@ -107,7 +108,8 @@ import { SubscriptionModule } from './subscription/subscription.module';
     NgxDatatableModule,
     QuoteModule,
     TariffModule,
-    SubscriptionModule
+    SubscriptionModule,
+    MemberSubscriptionModule
 ],
   exports: [ReactiveFormsModule],
   providers: [{

@@ -3,7 +3,7 @@ package haulage.project
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class SubscriptionSpec extends Specification implements DomainUnitTest<Subscription> {
+class MemberSubscriptionSpec extends Specification implements DomainUnitTest<MemberSubscription> {
 
     def setup() {
     }

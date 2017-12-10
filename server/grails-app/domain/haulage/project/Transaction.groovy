@@ -7,7 +7,7 @@ import grails.rest.*
 class Transaction {
     //belongs to which user, most likely haulier
     TransactionStatus status
-    Subscription subscription
+    MemberSubscription subscription
 
     static constraints = {
         status nullable: false, inList: TransactionStatus.values()*.id

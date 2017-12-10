@@ -1,7 +1,7 @@
-import haulage.project.Subscription
+import haulage.project.MemberSubscription
 
 model {
-	Subscription subscription
+	MemberSubscription subscription
 }
 
 json tmpl.subscription(subscription)
