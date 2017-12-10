@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, RequestOptions, RequestMethod, Request, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Tariff} from './tariff';
 import {Subject} from 'rxjs/Subject';
@@ -7,7 +6,7 @@ import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import {environment} from "../../environments/environment";
-import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 
 @Injectable()
 export class TariffService {

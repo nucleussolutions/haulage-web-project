@@ -5,7 +5,7 @@ import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
-import {HttpClient, HttpHeaders, HttpRequest} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 
 @Injectable()
@@ -14,9 +14,24 @@ export class MemberSubscriptionService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject: any): Observable<MemberSubscription[]> {
+  list(userObject: any, page: number): Observable<MemberSubscription[]> {
     let subject = new Subject<MemberSubscription[]>();
-    this.http.get(environment.serverUrl + '/memberSubscription')
+
+    let offset = page * 10;
+
+    let params = new HttpParams();
+    params = params.append('offset', offset.toString());
+    params = params.append('max', '10');
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    this.http.get(environment.serverUrl + '/memberSubscription', {
+      headers: headers,
+      params: params
+    })
         .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new MemberSubscription(item)))
       });
@@ -24,7 +39,16 @@ export class MemberSubscriptionService {
   }
 
   get(id: number, userObject: any): Observable<MemberSubscription> {
-    return this.http.get(environment.serverUrl + '/memberSubscription/'+id)
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+
+    return this.http.get(environment.serverUrl + '/memberSubscription/'+id, {
+      headers: headers
+    })
       .map((r: Response) => new MemberSubscription(r));
   }
 
@@ -40,7 +64,11 @@ export class MemberSubscriptionService {
       url = environment.serverUrl + '/memberSubscription';
     }
     let body = JSON.stringify(memberSubscription);
-    let headers = new HttpHeaders({"Content-Type": "application/json"});
+    let headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
 
     return this.http.request(requestMethodStr, url, {
       headers: headers,
@@ -49,8 +77,14 @@ export class MemberSubscriptionService {
       .map((r: Response) => new MemberSubscription(r));
   }
 
-  destroy(memberSubscription: MemberSubscription): Observable<boolean> {
-    return this.http.delete(environment.serverUrl + '/memberSubscription/' + memberSubscription.id).map((res: Response) => res.ok).catch(() => {
+  destroy(memberSubscription: MemberSubscription, userObject: any): Observable<boolean> {
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+    return this.http.delete(environment.serverUrl + '/memberSubscription/' + memberSubscription.id, {
+      headers: headers
+    }).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
   }

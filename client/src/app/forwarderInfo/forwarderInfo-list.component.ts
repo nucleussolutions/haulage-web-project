@@ -5,6 +5,8 @@ import {Modal} from 'ngx-modialog/plugins/bootstrap';
 import {Title} from '@angular/platform-browser';
 import {Subscription} from 'rxjs/Subscription';
 import {UserService} from 'app/user.service';
+import {Observable} from "rxjs/Observable";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -20,14 +22,27 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(private forwarderInfoService: ForwarderInfoService, private modal: Modal, private titleService: Title, private userService: UserService) {
+  private page: number = 1;
+
+  constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private modal: Modal, private titleService: Title, private userService: UserService) {
     this.titleService.setTitle('Forwarders');
 
   }
 
   ngOnInit() {
 
-    this.subscription = this.userService.getUser().flatMap(userObject => this.forwarderInfoService.list(userObject)).subscribe((forwarderInfoList: ForwarderInfo[]) => {
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+
+      let userObject  = result[0];
+
+      let params = result[1];
+
+      if (params['page']) {
+        this.page = params['page'];
+      }
+
+      return this.forwarderInfoService.list(userObject);
+    }).subscribe((forwarderInfoList: ForwarderInfo[]) => {
       this.forwarderInfoList = forwarderInfoList;
     }, error => {
       let message;

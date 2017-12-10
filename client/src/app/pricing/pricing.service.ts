@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 import {environment} from 'environments/environment';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 
 @Injectable()
 export class PricingService {
@@ -15,8 +15,13 @@ export class PricingService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject:any): Observable<Pricing[]> {
+  list(userObject:any, page: number): Observable<Pricing[]> {
     let subject = new Subject<Pricing[]>();
+    let offset = page * 10;
+
+    let params = new HttpParams();
+    params = params.append('offset', offset.toString());
+    params = params.append('max', '10');
 
 
     let headers = new HttpHeaders({
@@ -25,7 +30,8 @@ export class PricingService {
     });
 
     this.http.get(environment.serverUrl + '/pricing', {
-      headers: headers
+      headers: headers,
+      params: params
     })
       .catch(err => {
         subject.error(err);
