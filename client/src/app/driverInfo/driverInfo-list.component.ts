@@ -6,7 +6,8 @@ import {Modal} from 'ngx-modialog/plugins/bootstrap';
 import {Subscription} from 'rxjs/Subscription';
 import {UserService} from 'app/user.service';
 import {PermissionService} from "../permission/permission.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Observable} from "rxjs/Observable";
 
 
 @Component({
@@ -23,12 +24,26 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(private driverInfoService: DriverInfoService, private titleService: Title, private modal: Modal, private userService: UserService) {
+  private page : number = 1;
+
+  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private titleService: Title, private modal: Modal, private userService: UserService) {
     this.titleService.setTitle('Drivers');
   }
 
   ngOnInit() {
-    this.subscription = this.userService.getUser().flatMap(userObject => this.driverInfoService.list(userObject, 1)).subscribe((driverInfoList: DriverInfo[]) => {
+
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+
+      let userObject = result[0];
+
+      let params = result[1];
+
+      if (params['page']) {
+        this.page = params['page'];
+      }
+
+      return this.driverInfoService.list(userObject, this.page);
+    }).subscribe((driverInfoList: DriverInfo[]) => {
       this.driverInfoList = driverInfoList;
     }, error => {
 
@@ -44,7 +59,5 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
 
       this.modal.alert().title('Error').message(message).open();
     });
-
-    //todo support paging
   }
 }

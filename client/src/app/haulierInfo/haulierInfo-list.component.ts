@@ -3,11 +3,12 @@ import {HaulierInfoService} from './haulierInfo.service';
 import {HaulierInfo} from './haulierInfo';
 import {Modal} from 'ngx-modialog/plugins/bootstrap';
 import {Title} from "@angular/platform-browser";
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from 'app/user.service';
 import {PermissionService} from "../permission/permission.service";
 import {Permission} from "../permission/permission";
 import {Subscription} from "rxjs/Subscription";
+import {Observable} from "rxjs/Observable";
 
 
 @Component({
@@ -17,22 +18,25 @@ import {Subscription} from "rxjs/Subscription";
 export class HaulierInfoListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-
+    this.subscription.unsubscribe();
   }
 
   haulierInfoList: HaulierInfo[] = [];
 
-  private permission: Permission;
-
   private subscription: Subscription;
 
-  constructor(private haulierInfoService: HaulierInfoService, private modal: Modal, private titleService: Title, private router: Router, private userService: UserService, private permissionService: PermissionService) {
+  constructor(private route: ActivatedRoute, private haulierInfoService: HaulierInfoService, private modal: Modal, private titleService: Title, private router: Router, private userService: UserService, private permissionService: PermissionService) {
     this.titleService.setTitle('Hauliers');
   }
 
   ngOnInit() {
-    this.userService.getUser().flatMap(userObject => {
-      this.checkPermission(userObject);
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+
+      let userObject = result[0];
+
+      let params = result[1];
+
+
       return this.haulierInfoService.list(userObject);
     }).subscribe((haulierInfoList: HaulierInfo[]) => {
       this.haulierInfoList = haulierInfoList;
@@ -53,9 +57,4 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
     });
   }
 
-  checkPermission(userObject){
-    this.permissionService.getByUserId(userObject).subscribe(permission =>{
-      this.permission = permission;
-    })
-  }
 }

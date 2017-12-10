@@ -3,6 +3,8 @@ import {TariffService} from './tariff.service';
 import {Tariff} from './tariff';
 import {UserService} from "../user.service";
 import {Subscription} from "rxjs/Subscription";
+import {ActivatedRoute} from "@angular/router";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'tariff-list',
@@ -18,13 +20,24 @@ export class TariffListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(private tariffService: TariffService, private userService: UserService) { }
+  private page : number = 1;
+
+  constructor(private route: ActivatedRoute, private tariffService: TariffService, private userService: UserService) { }
 
   ngOnInit() {
-    this.subscription = this.userService.getUser().flatMap(userObject => this.tariffService.list(userObject, 1)).subscribe((tariffList: Tariff[]) => {
+
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+
+      let userObject = result[0];
+      let params = result[1];
+
+      if (params['page']) {
+        this.page = params['page'];
+      }
+
+      return this.tariffService.list(userObject, this.page);
+    }).subscribe((tariffList: Tariff[]) => {
       this.tariffList = tariffList;
     });
-
-    //todo support paging
   }
 }
