@@ -1,16 +1,17 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { PermissionService } from './permission.service';
-import { Permission } from './permission';
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
-import { Router } from '@angular/router';
-import { UserService } from 'app/user.service';
+import {PermissionService} from './permission.service';
+import {Permission} from './permission';
+import {Modal} from 'ngx-modialog/plugins/bootstrap';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UserService} from 'app/user.service';
 import {Subscription} from "rxjs/Subscription";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'permission-list',
   templateUrl: './permission-list.component.html',
 })
-export class PermissionListComponent implements OnInit, OnDestroy{
+export class PermissionListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -20,12 +21,25 @@ export class PermissionListComponent implements OnInit, OnDestroy{
 
   private subscription: Subscription;
 
-  constructor(private permissionService: PermissionService, private modal: Modal, private router: Router, private userService: UserService) {
+  private page: number = 1;
+
+  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private modal: Modal, private router: Router, private userService: UserService) {
   }
 
   ngOnInit() {
 
-    this.subscription = this.userService.getUser().flatMap(userObject => this.permissionService.list(userObject, 1)).subscribe((permissionList: Permission[]) => {
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+
+      let userObject = result[0];
+
+      let params = result[1];
+
+      if (params['page']) {
+        this.page = params['page'];
+      }
+
+      return this.permissionService.list(userObject, this.page);
+    }).subscribe((permissionList: Permission[]) => {
       this.permissionList = permissionList;
     }, error => {
       let message;
@@ -45,8 +59,5 @@ export class PermissionListComponent implements OnInit, OnDestroy{
         this.router.navigate(['/login']);
       });
     });
-
-
-    //todo support paging
   }
 }
