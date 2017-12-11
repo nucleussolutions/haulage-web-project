@@ -26,13 +26,19 @@ export class LocationListComponent implements OnInit, OnDestroy {
 
   private page: number = 0;
 
+  private nextLink: string;
+
+  private firstLink: string;
+
+  private lastLink: string;
+
   constructor(private route: ActivatedRoute, private locationService: LocationService, private modal: Modal, private router: Router, private userService: UserService, private permissionService: PermissionService) {
 
   }
 
   ngOnInit() {
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
-      let userObject = result[0];
+      this.userObject = result[0];
       //if params doesnt exist, let api call, if there is, then proceed to call the api by page number
       let params = result[1];
 
@@ -40,7 +46,7 @@ export class LocationListComponent implements OnInit, OnDestroy {
         this.page = params['page'];
       }
 
-      return this.permissionService.getByUserId(userObject);
+      return this.permissionService.getByUserId(this.userObject);
     }).subscribe(permission => {
       if (permission.authority == 'Super Admin' || permission.authority == 'Admin') {
         this.callLocationListApi(this.page);
@@ -54,8 +60,18 @@ export class LocationListComponent implements OnInit, OnDestroy {
   }
 
   callLocationListApi(page: number) {
-    this.locationService.list(this.userObject, page).subscribe((locationList: Location[]) => {
-      this.locationList = locationList;
+    this.locationService.list(this.userObject, page).subscribe(json => {
+      let data = json['data'];
+      let links = json['links'];
+      this.nextLink = links.next;
+      this.firstLink = links.first;
+      this.lastLink = links.last;
+
+      data.forEach(locationDatum => {
+        let location = new Location(locationDatum.attributes);
+        location.id = locationDatum.id;
+        this.locationList.push(location);
+      });
     }, error => {
       let message;
 

@@ -37,7 +37,7 @@ export class LocationService {
         return subject.asObservable();
       })
       .subscribe((json: any[]) => {
-        subject.next(json.map((item: any) => new Location(item)))
+        subject.next(json);
       });
     return subject.asObservable();
   }

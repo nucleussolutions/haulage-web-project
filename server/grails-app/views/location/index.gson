@@ -5,7 +5,7 @@ model {
   Integer total
 }
 
-json g.render(locationList, [pagination: [total: total, resource: Location, max: 10]])
+json jsonapi.render(locationList, [pagination: [total: total, resource: Location]])
 
 //json tmpl.location(locationList ?: [])
 

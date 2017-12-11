@@ -7,6 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class TariffService {
@@ -30,6 +31,10 @@ export class TariffService {
       headers: headers,
       params: params
     })
+        .catch(err => {
+          subject.error(err);
+          return subject.asObservable();
+        })
       .subscribe((json: any[]) => {
         subject.next(json.map((item: any) => new Tariff(item)))
       });

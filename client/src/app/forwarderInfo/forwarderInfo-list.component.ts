@@ -41,7 +41,7 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
         this.page = params['page'];
       }
 
-      return this.forwarderInfoService.list(userObject);
+      return this.forwarderInfoService.list(userObject, this.page);
     }).subscribe((forwarderInfoList: ForwarderInfo[]) => {
       this.forwarderInfoList = forwarderInfoList;
     }, error => {

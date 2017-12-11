@@ -7,6 +7,6 @@ model {
 
 //json tmpl.forwarderInfo(forwarderInfoList ?: [])
 
-json g.render(forwarderInfoList, [pagination: [total: total, resource: ForwarderInfo, max: 10]])
+json g.render(forwarderInfoList, [expand: 'company', pagination: [total: total, resource: ForwarderInfo, max: 10]])
 
 

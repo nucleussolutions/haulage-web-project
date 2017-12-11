@@ -34,7 +34,7 @@ export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.companyService.list(this.userObject).subscribe((companyList: Company[]) => { this.companyList = companyList; });
+    this.companyService.list(this.userObject,1 ).subscribe((companyList: Company[]) => { this.companyList = companyList; });
     this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
         this.forwarderInfoService.get(+params['id'], this.userObject).subscribe((forwarderInfo: ForwarderInfo) => {

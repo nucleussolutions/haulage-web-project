@@ -31,11 +31,16 @@ export class CompanyListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
       let userObject = result[0];
 
       let params = result[1];
-      return this.companyService.list(userObject);
+
+      if (params['page']) {
+        this.page = params['page'];
+      }
+
+      return this.companyService.list(userObject, this.page);
     }).subscribe((companyList: Company[]) => {
       this.companyList = companyList;
     }, error => {

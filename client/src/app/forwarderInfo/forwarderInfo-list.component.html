@@ -24,7 +24,7 @@
         <span>{{forwarderInfo.name}}</span>
       </td>
       <td>
-        <a *ngIf="forwarderInfo.company" [routerLink]="['/forwarderInfo','show', forwarderInfo.company.id]">{{forwarderInfo.company.toString()}}</a>
+        <a *ngIf="forwarderInfo.company" [routerLink]="['/forwarderInfo','show', forwarderInfo.company.id]">{{forwarderInfo.company.name}}</a>
       </td>
       <td>
         <span>{{forwarderInfo.userId}}</span>
