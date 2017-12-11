@@ -22,7 +22,7 @@ export class JobListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private page : number = 1;
+  private page : number = 0;
 
   constructor(private route: ActivatedRoute, private jobService: JobService, private userService: UserService) {
 

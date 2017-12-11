@@ -8,7 +8,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 import {environment} from 'environments/environment';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 
 @Injectable()
 export class HaulierInfoService {
@@ -16,7 +16,7 @@ export class HaulierInfoService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject: any): Observable<HaulierInfo[]> {
+  list(userObject: any, page: number): Observable<HaulierInfo[]> {
     let subject = new Subject<HaulierInfo[]>();
 
     let headers = new HttpHeaders({
@@ -24,8 +24,15 @@ export class HaulierInfoService {
       'apiKey': userObject.apiKey
     });
 
+    let offset = page * 10;
+
+    let params = new HttpParams();
+    params = params.append('offset', offset.toString());
+    params = params.append('max', '10');
+
     this.http.get(environment.serverUrl + '/haulierInfo', {
-      headers: headers
+      headers: headers,
+      params: params
     })
       .catch(err => {
         subject.error(err);

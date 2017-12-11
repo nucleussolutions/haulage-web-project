@@ -24,7 +24,7 @@ export class LocationListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  private page: number = 1;
+  private page: number = 0;
 
   constructor(private route: ActivatedRoute, private locationService: LocationService, private modal: Modal, private router: Router, private userService: UserService, private permissionService: PermissionService) {
 

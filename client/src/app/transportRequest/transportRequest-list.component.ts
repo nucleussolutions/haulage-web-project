@@ -25,11 +25,18 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
 
   private permission: any;
 
+  private page: number = 0;
+
   constructor(private transportRequestService: TransportRequestService, private userService: UserService, private modal: Modal, private titleService: Title, private permissionService: PermissionService) {
     this.titleService.setTitle('Transport Request List');
   }
 
   ngOnInit() {
+
+
+
+
+
     this.subscription = this.userService.getUser().flatMap(userObject => {
       this.listTransportRequests(userObject);
       console.log('transport request list userobject '+JSON.stringify(userObject));

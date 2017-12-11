@@ -20,7 +20,7 @@ export class TariffListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private page : number = 1;
+  private page : number = 0;
 
   constructor(private route: ActivatedRoute, private tariffService: TariffService, private userService: UserService) { }
 

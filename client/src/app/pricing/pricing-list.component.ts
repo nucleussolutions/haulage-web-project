@@ -23,7 +23,7 @@ export class PricingListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private page: number = 1;
+  private page: number = 0;
 
   constructor(private route: ActivatedRoute, private pricingService: PricingService, private modal: Modal, private titleService: Title, private router: Router, private userService: UserService) {
     this.titleService.setTitle('Pricing List');

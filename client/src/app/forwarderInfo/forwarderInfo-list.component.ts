@@ -22,7 +22,7 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private page: number = 1;
+  private page: number = 0;
 
   constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private modal: Modal, private titleService: Title, private userService: UserService) {
     this.titleService.setTitle('Forwarders');

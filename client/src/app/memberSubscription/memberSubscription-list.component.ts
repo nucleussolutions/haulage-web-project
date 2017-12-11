@@ -17,7 +17,7 @@ export class MemberSubscriptionListComponent implements OnInit, OnDestroy {
 
   memberSubscriptionList: MemberSubscription[] = [];
 
-  private page: number = 1;
+  private page: number = 0;
 
   private subscription : Subscription;
 

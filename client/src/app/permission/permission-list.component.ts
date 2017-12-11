@@ -21,7 +21,7 @@ export class PermissionListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private page: number = 1;
+  private page: number = 0;
 
   constructor(private route: ActivatedRoute, private permissionService: PermissionService, private modal: Modal, private router: Router, private userService: UserService) {
   }

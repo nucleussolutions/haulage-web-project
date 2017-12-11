@@ -21,7 +21,7 @@ export class QuoteListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private page: number =1;
+  private page: number = 0;
 
   constructor(private route: ActivatedRoute, private quoteService: QuoteService, private userService: UserService, private modal: Modal) {
   }

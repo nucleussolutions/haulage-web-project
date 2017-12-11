@@ -1,9 +1,12 @@
 import haulage.project.Tariff
 
 model {
-	Iterable<Tariff> tariffList
-	Integer total
+  Iterable<Tariff> tariffList
+  Integer total
 }
 
-json tmpl.tariff(tariffList ?: [])
+//json tmpl.tariff(tariffList ?: [])
+
+json jsonapi.render(tariffList, [associations: false, pagination: [total: total, resource: Tariff]])
+
 

@@ -19,7 +19,7 @@ export class ConsignmentListComponent implements OnInit {
 
   consignmentList: Consignment[] = [];
 
-  private page: number = 1;
+  private page: number = 0;
 
   constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private modal: Modal, private router: Router, private userService: UserService, private permissionService: PermissionService) {
   }
