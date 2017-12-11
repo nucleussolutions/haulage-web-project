@@ -1,13 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Job} from './job';
-import {JobService} from './job.service';
-import {Response} from "@angular/http";
-import {ConsignmentService} from '../consignment/consignment.service';
-import {Consignment} from '../consignment/consignment';
-import {Subscription} from "rxjs/Subscription";
-import {UserService} from "../user.service";
-import {PermissionService} from "../permission/permission.service";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Job } from './job';
+import { JobService } from './job.service';
+import { ConsignmentService } from '../consignment/consignment.service';
+import { Consignment } from '../consignment/consignment';
+import { Subscription } from "rxjs/Subscription";
+import { UserService } from "../user.service";
+import { PermissionService } from "../permission/permission.service";
 
 @Component({
     selector: 'job-persist',
@@ -29,26 +28,16 @@ export class JobPersistComponent implements OnInit, OnDestroy {
 
     private userObject: any;
 
-    private permission : any;
-
+    // tslint:disable-next-line:max-line-length
     constructor(private route: ActivatedRoute, private jobService: JobService, private router: Router, private consignmentService: ConsignmentService, private userService: UserService, private permissionService: PermissionService) {
-
-
-
-        this.subscription = this.userService.getUser().subscribe(response => {
-            this.userObject = response;
-
-            this.permissionService.getByUserId(this.userObject).subscribe(permission => {
-                this.permission = permission;
-            }, error => {
-                console.log('JobPersistComponent error'+error);
-
-            })
-        });
     }
 
     ngOnInit() {
-        this.consignmentService.list(this.userObject).subscribe((consignmentList: Consignment[]) => {
+        this.subscription = this.userService.getUser().subscribe(userObject => {
+            this.userObject = userObject;
+        });
+
+        this.consignmentService.list(this.userObject, 1).subscribe((consignmentList: Consignment[]) => {
             this.consignmentList = consignmentList;
         });
         this.route.params.subscribe((params: Params) => {
@@ -69,7 +58,7 @@ export class JobPersistComponent implements OnInit, OnDestroy {
             if (json.hasOwnProperty('message')) {
                 this.errors = [json];
             } else {
-                this.errors = json._embedded.errors;
+                // this.errors = json._embedded.errors;
             }
         });
     }
