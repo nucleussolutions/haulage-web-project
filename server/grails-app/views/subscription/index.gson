@@ -2,7 +2,9 @@ import haulage.project.MemberSubscription
 
 model {
 	Iterable<MemberSubscription> subscriptionList
+	Integer total
 }
 
 json tmpl.subscription(subscriptionList ?: [])
+
 

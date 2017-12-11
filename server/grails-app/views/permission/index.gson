@@ -2,7 +2,11 @@ import haulage.project.Permission
 
 model {
 	Iterable<Permission> permissionList
+	Integer total
 }
 
-json tmpl.permission(permissionList ?: [])
+//json tmpl.permission(permissionList ?: [])
+
+json g.render(permissionList, [pagination: [total: total, resource: Permission, max: 10]])
+
 

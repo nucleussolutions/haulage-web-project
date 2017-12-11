@@ -2,7 +2,10 @@ import haulage.project.Consignment
 
 model {
 	Iterable<Consignment> consignmentList
+	Integer total
 }
 
-json tmpl.consignment(consignmentList ?: [])
+//json tmpl.consignment(consignmentList ?: [])
+
+json g.render(consignmentList, [pagination: [total: total, resource: Consignment, max: 10]])
 

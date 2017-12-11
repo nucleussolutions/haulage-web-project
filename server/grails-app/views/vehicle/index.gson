@@ -2,6 +2,7 @@ import haulage.project.Vehicle
 
 model {
 	Iterable<Vehicle> vehicleList
+	Integer total
 }
 
 json tmpl.vehicle(vehicleList ?: [])

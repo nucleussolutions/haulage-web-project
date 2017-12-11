@@ -1,0 +1,12 @@
+import haulage.project.ForwarderInfo
+
+model {
+	Iterable<ForwarderInfo> forwarderInfoList
+	Integer total
+}
+
+//json tmpl.forwarderInfo(forwarderInfoList ?: [])
+
+json g.render(forwarderInfoList, [pagination: [total: total, resource: ForwarderInfo, max: 10]])
+
+

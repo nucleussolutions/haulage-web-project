@@ -2,6 +2,7 @@ import haulage.project.Tariff
 
 model {
 	Iterable<Tariff> tariffList
+	Integer total
 }
 
 json tmpl.tariff(tariffList ?: [])

@@ -5,7 +5,6 @@ model {
 	Integer total
 }
 
-json jsonapi.render(quoteList, [pagination: [total: total, resource: Quote]])
+//json jsonapi.render(quoteList, [pagination: [total: total, resource: Quote]])
 
-//json tmpl.quote(quoteList ?: [])
-
+json g.render(quoteList, [pagination: [total: total, resource: Quote, max: 10]])
