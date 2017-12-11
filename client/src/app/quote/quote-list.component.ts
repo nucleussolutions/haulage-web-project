@@ -5,6 +5,7 @@ import {Subscription} from "rxjs/Subscription";
 import {UserService} from "../user.service";
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs/Observable";
+import {Modal} from "ngx-modialog/plugins/bootstrap";
 
 @Component({
   selector: 'quote-list',
@@ -22,7 +23,7 @@ export class QuoteListComponent implements OnInit, OnDestroy {
 
   private page: number =1;
 
-  constructor(private route: ActivatedRoute, private quoteService: QuoteService, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private quoteService: QuoteService, private userService: UserService, private modal: Modal) {
   }
 
   ngOnInit() {
