@@ -23,6 +23,8 @@ export class PermissionListComponent implements OnInit, OnDestroy {
 
   private page: number = 0;
 
+  private count:number = 0;
+
   constructor(private route: ActivatedRoute, private permissionService: PermissionService, private modal: Modal, private router: Router, private userService: UserService) {
   }
 
@@ -37,6 +39,10 @@ export class PermissionListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
+
+      this.permissionService.count(userObject).subscribe(count => {
+        this.count = count;
+      });
 
       return this.permissionService.list(userObject, this.page);
     }).subscribe((permissionList: Permission[]) => {

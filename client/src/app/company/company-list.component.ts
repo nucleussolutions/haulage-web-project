@@ -25,6 +25,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
 
   private page: number = 0;
 
+  private count: number = 0;
 
   constructor(private route: ActivatedRoute, private companyService: CompanyService, private modal: Modal, private router: Router, private userService: UserService) {
   }
@@ -39,6 +40,11 @@ export class CompanyListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
+
+      //count
+      this.companyService.count(userObject).subscribe(count => {
+        this.count = count;
+      });
 
       return this.companyService.list(userObject, this.page);
     }).subscribe((companyList: Company[]) => {

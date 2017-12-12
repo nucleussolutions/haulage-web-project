@@ -28,6 +28,8 @@ export class TariffListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
+  private count: number  = 0;
+
   constructor(private route: ActivatedRoute, private tariffService: TariffService, private userService: UserService) { }
 
   ngOnInit() {
@@ -40,6 +42,8 @@ export class TariffListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
+
+      this.tariffService.count(userObject).subscribe()
 
       return this.tariffService.list(userObject, this.page);
     }).subscribe(json => {

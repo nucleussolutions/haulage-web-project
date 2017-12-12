@@ -30,6 +30,8 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
+  private count: number = 0;
+
   constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private modal: Modal, private titleService: Title, private userService: UserService) {
     this.titleService.setTitle('Forwarders');
 
@@ -46,6 +48,10 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
+
+      this.forwarderInfoService.count(userObject).subscribe(count => {
+        this.count = count;
+      });
 
       return this.forwarderInfoService.list(userObject, this.page);
     }).subscribe(json => {

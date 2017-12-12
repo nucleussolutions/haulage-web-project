@@ -33,6 +33,8 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
+  private count: number = 0;
+
   constructor(private route: ActivatedRoute, private haulierInfoService: HaulierInfoService, private modal: Modal, private titleService: Title, private router: Router, private userService: UserService) {
     this.titleService.setTitle('Hauliers');
   }
@@ -47,6 +49,8 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
+
+      this.haulierInfoService.count(userObject).subscribe()
 
       return this.haulierInfoService.list(userObject, this.page);
     }).subscribe(json => {

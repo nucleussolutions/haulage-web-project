@@ -33,6 +33,8 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
+  private count: number = 0;
+
 
   constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private userService: UserService, private modal: Modal, private titleService: Title) {
     this.titleService.setTitle('Transport Request List');
@@ -49,6 +51,10 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
+
+      this.transportRequestService.count(userObject).subscribe(count => {
+        this.count = count;
+      });
 
       return this.transportRequestService.list(userObject, this.page);
     }).subscribe(json => {

@@ -27,6 +27,8 @@ export class MemberSubscriptionListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
+  private count: number = 0;
+
   constructor(private route: ActivatedRoute, private memberSubscriptionService: MemberSubscriptionService, private userService: UserService) { }
 
   ngOnInit() {
@@ -40,6 +42,10 @@ export class MemberSubscriptionListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
+
+      this.memberSubscriptionService.count(userObject).subscribe(count => {
+        this.count = count;
+      });
 
       return this.memberSubscriptionService.list(userObject, this.page);
     }).subscribe(json => {

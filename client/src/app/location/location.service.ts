@@ -108,8 +108,8 @@ export class LocationService {
     });
   }
 
-  count(userObject: any): Observable<int> {
-    let subject = new Subject<int>();
+  count(userObject: any): Observable<number> {
+    let subject = new Subject<number>();
 
     let headers = new HttpHeaders({
       'token': userObject.token,
@@ -120,8 +120,8 @@ export class LocationService {
       headers: headers
     }).subscribe(json => {
       subject.next(json['count']);
-    }).catch(err => {
-      subject.error(err);
+    }, error => {
+      subject.error(error);
     });
     return subject.asObservable();
   }

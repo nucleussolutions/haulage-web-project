@@ -32,6 +32,7 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
+  private count : number = 0;
 
   constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private titleService: Title, private modal: Modal, private userService: UserService) {
     this.titleService.setTitle('Drivers');
@@ -48,6 +49,12 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
+
+      //get count of drivers infos
+      this.driverInfoService.count(userObject).subscribe(count => {
+        this.count = count;
+        console.log('driver info count '+count);
+      });
 
       return this.driverInfoService.list(userObject, this.page);
     }).subscribe(json => {
@@ -78,5 +85,6 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
 
       this.modal.alert().title('Error').message(message).open();
     });
+
   }
 }

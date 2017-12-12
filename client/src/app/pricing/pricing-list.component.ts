@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { PricingService } from './pricing.service';
-import { Pricing } from './pricing';
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
-import { Title } from '@angular/platform-browser';
+import {PricingService} from './pricing.service';
+import {Pricing} from './pricing';
+import {Modal} from 'ngx-modialog/plugins/bootstrap';
+import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
-import { UserService } from 'app/user.service';
+import {UserService} from 'app/user.service';
 import {Subscription} from "rxjs/Subscription";
 import {Observable} from "rxjs/Observable";
 
@@ -31,6 +31,8 @@ export class PricingListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
+  private count: number = 0;
+
   constructor(private route: ActivatedRoute, private pricingService: PricingService, private modal: Modal, private titleService: Title, private router: Router, private userService: UserService) {
     this.titleService.setTitle('Pricing List');
   }
@@ -48,6 +50,10 @@ export class PricingListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
+
+      this.pricingService.count(userObject).subscribe(count => {
+        this.count = count;
+      });
 
       return this.pricingService.list(userObject, this.page);
     }).subscribe(json => {

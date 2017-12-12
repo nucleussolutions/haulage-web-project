@@ -30,6 +30,8 @@ export class VehicleListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
+  private count: number = 0;
+
   constructor(private route: ActivatedRoute, private vehicleService: VehicleService, private userService: UserService, private modal: Modal, private titleService: Title) {
 
     this.titleService.setTitle('Vehicles');
@@ -46,6 +48,10 @@ export class VehicleListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
+
+      this.vehicleService.count(userObject).subscribe(count => {
+        this.count = count;
+      });
 
       return this.vehicleService.list(userObject, this.page);
     }).subscribe(json => {

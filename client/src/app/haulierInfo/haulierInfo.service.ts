@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, RequestOptions, RequestMethod, Request, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {HaulierInfo} from './haulierInfo';
 import {Subject} from 'rxjs/Subject';

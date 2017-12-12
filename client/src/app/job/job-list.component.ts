@@ -30,6 +30,8 @@ export class JobListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
+  private count: number = 0;
+
   constructor(private route: ActivatedRoute, private jobService: JobService, private userService: UserService) {
 
   }
@@ -45,6 +47,10 @@ export class JobListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
+
+      this.jobService.count(userObject).subscribe(count => {
+        this.count = count;
+      });
 
       return this.jobService.list(userObject, this.page);
     }).subscribe(json => {

@@ -29,6 +29,8 @@ export class QuoteListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
+  private count: number = 0;
+
   constructor(private route: ActivatedRoute, private quoteService: QuoteService, private userService: UserService, private modal: Modal) {
   }
 
@@ -43,6 +45,11 @@ export class QuoteListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
+
+      //count
+      this.quoteService.count(userObject).subscribe(count => {
+        this.count = count;
+      });
 
       return this.quoteService.list(userObject, this.page);
     }).subscribe(json => {

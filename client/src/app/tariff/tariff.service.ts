@@ -93,4 +93,21 @@ export class TariffService {
       return Observable.of(false);
     });
   }
+
+  count(userObject: any) : Observable<number>{
+    let subject = new Subject<number>();
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+    this.http.get(environment.serverUrl+ '/tariff/count', {
+      headers: headers
+    }).subscribe(json => {
+      subject.next(json['count']);
+    }, error => {
+      subject.error(error);
+    });
+
+    return subject.asObservable();
+  }
 }

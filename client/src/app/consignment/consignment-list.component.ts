@@ -24,7 +24,9 @@ export class ConsignmentListComponent implements OnInit {
 
   private subscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private modal: Modal, private router: Router, private userService: UserService, private permissionService: PermissionService) {
+  private count: number = 0;
+
+  constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private modal: Modal, private router: Router, private userService: UserService) {
   }
 
   ngOnInit() {
@@ -37,6 +39,11 @@ export class ConsignmentListComponent implements OnInit {
       if (params['page']) {
         this.page = params['page'];
       }
+
+      //count
+      this.consignmentService.count(userObject).subscribe(count => {
+        this.count = count;
+      });
 
       return this.consignmentService.list(userObject, this.page);
     }).subscribe((consignmentList: Consignment[]) => {

@@ -8,6 +8,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {int} from "aws-sdk/clients/datapipeline";
 
 @Injectable()
 export class DriverInfoService {
@@ -90,5 +91,24 @@ export class DriverInfoService {
     }).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
+  }
+
+  count(userObject: any): Observable<number>{
+    let subject = new Subject<number>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    this.http.get(environment.serverUrl+ '/driverInfo/count', {
+      headers: headers
+    }).subscribe(json => {
+      subject.next(json['count']);
+    }, error => {
+      subject.error(error);
+    });
+
+    return subject.asObservable();
   }
 }
