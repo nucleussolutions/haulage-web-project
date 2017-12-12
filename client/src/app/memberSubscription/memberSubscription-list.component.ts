@@ -21,6 +21,12 @@ export class MemberSubscriptionListComponent implements OnInit, OnDestroy {
 
   private subscription : Subscription;
 
+  private nextLink: string;
+
+  private firstLink: string;
+
+  private lastLink: string;
+
   constructor(private route: ActivatedRoute, private memberSubscriptionService: MemberSubscriptionService, private userService: UserService) { }
 
   ngOnInit() {
@@ -36,8 +42,19 @@ export class MemberSubscriptionListComponent implements OnInit, OnDestroy {
       }
 
       return this.memberSubscriptionService.list(userObject, this.page);
-    }).subscribe((memberSubscriptionList: MemberSubscription[]) => {
-      this.memberSubscriptionList = memberSubscriptionList;
+    }).subscribe(json => {
+      let data = json['data'];
+      let links = json['links'];
+      this.nextLink = links.next;
+      this.firstLink = links.first;
+      this.lastLink = links.last;
+
+      data.forEach(memberSubscriptionDatum => {
+        let memberSubscription = new MemberSubscription(memberSubscriptionDatum.attributes);
+        memberSubscription.id = memberSubscriptionDatum.id;
+        this.memberSubscriptionList.push(memberSubscription);
+      });
+
     });
   }
 }

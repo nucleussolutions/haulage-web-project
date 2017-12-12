@@ -2,10 +2,7 @@ import haulage.project.Location
 
 model {
   Iterable<Location> locationList
-  Integer total
+  Integer locationTotal
 }
 
-json jsonapi.render(locationList, [pagination: [total: total, resource: Location]])
-
-//json tmpl.location(locationList ?: [])
-
+json jsonapi.render(locationList, [pagination: [total: locationTotal, resource: Location]])

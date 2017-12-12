@@ -24,6 +24,12 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
 
   private page: number = 0;
 
+  private nextLink: string;
+
+  private firstLink: string;
+
+  private lastLink: string;
+
   constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private modal: Modal, private titleService: Title, private userService: UserService) {
     this.titleService.setTitle('Forwarders');
 
@@ -42,8 +48,20 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
       }
 
       return this.forwarderInfoService.list(userObject, this.page);
-    }).subscribe((forwarderInfoList: ForwarderInfo[]) => {
-      this.forwarderInfoList = forwarderInfoList;
+    }).subscribe(json => {
+      // this.forwarderInfoList = forwarderInfoList;
+      let data = json['data'];
+      let links = json['links'];
+      this.nextLink = links.next;
+      this.firstLink = links.first;
+      this.lastLink = links.last;
+
+      data.forEach(forwarderInfoDatum => {
+        let forwarderInfo = new ForwarderInfo(forwarderInfoDatum.attributes);
+        forwarderInfo.id = forwarderInfoDatum.id;
+        this.forwarderInfoList.push(forwarderInfo);
+      });
+
     }, error => {
       let message;
       if (error.status === 401) {

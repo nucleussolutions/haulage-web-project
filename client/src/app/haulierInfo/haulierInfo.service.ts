@@ -28,7 +28,6 @@ export class HaulierInfoService {
 
     let params = new HttpParams();
     params = params.append('offset', offset.toString());
-    params = params.append('max', '10');
 
     this.http.get(environment.serverUrl + '/haulierInfo', {
       headers: headers,
@@ -39,7 +38,7 @@ export class HaulierInfoService {
         return subject.asObservable();
       })
       .subscribe((json: any[]) => {
-        subject.next(json.map((item: any) => new HaulierInfo(item)))
+        subject.next(json);
       });
     return subject.asObservable();
   }

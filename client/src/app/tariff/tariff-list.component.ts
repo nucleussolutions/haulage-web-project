@@ -22,6 +22,12 @@ export class TariffListComponent implements OnInit, OnDestroy {
 
   private page : number = 0;
 
+  private nextLink: string;
+
+  private firstLink: string;
+
+  private lastLink: string;
+
   constructor(private route: ActivatedRoute, private tariffService: TariffService, private userService: UserService) { }
 
   ngOnInit() {
@@ -36,8 +42,17 @@ export class TariffListComponent implements OnInit, OnDestroy {
       }
 
       return this.tariffService.list(userObject, this.page);
-    }).subscribe((tariffList: Tariff[]) => {
-      this.tariffList = tariffList;
+    }).subscribe(json => {
+      let data = json['data'];
+      let links = json['links'];
+      this.nextLink = links.next;
+      this.firstLink = links.first;
+      this.lastLink = links.last;
+      data.forEach(tariffDatum => {
+        let tariff = new Tariff(tariffDatum.attributes);
+        tariff.id = tariffDatum.id;
+        this.tariffList.push(tariff);
+      });
     });
   }
 }

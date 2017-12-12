@@ -32,7 +32,7 @@ export class JobService {
       params: params
     })
       .subscribe((json: any[]) => {
-        subject.next(json.map((item: any) => new Job(item)))
+        subject.next(json);
       });
     return subject.asObservable();
   }

@@ -21,7 +21,6 @@ export class MemberSubscriptionService {
 
     let params = new HttpParams();
     params = params.append('offset', offset.toString());
-    params = params.append('max', '10');
 
     let headers = new HttpHeaders({
       'token': userObject.token,
@@ -33,7 +32,7 @@ export class MemberSubscriptionService {
       params: params
     })
         .subscribe((json: any[]) => {
-        subject.next(json.map((item: any) => new MemberSubscription(item)))
+        subject.next(json);
       });
     return subject.asObservable();
   }

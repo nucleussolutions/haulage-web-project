@@ -1,0 +1,9 @@
+import haulage.project.Job
+
+model {
+  Iterable<Job> jobList
+  Integer total
+}
+
+json jsonapi.render(jobList, [pagination: [total: total, resource: Job]])
+

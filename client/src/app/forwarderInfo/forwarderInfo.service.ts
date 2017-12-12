@@ -39,7 +39,7 @@ export class ForwarderInfoService {
         return subject.asObservable();
       })
       .subscribe((json: any[]) => {
-        subject.next(json.map((item: any) => new ForwarderInfo(item)))
+        subject.next(json);
       });
     return subject.asObservable();
   }

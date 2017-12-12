@@ -1,0 +1,7 @@
+import haulage.project.Job
+
+model {
+	Job job
+}
+
+json tmpl.job(job)

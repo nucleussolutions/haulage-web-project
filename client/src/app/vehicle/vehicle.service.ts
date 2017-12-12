@@ -37,7 +37,7 @@ export class VehicleService {
             return subject.asObservable();
         })
       .subscribe((json: any[]) => {
-        subject.next(json.map((item: any) => new Vehicle(item)))
+        subject.next(json);
       });
     return subject.asObservable();
   }

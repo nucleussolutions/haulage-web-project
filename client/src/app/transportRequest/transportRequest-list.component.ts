@@ -7,6 +7,8 @@ import {UserService} from 'app/user.service';
 import {Subscription} from 'rxjs/Subscription';
 import {PermissionService} from 'app/permission/permission.service';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import {ActivatedRoute} from "@angular/router";
+import {Observable} from "rxjs/Observable";
 
 
 @Component({
@@ -23,36 +25,43 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private permission: any;
-
   private page: number = 0;
 
-  constructor(private transportRequestService: TransportRequestService, private userService: UserService, private modal: Modal, private titleService: Title, private permissionService: PermissionService) {
+  private nextLink: string;
+
+  private firstLink: string;
+
+  private lastLink: string;
+
+
+  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private userService: UserService, private modal: Modal, private titleService: Title) {
     this.titleService.setTitle('Transport Request List');
   }
 
   ngOnInit() {
 
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
 
+      let userObject = result[0];
 
+      let params = result[1];
 
+      if (params['page']) {
+        this.page = params['page'];
+      }
 
-    this.subscription = this.userService.getUser().flatMap(userObject => {
-      this.listTransportRequests(userObject);
-      console.log('transport request list userobject '+JSON.stringify(userObject));
-      return this.permissionService.getByUserId(userObject);
-    }).subscribe(permission => {
-      this.permission = permission;
-    }, error => {
-      console.log('transport request list permission error '+JSON.stringify(error));
-    });
-
-    //todo support paging
-  }
-
-  listTransportRequests(userObject: any){
-    this.transportRequestService.list(userObject, 1).subscribe((transportRequestList: TransportRequest[]) => {
-      this.transportRequestList = transportRequestList;
+      return this.transportRequestService.list(userObject, this.page);
+    }).subscribe(json => {
+      let data = json['data'];
+      let links = json['links'];
+      this.nextLink = links.next;
+      this.firstLink = links.first;
+      this.lastLink = links.last;
+      data.forEach(transportRequestDatum => {
+        let transportRequest = new TransportRequest(transportRequestDatum.attributes);
+        transportRequest.id = transportRequestDatum.id;
+        this.transportRequestList.push(transportRequest);
+      });
     }, error => {
 
       let message;
@@ -68,4 +77,5 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
       this.modal.alert().title('Error').message(message).open();
     });
   }
+
 }

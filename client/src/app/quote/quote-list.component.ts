@@ -23,6 +23,12 @@ export class QuoteListComponent implements OnInit, OnDestroy {
 
   private page: number = 0;
 
+  private nextLink: string;
+
+  private firstLink: string;
+
+  private lastLink: string;
+
   constructor(private route: ActivatedRoute, private quoteService: QuoteService, private userService: UserService, private modal: Modal) {
   }
 
@@ -39,8 +45,18 @@ export class QuoteListComponent implements OnInit, OnDestroy {
       }
 
       return this.quoteService.list(userObject, this.page);
-    }).subscribe((quoteList: Quote[]) => {
-      this.quoteList = quoteList;
+    }).subscribe(json => {
+      let data = json['data'];
+      let links = json['links'];
+      this.nextLink = links.next;
+      this.firstLink = links.first;
+      this.lastLink = links.last;
+
+      data.forEach(quoteDatum => {
+        let quote = new Quote(quoteDatum.attributes);
+        quote.id = quoteDatum.id;
+        this.quoteList.push(quote);
+      });
     }, error => {
       let message;
 

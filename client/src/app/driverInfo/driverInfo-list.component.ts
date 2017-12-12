@@ -26,6 +26,13 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
 
   private page : number = 0;
 
+  private nextLink: string;
+
+  private firstLink: string;
+
+  private lastLink: string;
+
+
   constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private titleService: Title, private modal: Modal, private userService: UserService) {
     this.titleService.setTitle('Drivers');
   }
@@ -43,8 +50,20 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
       }
 
       return this.driverInfoService.list(userObject, this.page);
-    }).subscribe((driverInfoList: DriverInfo[]) => {
-      this.driverInfoList = driverInfoList;
+    }).subscribe(json => {
+      // this.driverInfoList = driverInfoList;
+      let data = json['data'];
+      let links = json['links'];
+      this.nextLink = links.next;
+      this.firstLink = links.first;
+      this.lastLink = links.last;
+
+      data.forEach(driverInfoDatum => {
+        let driverInfo = new DriverInfo(driverInfoDatum.attributes);
+        driverInfo.id = driverInfoDatum.id;
+        this.driverInfoList.push(driverInfo);
+      });
+
     }, error => {
 
       let message;

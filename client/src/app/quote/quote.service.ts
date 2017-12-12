@@ -33,7 +33,7 @@ export class QuoteService {
       params: params
     })
       .subscribe((json: any[]) => {
-        subject.next(json.map((item: any) => new Quote(item)))
+        subject.next(json);
       });
     return subject.asObservable();
   }

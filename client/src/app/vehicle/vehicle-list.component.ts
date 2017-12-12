@@ -24,6 +24,12 @@ export class VehicleListComponent implements OnInit, OnDestroy {
 
   private page : number = 0;
 
+  private nextLink: string;
+
+  private firstLink: string;
+
+  private lastLink: string;
+
   constructor(private route: ActivatedRoute, private vehicleService: VehicleService, private userService: UserService, private modal: Modal, private titleService: Title) {
 
     this.titleService.setTitle('Vehicles');
@@ -42,8 +48,20 @@ export class VehicleListComponent implements OnInit, OnDestroy {
       }
 
       return this.vehicleService.list(userObject, this.page);
-    }).subscribe((vehicleList: Vehicle[]) => {
-      this.vehicleList = vehicleList;
+    }).subscribe(json => {
+      // this.vehicleList = vehicleList;
+      let data = json['data'];
+      let links = json['links'];
+      this.nextLink = links.next;
+      this.firstLink = links.first;
+      this.lastLink = links.last;
+
+      data.forEach(vehicleDatum => {
+        let vehicle = new Vehicle(vehicleDatum.attributes);
+        vehicle.id = vehicleDatum.id;
+        this.vehicleList.push(vehicle);
+      });
+
     }, error => {
       let message;
 

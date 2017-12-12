@@ -27,7 +27,13 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
 
   private page: number = 0;
 
-  constructor(private route: ActivatedRoute, private haulierInfoService: HaulierInfoService, private modal: Modal, private titleService: Title, private router: Router, private userService: UserService, private permissionService: PermissionService) {
+  private nextLink: string;
+
+  private firstLink: string;
+
+  private lastLink: string;
+
+  constructor(private route: ActivatedRoute, private haulierInfoService: HaulierInfoService, private modal: Modal, private titleService: Title, private router: Router, private userService: UserService) {
     this.titleService.setTitle('Hauliers');
   }
 
@@ -43,8 +49,20 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
       }
 
       return this.haulierInfoService.list(userObject, this.page);
-    }).subscribe((haulierInfoList: HaulierInfo[]) => {
-      this.haulierInfoList = haulierInfoList;
+    }).subscribe(json => {
+      let data = json['data'];
+      let links = json['links'];
+      this.nextLink = links.next;
+      this.firstLink = links.first;
+      this.lastLink = links.last;
+
+      data.forEach(haulierInfoDatum => {
+        let haulierInfo = new HaulierInfo(haulierInfoDatum.attributes);
+        haulierInfo.id = haulierInfoDatum.id;
+        this.haulierInfoList.push(haulierInfo);
+      });
+
+
     }, error => {
       let message;
       if (error.status === 401) {

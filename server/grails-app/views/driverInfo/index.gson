@@ -1,13 +1,10 @@
 import haulage.project.DriverInfo
-import haulage.project.ForwarderInfo
 
 model {
 	Iterable<DriverInfo> driverInfoList
 	Integer total
 }
 
-//json tmpl.driverInfo(driverInfoList ?: [])
-
-json g.render(driverInfoList, [pagination: [total: total, resource: DriverInfo, max: 10]])
+json jsonapi.render(driverInfoList, [pagination: [total: total, resource: DriverInfo]])
 
 

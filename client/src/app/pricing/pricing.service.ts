@@ -37,7 +37,7 @@ export class PricingService {
         subject.error(err);
         return subject.asObservable();
       }).subscribe((json: any[]) => {
-      subject.next(json.map((item: any) => new Pricing(item)))
+      subject.next(json);
     });
     return subject.asObservable();
   }

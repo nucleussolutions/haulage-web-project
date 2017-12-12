@@ -1,0 +1,7 @@
+import haulage.project.Job
+
+model {
+	Job job
+}
+
+json g.render(job, [resolveTemplate: false])

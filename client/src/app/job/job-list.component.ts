@@ -24,6 +24,12 @@ export class JobListComponent implements OnInit, OnDestroy {
 
   private page : number = 0;
 
+  private nextLink: string;
+
+  private firstLink: string;
+
+  private lastLink: string;
+
   constructor(private route: ActivatedRoute, private jobService: JobService, private userService: UserService) {
 
   }
@@ -41,8 +47,18 @@ export class JobListComponent implements OnInit, OnDestroy {
       }
 
       return this.jobService.list(userObject, this.page);
-    }).subscribe((jobList: Job[]) => {
-      this.jobList = jobList;
+    }).subscribe(json => {
+      let data = json['data'];
+      let links = json['links'];
+      this.nextLink = links.next;
+      this.firstLink = links.first;
+      this.lastLink = links.last;
+
+      data.forEach(jobDatum => {
+        let job = new Job(jobDatum.attributes);
+        job.id = jobDatum.id;
+        this.jobList.push(job);
+      });
     });
   }
 }

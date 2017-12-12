@@ -25,6 +25,12 @@ export class PricingListComponent implements OnInit, OnDestroy {
 
   private page: number = 0;
 
+  private nextLink: string;
+
+  private firstLink: string;
+
+  private lastLink: string;
+
   constructor(private route: ActivatedRoute, private pricingService: PricingService, private modal: Modal, private titleService: Title, private router: Router, private userService: UserService) {
     this.titleService.setTitle('Pricing List');
   }
@@ -44,8 +50,19 @@ export class PricingListComponent implements OnInit, OnDestroy {
       }
 
       return this.pricingService.list(userObject, this.page);
-    }).subscribe((pricingList: Pricing[]) => {
-      this.pricingList = pricingList;
+    }).subscribe(json => {
+      // this.pricingList = pricingList;
+      let data = json['data'];
+      let links = json['links'];
+      this.nextLink = links.next;
+      this.firstLink = links.first;
+      this.lastLink = links.last;
+
+      data.forEach(pricingDatum => {
+        let pricing = new Pricing(pricingDatum.attributes);
+        pricing.id = pricingDatum.id;
+        this.pricingList.push(pricing);
+      });
     }, error => {
       let message;
       if (error.status === 401) {

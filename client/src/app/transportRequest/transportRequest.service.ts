@@ -20,6 +20,8 @@ export class TransportRequestService {
     let offset = page * 10;
 
     let params = new HttpParams();
+    params = params.append('offset', offset.toString());
+    params = params.append('max', '10');
 
     let headers = new HttpHeaders({
       'token': userObject.token,
@@ -35,7 +37,7 @@ export class TransportRequestService {
         return subject.asObservable();
       })
       .subscribe((json: any[]) => {
-        subject.next(json.map((item: any) => new TransportRequest(item)))
+        subject.next(json);
       });
     return subject.asObservable();
   }
