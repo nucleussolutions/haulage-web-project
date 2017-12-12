@@ -7,4 +7,4 @@ model {
 
 //json jsonapi.render(quoteList, [pagination: [total: total, resource: Quote]])
 
-json g.render(quoteList, [pagination: [total: total, resource: Quote, max: 10]])
+json jsonapi.render(quoteList, [pagination: [total: total, resource: Quote, max: 10]])

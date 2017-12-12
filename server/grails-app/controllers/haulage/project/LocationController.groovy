@@ -7,10 +7,15 @@ import org.springframework.http.HttpStatus
 
 class LocationController extends RestfulController {
 
-    LocationService locationService
+  def locationService
 
-    static responseFormats = ['json', 'xml']
-    LocationController() {
-        super(Location)
-    }
+  static responseFormats = ['json', 'xml']
+
+  LocationController() {
+    super(Location)
+  }
+
+  def count() {
+    respond count: locationService.count()
+  }
 }

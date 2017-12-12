@@ -5,5 +5,4 @@ model {
 	Integer total
 }
 
-json tmpl.vehicle(vehicleList ?: [])
-
+json jsonapi.render(vehicleList, [pagination: [total: total, resource: Vehicle]])

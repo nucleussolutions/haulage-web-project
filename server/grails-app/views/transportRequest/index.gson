@@ -5,6 +5,5 @@ model {
 	Integer total
 }
 
-json g.render(transportRequestList, [pagination: [total: total, resource: TransportRequest, max: 10], deep: true])
-//json tmpl.transportRequest(transportRequestList ?: [])
+json jsonapi.render(transportRequestList, [pagination: [total: total, resource: TransportRequest], deep: true])
 

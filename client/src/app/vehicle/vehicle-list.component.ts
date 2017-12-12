@@ -37,7 +37,7 @@ export class VehicleListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
 
       let userObject = result[0];
 

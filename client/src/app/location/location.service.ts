@@ -8,6 +8,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 import {environment} from 'environments/environment';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {int} from "aws-sdk/clients/datapipeline";
 
 @Injectable()
 export class LocationService {
@@ -105,5 +106,23 @@ export class LocationService {
     }).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
+  }
+
+  count(userObject: any): Observable<int> {
+    let subject = new Subject<int>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    this.http.get(environment.serverUrl + '/location/count', {
+      headers: headers
+    }).subscribe(json => {
+      subject.next(json['count']);
+    }).catch(err => {
+      subject.error(err);
+    });
+    return subject.asObservable();
   }
 }

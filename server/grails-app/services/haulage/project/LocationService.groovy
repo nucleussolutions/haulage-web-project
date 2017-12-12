@@ -16,4 +16,5 @@ interface LocationService {
     Location save(Location location)
 
     Location findByType(String type)
+
 }

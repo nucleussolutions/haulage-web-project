@@ -62,7 +62,6 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
         this.haulierInfoList.push(haulierInfo);
       });
 
-
     }, error => {
       let message;
       if (error.status === 401) {

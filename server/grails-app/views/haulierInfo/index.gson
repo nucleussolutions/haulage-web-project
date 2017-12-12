@@ -5,5 +5,5 @@ model {
 	Integer total
 }
 
-json tmpl.haulierInfo(haulierInfoList ?: [])
-
+//json tmpl.haulierInfo(haulierInfoList ?: [])
+json jsonapi.render(haulierInfoList, [pagination: [total: total, resource: HaulierInfo]])

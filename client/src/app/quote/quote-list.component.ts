@@ -34,7 +34,7 @@ export class QuoteListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
 
       let userObject = result[0];
 

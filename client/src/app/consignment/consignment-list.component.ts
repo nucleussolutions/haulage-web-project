@@ -15,18 +15,21 @@ import {Observable} from "rxjs/Observable";
 export class ConsignmentListComponent implements OnInit {
 
   ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   consignmentList: Consignment[] = [];
 
   private page: number = 0;
 
+  private subscription: Subscription;
+
   constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private modal: Modal, private router: Router, private userService: UserService, private permissionService: PermissionService) {
   }
 
   ngOnInit() {
 
-    Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
 
       let userObject = result[0];
       let params = result[1];

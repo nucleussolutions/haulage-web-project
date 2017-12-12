@@ -21,7 +21,6 @@ export class TransportRequestService {
 
     let params = new HttpParams();
     params = params.append('offset', offset.toString());
-    params = params.append('max', '10');
 
     let headers = new HttpHeaders({
       'token': userObject.token,

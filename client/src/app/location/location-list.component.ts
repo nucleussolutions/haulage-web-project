@@ -37,11 +37,11 @@ export class LocationListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
       this.userObject = result[0];
       //if params doesnt exist, let api call, if there is, then proceed to call the api by page number
       let params = result[1];
-
+      console.log('params '+JSON.stringify(params));
       if (params['page']) {
         this.page = params['page'];
       }
@@ -56,6 +56,10 @@ export class LocationListComponent implements OnInit, OnDestroy {
           this.router.navigate(['/index']);
         })
       }
+    });
+
+    this.locationService.count(this.userObject).subscribe(count => {
+      console.log('location count '+count);
     });
   }
 
