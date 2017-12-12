@@ -1,67 +1,20 @@
 package haulage.project
 
-import grails.validation.ValidationException
-import static org.springframework.http.HttpStatus.*
 
-class ForwarderInfoController {
+import grails.rest.*
+import grails.converters.*
 
-    ForwarderInfoService forwarderInfoService
+class ForwarderInfoController extends RestfulController {
 
-    static responseFormats = ['json', 'xml']
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+  def forwarderInfoService
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond forwarderInfoService.list(params), model:[forwarderInfoCount: forwarderInfoService.count()]
-    }
+  static responseFormats = ['json', 'xml']
 
-    def show(Long id) {
-        respond forwarderInfoService.get(id)
-    }
+  ForwarderInfoController() {
+    super(ForwarderInfo)
+  }
 
-    def save(ForwarderInfo forwarderInfo) {
-        if (forwarderInfo == null) {
-            render status: NOT_FOUND
-            return
-        }
-
-        //todo check if info exists in the backend
-
-
-        try {
-            forwarderInfoService.save(forwarderInfo)
-        } catch (ValidationException e) {
-            respond forwarderInfo.errors, view:'create'
-            return
-        }
-
-        respond forwarderInfo, [status: CREATED, view:"show"]
-    }
-
-    def update(ForwarderInfo forwarderInfo) {
-        if (forwarderInfo == null) {
-            render status: NOT_FOUND
-            return
-        }
-
-        try {
-            forwarderInfoService.save(forwarderInfo)
-        } catch (ValidationException e) {
-            respond forwarderInfo.errors, view:'edit'
-            return
-        }
-
-        respond forwarderInfo, [status: OK, view:"show"]
-    }
-
-    def delete(Long id) {
-        if (id == null) {
-            render status: NOT_FOUND
-            return
-        }
-
-        forwarderInfoService.delete(id)
-
-        render status: NO_CONTENT
-    }
+  def count() {
+    respond count: forwarderInfoService.count
+  }
 }
