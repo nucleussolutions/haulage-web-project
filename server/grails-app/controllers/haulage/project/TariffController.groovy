@@ -15,6 +15,6 @@ class TariffController extends RestfulController {
   }
 
   def count(){
-    respond count: tariffService.count
+    respond count: tariffService.count()
   }
 }

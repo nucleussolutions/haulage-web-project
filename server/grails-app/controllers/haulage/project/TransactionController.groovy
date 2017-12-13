@@ -15,7 +15,7 @@ class TransactionController extends RestfulController {
   }
 
   def count(){
-    respond count: transactionService.count
+    respond count: transactionService.count()
   }
 }
 

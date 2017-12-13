@@ -15,6 +15,6 @@ class MemberSubscriptionController extends RestfulController {
   }
 
   def count() {
-    respond memberSubscriptionService.count
+    respond memberSubscriptionService.count()
   }
 }

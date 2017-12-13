@@ -14,6 +14,6 @@ class DriverInfoController extends RestfulController {
     }
 
     def count(){
-        respond count: driverInfoService.count
+        respond count: driverInfoService.count()
     }
 }

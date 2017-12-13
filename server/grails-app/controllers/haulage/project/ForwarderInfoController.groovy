@@ -14,6 +14,6 @@ class ForwarderInfoController extends RestfulController {
   }
 
   def count() {
-    respond count: forwarderInfoService.count
+    respond count: forwarderInfoService.count()
   }
 }

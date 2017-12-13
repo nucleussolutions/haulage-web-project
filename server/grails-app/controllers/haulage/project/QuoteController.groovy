@@ -15,6 +15,6 @@ class QuoteController extends RestfulController {
   }
 
   def count(){
-    respond count: quoteService.count
+    respond count: quoteService.count()
   }
 }

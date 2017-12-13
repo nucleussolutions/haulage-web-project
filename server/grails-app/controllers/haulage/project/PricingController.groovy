@@ -15,6 +15,6 @@ class PricingController extends RestfulController {
   }
 
   def count() {
-    respond count: pricingService.count
+    respond count: pricingService.count()
   }
 }

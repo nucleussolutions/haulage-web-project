@@ -14,6 +14,6 @@ class ConsignmentController extends RestfulController {
     }
 
     def count(){
-        respond count: consignmentService.count
+        respond count: consignmentService.count()
     }
 }

@@ -14,6 +14,6 @@ class TransportRequestController extends RestfulController {
     }
 
     def count(){
-        respond count: transportRequestService.count
+        respond count: transportRequestService.count()
     }
 }

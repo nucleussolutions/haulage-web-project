@@ -15,6 +15,6 @@ class HaulierInfoController extends RestfulController {
   }
 
   def count() {
-    respond count: haulierInfoService.count
+    respond count: haulierInfoService.count()
   }
 }

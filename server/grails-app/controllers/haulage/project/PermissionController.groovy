@@ -15,6 +15,6 @@ class PermissionController extends RestfulController {
   }
 
   def count(){
-    respond count: permissionService.count
+    respond count: permissionService.count()
   }
 }
