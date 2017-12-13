@@ -6,7 +6,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {IndexComponent} from './index/index.component';
 import {AppComponent} from './app.component';
-// import {NavComponent} from './nav/nav.component';
 import {NavService} from './nav/nav.service';
 import {AppRoutingModule} from "./app-routing.module";
 import {NotFoundComponent} from './not-found/not-found.component';
@@ -52,13 +51,12 @@ import { BillingComponent } from './billing/billing.component';
 import { NotificationPaneComponent } from './notification-pane/notification-pane.component';
 import { MemberSubscriptionModule } from './memberSubscription/memberSubscription.module';
 import { RoundPipe } from './round.pipe';
-import { PaginationComponent } from './shared/pagination/pagination.component';
+import {PaginationComponent} from "./pagination/pagination.component";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    // NavComponent,
     IndexComponent,
     NotFoundComponent,
     RegisterComponent,
