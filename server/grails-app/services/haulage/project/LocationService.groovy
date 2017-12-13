@@ -1,20 +1,22 @@
 package haulage.project
 
 import grails.gorm.services.Service
+import grails.plugin.cache.Cacheable
 
 @Service(Location)
 interface LocationService {
 
-    Location get(Serializable id)
+  Location get(Serializable id)
 
-    List<Location> list(Map args)
+  List<Location> list(Map args)
 
-    Long count()
+  @Cacheable('locationCount')
+  Long count()
 
-    void delete(Serializable id)
+  void delete(Serializable id)
 
-    Location save(Location location)
+  Location save(Location location)
 
-    Location findByType(String type)
+  Location findByType(String type)
 
 }

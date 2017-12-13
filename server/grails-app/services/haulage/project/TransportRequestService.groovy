@@ -1,18 +1,20 @@
 package haulage.project
 
 import grails.gorm.services.Service
+import grails.plugin.cache.Cacheable
 
 @Service(TransportRequest)
 interface TransportRequestService {
 
-    TransportRequest get(Serializable id)
+  TransportRequest get(Serializable id)
 
-    List<TransportRequest> list(Map args)
+  List<TransportRequest> list(Map args)
 
-    Long count()
+  @Cacheable('transportRequestCount')
+  Long count()
 
-    void delete(Serializable id)
+  void delete(Serializable id)
 
-    TransportRequest save(TransportRequest transportRequest)
+  TransportRequest save(TransportRequest transportRequest)
 
 }

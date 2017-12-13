@@ -1,6 +1,7 @@
 package haulage.project
 
 import grails.gorm.services.Service
+import grails.plugin.cache.Cacheable
 
 @Service(Tariff)
 interface TariffService {
@@ -9,6 +10,7 @@ interface TariffService {
 
     List<Tariff> list(Map args)
 
+    @Cacheable('tariffCount')
     Long count()
 
     void delete(Serializable id)

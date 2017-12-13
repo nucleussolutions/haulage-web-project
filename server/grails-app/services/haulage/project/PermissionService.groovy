@@ -1,6 +1,7 @@
 package haulage.project
 
 import grails.gorm.services.Service
+import grails.plugin.cache.Cacheable
 
 @Service(Permission)
 interface PermissionService {
@@ -9,6 +10,7 @@ interface PermissionService {
 
   List<Permission> list(Map args)
 
+  @Cacheable('permissionCount')
   Long count()
 
   void delete(Serializable id)
