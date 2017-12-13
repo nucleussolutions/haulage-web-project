@@ -1,6 +1,5 @@
 package haulage.project
 
-import org.springframework.http.HttpStatus
 
 import static org.springframework.http.HttpStatus.NOT_FOUND
 import static org.springframework.http.HttpStatus.OK
@@ -8,8 +7,20 @@ import static org.springframework.http.HttpStatus.OK
 
 class CustomController {
 
-    PermissionService permissionService
-    LocationService locationService
+    def permissionService
+    def locationService
+    def haulierInfoService
+    def driverInfoService
+    def companyService
+    def consignmentService
+    def forwarderInfoService
+    def quoteService
+    def pricingService
+    def tariffService
+
+    def memberSubscriptionService
+    def transactionService
+
 
     static responseFormats = ['json', 'xml']
 
@@ -52,4 +63,49 @@ class CustomController {
             respond status: NOT_FOUND, message: 'location not found'
         }
     }
+
+    def locationCount(){
+        respond count: locationService.count()
+    }
+
+    def haulierInfoCount(){
+        respond count: haulierInfoService.count()
+    }
+
+    def forwarderInfoCount(){
+        respond count: forwarderInfoService.count()
+    }
+
+    def consignmentCount(){
+        respond count: consignmentService.count()
+    }
+
+    def tariffCount(){
+        respond count: tariffService.count()
+    }
+
+    def memberSubscriptionCount(){
+        respond count: memberSubscriptionService.count()
+    }
+
+    def transactionCount(){
+        respond count: transactionService.count()
+    }
+
+    def driverInfoCount(){
+        respond count: driverInfoService.count()
+    }
+
+    def quoteCount(){
+        respond count: quoteService.count()
+    }
+
+    def companyCount(){
+        respond count: companyService.count()
+    }
+
+    def pricingCount(){
+        respond count: pricingService.count()
+    }
+
 }

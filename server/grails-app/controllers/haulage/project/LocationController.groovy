@@ -3,11 +3,8 @@ package haulage.project
 
 import grails.rest.*
 import grails.converters.*
-import org.springframework.http.HttpStatus
 
 class LocationController extends RestfulController {
-
-  def locationService
 
   static responseFormats = ['json', 'xml']
 
@@ -15,7 +12,4 @@ class LocationController extends RestfulController {
     super(Location)
   }
 
-  def count() {
-    respond count: locationService.count()
-  }
 }

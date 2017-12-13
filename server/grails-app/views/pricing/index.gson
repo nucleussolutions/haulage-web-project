@@ -1,0 +1,10 @@
+import haulage.project.Pricing
+
+model {
+  Iterable<Pricing> pricingList
+  Integer total
+}
+
+//json tmpl.pricing(pricingList ?: [])
+json jsonapi.render(pricingList, [pagination: [total: total, resource: Pricing, max: 10]])
+

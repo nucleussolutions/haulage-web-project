@@ -50,9 +50,7 @@ export class LocationListComponent implements OnInit, OnDestroy {
         this.page = params['page'];
       }
 
-      this.locationService.count(this.userObject).subscribe(count => {
-        this.count = count;
-      });
+
 
       return this.locationService.list(this.userObject, this.page);
     }).subscribe(json => {
@@ -67,6 +65,12 @@ export class LocationListComponent implements OnInit, OnDestroy {
         location.id = locationDatum.id;
         this.locationList.push(location);
       });
+
+      this.locationService.count(this.userObject).subscribe(count => {
+        this.count = count;
+        console.log('location count '+this.count);
+      });
+
     }, error => {
       let message;
 
@@ -84,6 +88,9 @@ export class LocationListComponent implements OnInit, OnDestroy {
         this.router.navigate(['/login']);
       });
     });
+
+
+
 
 
   }

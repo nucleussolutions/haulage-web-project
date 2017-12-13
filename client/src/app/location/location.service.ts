@@ -113,7 +113,7 @@ export class LocationService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
     });
 
     this.http.get(environment.serverUrl + '/location/count', {
@@ -125,4 +125,5 @@ export class LocationService {
     });
     return subject.asObservable();
   }
+
 }

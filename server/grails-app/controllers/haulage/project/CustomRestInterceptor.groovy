@@ -9,7 +9,7 @@ import static javax.servlet.http.HttpServletResponse.*
 class CustomRestInterceptor {
 
     CustomRestInterceptor() {
-        matchAll();
+        matchAll()
     }
 
     boolean before() {
@@ -20,6 +20,18 @@ class CustomRestInterceptor {
             response.status = SC_UNAUTHORIZED
             return false
         }else {
+
+            println 'request.method '+request.method
+
+            println 'request url '+request.requestURL
+
+            if (request.method == "OPTIONS") {
+                response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200")
+                response.setHeader("Access-Control-Allow-Credentials", "true")
+                response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")
+                response.setHeader("Access-Control-Max-Age", "3600")
+            }
+
             def http = new HTTPBuilder( 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key='+apiKey)
 
             def postBody = [idToken: token] // will be url-encoded
@@ -30,6 +42,8 @@ class CustomRestInterceptor {
                     println 'status code '+resp.statusLine.statusCode
 
                     if(resp.statusLine.statusCode == 200 || resp.statusLine.statusCode == 201){
+
+
                         response.status = SC_ACCEPTED
                         return true
                     }else {

@@ -57,7 +57,6 @@ export class PricingListComponent implements OnInit, OnDestroy {
 
       return this.pricingService.list(userObject, this.page);
     }).subscribe(json => {
-      // this.pricingList = pricingList;
       let data = json['data'];
       let links = json['links'];
       this.nextLink = links.next;

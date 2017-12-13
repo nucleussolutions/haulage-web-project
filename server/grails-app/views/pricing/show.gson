@@ -1,0 +1,7 @@
+import haulage.project.Pricing
+
+model {
+	Pricing pricing
+}
+
+json tmpl.pricing(pricing)

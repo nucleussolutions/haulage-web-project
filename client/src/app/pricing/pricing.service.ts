@@ -15,7 +15,7 @@ export class PricingService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject:any, page: number): Observable<Pricing[]> {
+  list(userObject: any, page: number): Observable<Pricing[]> {
     let subject = new Subject<Pricing[]>();
     let offset = page * 10;
 
@@ -33,10 +33,10 @@ export class PricingService {
       headers: headers,
       params: params
     })
-      .catch(err => {
-        subject.error(err);
-        return subject.asObservable();
-      }).subscribe((json: any[]) => {
+        .catch(err => {
+          subject.error(err);
+          return subject.asObservable();
+        }).subscribe((json: any[]) => {
       subject.next(json);
     });
     return subject.asObservable();
@@ -52,13 +52,13 @@ export class PricingService {
     return this.http.get(environment.serverUrl + '/pricing/' + id, {
       headers: headers
     })
-      .map((r: Response) => new Pricing(r.json())).catch(err => {
-        if (err.status === 401) {
-          return Observable.throw(new Error('Unauthorized'));
-        } else if (err.status === 500) {
-          return Observable.throw(new Error('Internal server error'));
-        }
-      });
+        .map((r: Response) => new Pricing(r.json())).catch(err => {
+          if (err.status === 401) {
+            return Observable.throw(new Error('Unauthorized'));
+          } else if (err.status === 500) {
+            return Observable.throw(new Error('Internal server error'));
+          }
+        });
   }
 
   save(pricing: Pricing, token: string, apiKey: string): Observable<Pricing> {
@@ -87,13 +87,13 @@ export class PricingService {
       headers: headers,
       body: body
     })
-      .map((r: Response) => new Pricing(r.json())).catch(err => {
-        if (err.status === 401) {
-          return Observable.throw(new Error('Unauthorized'));
-        } else if (err.status === 500) {
-          return Observable.throw(new Error('Internal server error'));
-        }
-      });
+        .map((r: Response) => new Pricing(r.json())).catch(err => {
+          if (err.status === 401) {
+            return Observable.throw(new Error('Unauthorized'));
+          } else if (err.status === 500) {
+            return Observable.throw(new Error('Internal server error'));
+          }
+        });
   }
 
   destroy(pricing: Pricing, token: string, apiKey: string): Observable<boolean> {
@@ -110,13 +110,13 @@ export class PricingService {
     });
   }
 
-  count(userObject: any) : Observable<number>{
+  count(userObject: any): Observable<number> {
     let subject = new Subject<number>();
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
-    this.http.get(environment.serverUrl+ '/pricing/count', {
+    this.http.get(environment.serverUrl + '/pricing/count', {
       headers: headers
     }).subscribe(json => {
       subject.next(json['count']);
