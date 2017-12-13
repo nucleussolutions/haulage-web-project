@@ -51,6 +51,8 @@ import { TariffModule } from './tariff/tariff.module';
 import { BillingComponent } from './billing/billing.component';
 import { NotificationPaneComponent } from './notification-pane/notification-pane.component';
 import { MemberSubscriptionModule } from './memberSubscription/memberSubscription.module';
+import { RoundPipe } from './round.pipe';
+import { PaginationComponent } from './shared/pagination/pagination.component';
 
 
 @NgModule({
@@ -77,6 +79,8 @@ import { MemberSubscriptionModule } from './memberSubscription/memberSubscriptio
     LoadingComponent,
     BillingComponent,
     NotificationPaneComponent,
+    RoundPipe,
+    PaginationComponent,
   ],
   entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent],
   imports: [

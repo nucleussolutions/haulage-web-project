@@ -32,8 +32,12 @@ export class LocationListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
-  constructor(private route: ActivatedRoute, private locationService: LocationService, private modal: Modal, private router: Router, private userService: UserService, private permissionService: PermissionService) {
+  private count: number = 0;
 
+  private Math: any;
+
+  constructor(private route: ActivatedRoute, private locationService: LocationService, private modal: Modal, private router: Router, private userService: UserService, private permissionService: PermissionService) {
+    this.Math = Math;
   }
 
   ngOnInit() {
@@ -46,25 +50,12 @@ export class LocationListComponent implements OnInit, OnDestroy {
         this.page = params['page'];
       }
 
-      return this.permissionService.getByUserId(this.userObject);
-    }).subscribe(permission => {
-      if (permission.authority == 'Super Admin' || permission.authority == 'Admin') {
-        this.callLocationListApi(this.page);
-      } else {
-        const dialog = this.modal.prompt().title('Error').message('Unauthorized').open();
-        dialog.result.then(result => {
-          this.router.navigate(['/index']);
-        })
-      }
-    });
+      this.locationService.count(this.userObject).subscribe(count => {
+        this.count = count;
+      });
 
-    this.locationService.count(this.userObject).subscribe(count => {
-      console.log('location count '+count);
-    });
-  }
-
-  callLocationListApi(page: number) {
-    this.locationService.list(this.userObject, page).subscribe(json => {
+      return this.locationService.list(this.userObject, this.page);
+    }).subscribe(json => {
       let data = json['data'];
       let links = json['links'];
       this.nextLink = links.next;
@@ -93,5 +84,8 @@ export class LocationListComponent implements OnInit, OnDestroy {
         this.router.navigate(['/login']);
       });
     });
+
+
   }
+
 }
