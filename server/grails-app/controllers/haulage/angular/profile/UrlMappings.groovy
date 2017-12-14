@@ -22,7 +22,7 @@ class UrlMappings {
 
     //FIXME count urls arent supposed to be done this way. Fix this in the later stage
     get "/location/count"(controller: 'custom', action: 'locationCount')
-    get "/haulierInfo/count"(controller: 'custom', action: 'haulierCount')
+    get "/haulierInfo/count"(controller: 'custom', action: 'haulierInfoCount')
     get "/pricing/count"(controller: 'custom', action: 'pricingCount')
     get "/forwarderInfo/count"(controller: 'custom', action: 'forwarderInfoCount')
     get "/driverInfo/count"(controller: 'custom', action:'driverInfoCount')
@@ -33,6 +33,8 @@ class UrlMappings {
     get "/permission/count"(controller: 'custom', action: 'permissionCount')
     get "/transaction/count"(controller: 'custom', action: 'transactionCount')
     get "/tariff/count"(controller: 'custom', action: 'tariffCount')
+    get "/transportRequest/count"(controller: 'custom', action: 'transportRequestCount')
+    get "/consignment/count"(controller:'custom', action: 'consignmentCount')
 
     "/api/usertype"(controller: 'userType', action: 'checkUserExist', method: 'GET')
   }
