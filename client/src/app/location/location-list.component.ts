@@ -32,7 +32,11 @@ export class LocationListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
+  private offset: number = 10;
+
   private count: number = 0;
+
+  private limit: number = 0;
 
   private Math: any;
 
@@ -45,11 +49,10 @@ export class LocationListComponent implements OnInit, OnDestroy {
       this.userObject = result[0];
       //if params doesnt exist, let api call, if there is, then proceed to call the api by page number
       let params = result[1];
-      console.log('params '+JSON.stringify(params));
+      console.log('params ' + JSON.stringify(params));
       if (params['page']) {
         this.page = params['page'];
       }
-
 
 
       return this.locationService.list(this.userObject, this.page);
@@ -68,7 +71,7 @@ export class LocationListComponent implements OnInit, OnDestroy {
 
       this.locationService.count(this.userObject).subscribe(count => {
         this.count = count;
-        console.log('location count '+this.count);
+        console.log('location count ' + this.count);
       });
 
     }, error => {
@@ -88,11 +91,10 @@ export class LocationListComponent implements OnInit, OnDestroy {
         this.router.navigate(['/login']);
       });
     });
-
-
-
-
-
   }
 
+  onPageChange(offset) {
+    this.offset = offset;
+    this.router.navigate(['/location/list', (offset / this.limit) + 1]);
+  }
 }

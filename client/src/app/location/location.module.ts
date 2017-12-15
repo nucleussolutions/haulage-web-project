@@ -9,6 +9,7 @@ import {LocationRoutingModule} from './location-routing.module';
 import {LocationShowComponent} from './location-show.component';
 import {LocationListComponent} from './location-list.component';
 import {LocationPersistComponent} from './location-persist.component';
+import {PaginationModule} from "../pagination/pagination.module";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {LocationPersistComponent} from './location-persist.component';
   imports: [
     CommonModule,
     FormsModule,
-    LocationRoutingModule
+    LocationRoutingModule,
+    PaginationModule
   ],
   providers: [
     LocationService

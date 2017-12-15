@@ -52,6 +52,7 @@ import { NotificationPaneComponent } from './notification-pane/notification-pane
 import { MemberSubscriptionModule } from './memberSubscription/memberSubscription.module';
 import { RoundPipe } from './round.pipe';
 import {PaginationComponent} from "./pagination/pagination.component";
+import {PaginationModule} from "./pagination/pagination.module";
 
 
 @NgModule({
@@ -108,7 +109,8 @@ import {PaginationComponent} from "./pagination/pagination.component";
     NgxDatatableModule,
     QuoteModule,
     TariffModule,
-    MemberSubscriptionModule
+    MemberSubscriptionModule,
+    PaginationModule
 ],
   exports: [ReactiveFormsModule],
   providers: [{
