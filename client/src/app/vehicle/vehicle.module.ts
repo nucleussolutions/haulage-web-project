@@ -9,12 +9,13 @@ import {VehicleRoutingModule} from './vehicle-routing.module';
 import {VehicleShowComponent} from './vehicle-show.component';
 import {VehicleListComponent} from './vehicle-list.component';
 import {VehiclePersistComponent} from './vehicle-persist.component';
+import {PaginationComponent} from "../pagination/pagination.component";
 
 @NgModule({
   declarations: [
     VehicleListComponent,
     VehiclePersistComponent,
-    VehicleShowComponent
+    VehicleShowComponent,
   ],
   imports: [
     CommonModule,

@@ -16,13 +16,11 @@ export class VehicleService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject: any, page: number): Observable<Vehicle[]> {
+  list(userObject: any, offset: number): Observable<Vehicle[]> {
     let subject = new Subject<Vehicle[]>();
-    let offset = page * 10;
 
     let params = new HttpParams();
     params = params.append('offset', offset.toString());
-    params = params.append('max', '10');
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey

@@ -17,8 +17,6 @@ export class MemberSubscriptionService {
   list(userObject: any, page: number): Observable<MemberSubscription[]> {
     let subject = new Subject<MemberSubscription[]>();
 
-    let offset = page * 10;
-
     let params = new HttpParams();
     params = params.append('offset', offset.toString());
 

@@ -17,7 +17,7 @@ export class MemberSubscriptionListComponent implements OnInit, OnDestroy {
 
   memberSubscriptionList: MemberSubscription[] = [];
 
-  private page: number = 0;
+  private page: number = 1;
 
   private subscription : Subscription;
 
@@ -27,7 +27,11 @@ export class MemberSubscriptionListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
-  private count: number = 0;
+  offset: number = 0;
+
+  count: number = 0;
+
+  limit: number = 10;
 
   constructor(private route: ActivatedRoute, private memberSubscriptionService: MemberSubscriptionService, private userService: UserService) { }
 
@@ -43,11 +47,13 @@ export class MemberSubscriptionListComponent implements OnInit, OnDestroy {
         this.page = params['page'];
       }
 
+      let offset = (this.page - 1) * this.limit;
+
       this.memberSubscriptionService.count(userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.memberSubscriptionService.list(userObject, this.page);
+      return this.memberSubscriptionService.list(userObject, offset);
     }).subscribe(json => {
       let data = json['data'];
       let links = json['links'];

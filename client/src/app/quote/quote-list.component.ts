@@ -21,7 +21,7 @@ export class QuoteListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private page: number = 0;
+  private page: number = 1;
 
   private nextLink: string;
 
@@ -29,7 +29,11 @@ export class QuoteListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
-  private count: number = 0;
+  offset: number = 0;
+
+  count: number = 0;
+
+  limit: number = 10;
 
   constructor(private route: ActivatedRoute, private quoteService: QuoteService, private userService: UserService, private modal: Modal) {
   }
@@ -46,12 +50,14 @@ export class QuoteListComponent implements OnInit, OnDestroy {
         this.page = params['page'];
       }
 
+      let offset = (this.page - 1) * this.limit;
+
       //count
       this.quoteService.count(userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.quoteService.list(userObject, this.page);
+      return this.quoteService.list(userObject, offset);
     }).subscribe(json => {
       let data = json['data'];
       let links = json['links'];

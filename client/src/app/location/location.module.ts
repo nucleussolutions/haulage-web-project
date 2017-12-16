@@ -16,7 +16,6 @@ import {PaginationComponent} from "../pagination/pagination.component";
     LocationListComponent,
     LocationPersistComponent,
     LocationShowComponent,
-      PaginationComponent
   ],
   imports: [
     CommonModule,

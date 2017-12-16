@@ -22,7 +22,7 @@ export class VehicleListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private page : number = 0;
+  private page : number = 1;
 
   private nextLink: string;
 
@@ -30,7 +30,11 @@ export class VehicleListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
-  private count: number = 0;
+  offset: number = 0;
+
+  count: number = 0;
+
+  limit: number = 10;
 
   constructor(private route: ActivatedRoute, private vehicleService: VehicleService, private userService: UserService, private modal: Modal, private titleService: Title) {
 
@@ -48,12 +52,13 @@ export class VehicleListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
+      let offset = (this.page - 1) * this.limit;
 
       this.vehicleService.count(userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.vehicleService.list(userObject, this.page);
+      return this.vehicleService.list(userObject, offset);
     }).subscribe(json => {
       // this.vehicleList = vehicleList;
       let data = json['data'];

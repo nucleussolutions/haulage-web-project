@@ -38,10 +38,8 @@ export class LocationListComponent implements OnInit, OnDestroy {
 
   limit: number = 10;
 
-  private Math: any;
 
   constructor(private route: ActivatedRoute, private locationService: LocationService, private modal: Modal, private router: Router, private userService: UserService) {
-    this.Math = Math;
   }
 
   ngOnInit() {

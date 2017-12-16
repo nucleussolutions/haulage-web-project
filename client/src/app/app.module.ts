@@ -50,8 +50,8 @@ import { TariffModule } from './tariff/tariff.module';
 import { BillingComponent } from './billing/billing.component';
 import { NotificationPaneComponent } from './notification-pane/notification-pane.component';
 import { MemberSubscriptionModule } from './memberSubscription/memberSubscription.module';
-import { RoundPipe } from './round.pipe';
 import { SearchComponent } from './search/search.component';
+import {PaginationComponent} from "./pagination/pagination.component";
 
 
 @NgModule({
@@ -77,8 +77,8 @@ import { SearchComponent } from './search/search.component';
     LoadingComponent,
     BillingComponent,
     NotificationPaneComponent,
-    RoundPipe,
     SearchComponent,
+    PaginationComponent
   ],
   entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent],
   imports: [

@@ -21,9 +21,13 @@ export class PermissionListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private page: number = 0;
+  private page: number = 1;
 
-  private count:number = 0;
+  offset: number = 0;
+
+  count: number = 0;
+
+  limit: number = 10;
 
   constructor(private route: ActivatedRoute, private permissionService: PermissionService, private modal: Modal, private router: Router, private userService: UserService) {
   }
@@ -40,11 +44,14 @@ export class PermissionListComponent implements OnInit, OnDestroy {
         this.page = params['page'];
       }
 
+      let offset = (this.page - 1) * this.limit;
+
+
       this.permissionService.count(userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.permissionService.list(userObject, this.page);
+      return this.permissionService.list(userObject, offset);
     }).subscribe((permissionList: Permission[]) => {
       this.permissionList = permissionList;
     }, error => {

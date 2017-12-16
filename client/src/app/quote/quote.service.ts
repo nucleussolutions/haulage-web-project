@@ -14,14 +14,12 @@ export class QuoteService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject: any, page: number): Observable<Quote[]> {
+  list(userObject: any, offset: number): Observable<Quote[]> {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
-
-    let offset = page * 10;
 
     let params = new HttpParams();
     params = params.append('offset', offset.toString());
