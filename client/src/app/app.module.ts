@@ -51,8 +51,7 @@ import { BillingComponent } from './billing/billing.component';
 import { NotificationPaneComponent } from './notification-pane/notification-pane.component';
 import { MemberSubscriptionModule } from './memberSubscription/memberSubscription.module';
 import { RoundPipe } from './round.pipe';
-import {PaginationComponent} from "./pagination/pagination.component";
-import {PaginationModule} from "./pagination/pagination.module";
+import { SearchComponent } from './search/search.component';
 
 
 @NgModule({
@@ -79,7 +78,7 @@ import {PaginationModule} from "./pagination/pagination.module";
     BillingComponent,
     NotificationPaneComponent,
     RoundPipe,
-    PaginationComponent,
+    SearchComponent,
   ],
   entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent],
   imports: [
@@ -110,7 +109,6 @@ import {PaginationModule} from "./pagination/pagination.module";
     QuoteModule,
     TariffModule,
     MemberSubscriptionModule,
-    PaginationModule
 ],
   exports: [ReactiveFormsModule],
   providers: [{

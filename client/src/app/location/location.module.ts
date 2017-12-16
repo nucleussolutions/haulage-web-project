@@ -9,19 +9,19 @@ import {LocationRoutingModule} from './location-routing.module';
 import {LocationShowComponent} from './location-show.component';
 import {LocationListComponent} from './location-list.component';
 import {LocationPersistComponent} from './location-persist.component';
-import {PaginationModule} from "../pagination/pagination.module";
+import {PaginationComponent} from "../pagination/pagination.component";
 
 @NgModule({
   declarations: [
     LocationListComponent,
     LocationPersistComponent,
-    LocationShowComponent
+    LocationShowComponent,
+      PaginationComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     LocationRoutingModule,
-    PaginationModule
   ],
   providers: [
     LocationService

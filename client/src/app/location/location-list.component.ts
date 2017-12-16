@@ -32,15 +32,15 @@ export class LocationListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
-  private offset: number = 10;
+  offset: number = 10;
 
-  private count: number = 0;
+  count: number = 0;
 
-  private limit: number = 0;
+  limit: number = 0;
 
   private Math: any;
 
-  constructor(private route: ActivatedRoute, private locationService: LocationService, private modal: Modal, private router: Router, private userService: UserService, private permissionService: PermissionService) {
+  constructor(private route: ActivatedRoute, private locationService: LocationService, private modal: Modal, private router: Router, private userService: UserService) {
     this.Math = Math;
   }
 
@@ -94,7 +94,8 @@ export class LocationListComponent implements OnInit, OnDestroy {
   }
 
   onPageChange(offset) {
+    console.log('onPageChange offset '+offset);
     this.offset = offset;
-    this.router.navigate(['/location/list', (offset / this.limit) + 1]);
+    this.router.navigate(['/location', '/list', (offset / this.limit) + 1]);
   }
 }
