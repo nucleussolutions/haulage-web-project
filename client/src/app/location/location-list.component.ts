@@ -4,9 +4,9 @@ import {Location} from './location';
 import {Modal} from 'ngx-modialog/plugins/bootstrap';
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {UserService} from 'app/user.service';
-import {PermissionService} from "../permission/permission.service";
 import {Subscription} from "rxjs/Subscription";
 import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/share";
 
 @Component({
   selector: 'location-list',
@@ -24,7 +24,7 @@ export class LocationListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  private page: number = 0;
+  private page: number = 1;
 
   private nextLink: string;
 
@@ -32,11 +32,11 @@ export class LocationListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
-  offset: number = 10;
+  offset: number = 0;
 
   count: number = 0;
 
-  limit: number = 0;
+  limit: number = 10;
 
   private Math: any;
 
@@ -54,14 +54,16 @@ export class LocationListComponent implements OnInit, OnDestroy {
         this.page = params['page'];
       }
 
-
-      return this.locationService.list(this.userObject, this.page);
+      let offset = (this.page - 1) * this.limit;
+      return this.locationService.list(this.userObject, offset);
     }).subscribe(json => {
       let data = json['data'];
       let links = json['links'];
       this.nextLink = links.next;
       this.firstLink = links.first;
       this.lastLink = links.last;
+
+      this.locationList = [];
 
       data.forEach(locationDatum => {
         let location = new Location(locationDatum.attributes);
@@ -75,6 +77,8 @@ export class LocationListComponent implements OnInit, OnDestroy {
       });
 
     }, error => {
+
+      console.log('location list error '+JSON.stringify(error));
       let message;
 
       if (error.status === 401) {
@@ -96,6 +100,6 @@ export class LocationListComponent implements OnInit, OnDestroy {
   onPageChange(offset) {
     console.log('onPageChange offset '+offset);
     this.offset = offset;
-    this.router.navigate(['/location', '/list', (offset / this.limit) + 1]);
+    this.router.navigate(['/location', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
   }
 }

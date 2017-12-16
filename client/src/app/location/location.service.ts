@@ -16,13 +16,11 @@ export class LocationService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject: any, page: number): Observable<Location[]> {
+  list(userObject: any, offset: number): Observable<Location[]> {
     let subject = new Subject<Location[]>();
-    let offset = page * 10;
 
     let params = new HttpParams();
     params = params.append('offset', offset.toString());
-    params = params.append('max', '10');
 
     let headers = new HttpHeaders({
       'token': userObject.token,
