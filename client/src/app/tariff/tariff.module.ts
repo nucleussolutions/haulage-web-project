@@ -10,6 +10,7 @@ import {TariffShowComponent} from './tariff-show.component';
 import {TariffListComponent} from './tariff-list.component';
 import {TariffPersistComponent} from './tariff-persist.component';
 import { LocationModule } from '../location/location.module';
+import {PaginationModule} from "../pagination/pagination.module";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { LocationModule } from '../location/location.module';
     CommonModule,
     FormsModule,
     TariffRoutingModule,
-    LocationModule
+    LocationModule,
+    PaginationModule
 ],
   providers: [
     TariffService

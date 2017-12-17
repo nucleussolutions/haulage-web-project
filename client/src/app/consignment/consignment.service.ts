@@ -15,14 +15,11 @@ export class ConsignmentService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject: any, page: number): Observable<Consignment[]> {
+  list(userObject: any, offset: number): Observable<Consignment[]> {
     let subject = new Subject<Consignment[]>();
-
-    let offset = page * 10;
 
     let params = new HttpParams();
     params = params.append('offset', offset.toString());
-    params = params.append('max', '10');
 
     let headers = new HttpHeaders({
       'token': userObject.token,
@@ -34,7 +31,7 @@ export class ConsignmentService {
       params: params
     })
         .subscribe((json: any[]) => {
-          subject.next(json.map((item: any) => new Consignment(item)))
+          subject.next(json);
         });
     return subject.asObservable();
   }

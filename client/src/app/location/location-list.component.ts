@@ -52,8 +52,8 @@ export class LocationListComponent implements OnInit, OnDestroy {
         this.page = params['page'];
       }
 
-      let offset = (this.page - 1) * this.limit;
-      return this.locationService.list(this.userObject, offset);
+      this.offset = (this.page - 1) * this.limit;
+      return this.locationService.list(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
       let links = json['links'];

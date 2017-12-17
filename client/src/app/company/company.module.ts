@@ -9,6 +9,7 @@ import {CompanyRoutingModule} from './company-routing.module';
 import {CompanyShowComponent} from './company-show.component';
 import {CompanyListComponent} from './company-list.component';
 import {CompanyPersistComponent} from './company-persist.component';
+import {PaginationModule} from "../pagination/pagination.module";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {CompanyPersistComponent} from './company-persist.component';
   imports: [
     CommonModule,
     FormsModule,
-    CompanyRoutingModule
+    CompanyRoutingModule,
+    PaginationModule
   ],
   providers: [
     CompanyService

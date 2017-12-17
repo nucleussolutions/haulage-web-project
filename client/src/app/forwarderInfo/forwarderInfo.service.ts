@@ -16,15 +16,13 @@ export class ForwarderInfoService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject: any, page: number): Observable<ForwarderInfo[]> {
+  list(userObject: any, offset: number): Observable<ForwarderInfo[]> {
     let subject = new Subject<ForwarderInfo[]>();
 
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
-
-    let offset = page * 10;
 
     let params = new HttpParams();
     params = params.append('offset', offset.toString());

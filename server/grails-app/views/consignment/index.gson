@@ -5,7 +5,5 @@ model {
 	Integer total
 }
 
-//json tmpl.consignment(consignmentList ?: [])
-
-json g.render(consignmentList, [pagination: [total: total, resource: Consignment, max: 10]])
+json jsonapi.render(consignmentList, [pagination: [total: total, resource: Consignment]])
 

@@ -23,9 +23,13 @@ export class CompanyListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private page: number = 0;
+  private page: number = 1;
 
-  private count: number = 0;
+  offset: number = 0;
+
+  count: number = 0;
+
+  limit: number = 10;
 
   constructor(private route: ActivatedRoute, private companyService: CompanyService, private modal: Modal, private router: Router, private userService: UserService) {
   }
@@ -41,14 +45,31 @@ export class CompanyListComponent implements OnInit, OnDestroy {
         this.page = params['page'];
       }
 
+      this.offset = (this.page - 1) * this.limit;
+
       //count
       this.companyService.count(userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.companyService.list(userObject, this.page);
-    }).subscribe((companyList: Company[]) => {
-      this.companyList = companyList;
+      return this.companyService.list(userObject, this.offset);
+    }).subscribe(json => {
+      // this.companyList = companyList;
+      let data = json['data'];
+      let links = json['links'];
+      this.nextLink = links.next;
+      this.firstLink = links.first;
+      this.lastLink = links.last;
+
+      this.companyList = [];
+
+      data.forEach(companyDatum => {
+        let company = new Company(companyDatum.attributes);
+        company.id = companyDatum.id;
+        this.companyList.push(company);
+      });
+
+
     }, error => {
       const dialog = this.modal.alert().isBlocking(true)
         .title('Error').message(error).open();

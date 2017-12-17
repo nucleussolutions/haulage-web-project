@@ -5,7 +5,7 @@ import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { Title } from "@angular/platform-browser";
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 
 @Component({
@@ -36,7 +36,7 @@ export class VehicleListComponent implements OnInit, OnDestroy {
 
   limit: number = 10;
 
-  constructor(private route: ActivatedRoute, private vehicleService: VehicleService, private userService: UserService, private modal: Modal, private titleService: Title) {
+  constructor(private route: ActivatedRoute, private vehicleService: VehicleService, private userService: UserService, private modal: Modal, private titleService: Title, private router: Router) {
 
     this.titleService.setTitle('Vehicles');
   }
@@ -52,20 +52,21 @@ export class VehicleListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
-      let offset = (this.page - 1) * this.limit;
+      this.offset = (this.page - 1) * this.limit;
 
       this.vehicleService.count(userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.vehicleService.list(userObject, offset);
+      return this.vehicleService.list(userObject, this.offset);
     }).subscribe(json => {
-      // this.vehicleList = vehicleList;
       let data = json['data'];
       let links = json['links'];
       this.nextLink = links.next;
       this.firstLink = links.first;
       this.lastLink = links.last;
+
+      this.vehicleList = [];
 
       data.forEach(vehicleDatum => {
         let vehicle = new Vehicle(vehicleDatum.attributes);
@@ -89,5 +90,11 @@ export class VehicleListComponent implements OnInit, OnDestroy {
       const dialog = this.modal.alert().title('Error').message(message).open();
 
     });
+  }
+
+  onPageChange(offset) {
+    console.log('onPageChange offset '+offset);
+    this.offset = offset;
+    this.router.navigate(['/vehicle', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
   }
 }

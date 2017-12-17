@@ -10,6 +10,7 @@ import {JobShowComponent} from './job-show.component';
 import {JobListComponent} from './job-list.component';
 import {JobPersistComponent} from './job-persist.component';
 import { ConsignmentModule } from '../consignment/consignment.module';
+import {PaginationModule} from "../pagination/pagination.module";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ConsignmentModule } from '../consignment/consignment.module';
     CommonModule,
     FormsModule,
     JobRoutingModule,
-    ConsignmentModule
+    ConsignmentModule,
+    PaginationModule
 ],
   providers: [
     JobService

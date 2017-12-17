@@ -10,6 +10,7 @@ import {ForwarderInfoShowComponent} from './forwarderInfo-show.component';
 import {ForwarderInfoListComponent} from './forwarderInfo-list.component';
 import {ForwarderInfoPersistComponent} from './forwarderInfo-persist.component';
 import { CompanyModule } from '../company/company.module';
+import {PaginationModule} from "../pagination/pagination.module";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CompanyModule } from '../company/company.module';
     CommonModule,
     FormsModule,
     ForwarderInfoRoutingModule,
-    CompanyModule
+    CompanyModule,
+    PaginationModule
 ],
   providers: [
     ForwarderInfoService

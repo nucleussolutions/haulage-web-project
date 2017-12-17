@@ -10,6 +10,7 @@ import {HaulierInfoShowComponent} from './haulierInfo-show.component';
 import {HaulierInfoListComponent} from './haulierInfo-list.component';
 import {HaulierInfoPersistComponent} from './haulierInfo-persist.component';
 import { CompanyModule } from '../company/company.module';
+import {PaginationModule} from "../pagination/pagination.module";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CompanyModule } from '../company/company.module';
     CommonModule,
     FormsModule,
     HaulierInfoRoutingModule,
-    CompanyModule
+    CompanyModule,
+    PaginationModule
 ],
   providers: [
     HaulierInfoService

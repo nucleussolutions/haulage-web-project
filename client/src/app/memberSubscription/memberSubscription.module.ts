@@ -10,6 +10,7 @@ import {MemberSubscriptionShowComponent} from './memberSubscription-show.compone
 import {MemberSubscriptionListComponent} from './memberSubscription-list.component';
 import {MemberSubscriptionPersistComponent} from './memberSubscription-persist.component';
 import { PricingModule } from '../pricing/pricing.module';
+import {PaginationModule} from "../pagination/pagination.module";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PricingModule } from '../pricing/pricing.module';
     CommonModule,
     FormsModule,
     MemberSubscriptionRoutingModule,
-    PricingModule
+    PricingModule,
+    PaginationModule
 ],
   providers: [
     MemberSubscriptionService

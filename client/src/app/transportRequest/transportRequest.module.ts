@@ -13,6 +13,7 @@ import {LocationModule} from '../location/location.module';
 import {ConsignmentModule} from '../consignment/consignment.module';
 import {CustomerModule} from '../customer/customer.module';
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
+import {PaginationModule} from "../pagination/pagination.module";
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
     LocationModule,
     ConsignmentModule,
     CustomerModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    PaginationModule
   ],
   providers: [
     TransportRequestService

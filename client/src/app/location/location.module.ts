@@ -10,6 +10,7 @@ import {LocationShowComponent} from './location-show.component';
 import {LocationListComponent} from './location-list.component';
 import {LocationPersistComponent} from './location-persist.component';
 import {PaginationComponent} from "../pagination/pagination.component";
+import {PaginationModule} from "../pagination/pagination.module";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import {PaginationComponent} from "../pagination/pagination.component";
     CommonModule,
     FormsModule,
     LocationRoutingModule,
+    PaginationModule
   ],
   providers: [
     LocationService

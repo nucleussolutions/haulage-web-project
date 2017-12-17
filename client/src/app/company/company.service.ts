@@ -14,7 +14,7 @@ export class CompanyService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject, page: number): Observable<Company[]> {
+  list(userObject, offset: number): Observable<Company[]> {
     let subject = new Subject<Company[]>();
 
     let headers = new HttpHeaders({
@@ -22,11 +22,8 @@ export class CompanyService {
       'apiKey': userObject.apiKey,
     });
 
-    let offset = page * 10;
-
     let params = new HttpParams();
     params = params.append('offset', offset.toString());
-    params = params.append('max', '10');
 
     this.http.get(environment.serverUrl + '/company', {
       headers: headers,
@@ -37,7 +34,7 @@ export class CompanyService {
             return subject.asObservable();
         })
       .subscribe((json: any[]) => {
-        subject.next(json.map((item: any) => new Company(item)))
+        subject.next(json);
       });
     return subject.asObservable();
   }

@@ -9,6 +9,7 @@ import {PricingRoutingModule} from './pricing-routing.module';
 import {PricingShowComponent} from './pricing-show.component';
 import {PricingListComponent} from './pricing-list.component';
 import {PricingPersistComponent} from './pricing-persist.component';
+import {PaginationModule} from "../pagination/pagination.module";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {PricingPersistComponent} from './pricing-persist.component';
   imports: [
     CommonModule,
     FormsModule,
-    PricingRoutingModule
+    PricingRoutingModule,
+    PaginationModule
   ],
   providers: [
     PricingService

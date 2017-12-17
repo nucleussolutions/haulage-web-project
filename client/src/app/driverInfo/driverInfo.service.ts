@@ -17,9 +17,8 @@ export class DriverInfoService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject: any, page: number): Observable<DriverInfo[]> {
+  list(userObject: any, offset: number): Observable<DriverInfo[]> {
     let subject = new Subject<DriverInfo[]>();
-    let offset = page * 10;
 
     let params = new HttpParams();
     params = params.append('offset', offset.toString());

@@ -14,7 +14,7 @@ export class MemberSubscriptionService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject: any, page: number): Observable<MemberSubscription[]> {
+  list(userObject: any, offset: number): Observable<MemberSubscription[]> {
     let subject = new Subject<MemberSubscription[]>();
 
     let params = new HttpParams();

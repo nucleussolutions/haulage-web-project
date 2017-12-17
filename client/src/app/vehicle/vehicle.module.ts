@@ -10,6 +10,7 @@ import {VehicleShowComponent} from './vehicle-show.component';
 import {VehicleListComponent} from './vehicle-list.component';
 import {VehiclePersistComponent} from './vehicle-persist.component';
 import {PaginationComponent} from "../pagination/pagination.component";
+import {PaginationModule} from "../pagination/pagination.module";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {PaginationComponent} from "../pagination/pagination.component";
   imports: [
     CommonModule,
     FormsModule,
-    VehicleRoutingModule
+    VehicleRoutingModule,
+    PaginationModule
   ],
   providers: [
     VehicleService

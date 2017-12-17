@@ -10,6 +10,7 @@ import {ConsignmentShowComponent} from './consignment-show.component';
 import {ConsignmentListComponent} from './consignment-list.component';
 import {ConsignmentPersistComponent} from './consignment-persist.component';
 import { LocationModule } from '../location/location.module';
+import {PaginationModule} from "../pagination/pagination.module";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { LocationModule } from '../location/location.module';
     CommonModule,
     FormsModule,
     ConsignmentRoutingModule,
-    LocationModule
+    LocationModule,
+    PaginationModule
 ],
   providers: [
     ConsignmentService

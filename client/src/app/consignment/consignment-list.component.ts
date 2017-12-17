@@ -20,11 +20,15 @@ export class ConsignmentListComponent implements OnInit {
 
   consignmentList: Consignment[] = [];
 
-  private page: number = 0;
+  private page: number = 1;
 
   private subscription: Subscription;
 
-  private count: number = 0;
+  offset: number = 0;
+
+  count: number = 0;
+
+  limit: number = 10;
 
   constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private modal: Modal, private router: Router, private userService: UserService) {
   }
@@ -40,14 +44,29 @@ export class ConsignmentListComponent implements OnInit {
         this.page = params['page'];
       }
 
+      this.offset = (this.page - 1) * this.limit;
+
       //count
       this.consignmentService.count(userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.consignmentService.list(userObject, this.page);
-    }).subscribe((consignmentList: Consignment[]) => {
-      this.consignmentList = consignmentList;
+      return this.consignmentService.list(userObject, this.offset);
+    }).subscribe(json => {
+      let data = json['data'];
+      let links = json['links'];
+      this.nextLink = links.next;
+      this.firstLink = links.first;
+      this.lastLink = links.last;
+
+      this.consignmentList = [];
+
+      data.forEach(consignmentDatum => {
+         let consignment = new Consignment(consignmentDatum.attributes);
+         consignment.id = consignmentDatum.id;
+         this.consignmentList.push(consignment);
+      });
+
     }, error => {
       this.handleError(error);
     });
@@ -69,5 +88,11 @@ export class ConsignmentListComponent implements OnInit {
     dialog.result.then(result => {
       this.router.navigate(['/login']);
     });
+  }
+
+  onPageChange(offset) {
+    console.log('onPageChange offset '+offset);
+    this.offset = offset;
+    this.router.navigate(['/consignment', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
   }
 }

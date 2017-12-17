@@ -73,4 +73,10 @@ export class PermissionListComponent implements OnInit, OnDestroy {
       });
     });
   }
+
+  onPageChange(offset) {
+    console.log('onPageChange offset '+offset);
+    this.offset = offset;
+    this.router.navigate(['/permission', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
+  }
 }

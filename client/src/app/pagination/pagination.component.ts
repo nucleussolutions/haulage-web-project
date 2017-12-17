@@ -31,6 +31,7 @@ export class PaginationComponent implements OnInit, OnChanges {
 
   getPages(offset: number, limit: number, size: number) {
     this.currentPage = this.getCurrentPage(offset, limit);
+    console.log('PaginationComponent currentPage '+this.currentPage);
     this.totalPages = this.getTotalPages(limit, size);
     this.pages = Observable.range(-this.range, this.range * 2 + 1)
       .map(offset => this.currentPage + offset)

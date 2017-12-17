@@ -9,17 +9,20 @@ import {DriverInfoRoutingModule} from './driverInfo-routing.module';
 import {DriverInfoShowComponent} from './driverInfo-show.component';
 import {DriverInfoListComponent} from './driverInfo-list.component';
 import {DriverInfoPersistComponent} from './driverInfo-persist.component';
+import {PaginationComponent} from "../pagination/pagination.component";
+import {PaginationModule} from "../pagination/pagination.module";
 
 @NgModule({
   declarations: [
     DriverInfoListComponent,
     DriverInfoPersistComponent,
-    DriverInfoShowComponent
+    DriverInfoShowComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
-    DriverInfoRoutingModule
+    DriverInfoRoutingModule,
+    PaginationModule
   ],
   providers: [
     DriverInfoService

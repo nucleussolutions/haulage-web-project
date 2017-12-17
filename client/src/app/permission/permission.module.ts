@@ -9,6 +9,7 @@ import {PermissionRoutingModule} from './permission-routing.module';
 import {PermissionShowComponent} from './permission-show.component';
 import {PermissionListComponent} from './permission-list.component';
 import {PermissionPersistComponent} from './permission-persist.component';
+import {PaginationModule} from "../pagination/pagination.module";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {PermissionPersistComponent} from './permission-persist.component';
   imports: [
     CommonModule,
     FormsModule,
-    PermissionRoutingModule
+    PermissionRoutingModule,
+    PaginationModule
   ],
   providers: [
     PermissionService

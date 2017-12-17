@@ -24,7 +24,7 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private page : number = 0;
+  private page : number = 1;
 
   private nextLink: string;
 
@@ -32,7 +32,11 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
-  private count : number = 0;
+  offset: number = 0;
+
+  count: number = 0;
+
+  limit: number = 10;
 
   constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private titleService: Title, private modal: Modal, private userService: UserService) {
     this.titleService.setTitle('Drivers');
@@ -40,7 +44,7 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
 
       let userObject = result[0];
 
@@ -49,6 +53,7 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
+      let offset = (this.page - 1) * this.limit;
 
       //get count of drivers infos
       this.driverInfoService.count(userObject).subscribe(count => {
@@ -56,7 +61,7 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
         console.log('driver info count '+count);
       });
 
-      return this.driverInfoService.list(userObject, this.page);
+      return this.driverInfoService.list(userObject, offset);
     }).subscribe(json => {
       // this.driverInfoList = driverInfoList;
       let data = json['data'];
@@ -86,5 +91,11 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
       this.modal.alert().title('Error').message(message).open();
     });
 
+  }
+
+  onPageChange(offset) {
+    console.log('onPageChange offset '+offset);
+    this.offset = offset;
+    this.router.navigate(['/driverInfo', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
   }
 }
