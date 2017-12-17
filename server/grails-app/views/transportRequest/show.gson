@@ -4,4 +4,4 @@ model {
 	TransportRequest transportRequest
 }
 
-json g.render(transportRequest, [resolveTemplate: false, expand: 'consignments'])
+json g.render(transportRequest, [resolveTemplate: false, deep: true])

@@ -6,7 +6,7 @@ import {Title} from '@angular/platform-browser';
 import {Subscription} from 'rxjs/Subscription';
 import {UserService} from 'app/user.service';
 import {Observable} from "rxjs/Observable";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 
 @Component({
@@ -37,7 +37,7 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
   limit: number = 10;
 
 
-  constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private modal: Modal, private titleService: Title, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private modal: Modal, private titleService: Title, private userService: UserService, private router: Router) {
     this.titleService.setTitle('Forwarders');
 
   }
@@ -53,13 +53,13 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
-      let offset = (this.page - 1) * this.limit;
+      this.offset = (this.page - 1) * this.limit;
 
       this.forwarderInfoService.count(userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.forwarderInfoService.list(userObject, offset);
+      return this.forwarderInfoService.list(userObject, this.offset);
     }).subscribe(json => {
       // this.forwarderInfoList = forwarderInfoList;
       let data = json['data'];
@@ -67,6 +67,8 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
       this.nextLink = links.next;
       this.firstLink = links.first;
       this.lastLink = links.last;
+
+      this.forwarderInfoList = [];
 
       data.forEach(forwarderInfoDatum => {
         let forwarderInfo = new ForwarderInfo(forwarderInfoDatum.attributes);

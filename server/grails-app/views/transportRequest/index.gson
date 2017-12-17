@@ -5,5 +5,5 @@ model {
 	Integer total
 }
 
-json jsonapi.render(transportRequestList, [pagination: [total: total, resource: TransportRequest], deep: true])
+json jsonapi.render(transportRequestList, [pagination: [total: total, resource: TransportRequest]])
 

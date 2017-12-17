@@ -15,15 +15,13 @@ export class HaulierInfoService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject: any, page: number): Observable<HaulierInfo[]> {
+  list(userObject: any, offset: number): Observable<HaulierInfo[]> {
     let subject = new Subject<HaulierInfo[]>();
 
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
-
-    let offset = page * 10;
 
     let params = new HttpParams();
     params = params.append('offset', offset.toString());

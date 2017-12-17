@@ -5,7 +5,6 @@ import {Title} from "@angular/platform-browser";
 import {Modal} from 'ngx-modialog/plugins/bootstrap';
 import {Subscription} from 'rxjs/Subscription';
 import {UserService} from 'app/user.service';
-import {PermissionService} from "../permission/permission.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 
@@ -38,7 +37,7 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
 
   limit: number = 10;
 
-  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private titleService: Title, private modal: Modal, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private titleService: Title, private modal: Modal, private userService: UserService, private router: Router) {
     this.titleService.setTitle('Drivers');
   }
 

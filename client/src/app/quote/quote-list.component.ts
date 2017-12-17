@@ -3,7 +3,7 @@ import {QuoteService} from './quote.service';
 import {Quote} from './quote';
 import {Subscription} from "rxjs/Subscription";
 import {UserService} from "../user.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 import {Modal} from "ngx-modialog/plugins/bootstrap";
 
@@ -35,7 +35,7 @@ export class QuoteListComponent implements OnInit, OnDestroy {
 
   limit: number = 10;
 
-  constructor(private route: ActivatedRoute, private quoteService: QuoteService, private userService: UserService, private modal: Modal) {
+  constructor(private route: ActivatedRoute, private quoteService: QuoteService, private userService: UserService, private modal: Modal, private router: Router) {
   }
 
   ngOnInit() {
