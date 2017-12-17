@@ -15,13 +15,11 @@ export class PricingService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject: any, page: number): Observable<Pricing[]> {
+  list(userObject: any, offset: number): Observable<Pricing[]> {
     let subject = new Subject<Pricing[]>();
-    let offset = page * 10;
 
     let params = new HttpParams();
     params = params.append('offset', offset.toString());
-    params = params.append('max', '10');
 
 
     let headers = new HttpHeaders({

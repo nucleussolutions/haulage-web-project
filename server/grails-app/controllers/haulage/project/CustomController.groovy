@@ -125,4 +125,8 @@ class CustomController {
     respond count: jobService.count()
   }
 
+  def permissionCount(){
+    respond count: permissionService.count()
+  }
+
 }

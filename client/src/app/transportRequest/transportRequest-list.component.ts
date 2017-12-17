@@ -25,7 +25,7 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private page: number = 0;
+  private page: number = 1;
 
   private nextLink: string;
 
@@ -33,8 +33,11 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
-  private count: number = 0;
+  offset: number = 0;
 
+  count: number = 0;
+
+  limit: number = 10;
 
   constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private userService: UserService, private modal: Modal, private titleService: Title) {
     this.titleService.setTitle('Transport Request List');
@@ -52,17 +55,22 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
         this.page = params['page'];
       }
 
+      this.offset = (this.page - 1) * this.limit;
+
       this.transportRequestService.count(userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.transportRequestService.list(userObject, this.page);
+      return this.transportRequestService.list(userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
       let links = json['links'];
       this.nextLink = links.next;
       this.firstLink = links.first;
       this.lastLink = links.last;
+
+      this.transportRequestList = [];
+
       data.forEach(transportRequestDatum => {
         let transportRequest = new TransportRequest(transportRequestDatum.attributes);
         transportRequest.id = transportRequestDatum.id;

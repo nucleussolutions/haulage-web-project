@@ -52,7 +52,7 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
-      let offset = (this.page - 1) * this.limit;
+      this.offset = (this.page - 1) * this.limit;
 
       //get count of drivers infos
       this.driverInfoService.count(userObject).subscribe(count => {
@@ -60,7 +60,7 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
         console.log('driver info count '+count);
       });
 
-      return this.driverInfoService.list(userObject, offset);
+      return this.driverInfoService.list(userObject, this.offset);
     }).subscribe(json => {
       // this.driverInfoList = driverInfoList;
       let data = json['data'];

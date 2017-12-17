@@ -50,14 +50,14 @@ export class QuoteListComponent implements OnInit, OnDestroy {
         this.page = params['page'];
       }
 
-      let offset = (this.page - 1) * this.limit;
+      this.offset = (this.page - 1) * this.limit;
 
       //count
       this.quoteService.count(userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.quoteService.list(userObject, offset);
+      return this.quoteService.list(userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
       let links = json['links'];

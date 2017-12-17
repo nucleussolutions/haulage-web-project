@@ -15,9 +15,8 @@ export class TransportRequestService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject: any, page: number): Observable<TransportRequest[]> {
+  list(userObject: any, offset: number): Observable<TransportRequest[]> {
     let subject = new Subject<TransportRequest[]>();
-    let offset = page * 10;
 
     let params = new HttpParams();
     params = params.append('offset', offset.toString());
