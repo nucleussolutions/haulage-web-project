@@ -13,14 +13,12 @@ export class JobService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject:any, page: number): Observable<Job[]> {
+  list(userObject:any, offset: number): Observable<Job[]> {
     let subject = new Subject<Job[]>();
 
-    let offset = page * 10;
 
     let params = new HttpParams();
     params = params.append('offset', offset.toString());
-    params = params.append('max', '10');
 
     let headers = new HttpHeaders({
       'token': userObject.token,

@@ -24,6 +24,12 @@ export class ConsignmentListComponent implements OnInit {
 
   private subscription: Subscription;
 
+  private nextLink: string;
+
+  private firstLink: string;
+
+  private lastLink: string;
+
   offset: number = 0;
 
   count: number = 0;

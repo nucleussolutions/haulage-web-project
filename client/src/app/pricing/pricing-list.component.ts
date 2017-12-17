@@ -23,7 +23,7 @@ export class PricingListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private page: number = 0;
+  private page: number = 1;
 
   private nextLink: string;
 
@@ -31,7 +31,11 @@ export class PricingListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
-  private count: number = 0;
+  offset: number = 0;
+
+  count: number = 0;
+
+  limit: number = 10;
 
   constructor(private route: ActivatedRoute, private pricingService: PricingService, private modal: Modal, private titleService: Title, private router: Router, private userService: UserService) {
     this.titleService.setTitle('Pricing List');
@@ -50,18 +54,21 @@ export class PricingListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
+      this.offset = (this.page - 1) * this.limit;
 
       this.pricingService.count(userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.pricingService.list(userObject, this.page);
+      return this.pricingService.list(userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
       let links = json['links'];
       this.nextLink = links.next;
       this.firstLink = links.first;
       this.lastLink = links.last;
+
+      this.pricingList = [];
 
       data.forEach(pricingDatum => {
         let pricing = new Pricing(pricingDatum.attributes);

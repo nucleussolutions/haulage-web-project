@@ -9,8 +9,7 @@ import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'job-list',
-  templateUrl: './job-list.component.html',
-  providers: [UserService]
+  templateUrl: './job-list.component.html'
 })
 export class JobListComponent implements OnInit, OnDestroy {
 
@@ -22,7 +21,7 @@ export class JobListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private page : number = 0;
+  private page : number = 1;
 
   private nextLink: string;
 
@@ -30,7 +29,11 @@ export class JobListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
-  private count: number = 0;
+  offset: number = 0;
+
+  count: number = 0;
+
+  limit: number = 10;
 
   constructor(private route: ActivatedRoute, private jobService: JobService, private userService: UserService) {
 
@@ -48,17 +51,21 @@ export class JobListComponent implements OnInit, OnDestroy {
         this.page = params['page'];
       }
 
+      this.offset = (this.page - 1) * this.limit;
+
       this.jobService.count(userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.jobService.list(userObject, this.page);
+      return this.jobService.list(userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
       let links = json['links'];
       this.nextLink = links.next;
       this.firstLink = links.first;
       this.lastLink = links.last;
+
+      this.jobList = [];
 
       data.forEach(jobDatum => {
         let job = new Job(jobDatum.attributes);
