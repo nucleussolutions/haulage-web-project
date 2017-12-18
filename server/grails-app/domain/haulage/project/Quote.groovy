@@ -33,4 +33,6 @@ class Quote {
   static mapping = {
     autoTimestamp true
   }
+
+  static searchable = true
 }

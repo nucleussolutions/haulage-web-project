@@ -58,4 +58,6 @@ class Vehicle {
     static mapping = {
         autoTimestamp true
     }
+
+    static searchable = true
 }

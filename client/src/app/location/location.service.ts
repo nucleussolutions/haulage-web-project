@@ -135,7 +135,7 @@ export class LocationService {
 
     this.http.get(environment.serverUrl+ '/location?term='+term, {
       headers: headers
-    }).subscribe(json => {
+    }).subscribe((json: any[]) => {
       subject.next(json.map((item: any) => new Location(item)));
     }, error => {
       subject.error(error);

@@ -32,4 +32,5 @@ class Company {
         code nullable: false, blank: false, unique: true
     }
 
+    static searchable = true
 }

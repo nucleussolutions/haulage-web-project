@@ -133,7 +133,7 @@ export class ConsignmentService {
 
     this.http.get(environment.serverUrl+ '/consignment?term='+term, {
       headers: headers
-    }).subscribe(json => {
+    }).subscribe((json: any[]) => {
       subject.next(json.map((item: any) => new Consignment(item)));
     }, error => {
       subject.error(error);

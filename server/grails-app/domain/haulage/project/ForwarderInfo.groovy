@@ -6,14 +6,15 @@ import grails.rest.*
 @Resource(readOnly = false, formats = ['json', 'xml'])
 class ForwarderInfo {
 
-    String userId
-    String name
-    Company company
+  String userId
+  String name
+  Company company
 
-    static constraints = {
-        name nullable: false
-        company nullable: false
-        userId nullable: false, unique: true
-    }
+  static constraints = {
+    name nullable: false
+    company nullable: false
+    userId nullable: false, unique: true
+  }
 
+  static searchable = true
 }

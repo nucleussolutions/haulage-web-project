@@ -70,4 +70,8 @@ class DriverInfo {
         //can belong to a haulier, or just none which could mean freelance
         haulierId blank: true
     }
+
+    static searchable = {
+        except = ['icFrontImgUrl', 'icBackImgUrl', 'passportImgUrl']
+    }
 }

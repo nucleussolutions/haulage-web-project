@@ -15,4 +15,6 @@ class HaulierInfo {
         company nullable: false
         userId nullable: false, unique: true
     }
+
+    static searchable = true
 }

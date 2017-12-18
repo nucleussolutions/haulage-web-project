@@ -38,4 +38,6 @@ class Location {
         type nullable: true
         postalCode nullable: false
     }
+
+    static searchable = true
 }
