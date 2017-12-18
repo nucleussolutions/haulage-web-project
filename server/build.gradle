@@ -74,6 +74,7 @@ dependencies {
     compile 'com.xlson.groovycsv:groovycsv:1.1'
 //    compile 'org.grails.plugins:external-config:1.1.2'
     compile 'org.grails.plugins:hibernate-search:2.2.0'
+    compile "org.grails.plugins:elasticsearch:1.4.1"
 }
 
 bootRun {

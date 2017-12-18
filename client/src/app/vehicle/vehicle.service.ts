@@ -8,6 +8,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {TransportRequest} from "../transportRequest/transportRequest";
 
 @Injectable()
 export class VehicleService {
@@ -115,6 +116,25 @@ export class VehicleService {
       headers: headers
     }).subscribe(json => {
       subject.next(json['count']);
+    }, error => {
+      subject.error(error);
+    });
+
+    return subject.asObservable();
+  }
+
+  search(term: string, userObject: any): Observable<Vehicle[]>{
+    let subject = new Subject<Vehicle[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    this.http.get(environment.serverUrl+ '/vehicle?term='+term, {
+      headers: headers
+    }).subscribe((json: any[]) => {
+      subject.next(json.map((item: any) => new Vehicle(item)));
     }, error => {
       subject.error(error);
     });

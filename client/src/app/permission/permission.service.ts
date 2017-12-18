@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Permission} from './permission';
 import {Subject} from 'rxjs/Subject';
@@ -112,6 +111,25 @@ export class PermissionService {
       headers: headers
     }).subscribe(json => {
       subject.next(json['count']);
+    }, error => {
+      subject.error(error);
+    });
+
+    return subject.asObservable();
+  }
+
+  search(term: string, userObject: any): Observable<Permission[]>{
+    let subject = new Subject<Permission[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    this.http.get(environment.serverUrl+ '/permission?term='+term, {
+      headers: headers
+    }).subscribe((json: any[]) => {
+      subject.next(json.map((item: any) => new Permission(item)));
     }, error => {
       subject.error(error);
     });

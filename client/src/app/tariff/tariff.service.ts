@@ -8,6 +8,7 @@ import 'rxjs/add/observable/of';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import 'rxjs/add/operator/map';
+import {Quote} from "../quote/quote";
 
 @Injectable()
 export class TariffService {
@@ -102,6 +103,25 @@ export class TariffService {
       headers: headers
     }).subscribe(json => {
       subject.next(json['count']);
+    }, error => {
+      subject.error(error);
+    });
+
+    return subject.asObservable();
+  }
+
+  search(term: string, userObject: any): Observable<Tariff[]>{
+    let subject = new Subject<Tariff[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    this.http.get(environment.serverUrl+ '/quote?term='+term, {
+      headers: headers
+    }).subscribe((json: any[]) => {
+      subject.next(json.map((item: any) => new Tariff(item)));
     }, error => {
       subject.error(error);
     });

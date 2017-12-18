@@ -7,6 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from "@angular/common/http";
 import {environment} from "../../environments/environment";
+import {Permission} from "../permission/permission";
 
 @Injectable()
 export class MemberSubscriptionService {
@@ -96,6 +97,25 @@ export class MemberSubscriptionService {
       headers: headers
     }).subscribe(json => {
       subject.next(json['count']);
+    }, error => {
+      subject.error(error);
+    });
+
+    return subject.asObservable();
+  }
+
+  search(term: string, userObject: any): Observable<MemberSubscription[]>{
+    let subject = new Subject<MemberSubscription[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    this.http.get(environment.serverUrl+ '/memberSubscription?term='+term, {
+      headers: headers
+    }).subscribe((json: any[]) => {
+      subject.next(json.map((item: any) => new MemberSubscription(item)));
     }, error => {
       subject.error(error);
     });

@@ -109,4 +109,23 @@ export class HaulierInfoService {
     });
     return subject.asObservable();
   }
+
+  search(term: string, userObject: any): Observable<any[]>{
+    let subject = new Subject<any[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    this.http.get(environment.serverUrl+ '/haulierInfo?term='+term, {
+      headers: headers
+    }).subscribe((json: any[]) => {
+      subject.next(json);
+    }, error => {
+      subject.error(error);
+    });
+
+    return subject.asObservable();
+  }
 }

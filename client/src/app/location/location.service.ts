@@ -9,6 +9,7 @@ import 'rxjs/add/observable/throw';
 import {environment} from 'environments/environment';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {int} from "aws-sdk/clients/datapipeline";
+import {Vehicle} from "../vehicle/vehicle";
 
 @Injectable()
 export class LocationService {
@@ -124,4 +125,22 @@ export class LocationService {
     return subject.asObservable();
   }
 
+  search(term: string, userObject: any): Observable<Location[]>{
+    let subject = new Subject<Location[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    this.http.get(environment.serverUrl+ '/location?term='+term, {
+      headers: headers
+    }).subscribe(json => {
+      subject.next(json.map((item: any) => new Location(item)));
+    }, error => {
+      subject.error(error);
+    });
+
+    return subject.asObservable();
+  }
 }

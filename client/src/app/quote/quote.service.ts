@@ -7,6 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {MemberSubscription} from "../memberSubscription/memberSubscription";
 
 @Injectable()
 export class QuoteService {
@@ -97,6 +98,25 @@ export class QuoteService {
       headers: headers
     }).subscribe(json => {
       subject.next(json['count']);
+    }, error => {
+      subject.error(error);
+    });
+
+    return subject.asObservable();
+  }
+
+  search(term: string, userObject: any): Observable<Quote[]>{
+    let subject = new Subject<Quote[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    this.http.get(environment.serverUrl+ '/quote?term='+term, {
+      headers: headers
+    }).subscribe((json: any[]) => {
+      subject.next(json.map((item: any) => new Quote(item)));
     }, error => {
       subject.error(error);
     });

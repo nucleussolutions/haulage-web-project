@@ -6,6 +6,7 @@ import {environment} from 'environments/environment';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {Consignment} from "../consignment/consignment";
 
 @Injectable()
 export class JobService {
@@ -99,6 +100,25 @@ export class JobService {
       headers: headers
     }).subscribe(json => {
       subject.next(json['count']);
+    }, error => {
+      subject.error(error);
+    });
+
+    return subject.asObservable();
+  }
+
+  search(term: string, userObject: any): Observable<any[]>{
+    let subject = new Subject<any[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    this.http.get(environment.serverUrl+ '/job?term='+term, {
+      headers: headers
+    }).subscribe((json: any[]) => {
+      subject.next(json);
     }, error => {
       subject.error(error);
     });
