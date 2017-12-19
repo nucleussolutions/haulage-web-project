@@ -48,5 +48,11 @@ class SearchService {
 
   }
 
+  def searchQuote(String term){
 
+  }
+
+  def searchPricing(String term){
+
+  }
 }
