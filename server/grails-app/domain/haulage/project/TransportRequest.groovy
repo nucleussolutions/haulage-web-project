@@ -107,7 +107,9 @@ class TransportRequest {
     autoTimestamp true
   }
 
-  static searchable = true
+  static searchable = {
+    except = ['customer']
+  }
 }
 
 class Customer {

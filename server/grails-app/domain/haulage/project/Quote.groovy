@@ -34,5 +34,7 @@ class Quote {
     autoTimestamp true
   }
 
-  static searchable = true
+  static searchable = {
+    except = ['terms', 'items']
+  }
 }
