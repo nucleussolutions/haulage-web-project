@@ -6,6 +6,7 @@
 </div>
 <div id="list-forwarderInfo" class="content scaffold-list" role="main">
   <h1>ForwarderInfo List</h1>
+  <input type="text" class="form-control" placeholder="Search..." #searchBox id="search-box" (keyup)="search(searchBox.value)" />
   <div class="table-responsive"><table class="table">
     <thead>
     <tr>

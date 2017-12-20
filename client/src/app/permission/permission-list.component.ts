@@ -35,6 +35,8 @@ export class PermissionListComponent implements OnInit, OnDestroy {
 
   private lastLink: string;
 
+  private userObject: any;
+
   constructor(private route: ActivatedRoute, private permissionService: PermissionService, private modal: Modal, private router: Router, private userService: UserService) {
   }
 
@@ -42,7 +44,7 @@ export class PermissionListComponent implements OnInit, OnDestroy {
 
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
 
-      let userObject = result[0];
+      this.userObject = result[0];
 
       let params = result[1];
 
@@ -53,11 +55,11 @@ export class PermissionListComponent implements OnInit, OnDestroy {
       this.offset = (this.page - 1) * this.limit;
 
 
-      this.permissionService.count(userObject).subscribe(count => {
+      this.permissionService.count(this.userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.permissionService.list(userObject, this.offset);
+      return this.permissionService.list(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
       let links = json['links'];
@@ -97,5 +99,11 @@ export class PermissionListComponent implements OnInit, OnDestroy {
     console.log('onPageChange offset '+offset);
     this.offset = offset;
     this.router.navigate(['/permission', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
+  }
+
+  search(term: string){
+    this.permissionService.search(term, this.userObject).subscribe(response => {
+
+    });
   }
 }

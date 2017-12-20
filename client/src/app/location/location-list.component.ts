@@ -7,6 +7,7 @@ import {UserService} from 'app/user.service';
 import {Subscription} from "rxjs/Subscription";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/share";
+import {Subject} from "rxjs/Subject";
 
 @Component({
   selector: 'location-list',
@@ -99,5 +100,11 @@ export class LocationListComponent implements OnInit, OnDestroy {
     console.log('onPageChange offset '+offset);
     this.offset = offset;
     this.router.navigate(['/location', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
+  }
+
+  search(term: string){
+    this.locationService.search(term, this.userObject).subscribe(response => {
+
+    });
   }
 }

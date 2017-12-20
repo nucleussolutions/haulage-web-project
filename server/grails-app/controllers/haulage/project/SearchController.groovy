@@ -12,90 +12,90 @@ class SearchController {
 
   def searchService
 
-  def transportRequest(){
-    if(params.terms){
-      respond searchService.searchTransportRequest(params.terms)
-    }else{
+  def transportRequest() {
+    if (params.term) {
+      respond searchService.searchTransportRequest(params.term)
+    } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
 
-  def consignment(){
-    if(params.terms){
-      respond searchService.searchConsignment(params.terms)
-    }else{
+  def consignment() {
+    if (params.term) {
+      respond searchService.searchConsignment(params.term)
+    } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
 
-  def quote(){
-    if(params.terms){
-      respond searchService.searchQuote(params.terms)
-    }else{
+  def quote() {
+    if (params.term) {
+      respond searchService.searchQuote(params.term)
+    } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
 
-  def memberSubscription(){
-    if(params.terms){
-      respond searchService.searchMemberSubscription(params.terms)
-    }else{
+  def memberSubscription() {
+    if (params.term) {
+      respond searchService.searchMemberSubscription(params.term)
+    } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
 
-  def permission(){
-    if(params.terms){
-      respond searchService.searchPermission(params.terms)
-    }else{
+  def permission() {
+    if (params.term) {
+      respond searchService.searchPermission(params.term)
+    } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
 
-  def tariff(){
-    if(params.terms){
-      respond searchService.searchTariff(params.terms)
-    }else{
+  def tariff() {
+    if (params.term) {
+      respond searchService.searchTariff(params.term)
+    } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
 
-  def vehicle(){
-    if(params.terms){
-      respond searchService.searchVehicle(params.terms)
-    }else{
+  def vehicle() {
+    if (params.term) {
+      respond searchService.searchVehicle(params.term)
+    } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
 
-  def driverInfo(){
-    if(params.terms){
-      respond searchService.searchDriverInfo(params.terms)
-    }else{
+  def driverInfo() {
+    if (params.term) {
+      respond searchService.searchDriverInfo(params.term)
+    } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
 
-  def forwarderInfo(){
-    if(params.terms){
-      respond searchService.searchForwarderInfo(params.terms)
-    }else{
+  def forwarderInfo() {
+    if (params.term) {
+      respond searchService.searchForwarderInfo(params.term)
+    } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
 
-  def haulierInfo(){
-    if(params.terms){
-      respond searchService.searchHaulierInfo(params.terms)
-    }else{
+  def haulierInfo() {
+    if (params.term) {
+      respond searchService.searchHaulierInfo(params.term)
+    } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
 
-  def location(){
-    if(params.terms){
-      respond searchService.searchLocation(params.terms)
-    }else{
+  def location() {
+    if (params.term) {
+      respond searchService.searchLocation(params.term)
+    } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }

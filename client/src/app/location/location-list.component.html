@@ -6,6 +6,9 @@
 </div>
 <div id="list-location" class="content scaffold-list" role="main">
   <h1>Location List</h1>
+
+  <input type="text" class="form-control" placeholder="Search..." #searchBox id="search-box" (keyup)="search(searchBox.value)" />
+
   <div class="table-responsive">
     <table class="table">
       <thead>

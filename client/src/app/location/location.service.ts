@@ -133,7 +133,7 @@ export class LocationService {
       'apiKey': userObject.apiKey
     });
 
-    this.http.get(environment.serverUrl+ '/location?term='+term, {
+    this.http.get(environment.serverUrl+ '/search/location?term='+term, {
       headers: headers
     }).subscribe((json: any[]) => {
       subject.next(json.map((item: any) => new Location(item)));

@@ -1,37 +1,41 @@
 <div class="nav" role="navigation">
-    <ul>
-        <li><a [routerLink]="['/index']" class="home">Home</a></li>
-        <li><a [routerLink]="['/memberSubscription','create']" class="create">New MemberSubscription</a></li>
-    </ul>
+  <ul>
+    <li><a [routerLink]="['/index']" class="home">Home</a></li>
+    <li><a [routerLink]="['/memberSubscription','create']" class="create">New MemberSubscription</a></li>
+  </ul>
 </div>
 <div id="list-memberSubscription" class="content scaffold-list" role="main">
-    <h1>MemberSubscription List</h1>
-    <table>
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>User Id</th>
-      <th>Pricing</th>
-      <th>Monthly Recurring</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let memberSubscription of memberSubscriptionList; let e = even;">
-      <td>
-        <a [routerLink]="['/memberSubscription','show',memberSubscription.id]">{{memberSubscription.id}}</a>
-      </td>
-      <td>
-        <span>{{memberSubscription.userId}}</span>
-      </td>
-      <td>
-        <a *ngIf="memberSubscription.pricing" [routerLink]="['/memberSubscription','show', memberSubscription.pricing.id]">{{memberSubscription.pricing.toString()}}</a>
-      </td>
-      <td>
-        <span>{{memberSubscription.monthlyRecurring}}</span>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <h1>MemberSubscription List</h1>
+  <input type="text" class="form-control" placeholder="Search..." #searchBox id="search-box" (keyup)="search(searchBox.value)" />
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>User Id</th>
+        <th>Pricing</th>
+        <th>Monthly Recurring</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let memberSubscription of memberSubscriptionList; let e = even;">
+        <td>
+          <a [routerLink]="['/memberSubscription','show',memberSubscription.id]">{{memberSubscription.id}}</a>
+        </td>
+        <td>
+          <span>{{memberSubscription.userId}}</span>
+        </td>
+        <td>
+          <a *ngIf="memberSubscription.pricing"
+             [routerLink]="['/memberSubscription','show', memberSubscription.pricing.id]">{{memberSubscription.pricing.toString()}}</a>
+        </td>
+        <td>
+          <span>{{memberSubscription.monthlyRecurring}}</span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <app-pagination [offset]="offset" [limit]="limit" [size]="count" (pageChange)="onPageChange($event)"></app-pagination>

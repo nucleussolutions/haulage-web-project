@@ -35,6 +35,8 @@ export class QuoteListComponent implements OnInit, OnDestroy {
 
   limit: number = 10;
 
+  private userObject: any;
+
   constructor(private route: ActivatedRoute, private quoteService: QuoteService, private userService: UserService, private modal: Modal, private router: Router) {
   }
 
@@ -42,7 +44,7 @@ export class QuoteListComponent implements OnInit, OnDestroy {
 
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
 
-      let userObject = result[0];
+      this.userObject = result[0];
 
       let params = result[1];
 
@@ -53,11 +55,11 @@ export class QuoteListComponent implements OnInit, OnDestroy {
       this.offset = (this.page - 1) * this.limit;
 
       //count
-      this.quoteService.count(userObject).subscribe(count => {
+      this.quoteService.count(this.userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.quoteService.list(userObject, this.offset);
+      return this.quoteService.list(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
       let links = json['links'];
@@ -96,4 +98,11 @@ export class QuoteListComponent implements OnInit, OnDestroy {
     this.offset = offset;
     this.router.navigate(['/quote', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
   }
+
+  search(term: string){
+    this.quoteService.search(term, this.userObject).subscribe(response => {
+
+    });
+  }
+
 }

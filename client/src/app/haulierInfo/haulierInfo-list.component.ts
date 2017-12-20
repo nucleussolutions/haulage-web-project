@@ -37,6 +37,8 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
 
   limit: number = 10;
 
+  private userObject: any;
+
   constructor(private route: ActivatedRoute, private haulierInfoService: HaulierInfoService, private modal: Modal, private titleService: Title, private router: Router, private userService: UserService) {
     this.titleService.setTitle('Hauliers');
   }
@@ -44,7 +46,7 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
 
-      let userObject = result[0];
+      this.userObject = result[0];
 
       let params = result[1];
 
@@ -52,11 +54,11 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
         this.page = params['page'];
       }
 
-      this.haulierInfoService.count(userObject).subscribe(count => {
+      this.haulierInfoService.count(this.userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.haulierInfoService.list(userObject, this.offset);
+      return this.haulierInfoService.list(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
       let links = json['links'];
@@ -86,6 +88,12 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
         //todo might need to navigate them back to login
         this.router.navigate(['/login']);
       });
+    });
+  }
+
+  search(term:string){
+    this.haulierInfoService.search(term, this.userObject).subscribe(response => {
+
     });
   }
 

@@ -36,6 +36,8 @@ export class ConsignmentListComponent implements OnInit {
 
   limit: number = 10;
 
+  private userObject: any;
+
   constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private modal: Modal, private router: Router, private userService: UserService) {
   }
 
@@ -43,7 +45,7 @@ export class ConsignmentListComponent implements OnInit {
 
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
 
-      let userObject = result[0];
+      this.userObject = result[0];
       let params = result[1];
 
       if (params['page']) {
@@ -53,11 +55,11 @@ export class ConsignmentListComponent implements OnInit {
       this.offset = (this.page - 1) * this.limit;
 
       //count
-      this.consignmentService.count(userObject).subscribe(count => {
+      this.consignmentService.count(this.userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.consignmentService.list(userObject, this.offset);
+      return this.consignmentService.list(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
       let links = json['links'];
@@ -100,5 +102,11 @@ export class ConsignmentListComponent implements OnInit {
     console.log('onPageChange offset '+offset);
     this.offset = offset;
     this.router.navigate(['/consignment', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
+  }
+
+  search(term: string){
+    this.consignmentService.search(term, this.userObject).subscribe(response => {
+
+    });
   }
 }

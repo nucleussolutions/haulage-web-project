@@ -115,7 +115,7 @@ export class JobService {
       'apiKey': userObject.apiKey
     });
 
-    this.http.get(environment.serverUrl+ '/job?term='+term, {
+    this.http.get(environment.serverUrl+ '/search/job?term='+term, {
       headers: headers
     }).subscribe((json: any[]) => {
       subject.next(json);

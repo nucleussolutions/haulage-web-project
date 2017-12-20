@@ -36,6 +36,8 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
 
   limit: number = 10;
 
+  private userObject: any;
+
 
   constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private modal: Modal, private titleService: Title, private userService: UserService, private router: Router) {
     this.titleService.setTitle('Forwarders');
@@ -46,7 +48,7 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
 
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
 
-      let userObject  = result[0];
+      this.userObject  = result[0];
 
       let params = result[1];
 
@@ -55,11 +57,11 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
       }
       this.offset = (this.page - 1) * this.limit;
 
-      this.forwarderInfoService.count(userObject).subscribe(count => {
+      this.forwarderInfoService.count(this.userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.forwarderInfoService.list(userObject, this.offset);
+      return this.forwarderInfoService.list(this.userObject, this.offset);
     }).subscribe(json => {
       // this.forwarderInfoList = forwarderInfoList;
       let data = json['data'];
@@ -93,5 +95,11 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
     console.log('onPageChange offset '+offset);
     this.offset = offset;
     this.router.navigate(['/forwarderInfo', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
+  }
+
+  search(term: string){
+    this.forwarderInfoService.search(term, this.userObject).subscribe(response => {
+
+    })
   }
 }

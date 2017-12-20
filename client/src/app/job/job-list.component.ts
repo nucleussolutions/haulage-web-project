@@ -35,6 +35,8 @@ export class JobListComponent implements OnInit, OnDestroy {
 
   limit: number = 10;
 
+  private userObject: any;
+
   constructor(private route: ActivatedRoute, private jobService: JobService, private userService: UserService) {
 
   }
@@ -43,7 +45,7 @@ export class JobListComponent implements OnInit, OnDestroy {
 
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
 
-      let userObject = result[0];
+      this.userObject = result[0];
 
       let params = result[1];
 
@@ -53,11 +55,11 @@ export class JobListComponent implements OnInit, OnDestroy {
 
       this.offset = (this.page - 1) * this.limit;
 
-      this.jobService.count(userObject).subscribe(count => {
+      this.jobService.count(this.userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.jobService.list(userObject, this.offset);
+      return this.jobService.list(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
       let links = json['links'];
@@ -72,6 +74,13 @@ export class JobListComponent implements OnInit, OnDestroy {
         job.id = jobDatum.id;
         this.jobList.push(job);
       });
+    });
+  }
+
+  search(term: string){
+
+    this.jobService.search(term, this.userObject).subscribe(response => {
+
     });
   }
 }
