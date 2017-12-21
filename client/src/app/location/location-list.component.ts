@@ -8,6 +8,10 @@ import { Subscription } from "rxjs/Subscription";
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/share";
 import { Subject } from "rxjs/Subject";
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+
+
 
 @Component({
   selector: 'location-list',
@@ -104,17 +108,16 @@ export class LocationListComponent implements OnInit, OnDestroy {
 
   search(term: string) {
     if (term.length > 2) {
-      Observable.of(term).debounce(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
+      Observable.of(term).debounceTime(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
         // return the http search observable
         ? this.locationService.search(term, this.userObject)
         // or the observable of empty heroes if no search term
         : Observable.of<Location[]>([]))
         .subscribe(locationList => {
           this.locationList = locationList;
-        })
-        .catch(error => {
+        }, error => {
           // TODO: real error handling
-          console.log(`Error in component ... ${error}`);
+          console.log('Error in component '+JSON.stringify(error));
           return Observable.of<Location[]>([]);
         });
     }

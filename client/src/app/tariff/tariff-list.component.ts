@@ -34,13 +34,15 @@ export class TariffListComponent implements OnInit, OnDestroy {
 
   limit: number = 10;
 
+  private userObject: any;
+
   constructor(private route: ActivatedRoute, private tariffService: TariffService, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
 
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
 
-      let userObject = result[0];
+      this.userObject = result[0];
       let params = result[1];
 
       if (params['page']) {
@@ -50,11 +52,11 @@ export class TariffListComponent implements OnInit, OnDestroy {
 
       this.offset = (this.page - 1) * this.limit;
 
-      this.tariffService.count(userObject).subscribe(count => {
+      this.tariffService.count(this.userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.tariffService.list(userObject, this.offset);
+      return this.tariffService.list(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
       let links = json['links'];
@@ -80,15 +82,14 @@ export class TariffListComponent implements OnInit, OnDestroy {
 
   search(term: string){
     if(term.length > 2){
-      Observable.of(term).debounce(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
+      Observable.of(term).debounceTime(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
         // return the http search observable
         ? this.tariffService.search(term, this.userObject)
         // or the observable of empty heroes if no search term
         : Observable.of<Tariff[]>([]))
         .subscribe(tariffList => {
           this.tariffList = tariffList;
-        })
-        .catch(error => {
+        }, error => {
           // TODO: real error handling
           console.log(`Error in component ... ${error}`);
           return Observable.of<Tariff[]>([]);

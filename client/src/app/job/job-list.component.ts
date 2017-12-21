@@ -79,15 +79,14 @@ export class JobListComponent implements OnInit, OnDestroy {
 
   search(term: string) {
     if (term.length > 2) {
-      Observable.of(term).debounce(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
+      Observable.of(term).debounceTime(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
         // return the http search observable
         ? this.jobService.search(term, this.userObject)
         // or the observable of empty heroes if no search term
         : Observable.of<Job[]>([]))
         .subscribe(jobList => {
           this.jobList = jobList;
-        })
-        .catch(error => {
+        }, error => {
           // TODO: real error handling
           console.log(`Error in component ... ${error}`);
           return Observable.of<Job[]>([]);

@@ -37,5 +37,7 @@ class UrlMappings {
     get "/consignment/count"(controller:'custom', action: 'consignmentCount')
 
     "/api/usertype"(controller: 'userType', action: 'checkUserExist', method: 'GET')
+
+    get "/search/location"(controller: 'search', action: 'location')
   }
 }

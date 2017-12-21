@@ -36,6 +36,8 @@ export class VehicleListComponent implements OnInit, OnDestroy {
 
   limit: number = 10;
 
+  private userObject: any;
+
   constructor(private route: ActivatedRoute, private vehicleService: VehicleService, private userService: UserService, private modal: Modal, private titleService: Title, private router: Router) {
 
     this.titleService.setTitle('Vehicles');
@@ -45,7 +47,7 @@ export class VehicleListComponent implements OnInit, OnDestroy {
 
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
 
-      let userObject = result[0];
+      this.userObject = result[0];
 
       let params = result[1];
 
@@ -54,11 +56,11 @@ export class VehicleListComponent implements OnInit, OnDestroy {
       }
       this.offset = (this.page - 1) * this.limit;
 
-      this.vehicleService.count(userObject).subscribe(count => {
+      this.vehicleService.count(this.userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.vehicleService.list(userObject, this.offset);
+      return this.vehicleService.list(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
       let links = json['links'];
@@ -100,15 +102,14 @@ export class VehicleListComponent implements OnInit, OnDestroy {
 
   search(term: string) {
     if(term.length > 2){
-      Observable.of(term).debounce(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
+      Observable.of(term).debounceTime(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
         // return the http search observable
         ? this.vehicleService.search(term, this.userObject)
         // or the observable of empty heroes if no search term
         : Observable.of<Vehicle[]>([]))
         .subscribe(vehicleList => {
           this.vehicleList = vehicleList;
-        })
-        .catch(error => {
+        }, error => {
           // TODO: real error handling
           console.log(`Error in component ... ${error}`);
           return Observable.of<Vehicle[]>([]);
