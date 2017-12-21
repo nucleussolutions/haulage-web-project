@@ -7,7 +7,7 @@ import {UserService} from 'app/user.service';
 import {Subscription} from 'rxjs/Subscription';
 import {PermissionService} from 'app/permission/permission.service';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 
 
@@ -39,7 +39,9 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
 
   limit: number = 10;
 
-  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private userService: UserService, private modal: Modal, private titleService: Title) {
+  private userObject: any;
+
+  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private userService: UserService, private modal: Modal, private titleService: Title, private router: Router) {
     this.titleService.setTitle('Transport Request List');
   }
 
@@ -47,7 +49,7 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
 
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
 
-      let userObject = result[0];
+      this.userObject = result[0];
 
       let params = result[1];
 
@@ -57,11 +59,11 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
 
       this.offset = (this.page - 1) * this.limit;
 
-      this.transportRequestService.count(userObject).subscribe(count => {
+      this.transportRequestService.count(this.userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.transportRequestService.list(userObject, this.offset);
+      return this.transportRequestService.list(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
       let links = json['links'];
@@ -92,4 +94,27 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
     });
   }
 
+  onPageChange(offset) {
+    console.log('onPageChange offset ' + offset);
+    this.offset = offset;
+    this.router.navigate(['/transportRequest', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
+  }
+
+  search(term: string){
+    if(term.length > 2){
+      Observable.of(term).debounce(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
+        // return the http search observable
+        ? this.transportRequestService.search(term, this.userObject)
+        // or the observable of empty heroes if no search term
+        : Observable.of<TransportRequest[]>([]))
+        .subscribe(transportRequestList => {
+          this.transportRequestList = transportRequestList;
+        })
+        .catch(error => {
+          // TODO: real error handling
+          console.log(`Error in component ... ${error}`);
+          return Observable.of<TransportRequest[]>([]);
+        });
+    }
+  }
 }

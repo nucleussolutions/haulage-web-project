@@ -1,11 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {JobService} from './job.service';
-import {Job} from './job';
-import {Subscription} from "rxjs/Subscription";
-import {UserService} from "../user.service";
-import {PermissionService} from "../permission/permission.service";
-import {ActivatedRoute} from "@angular/router";
-import {Observable} from "rxjs/Observable";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { JobService } from './job.service';
+import { Job } from './job';
+import { Subscription } from "rxjs/Subscription";
+import { UserService } from "../user.service";
+import { PermissionService } from "../permission/permission.service";
+import { ActivatedRoute } from "@angular/router";
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'job-list',
@@ -21,7 +21,7 @@ export class JobListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private page : number = 1;
+  private page: number = 1;
 
   private nextLink: string;
 
@@ -77,10 +77,21 @@ export class JobListComponent implements OnInit, OnDestroy {
     });
   }
 
-  search(term: string){
-
-    this.jobService.search(term, this.userObject).subscribe(response => {
-
-    });
+  search(term: string) {
+    if (term.length > 2) {
+      Observable.of(term).debounce(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
+        // return the http search observable
+        ? this.jobService.search(term, this.userObject)
+        // or the observable of empty heroes if no search term
+        : Observable.of<Job[]>([]))
+        .subscribe(jobList => {
+          this.jobList = jobList;
+        })
+        .catch(error => {
+          // TODO: real error handling
+          console.log(`Error in component ... ${error}`);
+          return Observable.of<Job[]>([]);
+        });
+    }
   }
 }

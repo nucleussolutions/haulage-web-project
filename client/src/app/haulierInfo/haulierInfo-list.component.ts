@@ -1,12 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {HaulierInfoService} from './haulierInfo.service';
-import {HaulierInfo} from './haulierInfo';
-import {Modal} from 'ngx-modialog/plugins/bootstrap';
-import {Title} from "@angular/platform-browser";
-import {ActivatedRoute, Router} from '@angular/router';
-import {UserService} from 'app/user.service';
-import {Subscription} from "rxjs/Subscription";
-import {Observable} from "rxjs/Observable";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { HaulierInfoService } from './haulierInfo.service';
+import { HaulierInfo } from './haulierInfo';
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import { Title } from "@angular/platform-browser";
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from 'app/user.service';
+import { Subscription } from "rxjs/Subscription";
+import { Observable } from "rxjs/Observable";
 
 
 @Component({
@@ -91,10 +91,22 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
     });
   }
 
-  search(term:string){
-    this.haulierInfoService.search(term, this.userObject).subscribe(response => {
-
-    });
+  search(term: string) {
+    if (term.length > 2) {
+      Observable.of(term).debounce(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
+        // return the http search observable
+        ? this.haulierInfoService.search(term, this.userObject)
+        // or the observable of empty heroes if no search term
+        : Observable.of<HaulierInfo[]>([]))
+        .subscribe(haulierInfoList => {
+          this.haulierInfoList = haulierInfoList;
+        })
+        .catch(error => {
+          // TODO: real error handling
+          console.log(`Error in component ... ${error}`);
+          return Observable.of<HaulierInfo[]>([]);
+        });
+    }
   }
 
 }

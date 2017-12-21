@@ -1,12 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ForwarderInfoService} from './forwarderInfo.service';
-import {ForwarderInfo} from './forwarderInfo';
-import {Modal} from 'ngx-modialog/plugins/bootstrap';
-import {Title} from '@angular/platform-browser';
-import {Subscription} from 'rxjs/Subscription';
-import {UserService} from 'app/user.service';
-import {Observable} from "rxjs/Observable";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ForwarderInfoService } from './forwarderInfo.service';
+import { ForwarderInfo } from './forwarderInfo';
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs/Subscription';
+import { UserService } from 'app/user.service';
+import { Observable } from "rxjs/Observable";
+import { ActivatedRoute, Router } from "@angular/router";
 
 
 @Component({
@@ -48,7 +48,7 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
 
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
 
-      this.userObject  = result[0];
+      this.userObject = result[0];
 
       let params = result[1];
 
@@ -92,14 +92,26 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
   }
 
   onPageChange(offset) {
-    console.log('onPageChange offset '+offset);
+    console.log('onPageChange offset ' + offset);
     this.offset = offset;
-    this.router.navigate(['/forwarderInfo', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
+    this.router.navigate(['/forwarderInfo', 'list'], { queryParams: { page: (offset / this.limit) + 1 } });
   }
 
-  search(term: string){
-    this.forwarderInfoService.search(term, this.userObject).subscribe(response => {
-
-    })
+  search(term: string) {
+    if (term.length > 2) {
+      Observable.of(term).debounce(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
+        // return the http search observable
+        ? this.forwarderInfoService.search(term, this.userObject)
+        // or the observable of empty heroes if no search term
+        : Observable.of<ForwarderInfo[]>([]))
+        .subscribe(forwarderInfoList => {
+          this.forwarderInfoList = forwarderInfoList;
+        })
+        .catch(error => {
+          // TODO: real error handling
+          console.log(`Error in component ... ${error}`);
+          return Observable.of<ForwarderInfo[]>([]);
+        });
+    }
   }
 }

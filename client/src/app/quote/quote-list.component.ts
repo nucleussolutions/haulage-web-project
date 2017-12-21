@@ -100,9 +100,21 @@ export class QuoteListComponent implements OnInit, OnDestroy {
   }
 
   search(term: string){
-    this.quoteService.search(term, this.userObject).subscribe(response => {
-
-    });
+    if(term.length > 2){
+      Observable.of(term).debounce(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
+        // return the http search observable
+        ? this.quoteService.search(term, this.userObject)
+        // or the observable of empty heroes if no search term
+        : Observable.of<Quote[]>([]))
+        .subscribe(quoteList => {
+          this.quoteList = quoteList;
+        })
+        .catch(error => {
+          // TODO: real error handling
+          console.log(`Error in component ... ${error}`);
+          return Observable.of<Quote[]>([]);
+        });
+    }
   }
 
 }

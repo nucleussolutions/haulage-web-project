@@ -1,10 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MemberSubscriptionService} from './memberSubscription.service';
-import {MemberSubscription} from './memberSubscription';
-import {UserService} from "../user.service";
-import {Subscription} from "rxjs/Subscription";
-import {Observable} from "rxjs/Observable";
-import {ActivatedRoute} from "@angular/router";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MemberSubscriptionService } from './memberSubscription.service';
+import { MemberSubscription } from './memberSubscription';
+import { UserService } from "../user.service";
+import { Subscription } from "rxjs/Subscription";
+import { Observable } from "rxjs/Observable";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'memberSubscription-list',
@@ -19,7 +19,7 @@ export class MemberSubscriptionListComponent implements OnInit, OnDestroy {
 
   private page: number = 1;
 
-  private subscription : Subscription;
+  private subscription: Subscription;
 
   private nextLink: string;
 
@@ -33,7 +33,7 @@ export class MemberSubscriptionListComponent implements OnInit, OnDestroy {
 
   limit: number = 10;
 
-  private userObject:any;
+  private userObject: any;
 
   constructor(private route: ActivatedRoute, private memberSubscriptionService: MemberSubscriptionService, private userService: UserService) { }
 
@@ -72,9 +72,21 @@ export class MemberSubscriptionListComponent implements OnInit, OnDestroy {
     });
   }
 
-  search(term: string){
-    this.memberSubscriptionService.search(term, this.userObject).subscribe(response => {
-
-    });
+  search(term: string) {
+    if (term.length > 2) {
+      Observable.of(term).debounce(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
+        // return the http search observable
+        ? this.memberSubscriptionService.search(term, this.userObject)
+        // or the observable of empty heroes if no search term
+        : Observable.of<MemberSubscription[]>([]))
+        .subscribe(memberSubscriptionList => {
+          this.memberSubscriptionList = memberSubscriptionList;
+        })
+        .catch(error => {
+          // TODO: real error handling
+          console.log(`Error in component ... ${error}`);
+          return Observable.of<MemberSubscription[]>([]);
+        });
+    }
   }
 }

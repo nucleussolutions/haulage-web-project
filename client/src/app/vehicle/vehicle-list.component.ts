@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { VehicleService } from './vehicle.service';
-import { Vehicle } from './vehicle';
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
-import { Title } from "@angular/platform-browser";
-import { UserService } from 'app/user.service';
-import { Subscription } from 'rxjs/Subscription';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {VehicleService} from './vehicle.service';
+import {Vehicle} from './vehicle';
+import {Modal} from 'ngx-modialog/plugins/bootstrap';
+import {Title} from "@angular/platform-browser";
+import {UserService} from 'app/user.service';
+import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 
@@ -22,7 +22,7 @@ export class VehicleListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private page : number = 1;
+  private page: number = 1;
 
   private nextLink: string;
 
@@ -85,7 +85,7 @@ export class VehicleListComponent implements OnInit, OnDestroy {
         message = 'Bad request';
       }
 
-      console.log('error.status '+error.status);
+      console.log('error.status ' + error.status);
 
       const dialog = this.modal.alert().title('Error').message(message).open();
 
@@ -93,8 +93,26 @@ export class VehicleListComponent implements OnInit, OnDestroy {
   }
 
   onPageChange(offset) {
-    console.log('onPageChange offset '+offset);
+    console.log('onPageChange offset ' + offset);
     this.offset = offset;
     this.router.navigate(['/vehicle', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
+  }
+
+  search(term: string) {
+    if(term.length > 2){
+      Observable.of(term).debounce(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
+        // return the http search observable
+        ? this.vehicleService.search(term, this.userObject)
+        // or the observable of empty heroes if no search term
+        : Observable.of<Vehicle[]>([]))
+        .subscribe(vehicleList => {
+          this.vehicleList = vehicleList;
+        })
+        .catch(error => {
+          // TODO: real error handling
+          console.log(`Error in component ... ${error}`);
+          return Observable.of<Vehicle[]>([]);
+        });
+    }
   }
 }

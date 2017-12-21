@@ -77,4 +77,22 @@ export class TariffListComponent implements OnInit, OnDestroy {
     this.offset = offset;
     this.router.navigate(['/tariff', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
   }
+
+  search(term: string){
+    if(term.length > 2){
+      Observable.of(term).debounce(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
+        // return the http search observable
+        ? this.tariffService.search(term, this.userObject)
+        // or the observable of empty heroes if no search term
+        : Observable.of<Tariff[]>([]))
+        .subscribe(tariffList => {
+          this.tariffList = tariffList;
+        })
+        .catch(error => {
+          // TODO: real error handling
+          console.log(`Error in component ... ${error}`);
+          return Observable.of<Tariff[]>([]);
+        });
+    }
+  }
 }

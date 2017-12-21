@@ -1,11 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {PermissionService} from './permission.service';
-import {Permission} from './permission';
-import {Modal} from 'ngx-modialog/plugins/bootstrap';
-import {ActivatedRoute, Router} from '@angular/router';
-import {UserService} from 'app/user.service';
-import {Subscription} from "rxjs/Subscription";
-import {Observable} from "rxjs/Observable";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { PermissionService } from './permission.service';
+import { Permission } from './permission';
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from 'app/user.service';
+import { Subscription } from "rxjs/Subscription";
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'permission-list',
@@ -96,14 +96,27 @@ export class PermissionListComponent implements OnInit, OnDestroy {
   }
 
   onPageChange(offset) {
-    console.log('onPageChange offset '+offset);
+    console.log('onPageChange offset ' + offset);
     this.offset = offset;
-    this.router.navigate(['/permission', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
+    this.router.navigate(['/permission', 'list'], { queryParams: { page: (offset / this.limit) + 1 } });
   }
 
-  search(term: string){
-    this.permissionService.search(term, this.userObject).subscribe(response => {
+  search(term: string) {
+    if (term.length > 2) {
+      Observable.of(term).debounce(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
+        // return the http search observable
+        ? this.permissionService.search(term, this.userObject)
+        // or the observable of empty heroes if no search term
+        : Observable.of<Permission[]>([]))
+        .subscribe(permissionList => {
+          this.permissionList = permissionList;
+        })
+        .catch(error => {
+          // TODO: real error handling
+          console.log(`Error in component ... ${error}`);
+          return Observable.of<Permission[]>([]);
+        });
+    }
 
-    });
   }
 }
