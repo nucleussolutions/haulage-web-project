@@ -98,13 +98,16 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
         ? this.haulierInfoService.search(term, this.userObject)
         // or the observable of empty heroes if no search term
         : Observable.of<HaulierInfo[]>([]))
-        .subscribe(haulierInfoList => {
-          this.haulierInfoList = haulierInfoList;
+        .subscribe(json => {
+          this.haulierInfoList = json['searchResults'];
+          this.count = json['total'];
         }, error => {
           // TODO: real error handling
           console.log(`Error in component ... ${error}`);
           return Observable.of<HaulierInfo[]>([]);
         });
+    }else{
+      //todo
     }
   }
 

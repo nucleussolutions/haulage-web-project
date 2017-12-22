@@ -1,12 +1,12 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {DriverInfoService} from './driverInfo.service';
-import {DriverInfo} from './driverInfo';
-import {Title} from "@angular/platform-browser";
-import {Modal} from 'ngx-modialog/plugins/bootstrap';
-import {Subscription} from 'rxjs/Subscription';
-import {UserService} from 'app/user.service';
-import {ActivatedRoute, Router} from "@angular/router";
-import {Observable} from "rxjs/Observable";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { DriverInfoService } from './driverInfo.service';
+import { DriverInfo } from './driverInfo';
+import { Title } from "@angular/platform-browser";
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import { Subscription } from 'rxjs/Subscription';
+import { UserService } from 'app/user.service';
+import { ActivatedRoute, Router } from "@angular/router";
+import { Observable } from "rxjs/Observable";
 
 
 @Component({
@@ -23,7 +23,7 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private page : number = 1;
+  private page: number = 1;
 
   private nextLink: string;
 
@@ -59,7 +59,7 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
       //get count of drivers infos
       this.driverInfoService.count(this.userObject).subscribe(count => {
         this.count = count;
-        console.log('driver info count '+count);
+        console.log('driver info count ' + count);
       });
 
       return this.driverInfoService.list(this.userObject, this.offset);
@@ -95,25 +95,28 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
   }
 
   onPageChange(offset) {
-    console.log('onPageChange offset '+offset);
+    console.log('onPageChange offset ' + offset);
     this.offset = offset;
-    this.router.navigate(['/driverInfo', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
+    this.router.navigate(['/driverInfo', 'list'], { queryParams: { page: (offset / this.limit) + 1 } });
   }
 
-  search(term: string){
-    if(term.length > 2){
+  search(term: string) {
+    if (term.length > 2) {
       Observable.of(term).debounceTime(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
         // return the http search observable
         ? this.driverInfoService.search(term, this.userObject)
         // or the observable of empty heroes if no search term
         : Observable.of<DriverInfo[]>([]))
-        .subscribe(driverInfoList => {
-          this.driverInfoList = driverInfoList;
+        .subscribe(json => {
+          this.driverInfoList = json['searchResults'];
+          this.count = json['total'];
         }, error => {
           // TODO: real error handling
           console.log(`Error in component ... ${error}`);
           return Observable.of<DriverInfo[]>([]);
         });
+    }else{
+      //todo
     }
   }
 }

@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {HaulierInfo} from './haulierInfo';
-import {Subject} from 'rxjs/Subject';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { HaulierInfo } from './haulierInfo';
+import { Subject } from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
-import {environment} from 'environments/environment';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import { environment } from 'environments/environment';
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 
 @Injectable()
 export class HaulierInfoService {
@@ -110,7 +110,7 @@ export class HaulierInfoService {
     return subject.asObservable();
   }
 
-  search(term: string, userObject: any): Observable<any[]>{
+  search(term: string, userObject: any): Observable<any[]> {
     let subject = new Subject<any[]>();
 
     let headers = new HttpHeaders({
@@ -118,7 +118,7 @@ export class HaulierInfoService {
       'apiKey': userObject.apiKey
     });
 
-    this.http.get(environment.serverUrl+ '/haulierInfo?term='+term, {
+    this.http.get(environment.serverUrl + '/haulierInfo?term=' + term, {
       headers: headers
     }).subscribe((json: any[]) => {
       subject.next(json);

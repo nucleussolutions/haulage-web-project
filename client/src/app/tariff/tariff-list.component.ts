@@ -88,12 +88,15 @@ export class TariffListComponent implements OnInit, OnDestroy {
         // or the observable of empty heroes if no search term
         : Observable.of<Tariff[]>([]))
         .subscribe(tariffList => {
-          this.tariffList = tariffList;
+          this.tariffList = json['searchResults'];
+          this.count = json['total'];
         }, error => {
           // TODO: real error handling
           console.log(`Error in component ... ${error}`);
           return Observable.of<Tariff[]>([]);
         });
+    }else{
+      
     }
   }
 }

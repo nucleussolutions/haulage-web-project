@@ -1,15 +1,15 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Location} from './location';
-import {Subject} from 'rxjs/Subject';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Location } from './location';
+import { Subject } from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
-import {environment} from 'environments/environment';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {int} from "aws-sdk/clients/datapipeline";
-import {Vehicle} from "../vehicle/vehicle";
+import { environment } from 'environments/environment';
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { int } from "aws-sdk/clients/datapipeline";
+import { Vehicle } from "../vehicle/vehicle";
 
 @Injectable()
 export class LocationService {
@@ -125,7 +125,7 @@ export class LocationService {
     return subject.asObservable();
   }
 
-  search(term: string, userObject: any): Observable<Location[]>{
+  search(term: string, userObject: any): Observable<Location[]> {
     let subject = new Subject<Location[]>();
 
     let headers = new HttpHeaders({
@@ -133,10 +133,10 @@ export class LocationService {
       'apiKey': userObject.apiKey
     });
 
-    this.http.get(environment.serverUrl+ '/search/location?term='+term, {
+    this.http.get(environment.serverUrl + '/search/location?term=' + term, {
       headers: headers
     }).subscribe((json: any[]) => {
-      subject.next(json.map((item: any) => new Location(item)));
+      subject.next(json);
     }, error => {
       subject.error(error);
     });

@@ -1,14 +1,14 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Vehicle} from './vehicle';
-import {Subject} from 'rxjs/Subject';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Vehicle } from './vehicle';
+import { Subject } from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
-import {environment} from "../../environments/environment";
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {TransportRequest} from "../transportRequest/transportRequest";
+import { environment } from "../../environments/environment";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { TransportRequest } from "../transportRequest/transportRequest";
 
 @Injectable()
 export class VehicleService {
@@ -31,10 +31,10 @@ export class VehicleService {
       headers: headers,
       params: params
     })
-        .catch(err => {
-            subject.error(err);
-            return subject.asObservable();
-        })
+      .catch(err => {
+        subject.error(err);
+        return subject.asObservable();
+      })
       .subscribe((json: any[]) => {
         subject.next(json);
       });
@@ -46,16 +46,16 @@ export class VehicleService {
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
-    return this.http.get(environment.serverUrl + '/vehicle/'+id, {
+    return this.http.get(environment.serverUrl + '/vehicle/' + id, {
       headers: headers
     })
       .map((r: Response) => new Vehicle(r)).catch(err => {
-            if (err.status === 401) {
-                return Observable.throw(new Error('Unauthorized'));
-            }else if(err.status === 500){
-                return Observable.throw(new Error('Internal server error'));
-            }
-        });
+        if (err.status === 401) {
+          return Observable.throw(new Error('Unauthorized'));
+        } else if (err.status === 500) {
+          return Observable.throw(new Error('Internal server error'));
+        }
+      });
   }
 
   save(vehicle: Vehicle, userObject: any): Observable<Vehicle> {
@@ -76,7 +76,7 @@ export class VehicleService {
     let body = JSON.stringify(vehicle);
     let headers = new HttpHeaders({
       "Content-Type": "appzlication/json",
-      'token' : userObject.token,
+      'token': userObject.token,
       'apiKey': userObject.apiKey
     });
 
@@ -85,12 +85,12 @@ export class VehicleService {
       body: body
     })
       .map((r: Response) => new Vehicle(r)).catch(err => {
-            if (err.status === 401) {
-                return Observable.throw(new Error('Unauthorized'));
-            }else if(err.status === 500){
-                return Observable.throw(new Error('Internal server error'));
-            }
-        });
+        if (err.status === 401) {
+          return Observable.throw(new Error('Unauthorized'));
+        } else if (err.status === 500) {
+          return Observable.throw(new Error('Internal server error'));
+        }
+      });
   }
 
   destroy(vehicle: Vehicle, userObject: any): Observable<boolean> {
@@ -106,13 +106,13 @@ export class VehicleService {
     });
   }
 
-  count(userObject: any) : Observable<number>{
+  count(userObject: any): Observable<number> {
     let subject = new Subject<number>();
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
-    this.http.get(environment.serverUrl+ '/vehicle/count', {
+    this.http.get(environment.serverUrl + '/vehicle/count', {
       headers: headers
     }).subscribe(json => {
       subject.next(json['count']);
@@ -123,7 +123,7 @@ export class VehicleService {
     return subject.asObservable();
   }
 
-  search(term: string, userObject: any): Observable<Vehicle[]>{
+  search(term: string, userObject: any): Observable<Vehicle[]> {
     let subject = new Subject<Vehicle[]>();
 
     let headers = new HttpHeaders({
@@ -131,10 +131,10 @@ export class VehicleService {
       'apiKey': userObject.apiKey
     });
 
-    this.http.get(environment.serverUrl+ '/vehicle?term='+term, {
+    this.http.get(environment.serverUrl + '/vehicle?term=' + term, {
       headers: headers
     }).subscribe((json: any[]) => {
-      subject.next(json.map((item: any) => new Vehicle(item)));
+      subject.next(json);
     }, error => {
       subject.error(error);
     });

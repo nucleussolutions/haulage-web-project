@@ -79,8 +79,9 @@ export class MemberSubscriptionListComponent implements OnInit, OnDestroy {
         ? this.memberSubscriptionService.search(term, this.userObject)
         // or the observable of empty heroes if no search term
         : Observable.of<MemberSubscription[]>([]))
-        .subscribe(memberSubscriptionList => {
-          this.memberSubscriptionList = memberSubscriptionList;
+        .subscribe(json => {
+          // this.memberSubscriptionList = memberSubscriptionList;
+
         }, error => {
           // TODO: real error handling
           console.log(`Error in component ... ${error}`);

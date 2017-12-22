@@ -1,12 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ConsignmentService} from './consignment.service';
-import {Consignment} from './consignment';
-import {Modal} from 'ngx-modialog/plugins/bootstrap';
-import {ActivatedRoute, Router} from "@angular/router";
-import {UserService} from 'app/user.service';
-import {PermissionService} from "../permission/permission.service";
-import {Subscription} from "rxjs/Subscription";
-import {Observable} from "rxjs/Observable";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ConsignmentService } from './consignment.service';
+import { Consignment } from './consignment';
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import { ActivatedRoute, Router } from "@angular/router";
+import { UserService } from 'app/user.service';
+import { PermissionService } from "../permission/permission.service";
+import { Subscription } from "rxjs/Subscription";
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'consignment-list',
@@ -70,9 +70,9 @@ export class ConsignmentListComponent implements OnInit {
       this.consignmentList = [];
 
       data.forEach(consignmentDatum => {
-         let consignment = new Consignment(consignmentDatum.attributes);
-         consignment.id = consignmentDatum.id;
-         this.consignmentList.push(consignment);
+        let consignment = new Consignment(consignmentDatum.attributes);
+        consignment.id = consignmentDatum.id;
+        this.consignmentList.push(consignment);
       });
 
     }, error => {
@@ -99,14 +99,29 @@ export class ConsignmentListComponent implements OnInit {
   }
 
   onPageChange(offset) {
-    console.log('onPageChange offset '+offset);
+    console.log('onPageChange offset ' + offset);
     this.offset = offset;
-    this.router.navigate(['/consignment', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
+    this.router.navigate(['/consignment', 'list'], { queryParams: { page: (offset / this.limit) + 1 } });
   }
 
-  search(term: string){
-    this.consignmentService.search(term, this.userObject).subscribe(response => {
-
-    });
+  search(term: string) {
+    if (term.length > 2) {
+      Observable.of(term).debounceTime(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
+        // return the http search observable
+        ? this.consignmentService.search(term, this.userObject)
+        // or the observable of empty heroes if no search term
+        : Observable.of<Consignment[]>([]))
+        .subscribe(json => {
+          this.consignmentList = json['searchResults'];
+          this.count = json['total'];
+        }, error => {
+          // TODO: real error handling
+          console.log(`Error in component ... ${error}`);
+          return Observable.of<Consignment[]>([]);
+        });
+    }else{
+            //todo should call the original page number to get the results again
+            
+    }
   }
 }

@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {MemberSubscription} from './memberSubscription';
-import {Subject} from 'rxjs/Subject';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { MemberSubscription } from './memberSubscription';
+import { Subject } from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
-import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from "@angular/common/http";
-import {environment} from "../../environments/environment";
-import {Permission} from "../permission/permission";
+import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from "@angular/common/http";
+import { environment } from "../../environments/environment";
+import { Permission } from "../permission/permission";
 
 @Injectable()
 export class MemberSubscriptionService {
@@ -30,7 +30,7 @@ export class MemberSubscriptionService {
       headers: headers,
       params: params
     })
-        .subscribe((json: any[]) => {
+      .subscribe((json: any[]) => {
         subject.next(json);
       });
     return subject.asObservable();
@@ -44,7 +44,7 @@ export class MemberSubscriptionService {
     });
 
 
-    return this.http.get(environment.serverUrl + '/memberSubscription/'+id, {
+    return this.http.get(environment.serverUrl + '/memberSubscription/' + id, {
       headers: headers
     })
       .map((r: Response) => new MemberSubscription(r));
@@ -87,13 +87,13 @@ export class MemberSubscriptionService {
     });
   }
 
-  count(userObject: any): Observable<number>{
+  count(userObject: any): Observable<number> {
     let subject = new Subject<number>();
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
-    this.http.get(environment.serverUrl+ '/memberSubscription/count', {
+    this.http.get(environment.serverUrl + '/memberSubscription/count', {
       headers: headers
     }).subscribe(json => {
       subject.next(json['count']);
@@ -104,7 +104,7 @@ export class MemberSubscriptionService {
     return subject.asObservable();
   }
 
-  search(term: string, userObject: any): Observable<MemberSubscription[]>{
+  search(term: string, userObject: any): Observable<MemberSubscription[]> {
     let subject = new Subject<MemberSubscription[]>();
 
     let headers = new HttpHeaders({
@@ -112,10 +112,10 @@ export class MemberSubscriptionService {
       'apiKey': userObject.apiKey
     });
 
-    this.http.get(environment.serverUrl+ '/memberSubscription?term='+term, {
+    this.http.get(environment.serverUrl + '/memberSubscription?term=' + term, {
       headers: headers
     }).subscribe((json: any[]) => {
-      subject.next(json.map((item: any) => new MemberSubscription(item)));
+      subject.next(json);
     }, error => {
       subject.error(error);
     });

@@ -108,13 +108,17 @@ export class PermissionListComponent implements OnInit, OnDestroy {
         ? this.permissionService.search(term, this.userObject)
         // or the observable of empty heroes if no search term
         : Observable.of<Permission[]>([]))
-        .subscribe(permissionList => {
-          this.permissionList = permissionList;
+        .subscribe(json => {
+          this.permissionList = json['searchResults'];
+          this.count = json['total'];
         }, error => {
           // TODO: real error handling
           console.log(`Error in component ... ${error}`);
           return Observable.of<Permission[]>([]);
         });
+    }else{
+      //todo should call the original page number to get the results again
+      
     }
 
   }

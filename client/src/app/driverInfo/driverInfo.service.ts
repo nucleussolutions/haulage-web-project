@@ -1,15 +1,15 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {DriverInfo} from './driverInfo';
-import {Subject} from 'rxjs/Subject';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { DriverInfo } from './driverInfo';
+import { Subject } from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
-import {environment} from "../../environments/environment";
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {int} from "aws-sdk/clients/datapipeline";
-import {Job} from "../job/job";
+import { environment } from "../../environments/environment";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { int } from "aws-sdk/clients/datapipeline";
+import { Job } from "../job/job";
 
 @Injectable()
 export class DriverInfoService {
@@ -93,7 +93,7 @@ export class DriverInfoService {
     });
   }
 
-  count(userObject: any): Observable<number>{
+  count(userObject: any): Observable<number> {
     let subject = new Subject<number>();
 
     let headers = new HttpHeaders({
@@ -101,7 +101,7 @@ export class DriverInfoService {
       'apiKey': userObject.apiKey
     });
 
-    this.http.get(environment.serverUrl+ '/driverInfo/count', {
+    this.http.get(environment.serverUrl + '/driverInfo/count', {
       headers: headers
     }).subscribe(json => {
       subject.next(json['count']);
@@ -112,7 +112,7 @@ export class DriverInfoService {
     return subject.asObservable();
   }
 
-  search(term: string, userObject: any): Observable<any[]>{
+  search(term: string, userObject: any): Observable<any[]> {
     let subject = new Subject<any[]>();
 
     let headers = new HttpHeaders({
@@ -120,7 +120,7 @@ export class DriverInfoService {
       'apiKey': userObject.apiKey
     });
 
-    this.http.get(environment.serverUrl+ '/driverInfo?term='+term, {
+    this.http.get(environment.serverUrl + '/driverInfo?term=' + term, {
       headers: headers
     }).subscribe((json: any[]) => {
       subject.next(json);

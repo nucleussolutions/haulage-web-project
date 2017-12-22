@@ -113,13 +113,17 @@ export class LocationListComponent implements OnInit, OnDestroy {
         ? this.locationService.search(term, this.userObject)
         // or the observable of empty heroes if no search term
         : Observable.of<Location[]>([]))
-        .subscribe(locationList => {
-          this.locationList = locationList;
+        .subscribe(json => {
+          this.locationList = json['searchResults'];
+          this.count = json['total'];
         }, error => {
           // TODO: real error handling
-          console.log('Error in component '+JSON.stringify(error));
+          console.log('Error in component ' + JSON.stringify(error));
           return Observable.of<Location[]>([]);
         });
+    } else {
+      //todo should call the original page number to get the results again
+      
     }
   }
 }

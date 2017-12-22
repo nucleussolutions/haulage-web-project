@@ -1,14 +1,14 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Tariff} from './tariff';
-import {Subject} from 'rxjs/Subject';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Tariff } from './tariff';
+import { Subject } from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
-import {environment} from "../../environments/environment";
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import { environment } from "../../environments/environment";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import 'rxjs/add/operator/map';
-import {Quote} from "../quote/quote";
+import { Quote } from "../quote/quote";
 
 @Injectable()
 export class TariffService {
@@ -30,10 +30,10 @@ export class TariffService {
       headers: headers,
       params: params
     })
-        .catch(err => {
-          subject.error(err);
-          return subject.asObservable();
-        })
+      .catch(err => {
+        subject.error(err);
+        return subject.asObservable();
+      })
       .subscribe((json: any[]) => {
         subject.next(json);
       });
@@ -79,7 +79,7 @@ export class TariffService {
       .map((r: Response) => new Tariff(r));
   }
 
-  destroy(tariff: Tariff, userObject : any): Observable<boolean> {
+  destroy(tariff: Tariff, userObject: any): Observable<boolean> {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
@@ -93,13 +93,13 @@ export class TariffService {
     });
   }
 
-  count(userObject: any) : Observable<number>{
+  count(userObject: any): Observable<number> {
     let subject = new Subject<number>();
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
-    this.http.get(environment.serverUrl+ '/tariff/count', {
+    this.http.get(environment.serverUrl + '/tariff/count', {
       headers: headers
     }).subscribe(json => {
       subject.next(json['count']);
@@ -110,7 +110,7 @@ export class TariffService {
     return subject.asObservable();
   }
 
-  search(term: string, userObject: any): Observable<Tariff[]>{
+  search(term: string, userObject: any): Observable<Tariff[]> {
     let subject = new Subject<Tariff[]>();
 
     let headers = new HttpHeaders({
@@ -118,10 +118,10 @@ export class TariffService {
       'apiKey': userObject.apiKey
     });
 
-    this.http.get(environment.serverUrl+ '/quote?term='+term, {
+    this.http.get(environment.serverUrl + '/quote?term=' + term, {
       headers: headers
     }).subscribe((json: any[]) => {
-      subject.next(json.map((item: any) => new Tariff(item)));
+      subject.next(json);
     }, error => {
       subject.error(error);
     });

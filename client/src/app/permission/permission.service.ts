@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Permission} from './permission';
-import {Subject} from 'rxjs/Subject';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Permission } from './permission';
+import { Subject } from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
-import {environment} from 'environments/environment';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import { environment } from 'environments/environment';
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 
 @Injectable()
 export class PermissionService {
@@ -38,7 +38,7 @@ export class PermissionService {
     return subject.asObservable();
   }
 
-  get(id: number, userObject:any): Observable<Permission> {
+  get(id: number, userObject: any): Observable<Permission> {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
@@ -87,7 +87,7 @@ export class PermissionService {
       .map((r: Response) => new Permission(r));
   }
 
-  destroy(permission: Permission, userObject:any): Observable<boolean> {
+  destroy(permission: Permission, userObject: any): Observable<boolean> {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
@@ -101,13 +101,13 @@ export class PermissionService {
     });
   }
 
-  count(userObject: any) : Observable<number>{
+  count(userObject: any): Observable<number> {
     let subject = new Subject<number>();
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
-    this.http.get(environment.serverUrl+ '/permission/count', {
+    this.http.get(environment.serverUrl + '/permission/count', {
       headers: headers
     }).subscribe(json => {
       subject.next(json['count']);
@@ -118,7 +118,7 @@ export class PermissionService {
     return subject.asObservable();
   }
 
-  search(term: string, userObject: any): Observable<Permission[]>{
+  search(term: string, userObject: any): Observable<Permission[]> {
     let subject = new Subject<Permission[]>();
 
     let headers = new HttpHeaders({
@@ -126,10 +126,10 @@ export class PermissionService {
       'apiKey': userObject.apiKey
     });
 
-    this.http.get(environment.serverUrl+ '/permission?term='+term, {
+    this.http.get(environment.serverUrl + '/permission?term=' + term, {
       headers: headers
     }).subscribe((json: any[]) => {
-      subject.next(json.map((item: any) => new Permission(item)));
+      subject.next(json);
     }, error => {
       subject.error(error);
     });

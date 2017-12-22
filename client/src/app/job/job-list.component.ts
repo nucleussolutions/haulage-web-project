@@ -84,13 +84,17 @@ export class JobListComponent implements OnInit, OnDestroy {
         ? this.jobService.search(term, this.userObject)
         // or the observable of empty heroes if no search term
         : Observable.of<Job[]>([]))
-        .subscribe(jobList => {
-          this.jobList = jobList;
+        .subscribe(json => {
+          this.jobList = json['searchResults'];
+          this.count = json['total'];
         }, error => {
           // TODO: real error handling
           console.log(`Error in component ... ${error}`);
           return Observable.of<Job[]>([]);
         });
+    }else{
+      //todo recall the original api call again
+      
     }
   }
 }

@@ -106,8 +106,10 @@ export class QuoteListComponent implements OnInit, OnDestroy {
         ? this.quoteService.search(term, this.userObject)
         // or the observable of empty heroes if no search term
         : Observable.of<Quote[]>([]))
-        .subscribe(quoteList => {
-          this.quoteList = quoteList;
+        .subscribe(json => {
+          // this.quoteList = quoteList;
+          this.quoteList = json['searchResults'];
+          this.count = json['total'];
         }, error => {
         // TODO: real error handling
         console.log(`Error in component ... ${error}`);

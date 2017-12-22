@@ -104,13 +104,16 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
         ? this.forwarderInfoService.search(term, this.userObject)
         // or the observable of empty heroes if no search term
         : Observable.of<ForwarderInfo[]>([]))
-        .subscribe(forwarderInfoList => {
-          this.forwarderInfoList = forwarderInfoList;
+        .subscribe(json => {
+          this.forwarderInfoList = json['searchResults'];
+          this.count = json['total'];
         }, error => {
           // TODO: real error handling
           console.log(`Error in component ... ${error}`);
           return Observable.of<ForwarderInfo[]>([]);
         });
+    }else{
+      //todo 
     }
   }
 }
