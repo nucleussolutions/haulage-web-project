@@ -50,7 +50,6 @@ import { TariffModule } from './tariff/tariff.module';
 import { BillingComponent } from './billing/billing.component';
 import { NotificationPaneComponent } from './notification-pane/notification-pane.component';
 import { MemberSubscriptionModule } from './memberSubscription/memberSubscription.module';
-import { SearchComponent } from './search/search.component';
 import {PaginationComponent} from "./pagination/pagination.component";
 import {PaginationModule} from "./pagination/pagination.module";
 
@@ -78,8 +77,6 @@ import {PaginationModule} from "./pagination/pagination.module";
     LoadingComponent,
     BillingComponent,
     NotificationPaneComponent,
-    SearchComponent,
-
   ],
   entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent],
   imports: [

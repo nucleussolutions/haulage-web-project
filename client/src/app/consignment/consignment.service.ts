@@ -141,4 +141,25 @@ export class ConsignmentService {
 
     return subject.asObservable();
   }
+
+  printConsignment(consignment: Consignment, userObject: any){
+
+    let subject = new Subject<any>();
+
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    this.http.post(environment.serverUrl + '/consignment/print?id='+consignment.id, {
+      headers: headers
+    }).subscribe(json => {
+      //expect a jsonoutput with the link to the file so that the browser can display it and save it whenever they want
+
+
+    }, error => {
+      subject.error(error);
+    });
+  }
 }

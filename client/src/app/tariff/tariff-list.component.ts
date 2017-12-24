@@ -1,10 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {TariffService} from './tariff.service';
-import {Tariff} from './tariff';
-import {UserService} from "../user.service";
-import {Subscription} from "rxjs/Subscription";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Observable} from "rxjs/Observable";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { TariffService } from './tariff.service';
+import { Tariff } from './tariff';
+import { UserService } from "../user.service";
+import { Subscription } from "rxjs/Subscription";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'tariff-list',
@@ -20,7 +20,7 @@ export class TariffListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private page : number = 1;
+  private page: number = 1;
 
   private nextLink: string;
 
@@ -47,7 +47,7 @@ export class TariffListComponent implements OnInit, OnDestroy {
 
       if (params['page']) {
         this.page = params['page'];
-        console.log('tariff page '+this.page);
+        console.log('tariff page ' + this.page);
       }
 
       this.offset = (this.page - 1) * this.limit;
@@ -75,19 +75,19 @@ export class TariffListComponent implements OnInit, OnDestroy {
   }
 
   onPageChange(offset) {
-    console.log('onPageChange offset '+offset);
+    console.log('onPageChange offset ' + offset);
     this.offset = offset;
-    this.router.navigate(['/tariff', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
+    this.router.navigate(['/tariff', 'list'], { queryParams: { page: (offset / this.limit) + 1 } });
   }
 
-  search(term: string){
-    if(term.length > 2){
+  search(term: string) {
+    if (term.length > 2) {
       Observable.of(term).debounceTime(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
         // return the http search observable
         ? this.tariffService.search(term, this.userObject)
         // or the observable of empty heroes if no search term
         : Observable.of<Tariff[]>([]))
-        .subscribe(tariffList => {
+        .subscribe(json => {
           this.tariffList = json['searchResults'];
           this.count = json['total'];
         }, error => {
@@ -95,8 +95,8 @@ export class TariffListComponent implements OnInit, OnDestroy {
           console.log(`Error in component ... ${error}`);
           return Observable.of<Tariff[]>([]);
         });
-    }else{
-      
+    } else {
+
     }
   }
 }
