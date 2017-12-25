@@ -12,8 +12,10 @@ class PdfGenerationService {
 
   def quoteService
 
-  def generateQuotation(Quote quote){
+  def generateQuotation(Long id){
     //todo generate quote
+
+
 
   }
 

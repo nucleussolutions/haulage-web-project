@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
@@ -7,7 +7,7 @@ import {HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@ang
 import {IndexComponent} from './index/index.component';
 import {AppComponent} from './app.component';
 import {NavService} from './nav/nav.service';
-import {AppRoutingModule} from "./app-routing.module";
+import {AppRoutingModule} from './app-routing.module';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {RegisterComponent} from './register/register.component';
 import {HomeComponent} from './home/home.component';
@@ -28,20 +28,20 @@ import {CustomerModule} from './customer/customer.module';
 import {TransportRequestModule} from './transportRequest/transportRequest.module';
 import {PricingModule} from './pricing/pricing.module';
 import {CookieModule} from 'ngx-cookie';
-import {ModalModule} from "ngx-modialog";
-import {BootstrapModalModule} from "ngx-modialog/plugins/bootstrap";
+import {ModalModule} from 'ngx-modialog';
+import {BootstrapModalModule} from 'ngx-modialog/plugins/bootstrap';
 import {CreateProfileModalComponent} from './create-profile-modal/create-profile-modal.component';
 import {ResendCodeComponent} from './resend-code/resend-code.component';
-import {AngularFireModule} from "angularfire2";
-import {environment} from "environments/environment";
-import {AngularFireAuthModule} from "angularfire2/auth";
+import {AngularFireModule} from 'angularfire2';
+import {environment} from 'environments/environment';
+import {AngularFireAuthModule} from 'angularfire2/auth';
 import {VerifyEmailComponent} from './verify-email/verify-email.component';
 import {PermissionModule} from './permission/permission.module';
 import {JobModule} from './job/job.module';
 import {CreateConsignmentModalComponent} from './create-consignment-modal/create-consignment-modal.component';
 import {UnauthorizedComponent} from './unauthorized/unauthorized.component';
-import {HttpClientModule} from "@angular/common/http";
-import {NgxDatatableModule} from "@swimlane/ngx-datatable";
+import {HttpClientModule} from '@angular/common/http';
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import { HelpComponent } from './help/help.component';
 import { ReportingComponent } from './reporting/reporting.component';
 import { QuoteModule } from './quote/quote.module';
@@ -50,8 +50,8 @@ import { TariffModule } from './tariff/tariff.module';
 import { BillingComponent } from './billing/billing.component';
 import { NotificationPaneComponent } from './notification-pane/notification-pane.component';
 import { MemberSubscriptionModule } from './memberSubscription/memberSubscription.module';
-import {PaginationComponent} from "./pagination/pagination.component";
-import {PaginationModule} from "./pagination/pagination.module";
+import {PaginationComponent} from './pagination/pagination.component';
+import {PaginationModule} from './pagination/pagination.module';
 
 
 @NgModule({
