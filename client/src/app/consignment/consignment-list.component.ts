@@ -7,6 +7,7 @@ import { UserService } from 'app/user.service';
 import { PermissionService } from "../permission/permission.service";
 import { Subscription } from "rxjs/Subscription";
 import { Observable } from "rxjs/Observable";
+import {Permission} from "../permission/permission";
 
 @Component({
   selector: 'consignment-list',
@@ -38,7 +39,9 @@ export class ConsignmentListComponent implements OnInit {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private modal: Modal, private router: Router, private userService: UserService) {
+  permission: Permission;
+
+  constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private modal: Modal, private router: Router, private userService: UserService, private permissionService: PermissionService) {
   }
 
   ngOnInit() {
@@ -57,6 +60,10 @@ export class ConsignmentListComponent implements OnInit {
       //count
       this.consignmentService.count(this.userObject).subscribe(count => {
         this.count = count;
+      });
+
+      this.permissionService.getByUserId(this.userObject).subscribe(permission => {
+        this.permission = permission;
       });
 
       return this.consignmentService.list(this.userObject, this.offset);

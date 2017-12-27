@@ -12,8 +12,17 @@ class PdfGenerationService {
 
   def quoteService
 
+  def consignmentBucketService
+
+  def quotationBucketService
+
   def generateQuotation(Quote quote) {
     //todo generate quote
+
+
+
+
+
 
   }
 

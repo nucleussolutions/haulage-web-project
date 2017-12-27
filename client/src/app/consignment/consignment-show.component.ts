@@ -4,6 +4,7 @@ import {Consignment} from './consignment';
 import {ConsignmentService} from './consignment.service';
 import {UserService} from "../user.service";
 import {Subscription} from "rxjs/Subscription";
+import * as jsPDF from 'jspdf';
 
 @Component({
   selector: 'consignment-persist',

@@ -7,6 +7,7 @@ import {SuperAdminAndManagerPermissionGuard} from "../superadmin-and-manager-per
 import {RestrictUserPermissionGuard} from "../restrict-user-permission-guard";
 import {UserService} from "../user.service";
 import {PermissionService} from "../permission/permission.service";
+import {QuotationTemplateComponent} from "../quotation-template/quotation-template.component";
 
 const routes: Routes = [
   {path: 'quote', redirectTo: 'quote/list', pathMatch: 'full'},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'quote/create', canActivate: [SuperAdminAndManagerPermissionGuard], component: QuotePersistComponent},
   {path: 'quote/edit/:id',canActivate: [SuperAdminAndManagerPermissionGuard], component: QuotePersistComponent},
   {path: 'quote/show/:id', canActivate: [RestrictUserPermissionGuard], component: QuoteShowComponent},
+  {path: 'quote/printpreview/:id', component: QuotationTemplateComponent}
 ];
 
 @NgModule({

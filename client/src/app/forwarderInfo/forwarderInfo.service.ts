@@ -55,6 +55,17 @@ export class ForwarderInfoService {
       .map((r: Response) => new ForwarderInfo(r));
   }
 
+  getByUserId(userId : string, userObject: any){
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    return this.http.get(environment.serverUrl+'/forwarderInfo/userId/'+userId, {
+      headers: headers
+    }).map((r: Response) => new ForwarderInfo(r));
+  }
+
   save(forwarderInfo: ForwarderInfo, userObject: any): Observable<ForwarderInfo> {
     let requestMethodStr;
     let url;

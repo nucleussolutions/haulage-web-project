@@ -128,4 +128,15 @@ export class HaulierInfoService {
 
     return subject.asObservable();
   }
+
+  getByUserId(haulierId: string, userObject: any) {
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    return this.http.get(environment.serverUrl + '/haulierInfo/userId/'+haulierId, {
+      headers: headers
+    }).map((r: Response) => new HaulierInfo(r));
+  }
 }

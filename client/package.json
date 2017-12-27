@@ -24,6 +24,7 @@
     "@angular/platform-server": "^5.1.0",
     "@angular/router": "^5.1.0",
     "@swimlane/ngx-datatable": "^10.5.0",
+    "@types/jspdf": "^1.1.31",
     "angularfire2": "^5.0.0-rc.5-next",
     "aws-sdk": "^2.167.0",
     "bootstrap": "^3.3.7",
