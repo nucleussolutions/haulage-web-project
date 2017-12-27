@@ -52,6 +52,8 @@ import { NotificationPaneComponent } from './notification-pane/notification-pane
 import { MemberSubscriptionModule } from './memberSubscription/memberSubscription.module';
 import {PaginationComponent} from './pagination/pagination.component';
 import {PaginationModule} from './pagination/pagination.module';
+import { ConsignmentTemplateComponent } from './consignment-template/consignment-template.component';
+import { QuotationTemplateComponent } from './quotation-template/quotation-template.component';
 
 
 @NgModule({
@@ -77,6 +79,8 @@ import {PaginationModule} from './pagination/pagination.module';
     LoadingComponent,
     BillingComponent,
     NotificationPaneComponent,
+    ConsignmentTemplateComponent,
+    QuotationTemplateComponent,
   ],
   entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent],
   imports: [

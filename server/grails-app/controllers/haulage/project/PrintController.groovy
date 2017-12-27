@@ -24,6 +24,8 @@ class PrintController {
 
       if(quote){
         //todo print quotation
+
+
       }else{
         respond HttpStatus.NOT_FOUND, message: 'quotation not found'
       }
