@@ -61,6 +61,28 @@ class CustomController {
     }
   }
 
+  def haulierByUserId(String userId){
+    println 'haulierByUserId '+userId
+
+    def haulierInfo = haulierInfoService.findByUserId(userId)
+    if(haulierInfo){
+      respond haulierInfo
+    }else{
+      respond status: HttpStatus.NOT_FOUND, message: 'haulier info not found'
+    }
+  }
+
+  def forwarderByUserId(String userId){
+    println 'forwarderByUserId '+userId
+
+    def forwarderInfo = forwarderInfoService.findByUserId(userId)
+    if(forwarderInfo){
+      respond forwarderInfo
+    }else{
+      respond status: HttpStatus.NOT_FOUND, message: 'forwarder info not found'
+    }
+  }
+
   def locationByType() {
     if (params.type) {
       respond locationService.findByType(params.type as String)

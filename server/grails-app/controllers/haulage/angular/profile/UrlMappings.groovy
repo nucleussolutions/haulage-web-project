@@ -20,6 +20,10 @@ class UrlMappings {
     get "/permissionByGrantedBy/${userId}"(controller: 'custom', action: 'permissionByGrantedBy')
     get "/locationByType/${type}"(controller: 'custom', action: 'locationByType')
 
+    get "/haulierInfo/userId/${userId}"(controller: 'custom', action: 'haulierByUserId')
+
+    get "forwarderInfo/userId/${userId}"(controller:'custom', action: 'forwarderByUserId')
+
     //FIXME count urls arent supposed to be done this way. Fix this in the later stage
     get "/location/count"(controller: 'custom', action: 'locationCount')
     get "/haulierInfo/count"(controller: 'custom', action: 'haulierInfoCount')
