@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {UserService} from "../user.service";
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs/Observable";
@@ -8,13 +8,18 @@ import {ForwarderInfoService} from "../forwarderInfo/forwarderInfo.service";
 import {HaulierInfoService} from "../haulierInfo/haulierInfo.service";
 import {ForwarderInfo} from "../forwarderInfo/forwarderInfo";
 import {HaulierInfo} from "../haulierInfo/haulierInfo";
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-quotation-template',
   templateUrl: './quotation-template.component.html',
   styleUrls: ['./quotation-template.component.css']
 })
-export class QuotationTemplateComponent implements OnInit {
+export class QuotationTemplateComponent implements OnInit, OnDestroy {
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   private userObject: any;
 
@@ -24,17 +29,18 @@ export class QuotationTemplateComponent implements OnInit {
 
   haulierInfo: HaulierInfo;
 
+  private subscription:Subscription;
+
   constructor(private userService: UserService, private quoteService: QuoteService, private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private haulierInfoService: HaulierInfoService) {
   }
 
   ngOnInit() {
 
-    Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
 
       this.userObject = result[0];
 
       let params = result[1];
-
 
       return this.quoteService.get(params['id'], this.userObject);
     }).subscribe(quote => {
