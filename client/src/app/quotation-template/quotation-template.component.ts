@@ -9,6 +9,7 @@ import {HaulierInfoService} from "../haulierInfo/haulierInfo.service";
 import {ForwarderInfo} from "../forwarderInfo/forwarderInfo";
 import {HaulierInfo} from "../haulierInfo/haulierInfo";
 import { Subscription } from 'rxjs/Subscription';
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
 
 @Component({
   selector: 'app-quotation-template',
@@ -31,7 +32,7 @@ export class QuotationTemplateComponent implements OnInit, OnDestroy {
 
   private subscription:Subscription;
 
-  constructor(private userService: UserService, private quoteService: QuoteService, private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private haulierInfoService: HaulierInfoService) {
+  constructor(private userService: UserService, private quoteService: QuoteService, private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private haulierInfoService: HaulierInfoService, private modal: Modal) {
   }
 
   ngOnInit() {
@@ -51,13 +52,20 @@ export class QuotationTemplateComponent implements OnInit, OnDestroy {
       });
 
       this.haulierInfoService.getByUserId(this.quote.haulierId, this.userObject).subscribe(haulierInfo => {
-        this.haulierInfo = haulierInfo
+        this.haulierInfo = haulierInfo;
       });
 
     }, error => {
+      let message;
       if(error.status == 400){
-
+        message = 'Bad request';
+      }else if(error.status == 500){
+        message = 'Internal server error';
+      }else if(error.status == 404){
+        message = 'Not found';
       }
+
+      this.modal.alert().title('Error').message(message).open();
     });
 
   }

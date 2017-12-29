@@ -6,19 +6,23 @@
 
     <h4 class="quote-title">Quotation</h4>
 
-    <p>Company</p>
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        Company
+    </div>
 
-    <p>{{forwarderInfo.company.name}}</p>
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+      <p>{{forwarderInfo.company.name}}</p>
 
-    <p>{{forwarderInfo.company.address1}}</p>
+      <p>{{forwarderInfo.company.address1}}</p>
 
-    <p>{{forwarderInfo.company.address2}}</p>
+      <p>{{forwarderInfo.company.address2}}</p>
 
-    <p>{{forwarderInfo.company.city}}</p>
+      <p>{{forwarderInfo.company.city}}</p>
 
-    <p>{{forwarderInfo.company.state}}</p>
+      <p>{{forwarderInfo.company.state}}</p>
 
-    <p>{{forwarderInfo.company.country}}</p>
+      <p>{{forwarderInfo.company.country}}</p>
+    </div>
 
     <br>
 
@@ -37,22 +41,18 @@
     </div>
 
     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-
+      {{quote.dateCreated}}
+      {{quote.lastUpdated}}
     </div>
 
 
     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-
+      From
     </div>
 
     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-
+      {{haulierInfo.name}}
     </div>
-
-
-    <p>From</p>
-
-    <p>{{haulierInfo.name}}</p>
 
     <h4 class="quote-title">Quotation for Haulage Services to Various Destinations</h4>
 
@@ -70,8 +70,6 @@
     <p>If you have any inquiries in regards to the rates or any of our services, please do not hesitate to give us a call or drop a mail to be undersigned.</p>
 
     <p>Thank you.</p>
-
-
 
     <p>Best regards from</p>
 
