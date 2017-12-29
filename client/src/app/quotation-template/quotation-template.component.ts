@@ -54,6 +54,10 @@ export class QuotationTemplateComponent implements OnInit, OnDestroy {
         this.haulierInfo = haulierInfo
       });
 
+    }, error => {
+      if(error.status == 400){
+
+      }
     });
 
   }

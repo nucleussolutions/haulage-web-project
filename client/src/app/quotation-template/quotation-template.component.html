@@ -2,7 +2,9 @@
 
   <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 
-    <h1>Quotation</h1>
+    <img class="company-logo" [src]="haulierInfo.company.companyImgUrl">
+
+    <h4 class="quote-title">Quotation</h4>
 
     <p>Company</p>
 
@@ -52,17 +54,16 @@
 
     <p>{{haulierInfo.name}}</p>
 
-    <h2>Quotation for Haulage Services to Various Destinations</h2>
+    <h4 class="quote-title">Quotation for Haulage Services to Various Destinations</h4>
 
     <p>We are glad to be given this opportunity to quote your esteemed company for our services</p>
 
-    <h2>Terms and Conditions</h2>
+    <h4 class="quote-title">Terms and Conditions</h4>
 
 
-    <div *ngFor="let term of quote.terms">
-      <p>{{term.desc}}</p>
-    </div>
-
+    <ol *ngFor="let term of quote.terms; let i = index" [attr.data-index]="i">
+      <li>{{term.desc}}</li>
+    </ol>
 
     <p>We sincerely hope that our rate proposal will meet your requirement.</p>
 
@@ -75,15 +76,15 @@
     <p>Best regards from</p>
 
     <p>{{haulierInfo.name}}</p>
-    <p>{{haulierInfo.company.address1}}</p>
-    <p>{{haulierInfo.company.address2}}</p>
-    <p>{{haulierInfo.company.city}}</p>
-    <p>{{haulierInfo.company.state}}</p>
-    <p>{{haulierInfo.company.country}}</p>
+    <p>{{haulierInfo.company?.address1}}</p>
+    <p>{{haulierInfo.company?.address2}}</p>
+    <p>{{haulierInfo.company?.city}}</p>
+    <p>{{haulierInfo.company?.state}}</p>
+    <p>{{haulierInfo.company?.country}}</p>
 
 
-    <p>Mobile: {{haulierInfo.company.officePhone}}</p>
-    <p>Email: {{haulierInfo.company.email}}</p>
+    <p>Mobile: {{haulierInfo.company?.officePhone}}</p>
+    <p>Email: {{haulierInfo.company?.email}}</p>
 
   </div>
 

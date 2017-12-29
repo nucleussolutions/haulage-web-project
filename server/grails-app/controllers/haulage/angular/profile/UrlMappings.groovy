@@ -22,7 +22,7 @@ class UrlMappings {
 
     get "/haulierInfo/userId/${userId}"(controller: 'custom', action: 'haulierByUserId')
 
-    get "forwarderInfo/userId/${userId}"(controller:'custom', action: 'forwarderByUserId')
+    get "/forwarderInfo/userId/${userId}"(controller:'custom', action: 'forwarderByUserId')
 
     //FIXME count urls arent supposed to be done this way. Fix this in the later stage
     get "/location/count"(controller: 'custom', action: 'locationCount')
