@@ -3,7 +3,6 @@ import {PermissionService} from "../permission/permission.service";
 import {Subscription} from 'rxjs/Subscription';
 import {Permission} from "../permission/permission";
 import {UserService} from 'app/user.service';
-import {Router} from "@angular/router";
 
 
 @Component({
@@ -21,13 +20,13 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscription.unsubscribe();
   }
 
-  subscription: Subscription;
+  private subscription: Subscription;
 
   private permission: Permission;
 
   private userObject: any;
 
-  constructor(private permissionService: PermissionService, private userService: UserService, private router: Router) {
+  constructor(private permissionService: PermissionService, private userService: UserService) {
 
   }
 
@@ -45,6 +44,7 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.subscription = this.userService.getUser().flatMap(userObject => {
       this.userObject = userObject;
+      console.log('userObject '+JSON.stringify(userObject));
       return this.permissionService.getByUserId(this.userObject);
     }).subscribe(permission => {
       this.permission = permission;
