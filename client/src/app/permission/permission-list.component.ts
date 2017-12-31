@@ -41,7 +41,10 @@ export class PermissionListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.callPermissions();
+  }
 
+  callPermissions(){
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
 
       this.userObject = result[0];
@@ -117,9 +120,7 @@ export class PermissionListComponent implements OnInit, OnDestroy {
           return Observable.of<Permission[]>([]);
         });
     }else{
-      //todo should call the original page number to get the results again
-      
+      this.callPermissions();
     }
-
   }
 }

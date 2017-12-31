@@ -48,6 +48,10 @@ export class LocationListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.callLocations();
+  }
+
+  callLocations(){
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
       this.userObject = result[0];
       //if params doesnt exist, let api call, if there is, then proceed to call the api by page number
@@ -123,7 +127,7 @@ export class LocationListComponent implements OnInit, OnDestroy {
         });
     } else {
       //todo should call the original page number to get the results again
-      
+      this.callLocations();
     }
   }
 }

@@ -44,6 +44,10 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.callHauliers();
+  }
+
+  callHauliers(){
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
 
       this.userObject = result[0];
@@ -108,7 +112,7 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
         });
     }else{
       //todo
+      this.callHauliers();
     }
   }
-
 }

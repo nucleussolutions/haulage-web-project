@@ -7,7 +7,7 @@ import { UserService } from 'app/user.service';
 import { PermissionService } from "../permission/permission.service";
 import { Subscription } from "rxjs/Subscription";
 import { Observable } from "rxjs/Observable";
-import {Permission} from "../permission/permission";
+import { Permission } from "../permission/permission";
 
 @Component({
   selector: 'consignment-list',
@@ -45,7 +45,10 @@ export class ConsignmentListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.callConsignments();
+  }
 
+  callConsignments() {
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
 
       this.userObject = result[0];
@@ -119,7 +122,7 @@ export class ConsignmentListComponent implements OnInit {
         // or the observable of empty heroes if no search term
         : Observable.of<Consignment[]>([]))
         .subscribe(json => {
-          console.log('json '+JSON.stringify(json));
+          console.log('json ' + JSON.stringify(json));
           this.consignmentList = json['data'];
           this.count = json['total'];
         }, error => {
@@ -127,9 +130,9 @@ export class ConsignmentListComponent implements OnInit {
           console.log(`Error in component ... ${error}`);
           return Observable.of<Consignment[]>([]);
         });
-    }else{
-            //todo should call the original page number to get the results again
-            
+    } else {
+      //todo should call the original page number to get the results again
+      this.callConsignments();
     }
   }
 }

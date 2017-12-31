@@ -38,7 +38,10 @@ export class MemberSubscriptionListComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private memberSubscriptionService: MemberSubscriptionService, private userService: UserService) { }
 
   ngOnInit() {
+    this.callMemberSubscriptions();
+  }
 
+  callMemberSubscriptions(){
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
 
       this.userObject = result[0];
@@ -87,6 +90,8 @@ export class MemberSubscriptionListComponent implements OnInit, OnDestroy {
           console.log(`Error in component ... ${error}`);
           return Observable.of<MemberSubscription[]>([]);
         });
+    }else{
+      this.callMemberSubscriptions();
     }
   }
 }

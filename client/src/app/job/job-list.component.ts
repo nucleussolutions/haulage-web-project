@@ -42,7 +42,10 @@ export class JobListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.callJobs();
+  }
 
+  callJobs(){
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
 
       this.userObject = result[0];
@@ -94,7 +97,7 @@ export class JobListComponent implements OnInit, OnDestroy {
         });
     }else{
       //todo recall the original api call again
-      
+      this.callJobs();
     }
   }
 }

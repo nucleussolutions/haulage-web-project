@@ -44,7 +44,10 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.callDrivers();
+  }
 
+  callDrivers(){
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
 
       this.userObject = result[0];
@@ -91,7 +94,6 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
 
       this.modal.alert().title('Error').message(message).open();
     });
-
   }
 
   onPageChange(offset) {
@@ -116,7 +118,7 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
           return Observable.of<DriverInfo[]>([]);
         });
     }else{
-      //todo
+      this.callDrivers();
     }
   }
 }

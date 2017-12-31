@@ -45,7 +45,10 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.callForwarders();
+  }
 
+  callForwarders(){
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
 
       this.userObject = result[0];
@@ -113,7 +116,7 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
           return Observable.of<ForwarderInfo[]>([]);
         });
     }else{
-      //todo 
+      this.callForwarders();
     }
   }
 }

@@ -46,7 +46,10 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.callRFTs();
+  }
 
+  callRFTs(){
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
 
       this.userObject = result[0];
@@ -114,6 +117,8 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
           console.log(`Error in component ... ${error}`);
           return Observable.of<TransportRequest[]>([]);
         });
+    }else{
+      this.callRFTs();
     }
   }
 }

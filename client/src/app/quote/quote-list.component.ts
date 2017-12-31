@@ -41,7 +41,10 @@ export class QuoteListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.callQuotes();
+  }
 
+  callQuotes(){
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
 
       this.userObject = result[0];
@@ -90,7 +93,6 @@ export class QuoteListComponent implements OnInit, OnDestroy {
       const dialog = this.modal.alert().title('Error').message(message).open();
 
     });
-
   }
 
   onPageChange(offset) {
@@ -114,6 +116,8 @@ export class QuoteListComponent implements OnInit, OnDestroy {
         console.log(`Error in component ... ${error}`);
         return Observable.of<Quote[]>([]);
       });
+    }else{
+      this.callQuotes();
     }
   }
 

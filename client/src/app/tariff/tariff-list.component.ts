@@ -39,7 +39,10 @@ export class TariffListComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private tariffService: TariffService, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
+    this.callTariffs();
+  }
 
+  callTariffs(){
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
 
       this.userObject = result[0];
@@ -96,7 +99,7 @@ export class TariffListComponent implements OnInit, OnDestroy {
           return Observable.of<Tariff[]>([]);
         });
     } else {
-
+      this.callTariffs();
     }
   }
 }
