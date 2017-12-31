@@ -43,5 +43,13 @@ class UrlMappings {
     "/api/usertype"(controller: 'userType', action: 'checkUserExist', method: 'GET')
 
     get "/search/location"(controller: 'search', action: 'location')
+    get "/search/consignment"(controller: 'search', action: 'consignment')
+    get "/search/permission"(controller: 'search', action: 'permission')
+    get "/search/transaction"(controller: 'search', action: 'transaction')
+    get "/search/transportRequest"(controller: 'search', action: 'transportRequest')
+    get "/search/vehicle"(controller: 'search', action: 'vehicle')
+    get "/search/tariff"(controller: 'search', action: 'tariff')
+    get "/search/job"(controller: 'job', action: 'job')
+
   }
 }

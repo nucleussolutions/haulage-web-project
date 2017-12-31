@@ -131,10 +131,10 @@ export class ConsignmentService {
       'apiKey': userObject.apiKey
     });
 
-    this.http.get(environment.serverUrl+ '/consignment?term='+term, {
+    this.http.get(environment.serverUrl+ '/search/consignment?term='+term, {
       headers: headers
     }).subscribe((json: any[]) => {
-      subject.next(json.map((item: any) => new Consignment(item)));
+      subject.next(json);
     }, error => {
       subject.error(error);
     });

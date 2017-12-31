@@ -119,7 +119,8 @@ export class ConsignmentListComponent implements OnInit {
         // or the observable of empty heroes if no search term
         : Observable.of<Consignment[]>([]))
         .subscribe(json => {
-          this.consignmentList = json['searchResults'];
+          console.log('json '+JSON.stringify(json));
+          this.consignmentList = json['data'];
           this.count = json['total'];
         }, error => {
           // TODO: real error handling
