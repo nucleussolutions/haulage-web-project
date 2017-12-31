@@ -131,7 +131,7 @@ export class VehicleService {
       'apiKey': userObject.apiKey
     });
 
-    this.http.get(environment.serverUrl + '/vehicle?term=' + term, {
+    this.http.get(environment.serverUrl + '/search/vehicle?term=' + term, {
       headers: headers
     }).subscribe((json: any[]) => {
       subject.next(json);

@@ -51,20 +51,14 @@
     </div>
 
     <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-
+      {{haulierInfo.name}}
     </div>
-
-
-    <p>From</p>
-
-    <p>{{haulierInfo.name}}</p>
 
     <h4 class="quote-title">Quotation for Haulage Services to Various Destinations</h4>
 
     <p>We are glad to be given this opportunity to quote your esteemed company for our services</p>
 
     <h4 class="quote-title">Terms and Conditions</h4>
-
 
     <ol *ngFor="let term of quote.terms; let i = index" [attr.data-index]="i">
       <li>{{term.desc}}</li>

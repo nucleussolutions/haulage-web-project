@@ -44,7 +44,10 @@ export class VehicleListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.callVehicles();
+  }
 
+  callVehicles(){
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
 
       this.userObject = result[0];
@@ -108,10 +111,8 @@ export class VehicleListComponent implements OnInit, OnDestroy {
         // or the observable of empty heroes if no search term
         : Observable.of<Vehicle[]>([]))
         .subscribe(json => {
-          // this.vehicleList = vehicleList;
           this.vehicleList = json['searchResults'];
           this.count = json['total'];
-
         }, error => {
           // TODO: real error handling
           console.log(`Error in component ... ${error}`);
@@ -119,7 +120,7 @@ export class VehicleListComponent implements OnInit, OnDestroy {
         });
     }else{
         //todo should call the original page number to get the results again
-        
+      this.callVehicles();
     }
   }
 }

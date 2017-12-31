@@ -17,7 +17,10 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if( typeof this.subscription !== 'undefined' ) {
+      // foo could get resolved and it's defined
+      this.subscription.unsubscribe();
+    }
   }
 
   private subscription: Subscription;

@@ -18,7 +18,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if( typeof this.subscription !== 'undefined' ) {
+      this.subscription.unsubscribe();
+    }
   }
 
   @ViewChild(NavDrawerComponent)
