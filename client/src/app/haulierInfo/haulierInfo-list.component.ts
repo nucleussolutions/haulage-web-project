@@ -112,7 +112,9 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
         });
     }else{
       //todo
-      this.callHauliers();
+      Observable.of(term).debounceTime(300).distinctUntilChanged().subscribe(() => {
+        this.callHauliers();
+      });
     }
   }
 }

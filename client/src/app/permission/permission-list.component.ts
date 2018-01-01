@@ -120,7 +120,9 @@ export class PermissionListComponent implements OnInit, OnDestroy {
           return Observable.of<Permission[]>([]);
         });
     }else{
-      this.callPermissions();
+      Observable.of(term).debounceTime(300).distinctUntilChanged().subscribe(() => {
+        this.callPermissions();
+      });
     }
   }
 }

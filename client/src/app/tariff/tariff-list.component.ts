@@ -99,7 +99,9 @@ export class TariffListComponent implements OnInit, OnDestroy {
           return Observable.of<Tariff[]>([]);
         });
     } else {
-      this.callTariffs();
+      Observable.of(term).debounceTime(300).distinctUntilChanged().subscribe(() => {
+        this.callTariffs();
+      });
     }
   }
 }

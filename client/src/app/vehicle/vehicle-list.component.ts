@@ -1,12 +1,12 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {VehicleService} from './vehicle.service';
-import {Vehicle} from './vehicle';
-import {Modal} from 'ngx-modialog/plugins/bootstrap';
-import {Title} from "@angular/platform-browser";
-import {UserService} from 'app/user.service';
-import {Subscription} from 'rxjs/Subscription';
-import {ActivatedRoute, Router} from "@angular/router";
-import {Observable} from "rxjs/Observable";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { VehicleService } from './vehicle.service';
+import { Vehicle } from './vehicle';
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import { Title } from "@angular/platform-browser";
+import { UserService } from 'app/user.service';
+import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute, Router } from "@angular/router";
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'vehicle-list',
@@ -47,7 +47,7 @@ export class VehicleListComponent implements OnInit, OnDestroy {
     this.callVehicles();
   }
 
-  callVehicles(){
+  callVehicles() {
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
 
       this.userObject = result[0];
@@ -100,11 +100,11 @@ export class VehicleListComponent implements OnInit, OnDestroy {
   onPageChange(offset) {
     console.log('onPageChange offset ' + offset);
     this.offset = offset;
-    this.router.navigate(['/vehicle', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
+    this.router.navigate(['/vehicle', 'list'], { queryParams: { page: (offset / this.limit) + 1 } });
   }
 
   search(term: string) {
-    if(term.length > 2){
+    if (term.length > 2) {
       Observable.of(term).debounceTime(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
         // return the http search observable
         ? this.vehicleService.search(term, this.userObject)
@@ -118,9 +118,11 @@ export class VehicleListComponent implements OnInit, OnDestroy {
           console.log(`Error in component ... ${error}`);
           return Observable.of<Vehicle[]>([]);
         });
-    }else{
-        //todo should call the original page number to get the results again
-      this.callVehicles();
+    } else {
+      //todo should call the original page number to get the results again
+      Observable.of(term).debounceTime(300).distinctUntilChanged().subscribe(() => {
+        this.callVehicles();
+      });
     }
   }
 }
