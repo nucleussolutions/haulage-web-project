@@ -117,7 +117,9 @@ export class QuoteListComponent implements OnInit, OnDestroy {
         return Observable.of<Quote[]>([]);
       });
     }else{
-      this.callQuotes();
+      Observable.of(term).debounceTime(300).distinctUntilChanged().subscribe(() => {
+        this.callQuotes();
+      });
     }
   }
 

@@ -97,7 +97,9 @@ export class JobListComponent implements OnInit, OnDestroy {
         });
     }else{
       //todo recall the original api call again
-      this.callJobs();
+      Observable.of(term).debounceTime(300).distinctUntilChanged().subscribe(() => {
+        this.callJobs();
+      });
     }
   }
 }

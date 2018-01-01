@@ -116,7 +116,9 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
           return Observable.of<ForwarderInfo[]>([]);
         });
     }else{
-      this.callForwarders();
+      Observable.of(term).debounceTime(300).distinctUntilChanged().subscribe(() => {
+        this.callForwarders();
+      });
     }
   }
 }

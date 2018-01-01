@@ -118,7 +118,9 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
           return Observable.of<TransportRequest[]>([]);
         });
     }else{
-      this.callRFTs();
+      Observable.of(term).debounceTime(300).distinctUntilChanged().subscribe(() => {
+        this.callRFTs();
+      });
     }
   }
 }

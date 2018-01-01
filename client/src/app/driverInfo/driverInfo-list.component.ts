@@ -118,7 +118,9 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
           return Observable.of<DriverInfo[]>([]);
         });
     }else{
-      this.callDrivers();
+      Observable.of(term).debounceTime(300).distinctUntilChanged().subscribe(() => {
+        this.callDrivers();
+      });
     }
   }
 }

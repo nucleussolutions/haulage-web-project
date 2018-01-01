@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MemberSubscriptionService } from './memberSubscription.service';
-import { MemberSubscription } from './memberSubscription';
-import { UserService } from "../user.service";
-import { Subscription } from "rxjs/Subscription";
-import { Observable } from "rxjs/Observable";
-import { ActivatedRoute } from "@angular/router";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {MemberSubscriptionService} from './memberSubscription.service';
+import {MemberSubscription} from './memberSubscription';
+import {UserService} from "../user.service";
+import {Subscription} from "rxjs/Subscription";
+import {Observable} from "rxjs/Observable";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'memberSubscription-list',
@@ -35,13 +35,14 @@ export class MemberSubscriptionListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private memberSubscriptionService: MemberSubscriptionService, private userService: UserService) { }
+  constructor(private route: ActivatedRoute, private memberSubscriptionService: MemberSubscriptionService, private userService: UserService) {
+  }
 
   ngOnInit() {
     this.callMemberSubscriptions();
   }
 
-  callMemberSubscriptions(){
+  callMemberSubscriptions() {
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
 
       this.userObject = result[0];
@@ -78,20 +79,22 @@ export class MemberSubscriptionListComponent implements OnInit, OnDestroy {
   search(term: string) {
     if (term.length > 2) {
       Observable.of(term).debounceTime(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
-        // return the http search observable
-        ? this.memberSubscriptionService.search(term, this.userObject)
-        // or the observable of empty heroes if no search term
-        : Observable.of<MemberSubscription[]>([]))
-        .subscribe(json => {
-          // this.memberSubscriptionList = memberSubscriptionList;
+          // return the http search observable
+          ? this.memberSubscriptionService.search(term, this.userObject)
+          // or the observable of empty heroes if no search term
+          : Observable.of<MemberSubscription[]>([]))
+          .subscribe(json => {
+            // this.memberSubscriptionList = memberSubscriptionList;
 
-        }, error => {
-          // TODO: real error handling
-          console.log(`Error in component ... ${error}`);
-          return Observable.of<MemberSubscription[]>([]);
-        });
-    }else{
-      this.callMemberSubscriptions();
+          }, error => {
+            // TODO: real error handling
+            console.log(`Error in component ... ${error}`);
+            return Observable.of<MemberSubscription[]>([]);
+          });
+    } else {
+      Observable.of(term).debounceTime(300).distinctUntilChanged().subscribe(() => {
+        this.callMemberSubscriptions();
+      });
     }
   }
 }

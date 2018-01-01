@@ -131,8 +131,9 @@ export class ConsignmentListComponent implements OnInit {
           return Observable.of<Consignment[]>([]);
         });
     } else {
-      //todo should call the original page number to get the results again
-      this.callConsignments();
+      Observable.of(term).debounceTime(300).distinctUntilChanged().subscribe(() => {
+        this.callConsignments();
+      });
     }
   }
 }

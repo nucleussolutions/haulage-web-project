@@ -127,7 +127,9 @@ export class LocationListComponent implements OnInit, OnDestroy {
         });
     } else {
       //todo should call the original page number to get the results again
-      this.callLocations();
+      Observable.of(term).debounceTime(300).distinctUntilChanged().subscribe(() => {
+        this.callLocations();
+      });
     }
   }
 }
