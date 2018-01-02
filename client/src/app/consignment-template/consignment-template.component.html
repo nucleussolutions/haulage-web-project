@@ -1,124 +1,183 @@
+
 <div class="row">
 
-  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 
 
-    <p>Job No.</p>
+  <p>Job No.</p>
 
-    <p></p>
+  <p></p>
 
-    <p>RFT/ROT No.</p>
+  <p>RFT/ROT No.</p>
 
-    <p>{{consignment.transportRequest.id}}</p>
+  <p>{{consignment.transportRequest.id}}</p>
 
-
-    <p>Pickup Location</p>
-
-    <p>Test Pickup Location (should be a port)</p>
-
-    <p>Drop Address</p>
-
-    <p></p>
-
-    <p>Container No. </p>
-    <p>{{consignment.containerNo}}</p>
-
-    <p>Code</p>
-    <p>{{consignment.consignmentCode}}</p>
-
-    <p>Name</p>
-    <p>{{consignment.name}}</p>
-
-
-    <p>Size</p>
-    <p>{{consignment.size}}</p>
-
-    <p>Booking Number</p>
-
-    <p>Test booking number</p>
-
-    <p>Shipping Agent</p>
-
-    <p>{{consignment.transportRequest.shippingAgent}}</p>
-
-    <p>Operator Code</p>
-
-    <p>{{consignment.transportRequest.operatorCode}}</p>
-
-
-    <p>Vessel & Voyage No</p>
-
-    <p>Test Sino Bridge</p>
-
-    <p>ETA</p>
-    <p></p>
-
-
-    <p>MT Laden Back</p>
-
-    <p>Test KMT</p>
-
-    <p>POL/POD</p>
-
-
-    <p>Shipper Consignee</p>
-
-    <p>{{consignment.transportRequest.shipper}}</p>
-
-
-    <p>Job Type</p>
-
-    <p>{{consignment.taskType}}</p>
-
-    <p>Seal Number</p>
-
-    <p>Forwarding Agent</p>
-
-    <p>Suria Pantas</p>
-
-  </div>
-
-
-  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-
-    <p>Required Date</p>
-
-    <p></p>
-
-    <p>Time</p>
-
-    <p></p>
-
-
-    <p>Opening Date</p>
-
-    <p></p>
-
-
-    <p>Closing Date</p>
-
-    <p></p>
-
-    <p>Time</p>
-
-    <p></p>
-
-    <p>Bill To:</p>
-
-    <p>Render this using the forwarder id from RFT</p>
-
-    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-
-    </div>
-
-    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-
-    </div>
-
-  </div>
-
+  <p>Date</p>
 
   <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Consignment Details</h3>
+    </div>
+    <div class="panel-body">
+      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+
+        <div class="form-group">
+          <p>Pickup Location</p>
+
+          <p>Test Pickup Location (should be a port)</p>
+        </div>
+
+        <div class="form-group">
+          <p>Drop Address</p>
+          <p></p>
+        </div>
+
+        <div class="form-group">
+          <p>Container No. </p>
+          <p>{{consignment.containerNo}}</p>
+        </div>
+
+        <div class="form-group">
+          <p>Code</p>
+          <p>{{consignment.consignmentCode}}</p>
+        </div>
+
+        <div class="form-group">
+          <p>Name</p>
+          <p>{{consignment.name}}</p>
+        </div>
+
+        <div class="form-group">
+          <p>Size</p>
+          <p>{{consignment.size}}</p>
+        </div>
+
+        <div class="form-group">
+          <p>Booking Number</p>
+          <p>Test booking number</p>
+        </div>
+
+        <div class="form-group">
+          <p>Shipping Agent</p>
+
+          <p>{{consignment.transportRequest.shippingAgent}}</p>
+        </div>
+
+        <div class="form-group">
+          <p>Operator Code</p>
+
+          <p>{{consignment.transportRequest.operatorCode}}</p>
+        </div>
+
+
+        <div class="form-group">
+          <p>Vessel & Voyage No</p>
+
+          <p>Test Sino Bridge</p>
+        </div>
+
+        <div class="form-group">
+          <p>ETA</p>
+          <p></p>
+        </div>
+
+        <div class="form-group">
+          <p>MT Laden Back</p>
+
+          <p>Test KMT</p>
+        </div>
+
+        <div class="form-group">
+          <p>POL/POD</p>
+
+          <p></p>
+        </div>
+
+        <div class="form-group">
+          <p>Shipper Consignee</p>
+
+          <p>{{consignment.transportRequest.shipper}}</p>
+        </div>
+
+        <div class="form-group">
+          <p>Job Type</p>
+
+          <p>{{consignment.taskType}}</p>
+        </div>
+
+        <div class="form-group">
+          <p>Seal Number</p>
+
+          <p>Test Seal Number</p>
+        </div>
+
+        <div class="form-group">
+          <p>Forwarding Agent</p>
+
+          <p>Suria Pantas</p>
+        </div>
+
+      </div>
+
+
+      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Panel title</h3>
+          </div>
+          <div class="panel-body">
+            Panel body
+          </div>
+        </div>
+
+        <p>Required Date</p>
+
+        <p></p>
+
+        <p>Time</p>
+
+        <p></p>
+
+
+        <p>Opening Date</p>
+
+        <p></p>
+
+
+        <p>Closing Date</p>
+
+        <p></p>
+
+        <p>Time</p>
+
+        <p></p>
+
+        <p>Bill To:</p>
+
+        <p>Render this using the forwarder id from RFT</p>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+
+        </div>
+
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+
+        </div>
+
+      </div>    </div>
+  </div>
+
+
+</div>
+
+<div class="row">
+  <div class="panel panel-default">
+
+    <div class="panel-heading">
+      <h3 class="panel-title">Panel title</h3>
+    </div>
+
     <div class="panel-body">
       <p>Prime Mover</p>
 
@@ -133,6 +192,10 @@
   </div>
 
   <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Panel title</h3>
+    </div>
+
     <div class="panel-body">
 
       <p>Container</p>
@@ -151,6 +214,4 @@
 
     </div>
   </div>
-
-
 </div>
