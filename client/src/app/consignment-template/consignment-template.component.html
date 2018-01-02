@@ -1,16 +1,48 @@
+
+
 <div class="row">
 
 
-  <p>Job No.</p>
+  <img class="consignment-note-company-image" src="{{haulierInfo.company.companyImgUrl}}" />
+  <p>{{haulierInfo.company.code}}</p>
 
-  <p></p>
+  <p>{{haulierInfo.company.address1}}</p>
 
-  <p>RFT/ROT No.</p>
+  <p>{{haulierInfo.company.address2}}</p>
 
-  <p>{{consignment.transportRequest.id}}</p>
+  <p>{{haulierInfo.company.city}}</p>
+  <p>{{haulierInfo.company.state}}</p>
 
-  <p>Date</p>
+  <p>{{haulierInfo.company.country}}</p>
 
+
+
+</div>
+<h1>CONSIGNMENT NOTE</h1>
+<div class="row">
+
+
+  <div class="form-group">
+    <label class="consignment-note-label">Job No.</label>
+    <p></p>
+  </div>
+
+
+  <div class="form-group">
+    <p>RFT/ROT No.</p>
+
+    <p>{{consignment.transportRequest.id}}</p>
+
+  </div>
+
+  <div class="form-group">
+    <p>Date</p>
+    <p></p>
+  </div>
+
+</div>
+
+<div class="row">
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">Consignment Details</h3>

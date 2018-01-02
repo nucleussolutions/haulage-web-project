@@ -5,6 +5,8 @@ import {Observable} from "rxjs/Observable";
 import {ActivatedRoute} from "@angular/router";
 import {ConsignmentService} from "../consignment/consignment.service";
 import { Subscription } from 'rxjs/Subscription';
+import {HaulierInfo} from "../haulierInfo/haulierInfo";
+import {ForwarderInfo} from "../forwarderInfo/forwarderInfo";
 
 @Component({
   selector: 'app-consignment-template',
@@ -24,6 +26,10 @@ export class ConsignmentTemplateComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
+  haulierInfo: HaulierInfo;
+
+  forwarderInfo: ForwarderInfo;
+
   constructor(private userService: UserService, private route: ActivatedRoute, private consignmentService: ConsignmentService) { }
 
   ngOnInit() {
@@ -37,6 +43,12 @@ export class ConsignmentTemplateComponent implements OnInit, OnDestroy {
       return this.consignmentService.get(params['id'], this.userObject);
     }).subscribe(consignment => {
       this.consignment = consignment;
+
+      //todo call haulier and forwarder info based on consignment
+
+
+
+
     });
   }
 
