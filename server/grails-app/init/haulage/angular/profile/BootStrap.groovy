@@ -48,10 +48,7 @@ class BootStrap {
 
     def pickupLadenDropOff = new Location(name: 'asdasdalsdjk', address1: 'asdasdsad', address2: 'asdasdasd', lat: 3.12312323, lng: 31232139830, type: 'depot', city: 'asdasdjasld', state: 'asldskjdlkasd', country: 'sadsadkjl').save(flush: true)
 
-    consignments.add new Consignment(name: 'consignment 1', type: ConsignmentType.FLAT_RACK.id, acceptTime: new Date(), taskType: ConsignmentTaskType.DROP_OFF.id, consignmentCode: '12321312', ladenOrDropOffLocation: pickupLadenDropOff, pickupLocation: pickupLadenDropOff, containerNo: '1231232', size: '232323')
-    consignments.add new Consignment(name: 'consignment 2', type: ConsignmentType.GP.id, acceptTime: new Date(), taskType: ConsignmentTaskType.DROP_OFF.id, consignmentCode: '213123', ladenOrDropOffLocation: pickupLadenDropOff, pickupLocation: pickupLadenDropOff, containerNo: '21312312', size: '232323')
-    consignments.add new Consignment(name: 'consignment 3', type: ConsignmentType.HQ.id, acceptTime: new Date(), taskType: ConsignmentTaskType.DROP_OFF.id, consignmentCode: '123123', ladenOrDropOffLocation: pickupLadenDropOff, pickupLocation: pickupLadenDropOff, containerNo: '12321313', size: '123123')
-    consignments.add new Consignment(name: 'consignment 4', type: ConsignmentType.OT.id, acceptTime: new Date(), taskType: ConsignmentTaskType.DROP_OFF.id, consignmentCode: '1231232', ladenOrDropOffLocation: pickupLadenDropOff, pickupLocation: pickupLadenDropOff, containerNo: '1230281312', size: '123123')
+
 
     def customer = new Customer(companyName: 'asldjasdkdlaskjd', personInCharge: 'asdasdasdl', phone: '123123980132', address1: 'asdasdlkj asdlkj', address2: 'asdasdasd', city: 'asdsdasd', state: 'asdasdad', country: 'asdadsad').save(flush: true)
 
@@ -84,6 +81,11 @@ class BootStrap {
     testRFT.pickupOrDropoffEmptyDepoh = new Location(name: 'aksdsldjasd', address1: 'asdldsjasdl', address2: 'asdsadjlsadlksd', city: 'asdsdasd', state: 'asdskjd', country: 'askdjsldasd', type: 'depot', formattedAddress: 'asdlksajdlasd', postalCode: '123123')
     testRFT.backToBack = true
     testRFT.openCargoBoat = true
+
+    consignments.add new Consignment(name: 'consignment 1', type: ConsignmentType.FLAT_RACK.id, acceptTime: new Date(), taskType: ConsignmentTaskType.DROP_OFF.id, consignmentCode: '12321312', ladenOrDropOffLocation: pickupLadenDropOff, pickupLocation: pickupLadenDropOff, containerNo: '1231232', size: '232323', transportRequest: testRFT)
+    consignments.add new Consignment(name: 'consignment 2', type: ConsignmentType.GP.id, acceptTime: new Date(), taskType: ConsignmentTaskType.DROP_OFF.id, consignmentCode: '213123', ladenOrDropOffLocation: pickupLadenDropOff, pickupLocation: pickupLadenDropOff, containerNo: '21312312', size: '232323', transportRequest: testRFT)
+    consignments.add new Consignment(name: 'consignment 3', type: ConsignmentType.HQ.id, acceptTime: new Date(), taskType: ConsignmentTaskType.DROP_OFF.id, consignmentCode: '123123', ladenOrDropOffLocation: pickupLadenDropOff, pickupLocation: pickupLadenDropOff, containerNo: '12321313', size: '123123', transportRequest: testRFT)
+    consignments.add new Consignment(name: 'consignment 4', type: ConsignmentType.OT.id, acceptTime: new Date(), taskType: ConsignmentTaskType.DROP_OFF.id, consignmentCode: '1231232', ladenOrDropOffLocation: pickupLadenDropOff, pickupLocation: pickupLadenDropOff, containerNo: '1230281312', size: '123123', transportRequest: testRFT)
 
     testRFT.save(flush: true, failOnError: true)
 

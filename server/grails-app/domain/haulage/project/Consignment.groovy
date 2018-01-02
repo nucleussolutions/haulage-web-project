@@ -22,7 +22,7 @@ class Consignment {
 
   String taskType
 
-  static belongsTo = [TransportRequest]
+  static belongsTo = [transportRequest: TransportRequest]
 
   static constraints = {
     containerNo blank: false, nullable: false
@@ -32,6 +32,7 @@ class Consignment {
     consignmentCode nullable: false
     status nullable: false, inList: ConsignmentStatus.values()*.id
     taskType nullable: false, inList: ConsignmentTaskType.values()*.id
+    transportRequest nullable: false
   }
 
   static searchable = {

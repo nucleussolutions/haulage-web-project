@@ -20,6 +20,12 @@ class Quote {
   //todo alerts to renew the quotation is valid because this enables hauliers to call the forwarder
   Date endDate
 
+  //this field is filled by autotimestamp, just exposing it as a usable variable for the forms
+  Date dateCreated
+
+  //this field is filled by autotimestamp, just exposing it as a usable variable for the forms
+  Date lastUpdated
+
   static constraints = {
     haulierId nullable: false
     forwarderId nullable: false

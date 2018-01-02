@@ -40,7 +40,5 @@ export class ConsignmentTemplateComponent implements OnInit, OnDestroy {
     });
   }
 
-  print(){
-    window.print();
-  }
+
 }

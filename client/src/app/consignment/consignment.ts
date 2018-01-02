@@ -1,3 +1,4 @@
+import {TransportRequest} from "../transportRequest/transportRequest";
 
 
 export class Consignment {
@@ -11,6 +12,9 @@ export class Consignment {
   status: string;
   taskType: string;
   size: string;
+
+  //todo expose rft so that we can get number to fill in the consignment note
+  transportRequest: TransportRequest;
 
   constructor (object?: any) {
 
