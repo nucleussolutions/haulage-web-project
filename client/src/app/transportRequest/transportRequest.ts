@@ -29,6 +29,7 @@ export class TransportRequest {
   cmoImgUrl: string;
   consignments: Consignment[];
   forwarderId: string;
+  haulierId: string;
   customer: Customer;
   status: string;
   portOfLoading: string;
