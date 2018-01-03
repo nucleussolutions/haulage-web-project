@@ -50,6 +50,8 @@ class TransportRequest {
   //forwarder id or in the rft form's case it's requestor
   String forwarderId
 
+  String haulierId
+
   Customer customer
 
   String status = RFTStatus.PENDING
@@ -89,6 +91,7 @@ class TransportRequest {
     cmoImgUrl nullable: true
     consignments nullable: false
     forwarderId nullable: false
+    haulierId nullable: false
     customer nullable: false
     status nullable: false, inList: RFTStatus.values()*.id
 
