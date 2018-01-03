@@ -8,6 +8,8 @@ import {Subscription} from 'rxjs/Subscription';
 import {UserService} from 'app/user.service';
 import {PermissionService} from "../permission/permission.service";
 
+import { MouseEvent } from '@agm/core';
+
 
 @Component({
   selector: 'app-index',
@@ -29,8 +31,8 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   mapClicked($event: MouseEvent) {
     this.markers.push({
-      // lat: $event.coords.lat,
-      // lng: $event.coords.lng,
+      lat: $event.coords.lat,
+      lng: $event.coords.lng,
       draggable: true
     });
   }
@@ -132,4 +134,12 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log('NavDrawerComponent permissionService error ' + error);
       });
   }
+}
+
+// just an interface for type safety.
+interface marker {
+  lat: number;
+  lng: number;
+  label?: string;
+  draggable: boolean;
 }

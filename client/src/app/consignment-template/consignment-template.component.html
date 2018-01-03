@@ -196,7 +196,7 @@
   <div class="panel panel-default">
 
     <div class="panel-heading">
-      <h3 class="panel-title">Panel title</h3>
+      <h3 class="panel-title">Delivery</h3>
     </div>
 
     <div class="panel-body">
@@ -229,8 +229,13 @@
     <div class="panel-body">
 
       <div class="form-group">
-        <p>Container</p>
-        <p></p>
+        <label class="consignment-note-label">Status</label>
+        <p>{{consignment.status}}</p>
+      </div>
+
+      <div class="form-group">
+        <label class="consignment-note-label">Container</label>
+        <p>{{consignment.containerNo}}</p>
       </div>
 
       <div class="form-group">
