@@ -1,22 +1,11 @@
-
-
 <div class="row">
-
-
-  <img class="consignment-note-company-image" src="{{haulierInfo.company.companyImgUrl}}" />
-  <p>{{haulierInfo.company.code}}</p>
-
-  <p>{{haulierInfo.company.address1}}</p>
-
-  <p>{{haulierInfo.company.address2}}</p>
-
-  <p>{{haulierInfo.company.city}}</p>
-  <p>{{haulierInfo.company.state}}</p>
-
-  <p>{{haulierInfo.company.country}}</p>
-
-
-
+  <img class="consignment-note-company-image" src="{{haulierInfo?.company.companyImgUrl}}"/>
+  <p>{{haulierInfo?.company.registrationNo}}</p>
+  <p>{{haulierInfo?.company.address1}}</p>
+  <p>{{haulierInfo?.company.address2}}</p>
+  <p>{{haulierInfo?.company.city}}</p>
+  <p>{{haulierInfo?.company.state}}</p>
+  <p>{{haulierInfo?.company.country}}</p>
 </div>
 <h1>CONSIGNMENT NOTE</h1>
 <div class="row">
@@ -25,18 +14,17 @@
   <div class="form-group">
     <label class="consignment-note-label">Job No.</label>
     <p></p>
+    <!--show job number, otherwise show unassigned-->
   </div>
 
 
   <div class="form-group">
-    <p>RFT/ROT No.</p>
-
-    <p>{{consignment.transportRequest.id}}</p>
-
+    <label class="consignment-note-label">RFT/ROT No.</label>
+    <p>{{consignment?.transportRequest.id}}</p>
   </div>
 
   <div class="form-group">
-    <p>Date</p>
+    <label class="consignment-note-label">Date</label>
     <p></p>
   </div>
 
@@ -61,22 +49,22 @@
 
         <div class="form-group">
           <label class="consignment-note-label">Container No. </label>
-          <p>{{consignment.containerNo}}</p>
+          <p>{{consignment?.containerNo}}</p>
         </div>
 
         <div class="form-group">
           <label>Code</label>
-          <p>{{consignment.consignmentCode}}</p>
+          <p>{{consignment?.consignmentCode}}</p>
         </div>
 
         <div class="form-group">
           <label class="consignment-note-label">Name</label>
-          <p>{{consignment.name}}</p>
+          <p>{{consignment?.name}}</p>
         </div>
 
         <div class="form-group">
           <label class="consignment-note-label">Size</label>
-          <p>{{consignment.size}}</p>
+          <p>{{consignment?.size}}</p>
         </div>
 
         <div class="form-group">
@@ -87,25 +75,25 @@
         <div class="form-group">
           <label class="consignment-note-label">Shipping Agent</label>
 
-          <p>{{consignment.transportRequest.shippingAgent}}</p>
+          <p>{{consignment?.transportRequest.shippingAgent}}</p>
         </div>
 
         <div class="form-group">
           <label class="consignment-note-label">Operator Code</label>
 
-          <p>{{consignment.transportRequest.operatorCode}}</p>
+          <p>{{consignment?.transportRequest.operatorCode}}</p>
         </div>
 
 
         <div class="form-group">
           <label class="consignment-note-label">Vessel & Voyage No</label>
 
-          <p>Test Sino Bridge</p>
+          <p>{{consignment?.transportRequest.voyageNo}}</p>
         </div>
 
         <div class="form-group">
-          <label class="consignment-note-label">ETA</p>
-          <p></p>
+          <label class="consignment-note-label">Vessel ETA</label>
+          <p>{{consignment?.transportRequest.vesselEtaOrEtd}}</p>
         </div>
 
         <div class="form-group">
@@ -123,13 +111,13 @@
         <div class="form-group">
           <label class="consignment-note-label">Shipper Consignee</label>
 
-          <p>{{consignment.transportRequest.shipper}}</p>
+          <p>{{consignment?.transportRequest.shipper}}</p>
         </div>
 
         <div class="form-group">
           <label class="consignment-note-label">Job Type</label>
 
-          <p>{{consignment.taskType}}</p>
+          <p>{{consignment?.taskType}}</p>
         </div>
 
         <div class="form-group">
@@ -140,60 +128,55 @@
 
         <div class="form-group">
           <label class="consignment-note-label">Forwarding Agent</label>
-
-          <p>Suria Pantas</p>
+          <p>{{consignment?.transportRequest.forwardingAgent}}</p>
         </div>
 
       </div>
-
-
       <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-
         <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Panel title</h3>
-          </div>
+          <!--<div class="panel-heading">-->
+            <!--<h3 class="panel-title">Panel title</h3>-->
+          <!--</div>-->
           <div class="panel-body">
-            Panel body
+            <div class="form-group">
+              <label class="consignment-note-label">Required Date</label>
+              <p></p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">Time</label>
+
+              <p></p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">Opening Date</label>
+
+              <p></p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">Closing Date</label>
+
+              <p></p>
+            </div>
+            <div class="form-group">
+              <label class="consignment-note-label">Time</label>
+
+              <p></p>
+            </div>
           </div>
-        </div>
-
-        <div class="form-group">
-          <label class="consignment-note-label">Required Date</>
-
-          <p></p>
-        </div>
-
-
-        <div class="form-group">
-          <label class="consignment-note-label">Time</label>
-
-          <p></p>
-        </div>
-
-        <div class="form-group">
-          <label class="consignment-note-label">Opening Date</label>
-
-          <p></p>
-        </div>
-
-        <div class="form-group">
-          <label class="consignment-note-label">Closing Date</label>
-
-          <p></p>
-        </div>
-        <div class="form-group">
-          <label class="consignment-note-label">Time</label>
-
-          <p></p>
         </div>
 
         <div class="form-group">
           <label class="consignment-note-label">Bill To:</label>
-
-          <p>Render this using the forwarder id from RFT</p>
+          <p>{{forwarderInfo?.company.name}}</p>
         </div>
 
+        <div class="form-group">
+          <label class="consignment-note-label">Remarks</label>
+          <p>{{consignment?.transportRequest.containerRemarks}}</p>
+        </div>
 
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 
@@ -206,7 +189,6 @@
       </div>
     </div>
   </div>
-
 
 </div>
 

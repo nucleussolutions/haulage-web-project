@@ -15,6 +15,8 @@ export class Consignment {
 
   //todo expose rft so that we can get number to fill in the consignment note
   transportRequest: TransportRequest;
+  dateCreated: any;
+  lastUpdated: any;
 
   constructor (object?: any) {
 

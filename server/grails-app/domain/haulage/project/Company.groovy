@@ -19,8 +19,6 @@ class Company {
   String code
   String email
 
-  Address yardAddress
-
   static constraints = {
     name nullable: false, blank: false
     registrationNo nullable: false, blank: false
@@ -36,8 +34,6 @@ class Company {
     email nullable: false, email: true
     yardAddress nullable: true
   }
-
-  static embedded = ['yardAddress']
 
   static searchable = true
 }
