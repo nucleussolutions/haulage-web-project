@@ -54,6 +54,7 @@ import {PaginationComponent} from './pagination/pagination.component';
 import {PaginationModule} from './pagination/pagination.module';
 import { ConsignmentTemplateComponent } from './consignment-template/consignment-template.component';
 import { QuotationTemplateComponent } from './quotation-template/quotation-template.component';
+import {AgmCoreModule} from "@agm/core";
 
 
 @NgModule({
@@ -111,7 +112,10 @@ import { QuotationTemplateComponent } from './quotation-template/quotation-templ
     QuoteModule,
     TariffModule,
     MemberSubscriptionModule,
-    PaginationModule
+    PaginationModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDwrBvVQ4vb99X-IUAn0ntKOK3zv4hokxc'
+    })
 ],
   exports: [ReactiveFormsModule],
   providers: [{
