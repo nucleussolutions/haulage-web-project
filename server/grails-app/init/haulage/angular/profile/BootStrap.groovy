@@ -73,7 +73,8 @@ class BootStrap {
     testRFT.productDesc = '12p3128321093 aslkdjaskd'
     testRFT.grossWeight = 32.2
     testRFT.shipper = 'asdadasd'
-    testRFT.forwarderId = 'qwowqeiowqeiq'
+    testRFT.forwarderId = 'GWQOYWnAxxVPtnUODGCWe8cXllK2'
+    testRFT.haulierId = 'OFrQip85jPRRmXkBR544ROU51y93'
     testRFT.voyageNo = '123213123'
     testRFT.vesselName = '1232131208'
     testRFT.portOfLoading = 'asdasdadasd'
@@ -106,7 +107,8 @@ class BootStrap {
     testRFT2.productDesc = '12p3128321093 aslkdjaskd'
     testRFT2.grossWeight = 32.2
     testRFT2.shipper = 'asdadasd'
-    testRFT2.forwarderId = 'qwowqeiowqeiq'
+    testRFT2.forwarderId = 'GWQOYWnAxxVPtnUODGCWe8cXllK2'
+    testRFT2.haulierId = 'OFrQip85jPRRmXkBR544ROU51y93'
     testRFT2.kOnekEightFormImgUrl = 'http://www.google.com'
     testRFT2.gatePassImgUrl = 'http://www.google.com'
     testRFT2.voyageNo = '123213123'
@@ -121,7 +123,6 @@ class BootStrap {
 
 
     def forwarderPermission = new Permission(email: 'kevin@kevin.com', userId: 'GWQOYWnAxxVPtnUODGCWe8cXllK2', authority: 'Manager', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93').save(flush: true, failOnError: true)
-
 
     def forwarderInfo1 = new ForwarderInfo(userId: 'GWQOYWnAxxVPtnUODGCWe8cXllK2', company: company2, name: 'asdl;asdkd;').save(flush: true, failOnError: true)
 
