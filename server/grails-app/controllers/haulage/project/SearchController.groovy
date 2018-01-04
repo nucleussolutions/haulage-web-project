@@ -14,7 +14,7 @@ class SearchController {
 
   def transportRequest() {
     if (params.term) {
-      respond searchService.searchTransportRequest(params.term)
+      respond searchService.searchTransportRequest(params.term as String)
     } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
@@ -22,7 +22,7 @@ class SearchController {
 
   def consignment() {
     if (params.term) {
-      respond searchService.searchConsignment(params.term)
+      respond searchService.searchConsignment(params.term as String)
     } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
@@ -30,7 +30,7 @@ class SearchController {
 
   def quote() {
     if (params.term) {
-      respond searchService.searchQuote(params.term)
+      respond searchService.searchQuote(params.term as String)
     } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
@@ -38,7 +38,7 @@ class SearchController {
 
   def memberSubscription() {
     if (params.term) {
-      respond searchService.searchMemberSubscription(params.term)
+      respond searchService.searchMemberSubscription(params.term as String)
     } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
@@ -54,7 +54,7 @@ class SearchController {
 
   def tariff() {
     if (params.term) {
-      respond searchService.searchTariff(params.term)
+      respond searchService.searchTariff(params.term as String)
     } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
@@ -62,7 +62,7 @@ class SearchController {
 
   def vehicle() {
     if (params.term) {
-      respond searchService.searchVehicle(params.term)
+      respond searchService.searchVehicle(params.term as String)
     } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
@@ -70,7 +70,7 @@ class SearchController {
 
   def driverInfo() {
     if (params.term) {
-      respond searchService.searchDriverInfo(params.term)
+      respond searchService.searchDriverInfo(params.term as String)
     } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
@@ -78,7 +78,7 @@ class SearchController {
 
   def forwarderInfo() {
     if (params.term) {
-      respond searchService.searchForwarderInfo(params.term)
+      respond searchService.searchForwarderInfo(params.term as String)
     } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
@@ -86,7 +86,7 @@ class SearchController {
 
   def haulierInfo() {
     if (params.term) {
-      respond searchService.searchHaulierInfo(params.term)
+      respond searchService.searchHaulierInfo(params.term as String)
     } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
@@ -94,7 +94,7 @@ class SearchController {
 
   def location() {
     if (params.term) {
-      respond searchService.searchLocation(params.term)
+      respond searchService.searchLocation(params.term as String)
     } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }

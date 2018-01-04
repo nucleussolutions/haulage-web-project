@@ -1,6 +1,5 @@
 package haulage.project
 
-
 import static org.springframework.http.HttpStatus.NOT_FOUND
 import static org.springframework.http.HttpStatus.OK
 
@@ -50,14 +49,31 @@ class CustomController {
     if (!userId) {
       render([status: NOT_FOUND, message: 'user id not found'])
     } else {
-      List<Permission> permissions = permissionService.findAllByGrantedBy(userId)
+
+      //todo check if super admin display all
+      Permission userPermission = permissionService.findByUserId(userId)
+
+      def permissions
+
+      if(userPermission.authority == 'Super Admin'){
+        permissions = Permission.list()
+      }else{
+        permissions = permissionService.findAllByGrantedBy(userId)
+      }
 
       if (!permissions) {
-        response.status = 400
-        render([message: 'permissions granted by this user is not found'])
+        respond status: NOT_FOUND, message: 'permissions granted by this user is not found'
       } else {
         respond permissions, status: OK
       }
+    }
+  }
+
+  def permissionCountByGrantedBy(String userId){
+    if(userId){
+      respond count: permissionService.countByGrantedBy(userId)
+    }else{
+      respond status: NOT_FOUND, message: 'user id not found'
     }
   }
 
@@ -68,7 +84,7 @@ class CustomController {
     if(haulierInfo){
       respond haulierInfo
     }else{
-      respond status: HttpStatus.NOT_FOUND, message: 'haulier info not found'
+      respond status: NOT_FOUND, message: 'haulier info not found'
     }
   }
 
@@ -79,7 +95,7 @@ class CustomController {
     if(forwarderInfo){
       respond forwarderInfo
     }else{
-      respond status: HttpStatus.NOT_FOUND, message: 'forwarder info not found'
+      respond status: NOT_FOUND, message: 'forwarder info not found'
     }
   }
 

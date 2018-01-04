@@ -138,6 +138,14 @@ export class JobService {
 
     //todo need to search taking account of user permissions as well
 
+    // this.permissionService.getByUserId(userObject.uid).flatMap(permission => {
+    //
+    //
+    //
+    //
+    //
+    // });
+
     this.http.get(environment.serverUrl + '/search/job?term=' + term, {
       headers: headers
     }).subscribe((json: any[]) => {
