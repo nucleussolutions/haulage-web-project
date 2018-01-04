@@ -14,7 +14,7 @@ export class JobService {
   constructor(private http: HttpClient) {
   }
 
-  list(userObject:any, offset: number): Observable<Job[]> {
+  list(userObject: any, offset: number): Observable<Job[]> {
     let subject = new Subject<Job[]>();
 
 
@@ -30,13 +30,13 @@ export class JobService {
       headers: headers,
       params: params
     })
-      .subscribe((json: any[]) => {
-        subject.next(json);
-      });
+        .subscribe((json: any[]) => {
+          subject.next(json);
+        });
     return subject.asObservable();
   }
 
-  get(id: number, userObject:any): Observable<Job> {
+  get(id: number, userObject: any): Observable<Job> {
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
@@ -45,10 +45,10 @@ export class JobService {
     return this.http.get(environment.serverUrl + '/job/' + id, {
       headers: headers
     })
-      .map((r: Response) => new Job(r.json()));
+        .map((r: Response) => new Job(r.json()));
   }
 
-  save(job: Job, userObject:any): Observable<Job> {
+  save(job: Job, userObject: any): Observable<Job> {
     // const requestOptions = new RequestOptions();
 
     let requestMethodStr;
@@ -74,29 +74,29 @@ export class JobService {
       headers: headers,
       body: body
     })
-      .map((r: Response) => new Job(r.json()));
+        .map((r: Response) => new Job(r.json()));
   }
 
-  destroy(job: Job, userObject:any): Observable<boolean> {
+  destroy(job: Job, userObject: any): Observable<boolean> {
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
 
     return this.http.delete(environment.serverUrl + '/job/' + job.id, {
-      headers:headers
+      headers: headers
     }).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
   }
 
-  count(userObject: any) : Observable<number>{
+  count(userObject: any): Observable<number> {
     let subject = new Subject<number>();
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
-    this.http.get(environment.serverUrl+ '/job/count', {
+    this.http.get(environment.serverUrl + '/job/count', {
       headers: headers
     }).subscribe(json => {
       subject.next(json['count']);
@@ -107,7 +107,7 @@ export class JobService {
     return subject.asObservable();
   }
 
-  search(term: string, userObject: any): Observable<any[]>{
+  search(term: string, userObject: any): Observable<any[]> {
     let subject = new Subject<any[]>();
 
     let headers = new HttpHeaders({
@@ -115,7 +115,7 @@ export class JobService {
       'apiKey': userObject.apiKey
     });
 
-    this.http.get(environment.serverUrl+ '/search/job?term='+term, {
+    this.http.get(environment.serverUrl + '/search/job?term=' + term, {
       headers: headers
     }).subscribe((json: any[]) => {
       subject.next(json);
@@ -123,6 +123,48 @@ export class JobService {
       subject.error(error);
     });
 
+    return subject.asObservable();
+  }
+
+  findAllByDriverId(driverId: string, userObject: any, offset: number){
+    let subject = new Subject<Job[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    let params = new HttpParams();
+    params = params.append('offset', offset.toString());
+
+    this.http.get(environment.serverUrl + '/job/driver/'+driverId, {
+      headers: headers,
+      params: params
+    })
+        .subscribe((json: any[]) => {
+          subject.next(json);
+        });
+    return subject.asObservable();
+  }
+
+  findAllByHaulierId(haulierId: string, userObject: any, offset: number){
+    let subject = new Subject<Job[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
+
+    let params = new HttpParams();
+    params = params.append('offset', offset.toString());
+
+    this.http.get(environment.serverUrl + '/job/haulier/'+haulierId, {
+      headers: headers,
+      params: params
+    })
+        .subscribe((json: any[]) => {
+          subject.next(json);
+        });
     return subject.asObservable();
   }
 }

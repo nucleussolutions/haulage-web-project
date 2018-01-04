@@ -6,14 +6,18 @@ import grails.plugin.cache.Cacheable
 @Service(Job)
 interface JobService {
 
-    Job get(Serializable id)
+  Job get(Serializable id)
 
-    List<Job> list(Map args)
+  List<Job> list(Map args)
 
-    @Cacheable('jobCount')
-    Long count()
+  @Cacheable('jobCount')
+  Long count()
 
-    void delete(Serializable id)
+  void delete(Serializable id)
 
-    Job save(Job job)
+  Job save(Job job)
+
+  Job findAllByDriverId(String driverId)
+
+  Job findAllByHaulierId(String haulierId)
 }

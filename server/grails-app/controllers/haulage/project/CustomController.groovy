@@ -151,5 +151,19 @@ class CustomController {
     respond count: permissionService.count()
   }
 
+  def jobsByDriverId(String driverId){
+    if(driverId){
+      respond jobService.findAllByDriverId(driverId)
+    }else{
+      respond status: NOT_FOUND, message: 'driver id not found'
+    }
+  }
 
+  def jobsByHaulierId(String haulierId){
+    if(haulierId){
+      respond jobService.findAllByHaulierId(haulierId)
+    }else{
+      respond status: NOT_FOUND, message: 'haulier id not found'
+    }
+  }
 }

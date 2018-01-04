@@ -51,5 +51,7 @@ class UrlMappings {
     get "/search/tariff"(controller: 'search', action: 'tariff')
     get "/search/job"(controller: 'job', action: 'job')
 
+    get "/job/driver/${driverId}"(controller: 'custom', action: 'jobsByDriverId')
+    get "/job/haulier/${haulierId}"(controller: 'custom', action: 'jobsByHaulierId')
   }
 }
