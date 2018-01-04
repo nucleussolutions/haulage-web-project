@@ -13,6 +13,9 @@ interface JobService {
   @Cacheable('jobCount')
   Long count()
 
+  @Cacheable('jobCountByHaulierId')
+  Long countByHaulierId(String haulierId)
+
   void delete(Serializable id)
 
   Job save(Job job)

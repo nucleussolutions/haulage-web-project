@@ -62,6 +62,12 @@ export class JobListComponent implements OnInit, OnDestroy {
         this.count = count;
       });
 
+      //todo count by haulier as well, kill me
+
+      //todo list by haulier
+
+      //check permission if the person is a super admin
+
       return this.jobService.list(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];

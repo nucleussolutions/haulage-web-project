@@ -166,4 +166,12 @@ class CustomController {
       respond status: NOT_FOUND, message: 'haulier id not found'
     }
   }
+
+  def jobsCountByHaulierId(String haulierId){
+    if(haulierId){
+      respond count: jobService.countByHaulierId(haulierId)
+    }else{
+      respond status: NOT_FOUND, message: 'haulier id not found'
+    }
+  }
 }

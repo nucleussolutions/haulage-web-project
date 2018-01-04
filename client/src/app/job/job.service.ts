@@ -7,11 +7,12 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Consignment} from "../consignment/consignment";
+import {PermissionService} from "../permission/permission.service";
 
 @Injectable()
 export class JobService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private permissionService: PermissionService) {
   }
 
   list(userObject: any, offset: number): Observable<Job[]> {
@@ -26,11 +27,20 @@ export class JobService {
       'apiKey': userObject.apiKey
     });
 
-    this.http.get(environment.serverUrl + '/job', {
-      headers: headers,
-      params: params
-    })
-        .subscribe((json: any[]) => {
+    this.permissionService.getByUserId(userObject.uid).flatMap(permission => {
+      let urlPath;
+
+      if(permission.authority == 'Super Admin'){
+        urlPath = '/job';
+      }else{
+        urlPath = '/job/haulier/'+userObject.uid
+      }
+
+      return this.http.get(environment.serverUrl + urlPath, {
+        headers: headers,
+        params: params
+      });
+    }).subscribe((json: any[]) => {
           subject.next(json);
         });
     return subject.asObservable();
@@ -96,8 +106,19 @@ export class JobService {
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
-    this.http.get(environment.serverUrl + '/job/count', {
-      headers: headers
+
+    this.permissionService.getByUserId(userObject.uid).flatMap(permission => {
+      let urlPath;
+
+      if(permission.authority == 'Super Admin'){
+        urlPath = '/job/count'
+      }else{
+        urlPath = '/job/countByHaulier/'+userObject.uid;
+      }
+
+      return this.http.get(environment.serverUrl + urlPath, {
+        headers: headers
+      });
     }).subscribe(json => {
       subject.next(json['count']);
     }, error => {
@@ -114,6 +135,8 @@ export class JobService {
       'token': userObject.token,
       'apiKey': userObject.apiKey
     });
+
+    //todo need to search taking account of user permissions as well
 
     this.http.get(environment.serverUrl + '/search/job?term=' + term, {
       headers: headers
