@@ -8,72 +8,74 @@ import static javax.servlet.http.HttpServletResponse.*
 
 class CustomRestInterceptor {
 
-    CustomRestInterceptor() {
-        matchAll()
-    }
+  int order = HIGHEST_PRECEDENCE
 
-    boolean before() {
-        // perform authentication with firebase
-        String token = session.token ?: request.getHeader('token')
-        String apiKey = session.apiKey ?: request.getHeader('apiKey')
-        if(!token && !apiKey) { // Please note you could also have your own custom validation logic here
-            response.status = SC_UNAUTHORIZED
+  CustomRestInterceptor() {
+    matchAll()
+  }
+
+  boolean before() {
+    // perform authentication with firebase
+    String token = session.token ?: request.getHeader('token')
+    String apiKey = session.apiKey ?: request.getHeader('apiKey')
+    if (!token && !apiKey) { // Please note you could also have your own custom validation logic here
+      response.status = SC_UNAUTHORIZED
+      return false
+    } else {
+
+      println 'request.method ' + request.method
+
+      println 'request url ' + request.requestURL
+
+      if (request.method == "OPTIONS") {
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200")
+        response.setHeader("Access-Control-Allow-Credentials", "true")
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")
+        response.setHeader("Access-Control-Max-Age", "3600")
+      }
+
+      def http = new HTTPBuilder('https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key=' + apiKey)
+
+      def postBody = [idToken: token] // will be url-encoded
+
+      try {
+        http.post(body: postBody, requestContentType: ContentType.JSON) { resp, reader ->
+
+          println 'status code ' + resp.statusLine.statusCode
+
+          if (resp.statusLine.statusCode == 200 || resp.statusLine.statusCode == 201) {
+
+
+            response.status = SC_ACCEPTED
+            return true
+          } else {
+            response.status = resp.statusLine.statusCode
             return false
-        }else {
-
-            println 'request.method '+request.method
-
-            println 'request url '+request.requestURL
-
-            if (request.method == "OPTIONS") {
-                response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200")
-                response.setHeader("Access-Control-Allow-Credentials", "true")
-                response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")
-                response.setHeader("Access-Control-Max-Age", "3600")
-            }
-
-            def http = new HTTPBuilder( 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key='+apiKey)
-
-            def postBody = [idToken: token] // will be url-encoded
-
-            try {
-                http.post(body: postBody, requestContentType: ContentType.JSON) { resp, reader ->
-
-                    println 'status code '+resp.statusLine.statusCode
-
-                    if(resp.statusLine.statusCode == 200 || resp.statusLine.statusCode == 201){
-
-
-                        response.status = SC_ACCEPTED
-                        return true
-                    }else {
-                        response.status = resp.statusLine.statusCode
-                        return false
-                    }
-                }
-
-                http.handler.failure = { resp ->
-                    "Unexpected failure: ${resp.statusLine}"
-                    response.status = resp.statusLine.statusCode
-                    return false
-                }
-
-                http.handler.'400' = { resp ->
-                    response.status = resp.statusLine.statusCode
-                    return false
-                }
-            }catch (HttpResponseException e){
-                response.status  = e.statusCode
-                return false
-            }
+          }
         }
-    }
 
-    boolean after() {
-        true
-    }
+        http.handler.failure = { resp ->
+          "Unexpected failure: ${resp.statusLine}"
+          response.status = resp.statusLine.statusCode
+          return false
+        }
 
-    void afterView() {
-        // no-op
+        http.handler.'400' = { resp ->
+          response.status = resp.statusLine.statusCode
+          return false
+        }
+      } catch (HttpResponseException e) {
+        response.status = e.statusCode
+        return false
+      }
     }
+  }
+
+  boolean after() {
+    true
+  }
+
+  void afterView() {
+    // no-op
+  }
 }
