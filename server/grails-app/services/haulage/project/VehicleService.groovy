@@ -6,15 +6,16 @@ import grails.plugin.cache.Cacheable
 @Service(Vehicle)
 interface VehicleService {
 
-    Vehicle get(Serializable id)
+  Vehicle get(Serializable id)
 
-    List<Vehicle> list(Map args)
+  List<Vehicle> list(Map args)
 
-    @Cacheable('vehicleCount')
-    Long count()
+  @Cacheable('vehicleCount')
+  Long count()
 
-    void delete(Serializable id)
+  void delete(Serializable id)
 
-    Vehicle save(Vehicle vehicle)
+  Vehicle save(Vehicle vehicle)
 
+  List<Vehicle> findAllByUserId(String haulierId)
 }

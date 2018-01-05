@@ -190,4 +190,12 @@ class CustomController {
       respond status: NOT_FOUND, message: 'haulier id not found'
     }
   }
+
+  def vehiclesByHaulier(String haulierId){
+    if(haulierId){
+      respond Vehicle.findAllByUserId(haulierId)
+    }else{
+      respond status: NOT_FOUND, message: 'haulier id not found'
+    }
+  }
 }
