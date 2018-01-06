@@ -3,11 +3,36 @@ package haulage.project
 
 class QuoteInterceptor {
 
-    boolean before() { true }
+  def permissionService
 
-    boolean after() { true }
+  //todo access to only forwarder and haulier only
+  QuoteInterceptor(){
+    match controller: 'quote'
+  }
 
-    void afterView() {
-        // no-op
+  boolean before() {
+
+    if(params.userId){
+      def userPermission = permissionService.findByUserId(params.userId as String)
+
+      if(userPermission){
+        if(userPermission.authority == 'User'){
+          false
+        }else{
+          true
+        }
+      }else{
+        false
+      }
+
+    }else{
+      false
     }
+  }
+
+  boolean after() { true }
+
+  void afterView() {
+    // no-op
+  }
 }

@@ -2,30 +2,24 @@ package haulage.project
 
 import groovy.transform.CompileStatic
 
+
 @CompileStatic
-class TariffInterceptor {
+class TransportRequestInterceptor {
 
-  //super admin only
-
+  //kick user out
   def permissionService
 
-  TariffInterceptor() {
-    match controller: 'tariff'
-  }
-
   boolean before() {
-
-    if(params.userId){
+    if(params.userId) {
       Permission userPermission = Permission.findByUserId(params.userId as String)
       if(userPermission){
-        userPermission.authority == 'Super Admin'
+        userPermission.authority != 'User'
       }else {
         false
       }
-    }else{
+    }else {
       false
     }
-    true
   }
 
   boolean after() { true }

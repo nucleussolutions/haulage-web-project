@@ -3,7 +3,7 @@ package haulage.project
 
 class DriverInfoInterceptor {
 
-    public DriverInfoInterceptor(){
+    DriverInfoInterceptor(){
         match controller: 'driverInfo'
     }
 

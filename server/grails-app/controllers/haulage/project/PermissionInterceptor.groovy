@@ -13,13 +13,21 @@ class PermissionInterceptor {
 
   boolean before() {
     String userId = params.userId
-    if(userId){
-
-    }else{
-      permissionService.findByUserId(userId)
-
+    if (!userId) {
+      false
+    } else {
+      //find permission that belongs to this user
+      Permission userPermission = permissionService.findByUserId(userId)
+      if(!userPermission){
+        false
+      }else {
+        if(userPermission.authority == 'Super Admin' || 'Admin'){
+          true
+        }else{
+          false
+        }
+      }
     }
-    true
   }
 
   boolean after() { true }

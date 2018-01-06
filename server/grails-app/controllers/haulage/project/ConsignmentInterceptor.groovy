@@ -3,15 +3,15 @@ package haulage.project
 
 class ConsignmentInterceptor {
 
-    public ConsignmentInterceptor(){
-        match controller: 'consignment'
-    }
+  ConsignmentInterceptor() {
+    match controller: 'consignment'
+  }
 
-    boolean before() { true }
+  boolean before() { true }
 
-    boolean after() { true }
+  boolean after() { true }
 
-    void afterView() {
-        // no-op
-    }
+  void afterView() {
+    // no-op
+  }
 }

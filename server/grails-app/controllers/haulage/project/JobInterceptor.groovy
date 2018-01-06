@@ -3,15 +3,16 @@ package haulage.project
 
 class JobInterceptor {
 
-    public JobInterceptor(){
-        match controller: 'job'
-    }
 
-    boolean before() { true }
+  JobInterceptor() {
+    match controller: 'job'
+  }
 
-    boolean after() { true }
+  boolean before() { true }
 
-    void afterView() {
-        // no-op
-    }
+  boolean after() { true }
+
+  void afterView() {
+    // no-op
+  }
 }

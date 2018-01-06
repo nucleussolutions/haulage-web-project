@@ -3,15 +3,35 @@ package haulage.project
 
 class LocationInterceptor {
 
-    public LocationInterceptor() {
-        match controller: 'location'
+  //todo for super admins only
+  def permissionService
+
+  LocationInterceptor() {
+    match controller: 'location'
+  }
+
+  boolean before() {
+    if(params.userId){
+      Permission userPermission = permissionService.findByUserId(params.userId as String)
+
+      if(userPermission){
+        if(userPermission.authority == 'Super Admin'){
+          true
+        }else{
+          false
+        }
+      }else {
+        false
+      }
+
+    }else{
+      false
     }
+  }
 
-    boolean before() { true }
+  boolean after() { true }
 
-    boolean after() { true }
-
-    void afterView() {
-        // no-op
-    }
+  void afterView() {
+    // no-op
+  }
 }

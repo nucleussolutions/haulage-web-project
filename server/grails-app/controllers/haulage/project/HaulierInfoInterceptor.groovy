@@ -3,15 +3,15 @@ package haulage.project
 
 class HaulierInfoInterceptor {
 
-    public HaulierInfoInterceptor(){
-        match controller: 'haulierInfo'
-    }
+  HaulierInfoInterceptor() {
+    match controller: 'haulierInfo'
+  }
 
-    boolean before() { true }
+  boolean before() { true }
 
-    boolean after() { true }
+  boolean after() { true }
 
-    void afterView() {
-        // no-op
-    }
+  void afterView() {
+    // no-op
+  }
 }
