@@ -1,11 +1,7 @@
 package haulage.project
 
 
-class JobInterceptor {
-
-    public JobInterceptor(){
-        match controller: 'job'
-    }
+class ForwarderInfoInterceptor {
 
     boolean before() { true }
 

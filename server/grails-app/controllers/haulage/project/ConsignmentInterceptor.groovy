@@ -1,10 +1,10 @@
 package haulage.project
 
 
-class JobInterceptor {
+class ConsignmentInterceptor {
 
-    public JobInterceptor(){
-        match controller: 'job'
+    public ConsignmentInterceptor(){
+        match controller: 'consignment'
     }
 
     boolean before() { true }
