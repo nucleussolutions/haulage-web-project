@@ -1,6 +1,8 @@
 package haulage.project
 
+import grails.compiler.GrailsCompileStatic
 
+@GrailsCompileStatic
 class LocationInterceptor {
 
   //todo for super admins only
@@ -15,11 +17,7 @@ class LocationInterceptor {
       Permission userPermission = permissionService.findByUserId(params.userId as String)
 
       if(userPermission){
-        if(userPermission.authority == 'Super Admin'){
-          true
-        }else{
-          false
-        }
+        userPermission.authority == 'Super Admin'
       }else {
         false
       }

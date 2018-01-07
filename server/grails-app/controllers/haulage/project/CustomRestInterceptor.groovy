@@ -20,7 +20,7 @@ class CustomRestInterceptor {
     String apiKey = session.apiKey ?: request.getHeader('apiKey')
     if (!token && !apiKey) { // Please note you could also have your own custom validation logic here
       response.status = SC_UNAUTHORIZED
-      return false
+      false
     } else {
 
       println 'request.method ' + request.method
@@ -47,26 +47,26 @@ class CustomRestInterceptor {
 
 
             response.status = SC_ACCEPTED
-            return true
+            true
           } else {
             response.status = resp.statusLine.statusCode
-            return false
+            false
           }
         }
 
         http.handler.failure = { resp ->
           "Unexpected failure: ${resp.statusLine}"
           response.status = resp.statusLine.statusCode
-          return false
+          false
         }
 
         http.handler.'400' = { resp ->
           response.status = resp.statusLine.statusCode
-          return false
+          false
         }
       } catch (HttpResponseException e) {
         response.status = e.statusCode
-        return false
+        false
       }
     }
   }

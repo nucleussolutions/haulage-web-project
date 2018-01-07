@@ -1,6 +1,8 @@
 package haulage.project
 
+import grails.compiler.GrailsCompileStatic
 
+@GrailsCompileStatic
 class PermissionInterceptor {
 
   def permissionService
@@ -12,7 +14,7 @@ class PermissionInterceptor {
   }
 
   boolean before() {
-    String userId = params.userId
+    String userId = request.getHeader('userId')
     if (!userId) {
       false
     } else {

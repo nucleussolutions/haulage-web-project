@@ -1,11 +1,12 @@
 package haulage.project
 
-
+import grails.compiler.GrailsCompileStatic
 import grails.rest.*
 import grails.converters.*
 import org.elasticsearch.bootstrap.Elasticsearch
 import org.springframework.http.HttpStatus
 
+@GrailsCompileStatic
 class SearchController {
 
   static responseFormats = ['json', 'xml']

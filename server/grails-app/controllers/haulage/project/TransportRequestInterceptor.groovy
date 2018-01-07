@@ -1,17 +1,21 @@
 package haulage.project
 
-import groovy.transform.CompileStatic
+import grails.compiler.GrailsCompileStatic
 
 
-@CompileStatic
+@GrailsCompileStatic
 class TransportRequestInterceptor {
 
   //kick user out
   def permissionService
 
+  TransportRequestInterceptor() {
+  }
+
   boolean before() {
-    if(params.userId) {
-      Permission userPermission = Permission.findByUserId(params.userId as String)
+    def userId = request.getHeader('userId')
+    if(userId) {
+      Permission userPermission = permissionService.findByUserId(params.userId as String)
       if(userPermission){
         userPermission.authority != 'User'
       }else {

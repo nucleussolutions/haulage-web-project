@@ -1,6 +1,8 @@
 package haulage.project
 
+import grails.compiler.GrailsCompileStatic
 
+@GrailsCompileStatic
 class PricingInterceptor {
 
   //todo only allow access to admin and super admin
@@ -12,8 +14,9 @@ class PricingInterceptor {
   }
 
   boolean before() {
-    if(params.userId){
-      def userPermission = permissionService.findByUserId(params.userId)
+    def userId = request.getHeader('userId')
+    if(userId){
+      def userPermission = permissionService.findByUserId(userId)
 
       if(userPermission){
         if(userPermission.authority == 'Super Admin' || userPermission.authority == 'Admin'){

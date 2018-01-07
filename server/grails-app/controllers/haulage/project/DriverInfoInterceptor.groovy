@@ -3,15 +3,31 @@ package haulage.project
 
 class DriverInfoInterceptor {
 
-    DriverInfoInterceptor(){
-        match controller: 'driverInfo'
+  def permissionService
+
+  DriverInfoInterceptor() {
+    match controller: 'driverInfo'
+  }
+
+  boolean before() {
+    def userId = request.getHeader('userId')
+
+    if (userId) {
+      Permission userPermission = permissionService.findByUserId(userId)
+
+      if(userPermission){
+        userPermission.authority == 'Super Admin' || userPermission.authority == 'Admin'
+      }else{
+        false
+      }
+    } else {
+      false
     }
+  }
 
-    boolean before() { true }
+  boolean after() { true }
 
-    boolean after() { true }
-
-    void afterView() {
-        // no-op
-    }
+  void afterView() {
+    // no-op
+  }
 }

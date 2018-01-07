@@ -3,23 +3,21 @@ package haulage.project
 
 class ForwarderInfoInterceptor {
 
-  //todo hauliers and super admin only
+  // hauliers and super admin only
+  def permissionService
 
   ForwarderInfoInterceptor() {
     match controller: 'forwarderInfo'
   }
 
   boolean before() {
+    def userId = request.getHeader('userId')
 
-    if(params.userId){
-      Permission userPermission = Permission.findByUserId(params.userId as String)
+    if(userId){
+      Permission userPermission = permissionService.findByUserId(userId)
 
       if(userPermission){
-        if(userPermission.authority == 'Super Admin' || userPermission.authority == 'Admin'){
-          true
-        }else{
-          false
-        }
+        userPermission.authority == 'Super Admin' || userPermission.authority == 'Admin'
       }else{
         false
       }
