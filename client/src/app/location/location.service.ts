@@ -25,7 +25,8 @@ export class LocationService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     this.http.get(environment.serverUrl + '/location', {
@@ -46,7 +47,8 @@ export class LocationService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.get(environment.serverUrl + '/location/' + id, {
@@ -58,7 +60,8 @@ export class LocationService {
   getByType(type: string, userObject: any): Observable<Location> {
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.get(environment.serverUrl + '/locationByType/' + type, {
@@ -83,7 +86,8 @@ export class LocationService {
     let headers = new HttpHeaders({
       "Content-Type": "application/json",
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.request(requestMethodStr, url, {
@@ -97,7 +101,8 @@ export class LocationService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.delete(environment.serverUrl + '/location/' + location.id, {
@@ -113,6 +118,7 @@ export class LocationService {
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     this.http.get(environment.serverUrl + '/location/count', {
@@ -130,7 +136,8 @@ export class LocationService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     this.http.get(environment.serverUrl + '/search/location?term=' + term, {

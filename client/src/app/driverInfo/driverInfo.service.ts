@@ -26,7 +26,9 @@ export class DriverInfoService {
     params = params.append('max', '10');
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     this.http.get(environment.serverUrl + '/driverInfo', {
@@ -46,7 +48,9 @@ export class DriverInfoService {
   get(id: number, userObject: any): Observable<DriverInfo> {
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     return this.http.get(environment.serverUrl + '/driverInfo/' + id, {
@@ -70,7 +74,9 @@ export class DriverInfoService {
     let headers = new HttpHeaders({
       "Content-Type": "application/json",
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     return this.http.request(requestMethodStr, url, {
@@ -83,7 +89,9 @@ export class DriverInfoService {
   destroy(driverInfo: DriverInfo, userObject: any): Observable<boolean> {
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     return this.http.delete(environment.serverUrl + '/driverInfo/' + driverInfo.id, {
@@ -98,7 +106,9 @@ export class DriverInfoService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     this.http.get(environment.serverUrl + '/driverInfo/count', {
@@ -117,7 +127,9 @@ export class DriverInfoService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     this.http.get(environment.serverUrl + '/driverInfo?term=' + term, {

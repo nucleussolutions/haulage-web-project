@@ -20,7 +20,8 @@ export class HaulierInfoService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     let params = new HttpParams();
@@ -43,7 +44,9 @@ export class HaulierInfoService {
   get(id: number, userObject: any): Observable<HaulierInfo> {
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     return this.http.get(environment.serverUrl + '/haulierInfo/' + id, {
@@ -69,7 +72,9 @@ export class HaulierInfoService {
     let headers = new HttpHeaders({
       "Content-Type": "application/json",
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     return this.http.request(requestMethodStr, url, {
@@ -82,7 +87,9 @@ export class HaulierInfoService {
   destroy(haulierInfo: HaulierInfo, userObject: any): Observable<boolean> {
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     return this.http.delete(environment.serverUrl + '/haulierInfo/' + haulierInfo.id, {
@@ -97,7 +104,9 @@ export class HaulierInfoService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     this.http.get(environment.serverUrl + '/haulierInfo/count', {
@@ -115,7 +124,9 @@ export class HaulierInfoService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     this.http.get(environment.serverUrl + '/haulierInfo?term=' + term, {
@@ -132,7 +143,9 @@ export class HaulierInfoService {
   getByUserId(haulierId: string, userObject: any) {
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     return this.http.get(environment.serverUrl + '/haulierInfo/userId/'+haulierId, {

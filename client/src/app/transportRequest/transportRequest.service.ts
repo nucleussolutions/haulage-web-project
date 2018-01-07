@@ -24,7 +24,8 @@ export class TransportRequestService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     this.http.get(environment.serverUrl + '/transportRequest', {
@@ -45,7 +46,8 @@ export class TransportRequestService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.get(environment.serverUrl + '/transportRequest/' + id, {
@@ -71,7 +73,9 @@ export class TransportRequestService {
     let headers = new HttpHeaders({
       "Content-Type": "application/json",
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     return this.http.request(requestMethodStr, url, {
@@ -85,7 +89,9 @@ export class TransportRequestService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     return this.http.delete(environment.serverUrl + '/transportRequest/' + transportRequest.id, {
@@ -99,7 +105,9 @@ export class TransportRequestService {
     let subject = new Subject<number>();
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
     this.http.get(environment.serverUrl+ '/transportRequest/count', {
       headers: headers
@@ -117,7 +125,9 @@ export class TransportRequestService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     this.http.get(environment.serverUrl+ '/transportRequest?term='+term, {

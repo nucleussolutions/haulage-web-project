@@ -19,7 +19,8 @@ export class QuoteService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     let params = new HttpParams();
@@ -41,7 +42,8 @@ export class QuoteService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.get(environment.serverUrl + '/quote/' + id, {
@@ -67,6 +69,7 @@ export class QuoteService {
       "Content-Type": "application/json",
       'token': userObject.token,
       'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.request(requestMethodStr, url, {
@@ -79,7 +82,8 @@ export class QuoteService {
   destroy(quote: Quote, userObject: any): Observable<boolean> {
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
     return this.http.delete(environment.serverUrl + '/quote/' + quote.id, {
       headers: headers
@@ -92,7 +96,8 @@ export class QuoteService {
     let subject = new Subject<number>();
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
     this.http.get(environment.serverUrl + '/quote/count', {
       headers: headers
@@ -110,7 +115,8 @@ export class QuoteService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     this.http.get(environment.serverUrl + '/quote?term=' + term, {

@@ -21,12 +21,12 @@ export class ForwarderInfoService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     let params = new HttpParams();
     params = params.append('offset', offset.toString());
-    params = params.append('max', '10');
 
     this.http.get(environment.serverUrl + '/forwarderInfo', {
       headers: headers,
@@ -46,7 +46,8 @@ export class ForwarderInfoService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.get(environment.serverUrl + '/forwarderInfo/' + id, {
@@ -58,7 +59,8 @@ export class ForwarderInfoService {
   getByUserId(userId : string, userObject: any){
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.get(environment.serverUrl+'/forwarderInfo/userId/'+userId, {
@@ -80,7 +82,8 @@ export class ForwarderInfoService {
     let headers = new HttpHeaders({
       "Content-Type": "application/json",
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.request(requestMethodStr, url, {
@@ -99,7 +102,8 @@ export class ForwarderInfoService {
   destroy(forwarderInfo: ForwarderInfo, userObject: any): Observable<boolean> {
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.delete(environment.serverUrl + '/forwarderInfo/' + forwarderInfo.id, {
@@ -113,7 +117,8 @@ export class ForwarderInfoService {
     let subject = new Subject<number>();
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
 
@@ -133,7 +138,8 @@ export class ForwarderInfoService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     this.http.get(environment.serverUrl+ '/forwarderInfo?term='+term, {

@@ -23,7 +23,8 @@ export class MemberSubscriptionService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     this.http.get(environment.serverUrl + '/memberSubscription', {
@@ -40,7 +41,8 @@ export class MemberSubscriptionService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
 
@@ -65,7 +67,9 @@ export class MemberSubscriptionService {
     let headers = new HttpHeaders({
       "Content-Type": "application/json",
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     return this.http.request(requestMethodStr, url, {
@@ -78,7 +82,8 @@ export class MemberSubscriptionService {
   destroy(memberSubscription: MemberSubscription, userObject: any): Observable<boolean> {
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
     return this.http.delete(environment.serverUrl + '/memberSubscription/' + memberSubscription.id, {
       headers: headers
@@ -91,7 +96,8 @@ export class MemberSubscriptionService {
     let subject = new Subject<number>();
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
     this.http.get(environment.serverUrl + '/memberSubscription/count', {
       headers: headers
@@ -109,7 +115,8 @@ export class MemberSubscriptionService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     this.http.get(environment.serverUrl + '/memberSubscription?term=' + term, {

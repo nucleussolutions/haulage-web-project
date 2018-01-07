@@ -24,7 +24,8 @@ export class JobService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     this.permissionService.getByUserId(userObject.uid).flatMap(permission => {
@@ -49,7 +50,8 @@ export class JobService {
   get(id: number, userObject: any): Observable<Job> {
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.get(environment.serverUrl + '/job/' + id, {
@@ -77,7 +79,8 @@ export class JobService {
     let headers = new HttpHeaders({
       "Content-Type": "application/json",
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.request(requestMethodStr, url, {
@@ -90,7 +93,8 @@ export class JobService {
   destroy(job: Job, userObject: any): Observable<boolean> {
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.delete(environment.serverUrl + '/job/' + job.id, {
@@ -104,7 +108,8 @@ export class JobService {
     let subject = new Subject<number>();
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     this.permissionService.getByUserId(userObject.uid).flatMap(permission => {
@@ -133,7 +138,8 @@ export class JobService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     //todo need to search taking account of user permissions as well
@@ -162,7 +168,8 @@ export class JobService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     let params = new HttpParams();
@@ -183,7 +190,8 @@ export class JobService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     let params = new HttpParams();

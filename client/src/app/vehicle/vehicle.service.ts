@@ -24,7 +24,8 @@ export class VehicleService {
     params = params.append('offset', offset.toString());
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     this.http.get(environment.serverUrl + '/vehicle', {
@@ -44,7 +45,9 @@ export class VehicleService {
   get(id: number, userObject: any): Observable<Vehicle> {
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
     return this.http.get(environment.serverUrl + '/vehicle/' + id, {
       headers: headers
@@ -77,7 +80,9 @@ export class VehicleService {
     let headers = new HttpHeaders({
       "Content-Type": "appzlication/json",
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     return this.http.request(requestMethodStr, url, {
@@ -96,7 +101,9 @@ export class VehicleService {
   destroy(vehicle: Vehicle, userObject: any): Observable<boolean> {
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     return this.http.delete(environment.serverUrl + '/vehicle/' + vehicle.id, {
@@ -110,7 +117,9 @@ export class VehicleService {
     let subject = new Subject<number>();
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
     this.http.get(environment.serverUrl + '/vehicle/count', {
       headers: headers
@@ -128,7 +137,9 @@ export class VehicleService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
     });
 
     this.http.get(environment.serverUrl + '/search/vehicle?term=' + term, {

@@ -24,7 +24,8 @@ export class PricingService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     this.http.get(environment.serverUrl + '/pricing', {
@@ -40,17 +41,18 @@ export class PricingService {
     return subject.asObservable();
   }
 
-  get(id: number, token: string, apiKey: string): Observable<Pricing> {
+  get(id: number, userObject: any): Observable<Pricing> {
 
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.get(environment.serverUrl + '/pricing/' + id, {
       headers: headers
     })
-        .map((r: Response) => new Pricing(r.json())).catch(err => {
+        .map((r: Response) => new Pricing(r)).catch(err => {
           if (err.status === 401) {
             return Observable.throw(new Error('Unauthorized'));
           } else if (err.status === 500) {
@@ -59,7 +61,7 @@ export class PricingService {
         });
   }
 
-  save(pricing: Pricing, token: string, apiKey: string): Observable<Pricing> {
+  save(pricing: Pricing, userObject: any): Observable<Pricing> {
     // const requestOptions = new RequestOptions();
 
     let requestMethodStr;
@@ -77,8 +79,9 @@ export class PricingService {
     let body = JSON.stringify(pricing);
     let headers = new HttpHeaders({
       "Content-Type": "application/json",
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.request(requestMethodStr, url, {
@@ -94,11 +97,12 @@ export class PricingService {
         });
   }
 
-  destroy(pricing: Pricing, token: string, apiKey: string): Observable<boolean> {
+  destroy(pricing: Pricing, userObject: any): Observable<boolean> {
 
     let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.delete(environment.serverUrl + '/pricing/' + pricing.id, {
@@ -112,7 +116,8 @@ export class PricingService {
     let subject = new Subject<number>();
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
     this.http.get(environment.serverUrl + '/pricing/count', {
       headers: headers

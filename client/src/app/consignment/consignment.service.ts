@@ -25,7 +25,8 @@ export class ConsignmentService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     this.http.get(environment.serverUrl + '/consignment', {
@@ -41,7 +42,8 @@ export class ConsignmentService {
   get(id: number, userObject: any): Observable<Consignment> {
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.get(environment.serverUrl + '/consignment/' + id, {
@@ -53,7 +55,8 @@ export class ConsignmentService {
   getByRFTId(rftId: string, userObject: any): Observable<Consignment> {
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.get(environment.serverUrl + '/consignment?rftId=' + rftId, {
@@ -74,8 +77,10 @@ export class ConsignmentService {
     }
     let body = JSON.stringify(consignment);
     let headers = new HttpHeaders({
-      "Content-Type": "application/json", 'token': userObject.token,
-      'apiKey': userObject.apiKey
+      "Content-Type": "application/json",
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.request(requestMethodStr, url, {
@@ -94,7 +99,8 @@ export class ConsignmentService {
   destroy(consignment: Consignment, userObject: any): Observable<boolean> {
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     return this.http.delete(environment.serverUrl + '/consignment/' + consignment.id, {
@@ -108,7 +114,8 @@ export class ConsignmentService {
     let subject = new Subject<number>();
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
 
@@ -128,7 +135,8 @@ export class ConsignmentService {
 
     let headers = new HttpHeaders({
       'token': userObject.token,
-      'apiKey': userObject.apiKey
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
     });
 
     this.http.get(environment.serverUrl+ '/search/consignment?term='+term, {
@@ -142,24 +150,4 @@ export class ConsignmentService {
     return subject.asObservable();
   }
 
-  printConsignment(consignment: Consignment, userObject: any){
-
-    let subject = new Subject<any>();
-
-
-    let headers = new HttpHeaders({
-      'token': userObject.token,
-      'apiKey': userObject.apiKey
-    });
-
-    this.http.post(environment.serverUrl + '/consignment/print?id='+consignment.id, {
-      headers: headers
-    }).subscribe(json => {
-      //expect a jsonoutput with the link to the file so that the browser can display it and save it whenever they want
-
-
-    }, error => {
-      subject.error(error);
-    });
-  }
 }
