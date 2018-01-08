@@ -142,6 +142,9 @@ class BootStrap {
 
     parseCsvFile()
     parseTariffCsv()
+
+    def driverInfo = new DriverInfo(haulierId: 'OFrQip85jPRRmXkBR544ROU51y93', name: 'tan ah keong', icNumber: '1230981203', passportNumber: '1230912380', icFrontImgUrl: 'http://www.google.com', icBackImgUrl: 'http://www.google.com', passportImgUrl: 'http://www.google.com', phone: '21913012938', licenseClass: 'D', licenseExpiry: new Date(), westPortPassNo: '123098230123', westPortPassExpiry: new Date(), northPortPassNo: '123098213', northPortPassExpiry: new Date(), emergencyContactName: 'tan ah chong', emergencyContactPhone: '120213921830123').save(flush: true, failOnError: true)
+
   }
   def destroy = {
   }

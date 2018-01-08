@@ -7,8 +7,6 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {Location} from "../location/location";
-import {Vehicle} from "../vehicle/vehicle";
 import {PermissionService} from "../permission/permission.service";
 
 @Injectable()
@@ -30,14 +28,14 @@ export class ConsignmentService {
       'userId': userObject.uid
     });
 
-    this.permissionService.getByUserId(userObject.uid).flatMap(permission => {
+    this.permissionService.getByUserId(userObject).flatMap(permission => {
       let urlPath;
       if (permission.authority == 'Super Admin') {
-        urlPath = '/consignment'
+        urlPath = '/consignment';
       } else if (permission.authority == 'Admin') {
-        urlPath = '/consignment/haulier/'+userObject.uid
+        urlPath = '/consignment/haulier/'+userObject.uid;
       } else if (permission.authority == 'Manager') {
-        urlPath = '/consignment/forwarder/'+userObject.uid
+        urlPath = '/consignment/forwarder/'+userObject.uid;
       }
       return this.http.get(environment.serverUrl + urlPath, {
         headers: headers,
@@ -69,7 +67,7 @@ export class ConsignmentService {
       'userId': userObject.uid
     });
 
-    return this.http.get(environment.serverUrl + '/consignment?rftId=' + rftId, {
+    return this.http.get(environment.serverUrl + '/consignment/transportRequest/' + rftId, {
       headers: headers
     }).map((r: Response) => new Consignment(r));
   }

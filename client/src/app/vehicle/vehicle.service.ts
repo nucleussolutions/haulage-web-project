@@ -8,13 +8,13 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 import { environment } from "../../environments/environment";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { TransportRequest } from "../transportRequest/transportRequest";
+import {PermissionService} from "../permission/permission.service";
 
 @Injectable()
 export class VehicleService {
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private permissionService: PermissionService) {
   }
 
   list(userObject: any, offset: number): Observable<Vehicle[]> {
@@ -28,11 +28,20 @@ export class VehicleService {
       'userId': userObject.uid
     });
 
-    this.http.get(environment.serverUrl + '/vehicle', {
-      headers: headers,
-      params: params
-    })
-      .catch(err => {
+    this.permissionService.getByUserId(userObject).flatMap(permission => {
+      let urlPath;
+
+      if(permission.authority == 'Super Admin'){
+        urlPath = '/vehicle';
+      }else if(permission.authority == 'Admin'){
+        urlPath = '/vehicle/haulier';
+      }
+
+      return this.http.get(environment.serverUrl + urlPath, {
+        headers: headers,
+        params: params
+      });
+    }).catch(err => {
         subject.error(err);
         return subject.asObservable();
       })

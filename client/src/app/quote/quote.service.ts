@@ -29,7 +29,7 @@ export class QuoteService {
 
     let subject = new Subject<Quote[]>();
 
-    this.permissionService.getByUserId(userObject.uid).flatMap(permission => {
+    this.permissionService.getByUserId(userObject).flatMap(permission => {
       let urlPath;
       if (permission.authority == 'Super Admin') {
         urlPath = '/quote'

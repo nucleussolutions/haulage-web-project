@@ -60,7 +60,7 @@ class CustomController {
       if(userPermission.authority == 'Super Admin'){
         permissions = Permission.list()
       }else{
-        permissions = permissionService.findAllByGrantedBy(userId)
+        permissions = permissionService.findAllByGrantedBy(userId, [offset: params.offset])
       }
 
       if (!permissions) {
@@ -171,7 +171,7 @@ class CustomController {
 
   def jobsByDriverId(String driverId){
     if(driverId){
-      respond jobService.findAllByDriverId(driverId)
+      respond jobService.findAllByDriverId(driverId, [offset: params.offset])
     }else{
       respond status: NOT_FOUND, message: 'driver id not found'
     }
@@ -179,7 +179,7 @@ class CustomController {
 
   def jobsByHaulierId(String haulierId){
     if(haulierId){
-      respond jobService.findAllByHaulierId(haulierId)
+      respond jobService.findAllByHaulierId(haulierId, [offset: params.offset])
     }else{
       respond status: NOT_FOUND, message: 'haulier id not found'
     }
@@ -195,7 +195,7 @@ class CustomController {
 
   def vehiclesByHaulier(String haulierId){
     if(haulierId){
-      respond vehicleService.findAllByUserId(haulierId)
+      respond vehicleService.findAllByUserId(haulierId, [offset: params.offset])
     }else{
       respond status: NOT_FOUND, message: 'haulier id not found'
     }
@@ -203,7 +203,7 @@ class CustomController {
 
   def quotesByHaulier(String haulierId){
     if(haulierId){
-      respond quoteService.findAllByHaulierId(haulierId)
+      respond quoteService.findAllByHaulierId(haulierId, [offset: params.offset])
     }else{
       respond status: NOT_FOUND, message: 'haulier id not found'
     }
@@ -211,7 +211,7 @@ class CustomController {
 
   def quotesByForwarder(String forwarderId){
     if(forwarderId){
-      respond quoteService.findAllByForwarderId(forwarderId)
+      respond quoteService.findAllByForwarderId(forwarderId, [offset: params.offset])
     }else {
       respond status: NOT_FOUND, message: 'forwarder id not found'
     }
@@ -237,7 +237,7 @@ class CustomController {
     if(rftId){
       TransportRequest transportRequest = TransportRequest.findById(rftId)
       if(transportRequest){
-        respond Consignment.findAllByTransportRequest(transportRequest)
+        respond Consignment.findAllByTransportRequest(transportRequest, [offset: params.offset])
       }else{
         respond status: NOT_FOUND , message: 'rft not found'
       }

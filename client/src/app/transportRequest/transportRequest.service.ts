@@ -9,11 +9,12 @@ import 'rxjs/add/observable/of';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Quote} from "../quote/quote";
+import {PermissionService} from "../permission/permission.service";
 
 @Injectable()
 export class TransportRequestService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private permissionService: PermissionService) {
   }
 
   list(userObject: any, offset: number): Observable<TransportRequest[]> {
@@ -28,11 +29,21 @@ export class TransportRequestService {
       'userId': userObject.uid
     });
 
-    this.http.get(environment.serverUrl + '/transportRequest', {
-      headers: headers,
-      params: params
-    })
-      .catch(err => {
+    this.permissionService.getByUserId(userObject).flatMap(permission => {
+      let urlPath;
+      if(permission.authority == 'Super Admin'){
+        urlPath = '/transportRequest';
+      }else if(permission.authority == 'Admin'){
+        urlPath = '/transportRequest/haulier/'+userObject.uid;
+      }else if(permission.authority == 'Manager'){
+        urlPath = '/transportRequest/forwarder/'+userObject.uid;
+      }
+
+      return this.http.get(environment.serverUrl + urlPath, {
+        headers: headers,
+        params: params
+      });
+    }).catch(err => {
         subject.error(err);
         return subject.asObservable();
       })
