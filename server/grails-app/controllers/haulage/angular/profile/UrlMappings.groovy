@@ -51,5 +51,14 @@ class UrlMappings {
 
     get "/job/driver/${driverId}"(controller: 'custom', action: 'jobsByDriverId')
     get "/job/haulier/${haulierId}"(controller: 'custom', action: 'jobsByHaulierId')
+
+    get "/quote/haulier"(controller: 'custom', 'quotesByHaulier')
+    get "/quote/forwarder"(controller: 'custom', 'quotesByForwarder')
+
+
+
+//    get "/consignment/haulier"(controller: 'custom', action: 'consignmentsByHaulier')
+//    get "/consignment/forwarder"(controller: 'custom', action: 'consignmentsByForwarder')
+    get "/consignment/transportRequest/${rftId}"(controller: 'custom', action: 'consignmentsByRFT')
   }
 }

@@ -1,11 +1,13 @@
 package haulage.project
 
+import grails.compiler.GrailsCompileStatic
 import groovyx.net.http.ContentType
 import groovyx.net.http.HTTPBuilder
 import groovyx.net.http.HttpResponseException
 
 import static javax.servlet.http.HttpServletResponse.*
 
+@GrailsCompileStatic
 class CustomRestInterceptor {
 
   int order = HIGHEST_PRECEDENCE

@@ -1,6 +1,8 @@
 package haulage.project
 
+import grails.compiler.GrailsCompileStatic
 
+@GrailsCompileStatic
 class DriverInfoInterceptor {
 
   def permissionService

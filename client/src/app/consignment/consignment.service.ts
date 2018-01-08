@@ -9,12 +9,13 @@ import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Location} from "../location/location";
 import {Vehicle} from "../vehicle/vehicle";
+import {PermissionService} from "../permission/permission.service";
 
 @Injectable()
 export class ConsignmentService {
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private permissionService: PermissionService) {
   }
 
   list(userObject: any, offset: number): Observable<Consignment[]> {
@@ -29,11 +30,20 @@ export class ConsignmentService {
       'userId': userObject.uid
     });
 
-    this.http.get(environment.serverUrl + '/consignment', {
-      headers: headers,
-      params: params
-    })
-        .subscribe((json: any[]) => {
+    this.permissionService.getByUserId(userObject.uid).flatMap(permission => {
+      let urlPath;
+      if (permission.authority == 'Super Admin') {
+        urlPath = '/consignment'
+      } else if (permission.authority == 'Admin') {
+        urlPath = '/consignment/haulier/'+userObject.uid
+      } else if (permission.authority == 'Manager') {
+        urlPath = '/consignment/forwarder/'+userObject.uid
+      }
+      return this.http.get(environment.serverUrl + urlPath, {
+        headers: headers,
+        params: params
+      });
+    }).subscribe((json: any[]) => {
           subject.next(json);
         });
     return subject.asObservable();
@@ -110,7 +120,7 @@ export class ConsignmentService {
     });
   }
 
-  count(userObject:any):Observable<number>{
+  count(userObject: any): Observable<number> {
     let subject = new Subject<number>();
     let headers = new HttpHeaders({
       'token': userObject.token,
@@ -119,7 +129,7 @@ export class ConsignmentService {
     });
 
 
-    this.http.get(environment.serverUrl+ '/consignment/count', {
+    this.http.get(environment.serverUrl + '/consignment/count', {
       headers: headers
     }).subscribe(json => {
       subject.next(json['count']);
@@ -130,7 +140,7 @@ export class ConsignmentService {
     return subject.asObservable();
   }
 
-  search(term: string, userObject: any): Observable<Consignment[]>{
+  search(term: string, userObject: any): Observable<Consignment[]> {
     let subject = new Subject<Consignment[]>();
 
     let headers = new HttpHeaders({
@@ -139,7 +149,7 @@ export class ConsignmentService {
       'userId': userObject.uid
     });
 
-    this.http.get(environment.serverUrl+ '/search/consignment?term='+term, {
+    this.http.get(environment.serverUrl + '/search/consignment?term=' + term, {
       headers: headers
     }).subscribe((json: any[]) => {
       subject.next(json);

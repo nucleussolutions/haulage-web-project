@@ -1,6 +1,8 @@
 package haulage.project
 
+import grails.compiler.GrailsCompileStatic
 
+@GrailsCompileStatic
 class VehicleInterceptor {
 
   // vehicle can only be accessed by the haulier and super admin

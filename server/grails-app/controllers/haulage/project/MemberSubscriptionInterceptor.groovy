@@ -1,6 +1,8 @@
 package haulage.project
 
+import grails.compiler.GrailsCompileStatic
 
+@GrailsCompileStatic
 class MemberSubscriptionInterceptor {
 
   //so far subscription plans are editable since the haulier may change subscriptions

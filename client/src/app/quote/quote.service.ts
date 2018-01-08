@@ -8,11 +8,12 @@ import 'rxjs/add/observable/of';
 import { environment } from "../../environments/environment";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { MemberSubscription } from "../memberSubscription/memberSubscription";
+import { PermissionService } from 'app/permission/permission.service';
 
 @Injectable()
 export class QuoteService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private permissionService: PermissionService) {
   }
 
   list(userObject: any, offset: number): Observable<Quote[]> {
@@ -25,16 +26,26 @@ export class QuoteService {
 
     let params = new HttpParams();
     params = params.append('offset', offset.toString());
-    params = params.append('max', '10');
 
     let subject = new Subject<Quote[]>();
-    this.http.get(environment.serverUrl + '/quote', {
-      headers: headers,
-      params: params
-    })
-      .subscribe((json: any[]) => {
-        subject.next(json);
+
+    this.permissionService.getByUserId(userObject.uid).flatMap(permission => {
+      let urlPath;
+      if (permission.authority == 'Super Admin') {
+        urlPath = '/quote'
+      } else if (permission.authority == 'Manager') {
+        urlPath = '/quote/forwarder/'+userObject.uid;
+      } else if (permission.authority == 'Admin') {
+        urlPath = '/quote/haulier/'+userObject.uid;
+      }
+
+      return this.http.get(environment.serverUrl + urlPath, {
+        headers: headers,
+        params: params
       });
+    }).subscribe((json: any[]) => {
+      subject.next(json);
+    });
     return subject.asObservable();
   }
 

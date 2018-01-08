@@ -1,6 +1,8 @@
 package haulage.project
 
+import grails.compiler.GrailsCompileStatic
 
+@GrailsCompileStatic
 class HaulierInfoInterceptor {
 
   //todo dont allow driver to access this, as well as forwarder to create a haulier

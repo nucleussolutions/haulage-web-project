@@ -195,9 +195,54 @@ class CustomController {
 
   def vehiclesByHaulier(String haulierId){
     if(haulierId){
-      respond Vehicle.findAllByUserId(haulierId)
+      respond vehicleService.findAllByUserId(haulierId)
     }else{
       respond status: NOT_FOUND, message: 'haulier id not found'
+    }
+  }
+
+  def quotesByHaulier(String haulierId){
+    if(haulierId){
+      respond quoteService.findAllByHaulierId(haulierId)
+    }else{
+      respond status: NOT_FOUND, message: 'haulier id not found'
+    }
+  }
+
+  def quotesByForwarder(String forwarderId){
+    if(forwarderId){
+      respond quoteService.findAllByForwarderId(forwarderId)
+    }else {
+      respond status: NOT_FOUND, message: 'forwarder id not found'
+    }
+  }
+
+//  def consignmentsByHaulier(String haulierId){
+//    if(haulierId){
+//
+//
+//    }else{
+//      respond status: NOT_FOUND, message: 'haulier id not found'
+//    }
+//  }
+//
+//  def consignmentsByForwarder(String forwarderId){
+//    if(forwarderId){
+//    }else{
+//      respond status: NOT_FOUND, message: 'forwarder id not found'
+//    }
+//  }
+
+  def consignmentsByRFT(Long rftId){
+    if(rftId){
+      TransportRequest transportRequest = TransportRequest.findById(rftId)
+      if(transportRequest){
+        respond Consignment.findAllByTransportRequest(transportRequest)
+      }else{
+        respond status: NOT_FOUND , message: 'rft not found'
+      }
+    }else{
+      respond status: NOT_FOUND, message: 'rft id not found'
     }
   }
 }
