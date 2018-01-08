@@ -237,12 +237,20 @@ class CustomController {
     if(rftId){
       TransportRequest transportRequest = TransportRequest.findById(rftId)
       if(transportRequest){
-        respond Consignment.findAllByTransportRequest(transportRequest, [offset: params.offset])
+        respond consignmentService.findAllByTransportRequest(transportRequest, [offset: params.offset])
       }else{
         respond status: NOT_FOUND , message: 'rft not found'
       }
     }else{
       respond status: NOT_FOUND, message: 'rft id not found'
+    }
+  }
+
+  def driversByHaulier(String haulierId){
+    if(haulierId){
+      respond driverInfoService.findAllByHaulierId(haulierId, [offset: params.offset])
+    }else{
+      respond status: NOT_FOUND, message: 'haulier id not found'
     }
   }
 }

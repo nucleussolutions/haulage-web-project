@@ -140,7 +140,7 @@ export class DriverInfoService {
 
     });
 
-    this.http.get(environment.serverUrl + '/driverInfo?term=' + term, {
+    this.http.get(environment.serverUrl + '/search/driverInfo?term=' + term, {
       headers: headers
     }).subscribe((json: any[]) => {
       subject.next(json);

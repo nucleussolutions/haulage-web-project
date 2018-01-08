@@ -19,15 +19,26 @@ class SearchService {
 
   def searchTariff(String term){
     elasticSearchService.search(term, [ indices: Tariff, types: Tariff, from: 0, size: 10 ])
-
   }
 
   def searchTransportRequest(String term){
     elasticSearchService.search(term, [ indices: TransportRequest, types: TransportRequest, from: 0, size: 10 ])
   }
 
+  def searchTransportRequestByForwarder(String term, String forwarderId){
+
+  }
+
+  def searchTransportRequestByHaulier(String term, String haulierId){
+
+  }
+
   def searchDriverInfo(String term){
     elasticSearchService.search(term, [ indices: DriverInfo, types: DriverInfo, from: 0, size: 10 ])
+  }
+
+  def searchDriverInfoByHaulier(String term, String haulierId){
+
   }
 
   def searchHaulierInfo(String term){
@@ -42,6 +53,14 @@ class SearchService {
     elasticSearchService.search(term, [ indices: Consignment, types: Consignment, from: 0, size: 10 ])
   }
 
+  def searchConsignmentByHaulier(String term, String haulierId){
+
+  }
+
+  def searchConsignmentByForwarder(String term, String forwarderId){
+
+  }
+
   def searchMemberSubscription(String term){
     elasticSearchService.search(term, [ indices: MemberSubscription, types: MemberSubscription, from: 0, size: 10 ])
   }
@@ -54,8 +73,21 @@ class SearchService {
     elasticSearchService.search(term, [ indices: Vehicle, types: Vehicle, from: 0, size: 10 ])
   }
 
+  def searchVehicleByHaulier(String term, String haulierId){
+
+  }
+
   def searchQuote(String term){
     elasticSearchService.search(term, [ indices: Quote, types: Quote, from: 0, size: 10 ])
   }
+
+  def searchQuoteByHaulier(String term, String haulierId){
+
+  }
+
+  def searchQuotesByForwarder(String term, String forwarderId){
+
+  }
+
 
 }
