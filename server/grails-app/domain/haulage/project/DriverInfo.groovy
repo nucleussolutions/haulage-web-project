@@ -6,9 +6,6 @@ import grails.rest.*
 @Resource(readOnly = false, formats = ['json', 'xml'])
 class DriverInfo {
 
-    //belongs to which driver
-    String userId
-
     String name
     String icNumber
     String passportNumber
@@ -65,10 +62,8 @@ class DriverInfo {
         city blank: true
         state blank: true
         country blank: true
-        userId nullable: false, unique: true
-
         //can belong to a haulier, or just none which could mean freelance
-        haulierId blank: true
+        haulierId nullable: true
     }
 
     static searchable = {

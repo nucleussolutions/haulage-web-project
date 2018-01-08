@@ -23,7 +23,6 @@ export class DriverInfo {
   city: string;
   state: string;
   country: string;
-  userId: string;
   haulierId: string;
 
   constructor (object?: any) {

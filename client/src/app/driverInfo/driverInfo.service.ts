@@ -10,12 +10,13 @@ import { environment } from "../../environments/environment";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { int } from "aws-sdk/clients/datapipeline";
 import { Job } from "../job/job";
+import {PermissionService} from "../permission/permission.service";
 
 @Injectable()
 export class DriverInfoService {
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private permissionService: PermissionService) {
   }
 
   list(userObject: any, offset: number): Observable<DriverInfo[]> {
@@ -23,19 +24,26 @@ export class DriverInfoService {
 
     let params = new HttpParams();
     params = params.append('offset', offset.toString());
-    params = params.append('max', '10');
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey,
       'userId': userObject.uid
-
     });
 
-    this.http.get(environment.serverUrl + '/driverInfo', {
-      headers: headers,
-      params: params
-    })
-      .catch(err => {
+    this.permissionService.getByUserId(userObject).flatMap(permission => {
+      let urlPath;
+
+      if(permission.authority == 'Super Admin'){
+        urlPath = '/driverInfo';
+      }else if(permission.authority == 'Admin'){
+        urlPath = '/driverInfo/haulier/'+userObject.uid;
+      }
+
+      return this.http.get(environment.serverUrl + urlPath, {
+        headers: headers,
+        params: params
+      });
+    }).catch(err => {
         subject.error(err);
         return subject.asObservable();
       })
