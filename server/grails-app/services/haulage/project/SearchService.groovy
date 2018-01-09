@@ -89,5 +89,13 @@ class SearchService {
 
   }
 
+  def searchJob(String term){
+    elasticSearchService.search(term, [ indices: Job, types: Job, from: 0, size: 10 ])
+  }
+
+
+  def searchJobByHaulier(String term, String haulierId){
+
+  }
 
 }

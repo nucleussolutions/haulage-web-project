@@ -124,5 +124,23 @@ class SearchController {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
+
+  //search all job
+  def job(){
+    if(params.term){
+      respond searchService.searchJob(params.term as String)
+    }else{
+      respond status: HttpStatus.NOT_FOUND, message: 'not found'
+    }
+  }
+
+  def jobByHaulier(){
+    if(params.term){
+      respond searchService.searchJobByHaulier(params.term as String, request.getHeader('userId'))
+    }else{
+      respond status: HttpStatus.NOT_FOUND, message: 'not found'
+    }
+  }
+
 }
 
