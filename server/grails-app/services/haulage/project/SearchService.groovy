@@ -7,7 +7,6 @@ import org.elasticsearch.index.query.QueryBuilders
 import org.elasticsearch.search.sort.SortBuilders
 import org.elasticsearch.search.sort.SortOrder
 
-
 @Transactional
 class SearchService {
 
@@ -26,15 +25,17 @@ class SearchService {
   }
 
   def searchTransportRequestByForwarder(String term, String forwarderId){
-    elasticSearchService.search([indices: TransportRequest, types: TransportRequest, from: 0, size: 10], null as Closure, {
-
-    })
+    elasticSearchService.search(indices: TransportRequest, types: TransportRequest, from: 0, size: 10){
+      queryString(term)
+      match("forwarderId": forwarderId)
+    }
   }
 
   def searchTransportRequestByHaulier(String term, String haulierId){
-    elasticSearchService.search([indices: TransportRequest, types: TransportRequest, from: 0, size: 10], null as Closure, {
-
-    })
+    elasticSearchService.search(indices: TransportRequest, types: TransportRequest, from: 0, size: 10){
+      queryString(term)
+      match("haulierId": haulierId)
+    }
   }
 
   def searchDriverInfo(String term){
@@ -42,9 +43,10 @@ class SearchService {
   }
 
   def searchDriverInfoByHaulier(String term, String haulierId){
-    elasticSearchService.search([indices: DriverInfo, types: DriverInfo, from: 0, size: 10], null as Closure, {
-
-    })
+    elasticSearchService.search(indices: DriverInfo, types: DriverInfo, from: 0, size: 10){
+      queryString(term)
+      match("haulierId": haulierId)
+    }
   }
 
   def searchHaulierInfo(String term){
@@ -72,7 +74,7 @@ class SearchService {
   }
 
   def searchTransaction(String term){
-    elasticSearchService.search(term, [ indices: Transaction, types: Transaction, from: 0, size: 10 ])
+    elasticSearchService.search(term, [ indices: Transaction, types: Transaction, from: 0, size: 10])
   }
 
   def searchVehicle(String term){
@@ -80,9 +82,10 @@ class SearchService {
   }
 
   def searchVehicleByHaulier(String term, String haulierId){
-    elasticSearchService.search([indices: Vehicle, types: Vehicle, from: 0, size: 10], null as Closure, {
-
-    })
+    elasticSearchService.search(indices: Vehicle, types: Vehicle, from: 0, size: 10){
+      queryString(term)
+      match("haulierId": haulierId)
+    }
   }
 
   def searchQuote(String term){
@@ -90,15 +93,17 @@ class SearchService {
   }
 
   def searchQuoteByHaulier(String term, String haulierId){
-    elasticSearchService.search([indices: Quote, types: Quote, from: 0, size: 10], null as Closure, {
-
-    })
+    elasticSearchService.search(indices: Quote, types: Quote, from: 0, size: 10){
+      queryString(term)
+      match("haulierId": haulierId)
+    }
   }
 
   def searchQuotesByForwarder(String term, String forwarderId){
-    elasticSearchService.search([indices: Quote, types: Quote, from: 0, size: 10], null as Closure, {
-
-    })
+    elasticSearchService.search(indices: Quote, types: Quote, from: 0, size: 10){
+      queryString(term)
+      match("forwarderId": forwarderId)
+    }
   }
 
   def searchJob(String term){

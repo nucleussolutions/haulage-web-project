@@ -101,10 +101,26 @@ class SearchController {
     }
   }
 
+  def vehicleByHaulier(){
+    if(params.term){
+      respond searchService.searchVehicleByHaulier(params.term as String, request.getHeader('userId'))
+    }else{
+      respond status: HttpStatus.NOT_FOUND, message: 'not found'
+    }
+  }
+
   def driverInfo() {
     if (params.term) {
       respond searchService.searchDriverInfo(params.term as String)
     } else {
+      respond status: HttpStatus.NOT_FOUND, message: 'not found'
+    }
+  }
+
+  def driverInfoByHaulier(){
+    if(params.term){
+      respond searchService.searchDriverInfoByHaulier(params.term as String, request.getHeader('userId'))
+    }else{
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
