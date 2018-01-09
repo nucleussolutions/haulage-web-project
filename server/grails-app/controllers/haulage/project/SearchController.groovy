@@ -21,6 +21,22 @@ class SearchController {
     }
   }
 
+  def transportRequestByHaulier(){
+    if(params.term){
+      respond searchService.searchTransportRequestByHaulier(params.term as String, request.getHeader('userId') as String)
+    }else{
+      respond HttpStatus.NOT_FOUND, message: 'not found'
+    }
+  }
+
+  def transportRequestByForwarder(){
+    if(params.term){
+      respond searchService.searchTransportRequestByForwarder(params.term as String, request.getHeader('userId') as String)
+    }else{
+      respond HttpStatus.NOT_FOUND, message: 'not found'
+    }
+  }
+
   def consignment() {
     if (params.term) {
       respond searchService.searchConsignment(params.term as String)
@@ -35,6 +51,14 @@ class SearchController {
     } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
+  }
+
+  def quoteByForwarder(){
+
+  }
+
+  def quoteByHaulier(){
+
   }
 
   def memberSubscription() {
