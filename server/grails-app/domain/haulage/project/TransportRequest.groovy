@@ -1,9 +1,10 @@
 package haulage.project
 
-
+import grails.compiler.GrailsCompileStatic
 import grails.rest.*
 
 @Resource(readOnly = false, formats = ['json'])
+@GrailsCompileStatic
 class TransportRequest {
 
   //uncouple import, direct import, uncouple export or direct export
@@ -115,6 +116,7 @@ class TransportRequest {
   }
 }
 
+@GrailsCompileStatic
 class Customer {
   String companyName
   String personInCharge

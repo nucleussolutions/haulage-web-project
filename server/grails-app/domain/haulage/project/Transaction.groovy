@@ -1,9 +1,10 @@
 package haulage.project
 
-
+import grails.compiler.GrailsCompileStatic
 import grails.rest.*
 
 @Resource(readOnly = false, formats = ['json', 'xml'])
+@GrailsCompileStatic
 class Transaction {
   //belongs to which user, most likely haulier
   TransactionStatus status
