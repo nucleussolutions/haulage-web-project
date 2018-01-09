@@ -26,11 +26,15 @@ class SearchService {
   }
 
   def searchTransportRequestByForwarder(String term, String forwarderId){
+    elasticSearchService.search([indices: TransportRequest, types: TransportRequest, from: 0, size: 10], null as Closure, {
 
+    })
   }
 
   def searchTransportRequestByHaulier(String term, String haulierId){
+    elasticSearchService.search([indices: TransportRequest, types: TransportRequest, from: 0, size: 10], null as Closure, {
 
+    })
   }
 
   def searchDriverInfo(String term){
@@ -38,7 +42,9 @@ class SearchService {
   }
 
   def searchDriverInfoByHaulier(String term, String haulierId){
+    elasticSearchService.search([indices: DriverInfo, types: DriverInfo, from: 0, size: 10], null as Closure, {
 
+    })
   }
 
   def searchHaulierInfo(String term){
@@ -74,7 +80,9 @@ class SearchService {
   }
 
   def searchVehicleByHaulier(String term, String haulierId){
+    elasticSearchService.search([indices: Vehicle, types: Vehicle, from: 0, size: 10], null as Closure, {
 
+    })
   }
 
   def searchQuote(String term){
@@ -82,11 +90,15 @@ class SearchService {
   }
 
   def searchQuoteByHaulier(String term, String haulierId){
+    elasticSearchService.search([indices: Quote, types: Quote, from: 0, size: 10], null as Closure, {
 
+    })
   }
 
   def searchQuotesByForwarder(String term, String forwarderId){
+    elasticSearchService.search([indices: Quote, types: Quote, from: 0, size: 10], null as Closure, {
 
+    })
   }
 
   def searchJob(String term){
@@ -95,7 +107,9 @@ class SearchService {
 
 
   def searchJobByHaulier(String term, String haulierId){
+    elasticSearchService.search([indices: Job, types: Job, from: 0, size: 10], null as Closure, {
 
+    })
   }
 
 }
