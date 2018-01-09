@@ -85,6 +85,14 @@ class SearchController {
     }
   }
 
+  def permissionByHaulier(){
+    if(params.term){
+      respond searchService.searchPermissionByGrantedBy(params.term as String, request.getHeader('userId'))
+    }else {
+      respond status: HttpStatus.NOT_FOUND, message: 'not found'
+    }
+  }
+
   def tariff() {
     if (params.term) {
       respond searchService.searchTariff(params.term as String)

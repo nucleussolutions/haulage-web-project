@@ -1,32 +1,33 @@
 package haulage.project
 
 import grails.compiler.GrailsCompileStatic
+import groovy.transform.TypeCheckingMode
 
 import static org.springframework.http.HttpStatus.NOT_FOUND
 import static org.springframework.http.HttpStatus.OK
 
-@GrailsCompileStatic
+@GrailsCompileStatic(TypeCheckingMode.SKIP)
 class CustomController {
 
-  def permissionService
-  def locationService
-  def haulierInfoService
-  def driverInfoService
-  def companyService
-  def consignmentService
-  def forwarderInfoService
-  def quoteService
-  def pricingService
-  def tariffService
+  PermissionService permissionService
+  LocationService locationService
+  HaulierInfoService haulierInfoService
+  DriverInfoService driverInfoService
+  CompanyService companyService
+  ConsignmentService consignmentService
+  ForwarderInfoService forwarderInfoService
+  QuoteService quoteService
+  PricingService pricingService
+  TariffService tariffService
 
-  def memberSubscriptionService
-  def transactionService
+  MemberSubscriptionService memberSubscriptionService
+  TransactionService transactionService
 
-  def vehicleService
+  VehicleService vehicleService
 
-  def transportRequestService
+  TransportRequestService transportRequestService
 
-  def jobService
+  JobService jobService
 
   static responseFormats = ['json', 'xml']
 

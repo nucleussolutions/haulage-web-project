@@ -7,7 +7,7 @@ import org.elasticsearch.index.query.QueryBuilders
 import org.elasticsearch.search.sort.SortBuilders
 import org.elasticsearch.search.sort.SortOrder
 
-@Transactional
+//@Transactional
 class SearchService {
 
   def elasticSearchService
@@ -113,8 +113,20 @@ class SearchService {
 
   def searchJobByHaulier(String term, String haulierId){
     elasticSearchService.search([indices: Job, types: Job, from: 0, size: 10], null as Closure, {
-
+      queryString(term)
+      match("haulierId": haulierId)
     })
+  }
+
+  def searchPermission(String term){
+    elasticSearchService.search(term, [ indices: Permission, types: Permission, from: 0, size: 10 ])
+  }
+
+  def searchPermissionByGrantedBy(String term, String haulierId){
+    elasticSearchService.search(indices: Permission, types: Permission, from: 0, size: 10){
+      queryString(term)
+      match("grantedBy": haulierId)
+    }
   }
 
 }

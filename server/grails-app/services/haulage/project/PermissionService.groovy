@@ -19,7 +19,7 @@ interface PermissionService {
 
   Permission findByUserId(String userId)
 
-  List<Permission> findAllByGrantedBy(String userId)
+  List<Permission> findAllByGrantedBy(String userId, Map paginateParams)
 
   @Cacheable('permissionCountByGrantedBy')
   Long countByGrantedBy(String userId)

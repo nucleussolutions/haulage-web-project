@@ -1,8 +1,8 @@
 package haulage.project
 
-import groovy.transform.CompileStatic
+import grails.compiler.GrailsCompileStatic
 
-@CompileStatic
+@GrailsCompileStatic
 class TariffInterceptor {
 
   //super admin only
