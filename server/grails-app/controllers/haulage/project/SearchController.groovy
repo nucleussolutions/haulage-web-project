@@ -23,7 +23,7 @@ class SearchController {
 
   def transportRequestByHaulier(){
     if(params.term){
-      respond searchService.searchTransportRequestByHaulier(params.term as String, request.getHeader('userId') as String)
+      respond searchService.searchTransportRequestByHaulier(params.term as String, request.getHeader('userId'))
     }else{
       respond HttpStatus.NOT_FOUND, message: 'not found'
     }
@@ -54,11 +54,19 @@ class SearchController {
   }
 
   def quoteByForwarder(){
-
+    if(params.term){
+      respond searchService.searchQuotesByForwarder(params.term as String, request.getHeader('userId'))
+    }else{
+      respond status: HttpStatus.NOT_FOUND, message: 'not found'
+    }
   }
 
   def quoteByHaulier(){
-
+    if(params.term){
+      respond searchService.searchQuoteByHaulier(params.term as String, request.getHeader('userId'))
+    }else{
+      respond status: HttpStatus.NOT_FOUND, message: 'not found'
+    }
   }
 
   def memberSubscription() {
