@@ -50,7 +50,7 @@ class BootStrap {
 
 
 
-    def customer = new Customer(companyName: 'asldjasdkdlaskjd', personInCharge: 'asdasdasdl', phone: '123123980132', address1: 'asdasdlkj asdlkj', address2: 'asdasdasd', city: 'asdsdasd', state: 'asdasdad', country: 'asdadsad').save(flush: true)
+    def customer = new Customer(companyName: 'asldjasdkdlaskjd', personInCharge: 'asdasdasdl', phone: '123123980132', address1: 'asdasdlkj asdlkj', address2: 'asdasdasd', city: 'asdsdasd', state: 'asdasdad', country: 'asdadsad', email: 'kevin@kevin.com').save(flush: true)
 
     def testRFT = new TransportRequest()
     testRFT.type = RFTType.DIRECT_IMPORT.id

@@ -9,16 +9,16 @@ class QuoteInterceptor {
 
   def permissionService
 
-  //todo access to only forwarder and haulier only
+  //todo access to only super admin, forwarder and haulier only
   QuoteInterceptor(){
     match controller: 'quote'
   }
 
   boolean before() {
-
-    if(params.userId){
-      def userPermission = permissionService.findByUserId(params.userId as String)
-
+    def userId = request.getHeader('userId')
+    if(userId){
+      def userPermission = permissionService.findByUserId(userId)
+      println 'quote permission'+userPermission.authority
       if(userPermission){
         if(userPermission.authority == 'User'){
           respond HttpStatus.METHOD_NOT_ALLOWED, message: 'forbidden user/driver'

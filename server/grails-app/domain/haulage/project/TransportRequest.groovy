@@ -106,7 +106,6 @@ class TransportRequest {
     openCargoBoat nullable: false
   }
 
-  static embedded = ['customer']
 
   static mapping = {
     autoTimestamp true
@@ -115,16 +114,4 @@ class TransportRequest {
   static searchable = {
     except = ['customer']
   }
-}
-
-@GrailsCompileStatic
-class Customer {
-  String companyName
-  String personInCharge
-  String phone
-  String address1
-  String address2
-  String city
-  String state
-  String country
 }

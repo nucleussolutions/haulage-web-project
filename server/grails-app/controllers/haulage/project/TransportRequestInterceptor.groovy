@@ -17,7 +17,7 @@ class TransportRequestInterceptor {
   boolean before() {
     def userId = request.getHeader('userId')
     if(userId) {
-      Permission userPermission = permissionService.findByUserId(params.userId as String)
+      Permission userPermission = permissionService.findByUserId(userId)
       if(userPermission){
         userPermission.authority != 'User'
       }else {

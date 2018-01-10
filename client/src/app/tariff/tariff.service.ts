@@ -123,7 +123,7 @@ export class TariffService {
       'userId': userObject.uid
     });
 
-    this.http.get(environment.serverUrl + '/quote?term=' + term, {
+    this.http.get(environment.serverUrl + '/search/tariff?term=' + term, {
       headers: headers
     }).subscribe((json: any[]) => {
       subject.next(json);

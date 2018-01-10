@@ -14,9 +14,9 @@ class TariffInterceptor {
   }
 
   boolean before() {
-
-    if(params.userId){
-      Permission userPermission = Permission.findByUserId(params.userId as String)
+    def userId = request.getHeader('userId')
+    if(userId){
+      Permission userPermission = Permission.findByUserId(userId)
       if(userPermission){
         userPermission.authority == 'Super Admin'
       }else {
