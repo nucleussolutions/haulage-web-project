@@ -59,11 +59,11 @@ class DriverInfo {
 
         passportImgUrl nullable: false, blank: true
 
-        address1 blank: true
-        address2 blank: true
-        city blank: true
-        state blank: true
-        country blank: true
+        address1 nullable: true
+        address2 nullable: true
+        city nullable: true
+        state nullable: true
+        country nullable: true
         //can belong to a haulier, or just none which could mean freelance
         haulierId nullable: true
     }
