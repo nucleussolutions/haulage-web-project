@@ -20,7 +20,7 @@ interface JobService {
 
   Job save(Job job)
 
-  Job findAllByDriverId(String driverId)
+  Job findAllByDriverId(String driverId, Map args)
 
-  Job findAllByHaulierId(String haulierId)
+  Job findAllByHaulierId(String haulierId, Map args)
 }

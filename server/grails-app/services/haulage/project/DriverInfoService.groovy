@@ -6,15 +6,17 @@ import grails.plugin.cache.Cacheable
 @Service(DriverInfo)
 interface DriverInfoService {
 
-    DriverInfo get(Serializable id)
+  DriverInfo get(Serializable id)
 
-    List<DriverInfo> list(Map args)
+  List<DriverInfo> list(Map args)
 
-    @Cacheable('driverInfoCount')
-    Long count()
+  @Cacheable('driverInfoCount')
+  Long count()
 
-    void delete(Serializable id)
+  void delete(Serializable id)
 
-    DriverInfo save(DriverInfo driverInfo)
+  List<DriverInfo> findAllByHaulierId(String haulierId, Map args)
+
+  DriverInfo save(DriverInfo driverInfo)
 
 }

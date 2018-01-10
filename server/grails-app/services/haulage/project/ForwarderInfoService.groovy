@@ -6,15 +6,17 @@ import grails.plugin.cache.Cacheable
 @Service(ForwarderInfo)
 interface ForwarderInfoService {
 
-    ForwarderInfo get(Serializable id)
+  ForwarderInfo get(Serializable id)
 
-    List<ForwarderInfo> list(Map args)
+  List<ForwarderInfo> list(Map args)
 
-    @Cacheable('forwarderInfoCount')
-    Long count()
+  @Cacheable('forwarderInfoCount')
+  Long count()
 
-    void delete(Serializable id)
+  void delete(Serializable id)
 
-    ForwarderInfo save(ForwarderInfo forwarderInfo)
+  ForwarderInfo findByUserId(String userId)
+
+  ForwarderInfo save(ForwarderInfo forwarderInfo)
 
 }

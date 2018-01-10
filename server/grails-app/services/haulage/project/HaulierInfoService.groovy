@@ -6,15 +6,17 @@ import grails.plugin.cache.Cacheable
 @Service(HaulierInfo)
 interface HaulierInfoService {
 
-    HaulierInfo get(Serializable id)
+  HaulierInfo get(Serializable id)
 
-    List<HaulierInfo> list(Map args)
+  List<HaulierInfo> list(Map args)
 
-    @Cacheable('haulierInfoCount')
-    Long count()
+  @Cacheable('haulierInfoCount')
+  Long count()
 
-    void delete(Serializable id)
+  void delete(Serializable id)
 
-    HaulierInfo save(HaulierInfo haulierInfo)
+  HaulierInfo findByUserId(String userId)
+
+  HaulierInfo save(HaulierInfo haulierInfo)
 
 }
