@@ -8,7 +8,6 @@ import 'rxjs/add/observable/of';
 import { environment } from "../../environments/environment";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import 'rxjs/add/operator/map';
-import { Quote } from "../quote/quote";
 
 @Injectable()
 export class TariffService {

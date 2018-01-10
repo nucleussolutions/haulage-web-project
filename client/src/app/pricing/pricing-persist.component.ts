@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Pricing } from './pricing';
 import { PricingService } from './pricing.service';
-import { Response } from "@angular/http";
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
+import {Observable} from "rxjs/Observable";
 
 
 @Component({
@@ -27,20 +27,24 @@ export class PricingPersistComponent implements OnInit, OnDestroy {
   private userObject: any;
 
   constructor(private route: ActivatedRoute, private pricingService: PricingService, private router: Router, private modal: Modal, private userService: UserService) {
-    this.subscription = this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    });
+
   }
 
   ngOnInit() {
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
 
-    this.route.params.subscribe((params: Params) => {
+      this.userObject = result[0];
+
+      let params = result[1];
+
       if (params.hasOwnProperty('id')) {
-        this.pricingService.get(+params['id'], this.userObject.token, this.userObject.apiKey).subscribe((pricing: Pricing) => {
-          this.create = false;
-          this.pricing = pricing;
-        });
+        return this.pricingService.get(+params['id'], this.userObject);
+      }else{
+        throw 'Error occurred, id param not found'
       }
+    }).subscribe((pricing: Pricing) => {
+      this.create = false;
+      this.pricing = pricing;
     }, error => {
       this.modal.alert()
         .title('Error')
@@ -49,15 +53,14 @@ export class PricingPersistComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    this.pricingService.save(this.pricing, this.userObject.token, this.userObject.apiKey).subscribe((pricing: Pricing) => {
+    this.pricingService.save(this.pricing, this.userObject).subscribe((pricing: Pricing) => {
       this.router.navigate(['/pricing', 'show', pricing.id]);
-    }, (res: Response) => {
-      const json = res.json();
-      if (json.hasOwnProperty('message')) {
-        this.errors = [json];
+    }, (res => {
+      if (res.hasOwnProperty('message')) {
+        this.errors = [res];
       } else {
-        this.errors = json._embedded.errors;
+        this.errors = res._embedded.errors;
       }
-    });
+    }));
   }
 }

@@ -9,25 +9,25 @@ import static org.springframework.http.HttpStatus.OK
 @GrailsCompileStatic(TypeCheckingMode.SKIP)
 class CustomController {
 
-  PermissionService permissionService
-  LocationService locationService
-  HaulierInfoService haulierInfoService
-  DriverInfoService driverInfoService
-  CompanyService companyService
-  ConsignmentService consignmentService
-  ForwarderInfoService forwarderInfoService
-  QuoteService quoteService
-  PricingService pricingService
-  TariffService tariffService
+  def permissionService
+  def locationService
+  def haulierInfoService
+  def driverInfoService
+  def companyService
+  def consignmentService
+  def forwarderInfoService
+  def quoteService
+  def pricingService
+  def tariffService
 
-  MemberSubscriptionService memberSubscriptionService
-  TransactionService transactionService
+  def memberSubscriptionService
+  def transactionService
 
-  VehicleService vehicleService
+  def vehicleService
 
-  TransportRequestService transportRequestService
+  def transportRequestService
 
-  JobService jobService
+  def jobService
 
   static responseFormats = ['json', 'xml']
 

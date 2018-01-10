@@ -10,7 +10,7 @@ class TariffInterceptor {
   def permissionService
 
   TariffInterceptor() {
-    match controller: 'tariff'
+    match(controller: 'tariff').except(action: 'list').except(action: 'get')
   }
 
   boolean before() {

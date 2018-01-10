@@ -10,7 +10,7 @@ class LocationInterceptor {
   def permissionService
 
   LocationInterceptor() {
-    match controller: 'location'
+    match(controller: 'location').except(action: 'list').except(action: 'get')
   }
 
   boolean before() {
