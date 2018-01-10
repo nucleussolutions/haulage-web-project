@@ -1,15 +1,17 @@
 package haulage.project
 
 import grails.compiler.GrailsCompileStatic
+import groovy.transform.TypeCheckingMode
 
 
-@GrailsCompileStatic
+@GrailsCompileStatic(TypeCheckingMode.SKIP)
 class TransportRequestInterceptor {
 
   //kick user out
   def permissionService
 
   TransportRequestInterceptor() {
+    match controller: 'transportRequest'
   }
 
   boolean before() {

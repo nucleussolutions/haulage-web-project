@@ -2,9 +2,10 @@ package haulage.project
 
 import grails.compiler.GrailsCompileStatic
 import grails.rest.*
+import groovy.transform.TypeCheckingMode
 
 @Resource(readOnly = false, formats = ['json'])
-@GrailsCompileStatic
+@GrailsCompileStatic(TypeCheckingMode.SKIP)
 class TransportRequest {
 
   //uncouple import, direct import, uncouple export or direct export

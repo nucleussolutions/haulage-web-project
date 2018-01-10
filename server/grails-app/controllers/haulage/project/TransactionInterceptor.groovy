@@ -1,8 +1,9 @@
 package haulage.project
 
 import grails.compiler.GrailsCompileStatic
+import groovy.transform.TypeCheckingMode
 
-@GrailsCompileStatic
+@GrailsCompileStatic(TypeCheckingMode.SKIP)
 class TransactionInterceptor {
 
   def permissionService

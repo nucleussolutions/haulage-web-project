@@ -2,9 +2,10 @@ package haulage.project
 
 import grails.compiler.GrailsCompileStatic
 import grails.rest.*
+import groovy.transform.TypeCheckingMode
 
 @Resource(readOnly = false, formats = ['json', 'xml'])
-@GrailsCompileStatic
+@GrailsCompileStatic(TypeCheckingMode.SKIP)
 class Tariff {
 
   String desc

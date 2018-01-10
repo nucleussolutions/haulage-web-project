@@ -1,8 +1,9 @@
 package haulage.project
 
 import grails.compiler.GrailsCompileStatic
+import groovy.transform.TypeCheckingMode
 
-@GrailsCompileStatic
+@GrailsCompileStatic(TypeCheckingMode.SKIP)
 class PricingInterceptor {
 
   //todo only allow access to admin and super admin

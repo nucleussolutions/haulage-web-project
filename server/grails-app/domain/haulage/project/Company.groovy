@@ -2,9 +2,10 @@ package haulage.project
 
 import grails.compiler.GrailsCompileStatic
 import grails.rest.*
+import groovy.transform.TypeCheckingMode
 
 @Resource(readOnly = false, formats = ['json', 'xml'])
-@GrailsCompileStatic
+@GrailsCompileStatic(TypeCheckingMode.SKIP)
 class Company {
 
   String name
@@ -33,7 +34,6 @@ class Company {
     companyImgUrl nullable: true
     code nullable: false, blank: false, unique: true
     email nullable: false, email: true
-    yardAddress nullable: true
   }
 
   static searchable = true

@@ -1,8 +1,9 @@
 package haulage.project
 
 import grails.compiler.GrailsCompileStatic
+import groovy.transform.TypeCheckingMode
 
-@GrailsCompileStatic
+@GrailsCompileStatic(TypeCheckingMode.SKIP)
 class VehicleInterceptor {
 
   // vehicle can only be accessed by the haulier and super admin
@@ -13,7 +14,7 @@ class VehicleInterceptor {
   }
 
   boolean before() {
-    def userId = request.getHeader('userId')
+    String userId = request.getHeader('userId')
     if(userId){
       Permission userPermission = permissionService.findByUserId(userId)
       if(userPermission){
