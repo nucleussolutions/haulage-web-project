@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { HaulierInfo } from './haulierInfo';
-import { HaulierInfoService } from './haulierInfo.service';
-import { Subscription } from 'rxjs/Subscription';
-import { UserService } from 'app/user.service';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {HaulierInfo} from './haulierInfo';
+import {HaulierInfoService} from './haulierInfo.service';
+import {Subscription} from 'rxjs/Subscription';
+import {UserService} from 'app/user.service';
+import {Observable} from "rxjs/Observable";
 
 
 @Component({
@@ -23,16 +24,23 @@ export class HaulierInfoShowComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(private route: ActivatedRoute, private haulierInfoService: HaulierInfoService, private router: Router, private userService: UserService) {
-    this.subscription = this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    })
+
   }
 
   ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
-      this.haulierInfoService.get(+params['id'], this.userObject).subscribe((haulierInfo: HaulierInfo) => {
-        this.haulierInfo = haulierInfo;
-      });
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+
+      this.userObject = result[0];
+
+      let params = result[1];
+
+      if (params.hasOwnProperty('id')) {
+        return this.haulierInfoService.get(+params['id'], this.userObject);
+      } else {
+        throw 'params id not found'
+      }
+    }).subscribe((haulierInfo: HaulierInfo) => {
+      this.haulierInfo = haulierInfo;
     });
   }
 
