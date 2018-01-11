@@ -10,12 +10,15 @@ class LocationInterceptor {
   def permissionService
 
   LocationInterceptor() {
-    match(controller: 'location').except(action: 'list').except(action: 'get')
+    match(controller: 'location').except(action: 'index').except(action: 'show')
   }
 
   boolean before() {
-    if(params.userId){
-      Permission userPermission = permissionService.findByUserId(params.userId as String)
+
+    def userId = request.getHeader('userId')
+
+    if(userId){
+      Permission userPermission = permissionService.findByUserId(userId)
 
       if(userPermission){
         userPermission.authority == 'Super Admin'
@@ -24,7 +27,7 @@ class LocationInterceptor {
       }
 
     }else{
-      false
+      falsen
     }
   }
 
