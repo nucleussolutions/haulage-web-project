@@ -65,8 +65,7 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
     this.transportRequest.customer.country = 'Malaysia';
     this.transportRequest.hazardous = false;
     this.transportRequest.overDimension = false;
-
-
+    this.transportRequest.status = 'pending';
 
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).subscribe(response => {
       this.userObject = response[0];
@@ -85,8 +84,20 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
       });
 
       //todo this is supposed to be api for location by something
-      this.locationService.list(this.userObject, 1).subscribe((locationList: Location[]) => {
-        this.locationList = locationList;
+      this.locationService.list(this.userObject, 0).subscribe(json => {
+        let data = json['data'];
+        let links = json['links'];
+        // this.nextLink = links.next;
+        // this.firstLink = links.first;
+        // this.lastLink = links.last;
+
+        this.locationList = [];
+
+        data.forEach(locationDatum => {
+          let location = new Location(locationDatum.attributes);
+          location.id = locationDatum.id;
+          this.locationList.push(location);
+        });
         console.log('locationList ' + JSON.stringify(this.locationList));
       });
 

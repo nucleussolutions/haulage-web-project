@@ -15,7 +15,7 @@ class UrlMappings {
     "404"(view: '/notFound')
     get "/permissionByUserId/${userId}"(controller: 'custom', action: 'permissionByUserId')
     get "/permission/grantedBy/${userId}"(controller: 'custom', action: 'permissionByGrantedBy')
-    get "/locationByType/${type}"(controller: 'custom', action: 'locationByType')
+    get "/location/type/${type}"(controller: 'custom', action: 'locationByType')
 
     get "/haulierInfo/userId/${userId}"(controller: 'custom', action: 'haulierByUserId')
 

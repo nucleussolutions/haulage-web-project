@@ -9,6 +9,7 @@ import {PermissionService} from 'app/permission/permission.service';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable} from "rxjs/Observable";
+import {Permission} from "../permission/permission";
 
 
 @Component({
@@ -41,7 +42,9 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private userService: UserService, private modal: Modal, private titleService: Title, private router: Router) {
+  permission: Permission;
+
+  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private userService: UserService, private modal: Modal, private titleService: Title, private router: Router, private permissionService: PermissionService) {
     this.titleService.setTitle('Transport Request List');
   }
 
@@ -64,6 +67,10 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
 
       this.transportRequestService.count(this.userObject).subscribe(count => {
         this.count = count;
+      });
+
+      this.permissionService.getByUserId(this.userObject).subscribe(permission => {
+        this.permission = permission;
       });
 
       return this.transportRequestService.list(this.userObject, this.offset);
@@ -95,6 +102,7 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
 
       this.modal.alert().title('Error').message(message).open();
     });
+
   }
 
   onPageChange(offset) {
