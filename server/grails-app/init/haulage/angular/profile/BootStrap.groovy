@@ -146,7 +146,11 @@ class BootStrap {
     def driverInfo = new DriverInfo(haulierId: 'OFrQip85jPRRmXkBR544ROU51y93', name: 'tan ah keong', icNumber: '1230981203', passportNumber: '1230912380', icFrontImgUrl: 'http://www.google.com', icBackImgUrl: 'http://www.google.com', passportImgUrl: 'http://www.google.com', phone: '21913012938', licenseClass: 'D', licenseExpiry: new Date(), westPortPassNo: '123098230123', westPortPassExpiry: new Date(), northPortPassNo: '123098213', northPortPassExpiry: new Date(), emergencyContactName: 'tan ah chong', emergencyContactPhone: '120213921830123').save(flush: true, failOnError: true)
 
 
-    def quote2 = new Quote(haulierId: '', forwarderId: '', )
+//    def quote2 = new Quote(haulierId: '', forwarderId: '', status: QuotationStatus.PENDING_ACCEPTANCE, )
+
+
+    def driverPermission = new Permission(email: 'driver@kevin.com', userId: '6p3vO6jiPCenw3gXnq0tv2ylL4h1', authority: 'User', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93').save(flush: true, failOnError: true)
+
   }
   def destroy = {
   }
