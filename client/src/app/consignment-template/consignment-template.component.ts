@@ -1,17 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {Consignment} from "../consignment/consignment";
-import {UserService} from "../user.service";
-import {Observable} from "rxjs/Observable";
-import {ActivatedRoute} from "@angular/router";
-import {ConsignmentService} from "../consignment/consignment.service";
+import { Consignment } from "../consignment/consignment";
+import { UserService } from "../user.service";
+import { Observable } from "rxjs/Observable";
+import { ActivatedRoute } from "@angular/router";
+import { ConsignmentService } from "../consignment/consignment.service";
 import { Subscription } from 'rxjs/Subscription';
-import {HaulierInfo} from "../haulierInfo/haulierInfo";
-import {ForwarderInfo} from "../forwarderInfo/forwarderInfo";
-import {HaulierInfoService} from "../haulierInfo/haulierInfo.service";
-import {ForwarderInfoService} from "../forwarderInfo/forwarderInfo.service";
+import { HaulierInfo } from "../haulierInfo/haulierInfo";
+import { ForwarderInfo } from "../forwarderInfo/forwarderInfo";
+import { HaulierInfoService } from "../haulierInfo/haulierInfo.service";
+import { ForwarderInfoService } from "../forwarderInfo/forwarderInfo.service";
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
-import {TransportRequestService} from "../transportRequest/transportRequest.service";
-import {JobService} from "../job/job.service";
+import { TransportRequestService } from "../transportRequest/transportRequest.service";
+import { JobService } from "../job/job.service";
+import { TransportRequest } from 'app/transportRequest/transportRequest';
 
 @Component({
   selector: 'app-consignment-template',
@@ -22,12 +23,14 @@ export class ConsignmentTemplateComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   consignment: Consignment;
 
-  private userObject:any;
+  private userObject: any;
 
   private subscription: Subscription;
 
@@ -42,34 +45,27 @@ export class ConsignmentTemplateComponent implements OnInit, OnDestroy {
       this.userObject = result[0];
       let params = result[1];
 
-      if(params.hasOwnProperty('id')){
+      if (params.hasOwnProperty('id')) {
         return this.consignmentService.get(params['id'], this.userObject);
-      }else{
+      } else {
         throw 'param id not found'
       }
-    }).subscribe(consignment => {
+    }).flatMap(consignment => {
       this.consignment = consignment;
-      //consignment.transportRequest doesnt make sense
-      this.transportRequestService.get(this.consignment.transportRequest.id, this.userObject).subscribe(transportRequest => {
-        this.consignment.transportRequest = transportRequest;
-        console.log('consignment.transportRequest '+this.consignment.transportRequest);
-        //much better
-      });
-
-      //todo call haulier and forwarder info based on consignment
-      this.forwarderInfoService.getByUserId(this.consignment.transportRequest.forwarderId, this.userObject).subscribe(forwarderInfo => {
-        this.forwarderInfo = forwarderInfo;
-      });
-      //get job number by consignment id?
-
-
+      return this.transportRequestService.get(this.consignment.transportRequest.id, this.userObject);
+    }).flatMap(transportRequest => {
+      this.consignment.transportRequest = transportRequest;
+      console.log('consignment.transportRequest ' + this.consignment.transportRequest);
+      return this.forwarderInfoService.getByUserId(this.consignment.transportRequest.forwarderId, this.userObject);
+    }).subscribe(forwarderInfo => {
+      this.forwarderInfo = forwarderInfo;
     }, error => {
       let message;
-      if(error.status == 400){
+      if (error.status == 400) {
         message = 'Bad request';
-      }else if(error.status == 500){
+      } else if (error.status == 500) {
         message = 'Internal server error';
-      }else if(error.status == 404){
+      } else if (error.status == 404) {
         message = 'Not found';
       }
 

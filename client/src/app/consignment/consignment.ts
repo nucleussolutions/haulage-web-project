@@ -17,6 +17,8 @@ export class Consignment {
   //todo expose rft so that we can get number to fill in the consignment note
   transportRequest: TransportRequest;
 
+  signatureImgUrl : string;
+
   job: Job;
   dateCreated: any;
   lastUpdated: any;

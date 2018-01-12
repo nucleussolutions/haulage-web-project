@@ -16,7 +16,9 @@ import { PermissionService } from "../permission/permission.service";
 export class JobPersistComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+        if(this.subscription){
+            this.subscription.unsubscribe();
+        }
     }
 
     job = new Job();

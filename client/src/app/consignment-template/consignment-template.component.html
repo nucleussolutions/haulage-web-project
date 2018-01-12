@@ -104,8 +104,10 @@
 
         <div class="form-group">
           <label class="consignment-note-label">POL/POD</label>
-
-          <p></p>
+          
+          
+          <p *ngIf="consignment?.transportRequest.portOfLoading">{{consignment?.transportRequest.portOfLoading}}</p>
+          <p *ngIf="consignment?.transportRequest.portOfDischarge">{{consignment?.transportRequest.portOfDischarge}}</p>
         </div>
 
         <div class="form-group">

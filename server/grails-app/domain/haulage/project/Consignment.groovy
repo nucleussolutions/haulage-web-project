@@ -26,6 +26,8 @@ class Consignment {
 
   static belongsTo = [transportRequest: TransportRequest, job: Job]
 
+  String signatureImgUrl
+
   static constraints = {
     containerNo blank: false, nullable: false
     name blank: false, nullable: false
@@ -36,6 +38,7 @@ class Consignment {
     taskType nullable: false, inList: ConsignmentTaskType.values()*.id
     transportRequest nullable: false
     job nullable: true
+    signatureImgUrl nullable: true
   }
 
   static searchable = {
