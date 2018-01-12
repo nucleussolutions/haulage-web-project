@@ -14,7 +14,9 @@ import {Modal} from "ngx-modialog/plugins/bootstrap";
 export class QuoteListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   quoteList: Quote[] = [];

@@ -5,6 +5,7 @@ import {ConsignmentService} from './consignment.service';
 import {UserService} from "../user.service";
 import {Subscription} from "rxjs/Subscription";
 import * as jsPDF from 'jspdf';
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'consignment-persist',
@@ -13,7 +14,9 @@ import * as jsPDF from 'jspdf';
 export class ConsignmentShowComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   consignment = new Consignment();
@@ -23,16 +26,23 @@ export class ConsignmentShowComponent implements OnInit, OnDestroy {
   private userObject: any;
 
   constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private router: Router, private userService: UserService) {
-    this.subscription = this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    })
+
   }
 
   ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
-      this.consignmentService.get(+params['id'], this.userObject).subscribe((consignment: Consignment) => {
-        this.consignment = consignment;
-      });
+
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+      this.userObject = result[0];
+
+      let params = result[1];
+
+      if(params.hasOwnProperty('id')){
+        return this.consignmentService.get(+params['id'], this.userObject);
+      }else {
+        throw 'param id not found'
+      }
+    }).subscribe((consignment: Consignment) => {
+      this.consignment = consignment;
     });
   }
 

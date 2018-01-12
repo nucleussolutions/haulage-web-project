@@ -20,7 +20,9 @@ import 'rxjs/add/operator/distinctUntilChanged';
 export class LocationListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   locationList: Location[] = [];

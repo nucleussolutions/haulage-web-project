@@ -13,7 +13,9 @@ import { Observable } from "rxjs/Observable";
 export class TariffListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   tariffList: Tariff[] = [];

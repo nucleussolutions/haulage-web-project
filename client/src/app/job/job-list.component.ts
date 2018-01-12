@@ -14,7 +14,9 @@ import { Observable } from "rxjs/Observable";
 export class JobListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   jobList: Job[] = [];
@@ -48,6 +50,9 @@ export class JobListComponent implements OnInit, OnDestroy {
   callJobs(){
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
 
+
+      console.log('jobs list flatmap');
+
       this.userObject = result[0];
 
       let params = result[1];
@@ -66,10 +71,15 @@ export class JobListComponent implements OnInit, OnDestroy {
 
       //todo list by haulier
 
-      //check permission if the person is a super admin
+      console.log('userObject '+this.userObject);
+
+      console.log('offset '+this.offset);
 
       return this.jobService.list(this.userObject, this.offset);
     }).subscribe(json => {
+
+      console.log('job list json');
+
       let data = json['data'];
       let links = json['links'];
       this.nextLink = links.next;

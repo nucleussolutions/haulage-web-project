@@ -16,7 +16,9 @@ import { Permission } from "../permission/permission";
 export class ConsignmentListComponent implements OnInit {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   consignmentList: Consignment[] = [];

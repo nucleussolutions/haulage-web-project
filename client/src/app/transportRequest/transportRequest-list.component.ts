@@ -19,7 +19,9 @@ import {Permission} from "../permission/permission";
 export class TransportRequestListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   transportRequestList: TransportRequest[] = [];

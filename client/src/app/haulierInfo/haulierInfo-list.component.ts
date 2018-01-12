@@ -16,7 +16,9 @@ import { Observable } from "rxjs/Observable";
 export class HaulierInfoListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   haulierInfoList: HaulierInfo[] = [];
@@ -57,6 +59,8 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
       if (params['page']) {
         this.page = params['page'];
       }
+
+      this.offset = (this.page - 1) * this.limit;
 
       this.haulierInfoService.count(this.userObject).subscribe(count => {
         this.count = count;

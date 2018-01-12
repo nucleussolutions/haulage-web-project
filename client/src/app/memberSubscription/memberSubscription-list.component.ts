@@ -12,7 +12,9 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class MemberSubscriptionListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   memberSubscriptionList: MemberSubscription[] = [];

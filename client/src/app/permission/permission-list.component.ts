@@ -14,7 +14,9 @@ import { Observable } from "rxjs/Observable";
 export class PermissionListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   permissionList: Permission[] = [];

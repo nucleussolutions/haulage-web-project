@@ -15,7 +15,9 @@ import { ActivatedRoute, Router } from "@angular/router";
 })
 export class ForwarderInfoListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   forwarderInfoList: ForwarderInfo[] = [];

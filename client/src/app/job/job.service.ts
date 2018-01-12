@@ -28,7 +28,7 @@ export class JobService {
       'userId': userObject.uid
     });
 
-    this.permissionService.getByUserId(userObject.uid).flatMap(permission => {
+    this.permissionService.getByUserId(userObject).flatMap(permission => {
       let urlPath;
 
       if(permission.authority == 'Super Admin'){
@@ -112,7 +112,7 @@ export class JobService {
       'userId': userObject.uid
     });
 
-    this.permissionService.getByUserId(userObject.uid).flatMap(permission => {
+    this.permissionService.getByUserId(userObject).flatMap(permission => {
       let urlPath;
 
       if(permission.authority == 'Super Admin'){
