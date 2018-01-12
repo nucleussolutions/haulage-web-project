@@ -13,7 +13,7 @@
 
   <div class="form-group">
     <label class="consignment-note-label">Job No.</label>
-    <p></p>
+    <p>{{consignment?.job != null ? consignment.job.id : 'Unassigned'}}</p>
     <!--show job number, otherwise show unassigned-->
   </div>
 

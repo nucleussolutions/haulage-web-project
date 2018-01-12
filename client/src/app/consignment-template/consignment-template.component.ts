@@ -11,6 +11,7 @@ import {HaulierInfoService} from "../haulierInfo/haulierInfo.service";
 import {ForwarderInfoService} from "../forwarderInfo/forwarderInfo.service";
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import {TransportRequestService} from "../transportRequest/transportRequest.service";
+import {JobService} from "../job/job.service";
 
 @Component({
   selector: 'app-consignment-template',
@@ -34,13 +35,18 @@ export class ConsignmentTemplateComponent implements OnInit, OnDestroy {
 
   forwarderInfo: ForwarderInfo;
 
-  constructor(private userService: UserService, private route: ActivatedRoute, private consignmentService: ConsignmentService, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private modal: Modal, private transportRequestService: TransportRequestService) { }
+  constructor(private userService: UserService, private route: ActivatedRoute, private consignmentService: ConsignmentService, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private modal: Modal, private transportRequestService: TransportRequestService, private jobService: JobService) { }
 
   ngOnInit() {
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
       this.userObject = result[0];
       let params = result[1];
-      return this.consignmentService.get(params['id'], this.userObject);
+
+      if(params.hasOwnProperty('id')){
+        return this.consignmentService.get(params['id'], this.userObject);
+      }else{
+        throw 'param id not found'
+      }
     }).subscribe(consignment => {
       this.consignment = consignment;
       //consignment.transportRequest doesnt make sense
@@ -54,8 +60,8 @@ export class ConsignmentTemplateComponent implements OnInit, OnDestroy {
       this.forwarderInfoService.getByUserId(this.consignment.transportRequest.forwarderId, this.userObject).subscribe(forwarderInfo => {
         this.forwarderInfo = forwarderInfo;
       });
-
       //get job number by consignment id?
+
 
     }, error => {
       let message;

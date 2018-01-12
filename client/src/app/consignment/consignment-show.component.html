@@ -59,7 +59,7 @@
   </ol>
 
   <a class="edit btn btn-primary" [routerLink]="['/consignment', 'edit', consignment.id]">Edit</a>
-  <button class="btn btn-primary"><i class="fa fa-print fa-fw"></i>Print Consignment Note</button>
+  <button class="btn btn-primary" [routerLink]="['/consignment','printpreview', consignment.id]"><i class="fa fa-print fa-fw"></i>Print Consignment Note</button>
   <button class="btn btn-danger" type="button" (click)="destroy()">Delete</button>
 
 </div>

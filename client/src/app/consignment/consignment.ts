@@ -1,4 +1,5 @@
 import {TransportRequest} from "../transportRequest/transportRequest";
+import {Job} from "../job/job";
 
 
 export class Consignment {
@@ -15,6 +16,8 @@ export class Consignment {
 
   //todo expose rft so that we can get number to fill in the consignment note
   transportRequest: TransportRequest;
+
+  job: Job;
   dateCreated: any;
   lastUpdated: any;
 
