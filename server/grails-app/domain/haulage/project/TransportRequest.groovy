@@ -106,6 +106,7 @@ class TransportRequest {
     openCargoBoat nullable: false
   }
 
+  static embedded = ['customer']
 
   static mapping = {
     autoTimestamp true
