@@ -83,7 +83,7 @@ export class ConsignmentTemplateComponent implements OnInit, OnDestroy {
     popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
     console.log('popupWin '+popupWin);
     popupWin.document.open();
-    popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</html>');
+    popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" /></head><body onload="window.print()">' + printContents + '</html>');
     popupWin.document.close();
   }
 
