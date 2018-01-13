@@ -53,7 +53,7 @@
         </div>
 
         <div class="form-group">
-          <label>Code</label>
+          <label class="consignment-note-label">Code</label>
           <p>{{consignment?.consignmentCode}}</p>
         </div>
 
@@ -241,14 +241,14 @@
       </div>
 
       <div class="form-group">
-        <p>Signature</p>
-
+        <label>Signature</label>
+        <img [src]="consignment.signatureImgUrl" />
       </div>
 
-      <div class="form-group">
+      <!-- <div class="form-group">
         <p>Stamp</p>
 
-      </div>
+      </div> -->
 
       <div class="form-group">
         <p>Name</p>

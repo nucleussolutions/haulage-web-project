@@ -19,6 +19,8 @@ export class Consignment {
 
   signatureImgUrl : string;
 
+  signedBy: string;
+
   job: Job;
   dateCreated: any;
   lastUpdated: any;

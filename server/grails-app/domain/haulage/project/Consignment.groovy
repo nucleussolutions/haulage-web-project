@@ -28,6 +28,8 @@ class Consignment {
 
   String signatureImgUrl
 
+  String signedBy
+
   static constraints = {
     containerNo blank: false, nullable: false
     name blank: false, nullable: false
@@ -39,6 +41,7 @@ class Consignment {
     transportRequest nullable: false
     job nullable: true
     signatureImgUrl nullable: true
+    signedBy nullable: true
   }
 
   static searchable = {
