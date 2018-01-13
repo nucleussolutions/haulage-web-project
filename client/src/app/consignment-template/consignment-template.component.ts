@@ -59,6 +59,9 @@ export class ConsignmentTemplateComponent implements OnInit, OnDestroy {
       return this.forwarderInfoService.getByUserId(this.consignment.transportRequest.forwarderId, this.userObject);
     }).subscribe(forwarderInfo => {
       this.forwarderInfo = forwarderInfo;
+
+      // this.print();
+      window.print();
     }, error => {
       let message;
       if (error.status == 400) {
@@ -73,5 +76,15 @@ export class ConsignmentTemplateComponent implements OnInit, OnDestroy {
     });
   }
 
+  print(){
+    let printContents, popupWin;
+    printContents = document.getElementById('print-section').innerHTML;
+    console.log('printContents '+printContents);
+    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+    console.log('popupWin '+popupWin);
+    popupWin.document.open();
+    popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + printContents + '</html>');
+    popupWin.document.close();
+  }
 
 }
