@@ -30,7 +30,9 @@ import { HaulierInfoService } from 'app/haulierInfo/haulierInfo.service';
 export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   transportRequest = new TransportRequest();
