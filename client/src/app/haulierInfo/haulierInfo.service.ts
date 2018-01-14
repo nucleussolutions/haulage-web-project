@@ -41,6 +41,29 @@ export class HaulierInfoService {
     return subject.asObservable();
   }
 
+  listByForwarder(userObject: any){
+    let subject = new Subject<HaulierInfo[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+    this.http.get(environment.serverUrl + '/haulierInfo/forwarder/'+userObject.uid, {
+      headers: headers,
+      // params: params
+    })
+      .catch(err => {
+        subject.error(err);
+        return subject.asObservable();
+      })
+      .subscribe((json: any[]) => {
+        subject.next(json);
+      });
+    return subject.asObservable();
+  }
+
   get(id: number, userObject: any): Observable<HaulierInfo> {
     let headers = new HttpHeaders({
       'token': userObject.token,

@@ -19,7 +19,9 @@ import { Modal } from 'ngx-modialog/plugins/bootstrap';
 export class QuotationTemplateComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   private userObject: any;
@@ -33,41 +35,24 @@ export class QuotationTemplateComponent implements OnInit, OnDestroy {
   private subscription:Subscription;
 
   constructor(private userService: UserService, private quoteService: QuoteService, private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private haulierInfoService: HaulierInfoService, private modal: Modal) {
+
   }
 
   ngOnInit() {
 
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
-
       this.userObject = result[0];
-
       let params = result[1];
-
       return this.quoteService.get(params['id'], this.userObject);
-    }).subscribe(quote => {
+    }).flatMap(quote => {
       this.quote = quote;
-
-      this.forwarderInfoService.getByUserId(this.quote.forwarderId, this.userObject).subscribe(forwarderInfo => {
-        this.forwarderInfo = forwarderInfo;
-      });
-
-      this.haulierInfoService.getByUserId(this.quote.haulierId, this.userObject).subscribe(haulierInfo => {
-        this.haulierInfo = haulierInfo;
-      });
-
-    }, error => {
-      let message;
-      if(error.status == 400){
-        message = 'Bad request';
-      }else if(error.status == 500){
-        message = 'Internal server error';
-      }else if(error.status == 404){
-        message = 'Not found';
-      }
-
-      this.modal.alert().title('Error').message(message).open();
+      return this.forwarderInfoService.getByUserId(this.quote.forwarderId, this.userObject);
+    }).flatMap(forwarderInfo => {
+      this.forwarderInfo = forwarderInfo;
+      return this.haulierInfoService.getByUserId(this.quote.haulierId, this.userObject);
+    }).subscribe(haulierInfo => {
+      this.haulierInfo = haulierInfo;
+      window.print();
     });
-
   }
-
 }

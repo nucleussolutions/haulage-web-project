@@ -1,66 +1,67 @@
 <div class="nav" role="navigation">
-    <ul>
-        <li><a [routerLink]="['/index']" class="home">Home</a></li>
-        <li><a class="list" [routerLink]="['/quote', 'list']" class="list">Quote List</a></li>
-        <li><a class="create" [routerLink]="['/quote', 'create']" class="create">New Quote</a></li>
-    </ul>
+  <ul>
+    <li><a [routerLink]="['/index']" class="home">Home</a></li>
+    <li><a class="list" [routerLink]="['/quote', 'list']" class="list">Quote List</a></li>
+    <li><a class="create" [routerLink]="['/quote', 'create']" class="create">New Quote</a></li>
+  </ul>
 </div>
 <div id="show-part" class="content scaffold-show" role="main">
-    <h1>Show Quote</h1>
-    <ol class="property-list quote">
-  <li class="fieldcontain">
-    <span id="haulierId-label" class="property-label">Haulier Id</span>
-    <div class="property-value" aria-labelledby="haulierId-label">
-      <span>{{quote.haulierId}}</span>
-    </div>
-  </li>
-  <li class="fieldcontain">
-    <span id="forwarderId-label" class="property-label">Forwarder Id</span>
-    <div class="property-value" aria-labelledby="forwarderId-label">
-      <span>{{quote.forwarderId}}</span>
-    </div>
-  </li>
-  <li class="fieldcontain">
-    <span id="status-label" class="property-label">Status</span>
-    <div class="property-value" aria-labelledby="status-label">
-      <span>{{quote.status}}</span>
-    </div>
-  </li>
-  <li class="fieldcontain">
-    <span id="code-label" class="property-label">Code</span>
-    <div class="property-value" aria-labelledby="code-label">
-      <span>{{quote.code}}</span>
-    </div>
-  </li>
-  <li class="fieldcontain">
-    <span id="terms-label" class="property-label">Terms</span>
-    <div class="property-value" aria-labelledby="terms-label">
-      <ul>
-        <li *ngFor="let termAndCondition of quote.terms">
-          <a [routerLink]="['/termAndCondition', 'show', termAndCondition.id]">{{termAndCondition.desc}}</a>
-        </li>
-      </ul>
-    </div>
-  </li>
-  <li class="fieldcontain">
-    <span id="items-label" class="property-label">Items</span>
-    <div class="property-value" aria-labelledby="items-label">
-      <ul>
-        <li *ngFor="let quoteItem of quote.items">
-          <a [routerLink]="['/quoteItem', 'show', quoteItem.id]">{{quoteItem.desc}}</a>
-        </li>
-      </ul>
-    </div>
-  </li>
-  <li class="fieldcontain">
-    <span id="endDate-label" class="property-label">End Date</span>
-    <div class="property-value" aria-labelledby="endDate-label">
-      <span>{{quote.endDate | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
-    </div>
-  </li>
-</ol>
+  <h1>Show Quote</h1>
+  <ol class="property-list quote">
+    <li class="fieldcontain">
+      <span id="haulierId-label" class="property-label">Haulier Id</span>
+      <div class="property-value" aria-labelledby="haulierId-label">
+        <span>{{quote.haulierId}}</span>
+      </div>
+    </li>
+    <li class="fieldcontain">
+      <span id="forwarderId-label" class="property-label">Forwarder Id</span>
+      <div class="property-value" aria-labelledby="forwarderId-label">
+        <span>{{quote.forwarderId}}</span>
+      </div>
+    </li>
+    <li class="fieldcontain">
+      <span id="status-label" class="property-label">Status</span>
+      <div class="property-value" aria-labelledby="status-label">
+        <span>{{quote.status}}</span>
+      </div>
+    </li>
+    <li class="fieldcontain">
+      <span id="code-label" class="property-label">Code</span>
+      <div class="property-value" aria-labelledby="code-label">
+        <span>{{quote.code}}</span>
+      </div>
+    </li>
+    <li class="fieldcontain">
+      <span id="terms-label" class="property-label">Terms</span>
+      <div class="property-value" aria-labelledby="terms-label">
+        <ul>
+          <li *ngFor="let termAndCondition of quote.terms">
+            <a [routerLink]="['/termAndCondition', 'show', termAndCondition.id]">{{termAndCondition.desc}}</a>
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li class="fieldcontain">
+      <span id="items-label" class="property-label">Items</span>
+      <div class="property-value" aria-labelledby="items-label">
+        <ul>
+          <li *ngFor="let quoteItem of quote.items">
+            <a [routerLink]="['/quoteItem', 'show', quoteItem.id]">{{quoteItem.desc}}</a>
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li class="fieldcontain">
+      <span id="endDate-label" class="property-label">End Date</span>
+      <div class="property-value" aria-labelledby="endDate-label">
+        <span>{{quote.endDate | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+      </div>
+    </li>
+  </ol>
 
-    <a class="edit btn btn-primary" [routerLink]="['/quote', 'edit', quote.id]">Edit</a>
-    <button class="btn btn-danger" type="button" (click)="destroy()">Delete</button>
+  <button [routerLink]="['/quote', 'printpreview', quote.id]">Print Quote</button>
+  <a class="edit btn btn-primary" [routerLink]="['/quote', 'edit', quote.id]">Edit</a>
+  <button class="btn btn-danger" type="button" (click)="destroy()">Delete</button>
 
 </div>

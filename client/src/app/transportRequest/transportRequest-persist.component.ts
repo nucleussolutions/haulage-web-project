@@ -20,6 +20,7 @@ import { Observable } from "rxjs/Observable";
 import 'rxjs/add/observable/combineLatest';
 import { LoadingComponent } from "../loading/loading.component";
 import {S3Service} from "../service/s3.service";
+import { HaulierInfoService } from 'app/haulierInfo/haulierInfo.service';
 
 @Component({
   selector: 'transportRequest-persist',
@@ -55,7 +56,7 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
   gatePassImg: File;
 
-  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService, private modal: Modal, private permissionService: PermissionService, private createConsignmentEventService: CreateConsignmentEventService, private s3Service: S3Service) {
+  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService, private modal: Modal, private permissionService: PermissionService, private createConsignmentEventService: CreateConsignmentEventService, private s3Service: S3Service, private haulierInfoService: HaulierInfoService) {
 
   }
 
@@ -100,6 +101,7 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
         });
         console.log('locationList ' + JSON.stringify(this.locationList));
       });
+
 
       if (params.hasOwnProperty('id')) {
         this.transportRequestService.get(+params['id'], this.userObject).subscribe((transportRequest: TransportRequest) => {
