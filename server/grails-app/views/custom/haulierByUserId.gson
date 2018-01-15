@@ -1,6 +1,6 @@
 import haulage.project.HaulierInfo
 
 model {
-	HaulierInfo haulierInfo
+  HaulierInfo haulierInfo
 }
 json g.render(haulierInfo, [resolveTemplate: false, deep: true])
