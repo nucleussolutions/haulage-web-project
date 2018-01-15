@@ -15,6 +15,7 @@ export class Company {
   companyImgUrl: string;
   code: string;
   email: string;
+  postalCode: string;
 
   constructor (object?: any) {
     if (object) {

@@ -1,5 +1,7 @@
 <div class="row">
-  <img class="company-logo" [src]="haulierInfo.company.companyImgUrl">
+  <div class="text-center">
+    <img class="company-logo" [src]="haulierInfo.company.companyImgUrl">
+  </div>
 </div>
 
 <h4 class="quote-title">Quotation</h4>
@@ -18,17 +20,17 @@
   </div>
 
   <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-    <p>{{forwarderInfo.company.name}}</p>
+    <p>{{forwarderInfo?.company?.name}}</p>
 
-    <p>{{forwarderInfo.company.address1}}</p>
+    <span>{{forwarderInfo?.company?.address1}}</span><br>
 
-    <p>{{forwarderInfo.company.address2}}</p>
+    <span>{{forwarderInfo?.company?.address2}}</span><br>
 
-    <p>{{forwarderInfo.company.city}}</p>
+    <span>{{forwarderInfo?.company?.postalCode}} {{forwarderInfo?.company?.city}}</span>
 
-    <p>{{forwarderInfo.company.state}}</p>
+    <span>{{forwarderInfo?.company?.state}}</span><br>
 
-    <p>{{forwarderInfo.company.country}}</p>
+    <span>{{forwarderInfo?.company?.country}}</span>
   </div>
 </div>
 
@@ -63,8 +65,8 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <h4 class="quote-title">Terms and Conditions</h4>
 
-    <ol *ngFor="let term of quote.terms; let i = index" [attr.data-index]="i">
-      <li>{{term.desc}}</li>
+    <ol >
+      <li *ngFor="let term of quote.terms; let i = index" [attr.data-index]="i">{{term.desc}}</li>
     </ol>
 
     <p>We sincerely hope that our rate proposal will meet your requirement.</p>
@@ -77,14 +79,14 @@
     <br>
     <p>Best regards from</p>
 
-    <p>{{haulierInfo.name}}</p>
-    <p>{{haulierInfo.company?.address1}}</p>
-    <p>{{haulierInfo.company?.address2}}</p>
-    <p>{{haulierInfo.company?.city}}</p>
-    <p>{{haulierInfo.company?.state}}</p>
-    <p>{{haulierInfo.company?.country}}</p>
-    <p>Mobile: {{haulierInfo.company?.officePhone}}</p>
-    <p>Email: {{haulierInfo.company?.email}}</p>
+    <span>{{haulierInfo.name}}</span><br>
+    <span>{{haulierInfo.company?.address1}}</span><br>
+    <span>{{haulierInfo.company?.address2}}</span><br>
+    <span>{{haulierInfo.company?.postalCode}} {{haulierInfo.company?.city}}</span><br>
+    <span>{{haulierInfo.company?.state}}</span><br>
+    <span>{{haulierInfo.company?.country}}</span><br>
+    <span><strong>Mobile:</strong> {{haulierInfo.company?.officePhone}}</span><br>
+    <span><strong>Email:</strong> {{haulierInfo.company?.email}}</span>
   </div>
 </div>
 

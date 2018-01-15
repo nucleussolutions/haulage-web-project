@@ -16,9 +16,9 @@ class BootStrap {
 
   def init = { servletContext ->
 
-    def company1 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'AGL', name: 'AGL Logistics', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '12932813901283', email: 'kevin2@kevin.com')
+    def company1 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'AGL', name: 'AGL Logistics', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '12932813901283', email: 'kevin2@kevin.com', postalCode: '21309')
 
-    def company2 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'BGL', name: 'AGL Logistics', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '12932813901283', email: 'kevin@kevin.com')
+    def company2 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'BGL', name: 'AGL Logistics', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '12932813901283', email: 'kevin@kevin.com', postalCode: '98700')
 
     def haulierInfo1 = new HaulierInfo(userId: 'OFrQip85jPRRmXkBR544ROU51y93', company: company1, name: 'qwpeiwepwqiew').save(flush: true, failOnError: true)
 
@@ -133,7 +133,7 @@ class BootStrap {
 
 
     def term1 = new TermAndCondition(desc: 'desc 1')
-    def term2 = new TermAndCondition(desc: 'desc 1')
+    def term2 = new TermAndCondition(desc: 'desc 2')
 
 
     def quote = new Quote(forwarderId: 'GWQOYWnAxxVPtnUODGCWe8cXllK2', haulierId: 'OFrQip85jPRRmXkBR544ROU51y93', status: QuotationStatus.PENDING_ACCEPTANCE.id, items: [quoteItem1, quoteItem2], terms: [term1, term2], code: '12312321', endDate: new Date()).save(flush: true, failOnError: true)

@@ -20,6 +20,7 @@ class Company {
   String companyImgUrl
   String code
   String email
+  String postalCode
 
   static constraints = {
     name nullable: false, blank: false
@@ -34,6 +35,7 @@ class Company {
     companyImgUrl nullable: true
     code nullable: false, blank: false, unique: true
     email nullable: false, email: true
+    postalCode nullable: false
   }
 
   static searchable = true
