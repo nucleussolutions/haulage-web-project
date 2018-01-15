@@ -39,7 +39,11 @@ export class PricingShowComponent implements OnInit, OnDestroy {
 
       let params = result[1];
 
-      return this.pricingService.get(+params['id'], this.userObject);
+      if(params.hasOwnProperty('id')){
+        return this.pricingService.get(+params['id'], this.userObject);
+      }else{
+        throw 'params id not found'
+      }
     }).subscribe((pricing: Pricing) => {
       this.pricing = pricing;
     }, error => {
