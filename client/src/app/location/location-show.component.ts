@@ -13,7 +13,9 @@ import { Subscription } from 'rxjs/Subscription';
 export class LocationShowComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   location = new Location();

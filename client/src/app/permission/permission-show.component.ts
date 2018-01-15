@@ -4,6 +4,8 @@ import { Permission } from './permission';
 import { PermissionService } from './permission.service';
 import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { UserService } from 'app/user.service';
+import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'permission-persist',
@@ -12,27 +14,47 @@ import { UserService } from 'app/user.service';
 export class PermissionShowComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    // throw new Error("Method not implemented.");
-
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   permission = new Permission();
 
   private userObject : any;
 
+  private subscription: Subscription;
+
   constructor(private route: ActivatedRoute, private permissionService: PermissionService, private router: Router, private userService: UserService, private modal: Modal) {
-    this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    });
+    
   }
 
   ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
-      this.permissionService.get(+params['id'], this.userObject).subscribe((permission: Permission) => {
-        this.permission = permission;
-      });
+
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+
+        this.userObject = result[0];
+
+        let params = result[1];
+
+        if (params.hasOwnProperty('id')) {
+          return this.permissionService.get(+params['id'], this.userObject);    
+        }else{ 
+          throw 'params id not found';
+        }
+    }).subscribe((permission: Permission) => {
+      this.permission = permission;
     }, error => {
-      this.modal.alert().title('Error').message(error).open();
+      let message;
+      if (error.status == 400) {
+        message = 'Bad request';
+      } else if (error.status == 500) {
+        message = 'Internal server error';
+      } else if (error.status == 404) {
+        message = 'Not found';
+      }
+
+      this.modal.alert().title('Error').message(message).open();
     });
   }
 

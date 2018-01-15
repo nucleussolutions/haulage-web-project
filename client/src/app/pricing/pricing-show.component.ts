@@ -15,7 +15,9 @@ import { Observable } from 'rxjs/Observable';
 export class PricingShowComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   pricing = new Pricing();

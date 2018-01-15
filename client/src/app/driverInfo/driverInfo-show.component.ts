@@ -13,7 +13,9 @@ import { UserService } from 'app/user.service';
 export class DriverInfoShowComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   driverInfo = new DriverInfo();

@@ -4,23 +4,33 @@ import {MemberSubscription} from './memberSubscription';
 import {MemberSubscriptionService} from './memberSubscription.service';
 import { UserService } from 'app/user.service';
 import { Observable } from 'rxjs/Observable';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'memberSubscription-persist',
   templateUrl: './memberSubscription-show.component.html'
 })
-export class MemberSubscriptionShowComponent implements OnInit {
+export class MemberSubscriptionShowComponent implements OnInit, OnDestroy {
+
+  ngOnDestroy(): void {
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
+  }
 
   memberSubscription = new MemberSubscription();
 
   private userObject: any;
+
+  private subscription: Subscription;
 
   // tslint:disable-next-line:max-line-length
   constructor(private route: ActivatedRoute, private memberSubscriptionService: MemberSubscriptionService, private router: Router, private userService: UserService) {}
 
   ngOnInit() {
 
-    Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
 
       this.userObject = result[0];
 
