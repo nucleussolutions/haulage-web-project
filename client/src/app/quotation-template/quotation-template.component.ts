@@ -52,7 +52,7 @@ export class QuotationTemplateComponent implements OnInit, OnDestroy {
       return this.haulierInfoService.getByUserId(this.quote.haulierId, this.userObject);
     }).subscribe(haulierInfo => {
       this.haulierInfo = haulierInfo;
-      window.print();
+      // window.print();
     });
   }
 }

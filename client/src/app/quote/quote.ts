@@ -12,6 +12,9 @@ export class Quote {
   items: QuoteItem[];
   endDate: any;
 
+  dateCreated: any;
+  lastUpdated: any;
+
   constructor (object?: any) {
     if (object) {
       
