@@ -12,7 +12,7 @@ class PdfGenerationService {
 
   def quoteService
 
-  def consignmentBucketService
+  def haulageBucketService
 
   def quotationBucketService
 

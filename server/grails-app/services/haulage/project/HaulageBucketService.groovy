@@ -6,15 +6,13 @@ import grails.plugin.awssdk.s3.AmazonS3Service
 import javax.annotation.PostConstruct
 
 //@Transactional
-abstract class ConsignmentBucketService extends AmazonS3Service {
+abstract class HaulageBucketService extends AmazonS3Service {
 
-  static final BUCKET_NAME = 'consignment-bucket'
+  static final BUCKET_NAME = 'haulage-dev'
 
   @PostConstruct
   def init() {
     init(BUCKET_NAME)
   }
-
-
 
 }

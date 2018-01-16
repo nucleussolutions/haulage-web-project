@@ -3,7 +3,7 @@ package haulage.project
 import grails.testing.services.ServiceUnitTest
 import spock.lang.Specification
 
-class ConsignmentBucketServiceSpec extends Specification implements ServiceUnitTest<ConsignmentBucketService>{
+class HaulageBucketServiceSpec extends Specification implements ServiceUnitTest<HaulageBucketService>{
 
     def setup() {
     }

@@ -254,4 +254,5 @@ class CustomController {
       respond status: NOT_FOUND, message: 'haulier id not found'
     }
   }
+
 }
