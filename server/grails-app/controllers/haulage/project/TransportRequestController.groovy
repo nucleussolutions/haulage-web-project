@@ -32,87 +32,132 @@ class TransportRequestController extends RestfulController<TransportRequest> {
     if(!amazonS3Service.listBucketNames().contains('haulage-dev')){
       respond status: HttpStatus.INTERNAL_SERVER_ERROR, message: 'storage folder not found'
     }else{
+      byte[] kOnekEightBytes = request.JSON.kOnekEightBase64String.decodeBase64()
+      byte[] bookingConfirmationBytes = request.JSON.bookingConfirmationBase64String.decodeBase64()
+      byte[] cmoBytes = request.JSON.cmoBase64String.decodeBase64()
+      byte[] gatePassBytes = request.JSON.gatePassBase64String.decodeBase64()
 
-    }
+      //amazonS3Service.storeFile('my-bucket', 'asset/foo/someKey.jpg', new File('/Users/ben/Desktop/photo.jpg'), CannedAccessControlList.PublicRead)
+      def transportRequest = new TransportRequest()
 
+      if(kOnekEightBytes){
+        File tmpFile = new File('/tmp/kone-keight.jpg')
+        FileUtils.writeByteArrayToFile(tmpFile, kOnekEightBytes)
+        rx.Observable.from(haulageBucketService.storeFile('transport-request/rft-number/kone-keight-files/', tmpFile, CannedAccessControlList.PublicRead)).subscribe({
+          transportRequest.kOnekEightFormImgUrl = it
+        })
 
-    byte[] kOnekEightBytes = request.JSON.kOnekEightBase64String.decodeBase64()
-    byte[] bookingConfirmationBytes = request.JSON.bookingConfirmationBase64String.decodeBase64()
-    byte[] cmoBytes = request.JSON.cmoBase64String.decodeBase64()
-    byte[] gatePassBytes = request.JSON.gatePassBase64String.decodeBase64()
+        tmpFile.delete()
+      }
 
-    //amazonS3Service.storeFile('my-bucket', 'asset/foo/someKey.jpg', new File('/Users/ben/Desktop/photo.jpg'), CannedAccessControlList.PublicRead)
+      if(bookingConfirmationBytes){
+        File tmpFile = new File('/tmp/booking-confirmation.jpg')
+        FileUtils.writeByteArrayToFile(tmpFile, bookingConfirmationBytes)
+        rx.Observable.from(haulageBucketService.storeFile('transport-request/rft-number/booking-confirmation/', tmpFile, CannedAccessControlList.PublicRead)).subscribe({
+          transportRequest.bookingConfirmationImgUrl = it
+        })
 
-    if(kOnekEightBytes){
-      File tmpFile = new File('/tmp/kone-keight.jpg')
-      FileUtils.writeByteArrayToFile(tmpFile, kOnekEightBytes)
-      haulageBucketService.storeFile('transport-request/rft-number/kone-keight-files/', tmpFile, CannedAccessControlList.PublicRead)
-      tmpFile.delete()
-    }
+        tmpFile.delete()
+      }
 
-    if(bookingConfirmationBytes){
-      File tmpFile = new File('/tmp/booking-confirmation.jpg')
-      FileUtils.writeByteArrayToFile(tmpFile, bookingConfirmationBytes)
-      haulageBucketService.storeFile('transport-request/rft-number/booking-confirmation/', tmpFile, CannedAccessControlList.PublicRead)
-      tmpFile.delete()
-    }
+      if(cmoBytes){
+        File tmpFile = new File('/tmp/cmo.jpg')
+        FileUtils.writeByteArrayToFile(tmpFile, cmoBytes)
+        rx.Observable.from(haulageBucketService.storeFile('transport-request/rft-number/cmo/', tmpFile, CannedAccessControlList.PublicRead)).subscribe({
+          transportRequest.cmoImgUrl = it
+        })
 
-    if(cmoBytes){
-      File tmpFile = new File('/tmp/cmo.jpg')
-      FileUtils.writeByteArrayToFile(tmpFile, cmoBytes)
-      haulageBucketService.storeFile('transport-request/rft-number/cmo/', tmpFile, CannedAccessControlList.PublicRead)
-      tmpFile.delete()
-    }
+        tmpFile.delete()
+      }
 
-    if(gatePassBytes){
-      File tmpFile = new File('/tmp/gatepass.jpg')
-      FileUtils.writeByteArrayToFile(tmpFile, gatePassBytes)
-      haulageBucketService.storeFile('transport-request/rft-number/gate-pass/', tmpFile, CannedAccessControlList.PublicRead)
-      tmpFile.delete()
-    }
+      if(gatePassBytes){
+        File tmpFile = new File('/tmp/gatepass.jpg')
+        FileUtils.writeByteArrayToFile(tmpFile, gatePassBytes)
+        rx.Observable.from(haulageBucketService.storeFile('transport-request/rft-number/gate-pass/', tmpFile, CannedAccessControlList.PublicRead)).subscribe({
+          transportRequest.gatePassImgUrl = it
+        })
 
-    def transportRequest = new TransportRequest()
-    transportRequest.vesselName = request.JSON.vesselName
-    transportRequest.vesselEtaOrEtd = request.JSON.vesselEtaOrEtd
-    transportRequest.forwarderId = request.JSON.forwarderId
-    transportRequest.haulierId = request.JSON.haulierId
-    transportRequest.status = RFTStatus.PENDING
-    transportRequest.backToBack = request.JSON.backToBack
-    transportRequest.overDimension = request.JSON.overDimension
-    transportRequest.forwardingAgent = request.JSON.forwardingAgent
-    transportRequest.hazardous = request.JSON.hazardous
-    transportRequest.equipment = request.JSON.equipment
-    transportRequest.containerRemarks = request.JSON.containerRemarks
-    transportRequest.portOfDischarge = request.JSON.portOfLoading
-    transportRequest.portOfDischarge = request.JSON.portOfDischarge
-    transportRequest.shipper = request.JSON.shipper
-    transportRequest.shippingAgent = request.JSON.shippingAgent
+        tmpFile.delete()
+      }
 
-    def customer = new Customer(request.JSON.customer)
-    transportRequest.customer = customer
+      transportRequest.vesselName = request.JSON.vesselName
+      transportRequest.vesselEtaOrEtd = request.JSON.vesselEtaOrEtd
+      transportRequest.forwarderId = request.JSON.forwarderId
+      transportRequest.haulierId = request.JSON.haulierId
+      transportRequest.status = RFTStatus.PENDING
+      transportRequest.backToBack = request.JSON.backToBack
+      transportRequest.overDimension = request.JSON.overDimension
+      transportRequest.forwardingAgent = request.JSON.forwardingAgent
+      transportRequest.hazardous = request.JSON.hazardous
+      transportRequest.equipment = request.JSON.equipment
+      transportRequest.containerRemarks = request.JSON.containerRemarks
+      transportRequest.portOfDischarge = request.JSON.portOfLoading
+      transportRequest.portOfDischarge = request.JSON.portOfDischarge
+      transportRequest.shipper = request.JSON.shipper
+      transportRequest.shippingAgent = request.JSON.shippingAgent
 
-    if(customer.hasErrors() || transportRequest.hasErrors()){
-      respond status: HttpStatus.BAD_REQUEST, message: 'failed to save RFT, check fields'
-    }else{
-      //todo save your transportrequest
-      transportRequest.save(flush: true, failOnError: true)
+      def customer = new Customer(request.JSON.customer)
+      transportRequest.customer = customer
+
+      if(customer.hasErrors() || transportRequest.hasErrors()){
+        respond status: HttpStatus.BAD_REQUEST, message: 'failed to save RFT, check fields'
+      }else{
+        //todo save your transportrequest
+        transportRequest.save(flush: true, failOnError: true)
+      }
     }
   }
 
   @Override
   def update() {
-
-
-
     def transportRequest = TransportRequest.get(request.JSON.id as Long)
 
     if(transportRequest){
-      def kOnekEightFile = request.JSON.kOnekEightBase64String.decodeBase64()
-      def bookingConfirmationFile = request.JSON.bookingConfirmationBase64String.decodeBase64()
-      def cmoFile = request.JSON.cmoBase64String.decodeBase64()
-      def gatePassFile = request.JSON.gatePassBase64String.decodeBase64()
+      byte[] kOnekEightBytes = request.JSON.kOnekEightBase64String.decodeBase64()
+      byte[] bookingConfirmationBytes = request.JSON.bookingConfirmationBase64String.decodeBase64()
+      byte[] cmoBytes = request.JSON.cmoBase64String.decodeBase64()
+      byte[] gatePassBytes = request.JSON.gatePassBase64String.decodeBase64()
 
       //todo call AWS to upload files
+
+
+      if(kOnekEightBytes){
+        File tmpFile = new File('/tmp/kone-keight.jpg')
+        FileUtils.writeByteArrayToFile(tmpFile, kOnekEightBytes)
+
+        rx.Observable.from(haulageBucketService.storeFile('transport-request/rft-number/kone-keight-files/', tmpFile, CannedAccessControlList.PublicRead)).subscribe({
+          transportRequest.kOnekEightFormImgUrl = it
+        })
+//        haulageBucketService.storeFile('transport-request/rft-number/kone-keight-files/', tmpFile, CannedAccessControlList.PublicRead)
+        tmpFile.delete()
+      }
+
+      if(bookingConfirmationBytes){
+        File tmpFile = new File('/tmp/booking-confirmation.jpg')
+        FileUtils.writeByteArrayToFile(tmpFile, bookingConfirmationBytes)
+        haulageBucketService.storeFile('transport-request/rft-number/booking-confirmation/', tmpFile, CannedAccessControlList.PublicRead)
+        tmpFile.delete()
+      }
+
+      if(cmoBytes){
+        File tmpFile = new File('/tmp/cmo.jpg')
+        FileUtils.writeByteArrayToFile(tmpFile, cmoBytes)
+        rx.Observable.from(haulageBucketService.storeFile('transport-request/rft-number/cmo/', tmpFile, CannedAccessControlList.PublicRead)).subscribe({
+          transportRequest.cmoImgUrl = it
+        })
+
+        tmpFile.delete()
+      }
+
+      if(gatePassBytes){
+        File tmpFile = new File('/tmp/gatepass.jpg')
+        FileUtils.writeByteArrayToFile(tmpFile, gatePassBytes)
+        rx.Observable.from(haulageBucketService.storeFile('transport-request/rft-number/gate-pass/', tmpFile, CannedAccessControlList.PublicRead)).subscribe({
+          transportRequest.gatePassImgUrl = it
+        })
+
+        tmpFile.delete()
+      }
 
       transportRequest.status = request.JSON.status
       transportRequest.equipment = request.JSON.equipment
@@ -138,14 +183,7 @@ class TransportRequestController extends RestfulController<TransportRequest> {
       transportRequest.hazardous = request.JSON.hazardous
       transportRequest.overDimension = request.JSON.overDimension
 
-      transportRequest.gatePassImgUrl = ''
-
-      transportRequest.kOnekEightFormImgUrl = ''
-
       transportRequest.equipment = request.JSON.equipment
-
-      transportRequest.cmoImgUrl = ''
-      transportRequest.gatePassImgUrl = ''
       transportRequest.consignments = request.JSON.consignments
       transportRequest.shipper = request.JSON.shipper
       transportRequest.shippingAgent =  request.JSON.shippingAgent
@@ -156,13 +194,5 @@ class TransportRequestController extends RestfulController<TransportRequest> {
     }else{
       render status: HttpStatus.NOT_FOUND
     }
-
-
-
-    return super.update()
-
-
-
-
   }
 }
