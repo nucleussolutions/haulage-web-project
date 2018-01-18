@@ -1,5 +1,9 @@
 package haulage.project
 
+import grails.compiler.GrailsCompileStatic
+import groovy.transform.TypeCheckingMode
+
+@GrailsCompileStatic(TypeCheckingMode.SKIP)
 class Customer {
 
   String companyName

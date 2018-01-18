@@ -21,6 +21,7 @@ import 'rxjs/add/observable/combineLatest';
 import { LoadingComponent } from "../loading/loading.component";
 import {S3Service} from "../service/s3.service";
 import { HaulierInfoService } from 'app/haulierInfo/haulierInfo.service';
+import {ReplaySubject} from "rxjs/ReplaySubject";
 
 @Component({
   selector: 'transportRequest-persist',
@@ -131,29 +132,40 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
     }, BSModalContext));
 
     loadingDialogRef.result.then(result => {
-      if(this.kOnekEightFormImg){
-        this.s3Service.addkOnekEightFile(this.kOnekEightFormImg).subscribe(data => {
-          console.log('kOnekEightFormImg data '+data);
-        });
-      }
 
-      if(this.bookingConfirmationImg){
-        this.s3Service.addBookingConfirmationFile(this.bookingConfirmationImg).subscribe(data => {
-          console.log('bookingConfirmationImg data '+data);
-        });
-      }
+      Observable.of(this.kOnekEightFormImg).flatMap(kOnekEightFormImg => {
+        if(kOnekEightFormImg){
+          return this.readFile(kOnekEightFormImg);
+        }
+      }).subscribe(base64Observable => {
+        this.transportRequest.konekEightBase64String = base64Observable.result;
+      });
 
-      if(this.cmoImg){
-        this.s3Service.addCmoFile(this.cmoImg).subscribe(data => {
-          console.log('cmoImg data '+data);
-        });
-      }
+      Observable.of(this.bookingConfirmationImg).flatMap(bookingConfirmationImg => {
+        if(bookingConfirmationImg){
+          return this.readFile(bookingConfirmationImg);
+        }
+      }).subscribe(base64Observable => {
+        this.transportRequest.bookingConfirmationBase64String = base64Observable.result;
+      });
 
-      if(this.gatePassImg){
-        this.s3Service.addGatePassFile(this.gatePassImg).subscribe(data => {
-          console.log('gatePassImg data '+data);
-        });
-      }
+      Observable.of(this.cmoImg).flatMap(cmoImg => {
+        if(cmoImg){
+          return this.readFile(cmoImg)
+        }
+      }).subscribe(base64Observable => {
+        this.transportRequest.cmoBase64String = base64Observable.result;
+      });
+
+      Observable.of(this.gatePassImg).flatMap(gatePassImg => {
+        if(this.gatePassImg){
+          return this.readFile(gatePassImg);
+        }
+      }).subscribe(base64Observable => {
+        this.transportRequest.gatePassBase64String = base64Observable.result;
+      });
+
+      console.log('transportRequest being sent to the server '+this.transportRequest);
 
       this.transportRequestService.save(this.transportRequest, this.userObject).subscribe((transportRequest: TransportRequest) => {
         this.router.navigate(['/transportRequest', 'show', transportRequest.id]);
@@ -165,6 +177,18 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
         }
       });
     });
+  }
+
+  readFile(fileToRead: File): Observable<MSBaseReader>{
+    let base64Observable = new ReplaySubject<MSBaseReader>(1);
+
+    let fileReader = new FileReader();
+    fileReader.onload = event => {
+      base64Observable.next(fileReader.result);
+    };
+    fileReader.readAsDataURL(fileToRead);
+
+    return base64Observable;
   }
 
   onAddConsignmentClick() {
