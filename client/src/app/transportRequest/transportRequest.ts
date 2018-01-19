@@ -23,10 +23,19 @@ export class TransportRequest {
   orderRemarks: string;
   containerRemarks: string;
   dgCode: string;
+  konekEightBase64String: string;
+
   kOnekEightFormImgUrl: string;
+
+  gatePassBase64String: string;
   gatePassImgUrl: string;
+
+  bookingConfirmationBase64String: string;
   bookingConfirmationImgUrl: string;
+
+  cmoBase64String: string;
   cmoImgUrl: string;
+
   consignments: Consignment[];
   forwarderId: string;
   haulierId: string;

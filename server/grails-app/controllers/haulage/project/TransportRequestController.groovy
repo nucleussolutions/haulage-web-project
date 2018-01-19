@@ -29,6 +29,8 @@ class TransportRequestController extends RestfulController<TransportRequest> {
   @Override
   def save() {
 
+    println 'custom save executing'
+
     if(!amazonS3Service.listBucketNames().contains('haulage-dev')){
       respond status: HttpStatus.INTERNAL_SERVER_ERROR, message: 'storage folder not found'
     }else{
@@ -110,6 +112,9 @@ class TransportRequestController extends RestfulController<TransportRequest> {
 
   @Override
   def update() {
+
+    println 'custom save executing'
+
     def transportRequest = TransportRequest.get(request.JSON.id as Long)
 
     if(transportRequest){
@@ -188,8 +193,11 @@ class TransportRequestController extends RestfulController<TransportRequest> {
       transportRequest.shipper = request.JSON.shipper
       transportRequest.shippingAgent =  request.JSON.shippingAgent
 
-
-
+      if(transportRequest.hasErrors()){
+        respond HttpStatus.BAD_REQUEST, message: 'failed to save RFT, check fields for mandatory inputs'
+      }else{
+        transportRequest.save(flush: true, failOnError: true)
+      }
 
     }else{
       render status: HttpStatus.NOT_FOUND
