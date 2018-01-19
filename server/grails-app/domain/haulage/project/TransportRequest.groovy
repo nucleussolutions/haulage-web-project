@@ -4,7 +4,7 @@ import grails.compiler.GrailsCompileStatic
 import grails.rest.*
 import groovy.transform.TypeCheckingMode
 
-@Resource(readOnly = false, formats = ['json'])
+@Resource(readOnly = false, formats = ['json'], superClass = TransportRequestController)
 @GrailsCompileStatic(TypeCheckingMode.SKIP)
 class TransportRequest {
 
