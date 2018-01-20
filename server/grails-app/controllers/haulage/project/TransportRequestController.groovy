@@ -32,9 +32,9 @@ class TransportRequestController extends RestfulController<TransportRequest> {
 
     println 'custom save executing'
 
-    if(!amazonS3Service.listBucketNames().contains('haulage-dev')){
+    if (!amazonS3Service.listBucketNames().contains('haulage-dev')) {
       respond status: HttpStatus.INTERNAL_SERVER_ERROR, message: 'storage folder not found'
-    }else{
+    } else {
       byte[] kOnekEightBytes = request.JSON.kOnekEightBase64String.decodeBase64()
       byte[] bookingConfirmationBytes = request.JSON.bookingConfirmationBase64String.decodeBase64()
       byte[] cmoBytes = request.JSON.cmoBase64String.decodeBase64()
@@ -43,48 +43,50 @@ class TransportRequestController extends RestfulController<TransportRequest> {
       //amazonS3Service.storeFile('my-bucket', 'asset/foo/someKey.jpg', new File('/Users/ben/Desktop/photo.jpg'), CannedAccessControlList.PublicRead)
       def transportRequest = new TransportRequest()
 
-      if(kOnekEightBytes){
+      if (kOnekEightBytes) {
         File tmpFile = new File('/tmp/kone-keight.jpg')
+
+
         FileUtils.writeByteArrayToFile(tmpFile, kOnekEightBytes)
 
         asyncHaulageBucketService.storeFile('transport-request/rft-number/kone-keight-files/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
           transportRequest.kOnekEightFormImgUrl = it
         }.onError { Throwable err ->
-          println 'error occurred in storing kone keight file '+err.message
+          println 'error occurred in storing kone keight file ' + err.message
         }
         tmpFile.delete()
       }
 
-      if(bookingConfirmationBytes){
+      if (bookingConfirmationBytes) {
         File tmpFile = new File('/tmp/booking-confirmation.jpg')
         FileUtils.writeByteArrayToFile(tmpFile, bookingConfirmationBytes)
         asyncHaulageBucketService.storeFile('transport-request/rft-number/booking-confirmation/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
           transportRequest.bookingConfirmationImgUrl = it
         }.onError { Throwable err ->
-          println 'error occurred in storing booking confirmation file '+err.message
+          println 'error occurred in storing booking confirmation file ' + err.message
         }
 
         tmpFile.delete()
       }
 
-      if(cmoBytes){
+      if (cmoBytes) {
         File tmpFile = new File('/tmp/cmo.jpg')
         FileUtils.writeByteArrayToFile(tmpFile, cmoBytes)
         asyncHaulageBucketService.store.storeFile('transport-request/rft-number/cmo/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
           transportRequest.cmoImgUrl = it
-        }.onError{ Throwable err ->
-          println 'error occurred in storing cmo file '+err.message
+        }.onError { Throwable err ->
+          println 'error occurred in storing cmo file ' + err.message
         }
         tmpFile.delete()
       }
 
-      if(gatePassBytes){
+      if (gatePassBytes) {
         File tmpFile = new File('/tmp/gatepass.jpg')
         FileUtils.writeByteArrayToFile(tmpFile, gatePassBytes)
         asyncHaulageBucketService.storeFile('transport-request/rft-number/gate-pass/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
           transportRequest.gatePassImgUrl = it
         }.onError { Throwable err ->
-          println 'error occurring in storing gate pass file '+err.message
+          println 'error occurring in storing gate pass file ' + err.message
         }
 
         tmpFile.delete()
@@ -109,14 +111,14 @@ class TransportRequestController extends RestfulController<TransportRequest> {
       def customer = new Customer(request.JSON.customer)
       transportRequest.customer = customer
 
-      if(customer.hasErrors() || transportRequest.hasErrors()){
+      if (customer.hasErrors() || transportRequest.hasErrors()) {
         respond status: HttpStatus.BAD_REQUEST, message: 'failed to save RFT, check fields'
-      }else{
+      } else {
         // save your transportrequest
-        asyncTransportRequestService.transportRequestService.save(transportRequest).onComplete {
-          respond status: HttpStatus.ACCEPTED, message: 'save transport request successful'
+        asyncTransportRequestService.transportRequestService.save(transportRequest).onComplete { transportRequestResult ->
+          respond status: HttpStatus.ACCEPTED, transportRequestResult
         }.onError { Throwable err ->
-          respond status: HttpStatus.INTERNAL_SERVER_ERROR, message: 'failed in saving transportrequest '+err.message
+          respond status: HttpStatus.INTERNAL_SERVER_ERROR, message: 'failed in saving transportrequest ' + err.message
         }
       }
     }
@@ -129,7 +131,7 @@ class TransportRequestController extends RestfulController<TransportRequest> {
 
     def transportRequest = TransportRequest.get(request.JSON.id as Long)
 
-    if(transportRequest){
+    if (transportRequest) {
       byte[] kOnekEightBytes = request.JSON.kOnekEightBase64String.decodeBase64()
       byte[] bookingConfirmationBytes = request.JSON.bookingConfirmationBase64String.decodeBase64()
       byte[] cmoBytes = request.JSON.cmoBase64String.decodeBase64()
@@ -138,40 +140,40 @@ class TransportRequestController extends RestfulController<TransportRequest> {
       //todo call AWS to upload files
 
 
-      if(kOnekEightBytes){
+      if (kOnekEightBytes) {
         File tmpFile = new File('/tmp/kone-keight.jpg')
         FileUtils.writeByteArrayToFile(tmpFile, kOnekEightBytes)
         asyncHaulageBucketService.storeFile('transport-request/rft-number/kone-keight-files/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
           transportRequest.kOnekEightFormImgUrl = it
         }.onError { Throwable err ->
-          println 'error occurred in storing kone keight file '+err.message
+          println 'error occurred in storing kone keight file ' + err.message
         }
         tmpFile.delete()
       }
 
-      if(bookingConfirmationBytes){
+      if (bookingConfirmationBytes) {
         File tmpFile = new File('/tmp/booking-confirmation.jpg')
         FileUtils.writeByteArrayToFile(tmpFile, bookingConfirmationBytes)
         asyncHaulageBucketService.storeFile('transport-request/rft-number/booking-confirmation/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
           transportRequest.bookingConfirmationImgUrl = it
         }.onError { Throwable err ->
-          println 'failed to store booking confirmation file '+err.message
+          println 'failed to store booking confirmation file ' + err.message
         }
         tmpFile.delete()
       }
 
-      if(cmoBytes){
+      if (cmoBytes) {
         File tmpFile = new File('/tmp/cmo.jpg')
         FileUtils.writeByteArrayToFile(tmpFile, cmoBytes)
         asyncHaulageBucketService.storeFile('transport-request/rft-number/cmo/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
           transportRequest.cmoImgUrl = it
         }.onError {
-          println 'error occurred in storing cmo file '+err.message
+          println 'error occurred in storing cmo file ' + err.message
         }
         tmpFile.delete()
       }
 
-      if(gatePassBytes){
+      if (gatePassBytes) {
         File tmpFile = new File('/tmp/gatepass.jpg')
         FileUtils.writeByteArrayToFile(tmpFile, gatePassBytes)
         asyncHaulageBucketService.storeFile('transport-request/rft-number/gate-pass/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
@@ -187,10 +189,9 @@ class TransportRequestController extends RestfulController<TransportRequest> {
       transportRequest.containerRemarks = request.JSON.containerRemarks
       transportRequest.orderRemarks = request.JSON.orderRemarks
 
-
       //check if existing customer data is not the same with new fresh data
       def customer = new Customer(request.JSON.customer)
-      if(!transportRequest.customer.is(customer)){
+      if (!transportRequest.customer.is(customer)) {
         transportRequest.customer = customer
       }
 
@@ -209,19 +210,19 @@ class TransportRequestController extends RestfulController<TransportRequest> {
       transportRequest.equipment = request.JSON.equipment
       transportRequest.consignments = request.JSON.consignments
       transportRequest.shipper = request.JSON.shipper
-      transportRequest.shippingAgent =  request.JSON.shippingAgent
+      transportRequest.shippingAgent = request.JSON.shippingAgent
 
-      if(transportRequest.hasErrors()){
+      if (transportRequest.hasErrors()) {
         respond HttpStatus.BAD_REQUEST, message: 'failed to save RFT, check fields for mandatory inputs'
-      }else{
+      } else {
         asyncTransportRequestService.save(transportRequest).onComplete { transportRequestResult ->
           respond status: HttpStatus.ACCEPTED, transportRequestResult
         }.onError { Throwable err ->
-           respond status: HttpStatus.INTERNAL_SERVER_ERROR, message: 'error saving transport request '+err.message
+          respond status: HttpStatus.INTERNAL_SERVER_ERROR, message: 'error saving transport request ' + err.message
         }
       }
 
-    }else{
+    } else {
       render status: HttpStatus.NOT_FOUND
     }
   }
