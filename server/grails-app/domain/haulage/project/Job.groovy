@@ -15,7 +15,7 @@ class Job {
 
   String driverId
 
-  JobStatus status
+  String status
 
   //upon updating the status as started, start date time will be recorded
   Date startDateTime
