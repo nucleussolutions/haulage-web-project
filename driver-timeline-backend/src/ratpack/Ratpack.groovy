@@ -1,4 +1,6 @@
 import grails.gorm.annotation.Entity
+import org.grails.datastore.rx.mongodb.RxMongoDatastoreClient
+import org.springframework.core.env.StandardEnvironment
 import ratpack.groovy.template.MarkupTemplateModule
 import ratpack.jackson.JacksonModule
 
@@ -10,7 +12,9 @@ import static ratpack.rx.RxRatpack.observe
 
 import org.grails.datastore.mapping.mongo.MongoDatastore
 
-def datastore = new MongoDatastore(Datum)
+//def datastore = new MongoDatastore(Datum)
+//def env = new StandardEnvironment()
+def rxDataStore = new RxMongoDatastoreClient('haulage-mongo-database', Datum)
 
 ratpack {
   bindings {
