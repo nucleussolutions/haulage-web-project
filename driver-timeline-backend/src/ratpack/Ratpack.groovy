@@ -1,48 +1,36 @@
-import grails.gorm.annotation.Entity
+import com.driverapp.app.DataService
+import com.driverapp.app.Datum
+import com.driverapp.app.DatumModule
 import org.grails.datastore.rx.mongodb.RxMongoDatastoreClient
-import org.springframework.core.env.StandardEnvironment
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import ratpack.groovy.template.MarkupTemplateModule
-import ratpack.jackson.JacksonModule
+import ratpack.handling.RequestLogger
 
 import static ratpack.groovy.Groovy.groovyMarkupTemplate
 import static ratpack.groovy.Groovy.ratpack
-import static ratpack.jackson.Jackson.json
-import static ratpack.jackson.Jackson.jsonNode
-import static ratpack.rx.RxRatpack.observe
-
-import org.grails.datastore.mapping.mongo.MongoDatastore
 
 //def datastore = new MongoDatastore(Datum)
 //def env = new StandardEnvironment()
 def rxDataStore = new RxMongoDatastoreClient('haulage-mongo-database', Datum)
 
+final Logger logger = LoggerFactory.getLogger(Ratpack.class)
+
 ratpack {
   bindings {
 //    module JacksonModule
     module MarkupTemplateModule
+    module DatumModule
   }
 
-  handlers {
+  handlers { DataService dataService ->
+    all RequestLogger.ncsa(logger) // log all requests
+
     get {
       render groovyMarkupTemplate("index.gtpl", title: "My Ratpack App")
     }
 
-    post('submit') {
-//      parse(jsonNode()).observe().
-
-
-      //todo first let an interceptor filter the request if the driver id has permission to access this endpoint or not
-
-      //todo after that, just get the datum from the json request
-
-      //todo then use mongodb to store the data
-
-      //todo simple as that
-    }
-
-    get('data') {
-
-    }
+    
 
     files { dir "public" }
   }
