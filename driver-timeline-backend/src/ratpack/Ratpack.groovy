@@ -24,7 +24,7 @@ ratpack {
     }
 
     post('submit') {
-//      parse(jsonNode())
+//      parse(jsonNode()).observe().
 
 
       //todo first let an interceptor filter the request if the driver id has permission to access this endpoint or not
@@ -36,30 +36,11 @@ ratpack {
       //todo simple as that
     }
 
+    get('data') {
+
+    }
+
     files { dir "public" }
   }
 }
 
-@Entity
-class Datum {
-  Date timestamp
-  String type
-  Value value
-
-  def toMap(){
-    [timestamp: timestamp, type: type, value: value]
-  }
-}
-
-@Entity
-class Value {
-  String jobId
-  String driverId
-  Double lat
-  Double lng
-  String activity
-
-  def toMap(){
-    [jobId: jobId, driverId: driverId, lat: lat, lng: lng, activity: activity]
-  }
-}
