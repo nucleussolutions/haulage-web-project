@@ -1,6 +1,7 @@
 import com.driverapp.app.DataService
 import com.driverapp.app.Datum
 import com.driverapp.app.DatumModule
+import com.driverapp.app.DatumRestEndpoint
 import org.grails.datastore.rx.mongodb.RxMongoDatastoreClient
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -30,7 +31,9 @@ ratpack {
       render groovyMarkupTemplate("index.gtpl", title: "My Ratpack App")
     }
 
-    
+    prefix("api/data") {
+      all chain(registry.get(DatumRestEndpoint))
+    }
 
     files { dir "public" }
   }
