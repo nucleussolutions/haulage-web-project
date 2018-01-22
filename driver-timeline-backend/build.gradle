@@ -23,4 +23,8 @@ dependencies {
   runtime 'org.slf4j:slf4j-simple:1.7.25'
   compile "org.grails:grails-datastore-gorm-mongodb:6.1.2.RELEASE"
   testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
+  compile group: 'io.ratpack', name: 'ratpack-jackson', version: '0.9.17'
+  compile ratpack.dependency("rx")
+  compile ratpack.dependency("h2")
+
 }
