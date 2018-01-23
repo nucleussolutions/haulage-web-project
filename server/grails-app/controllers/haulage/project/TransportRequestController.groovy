@@ -8,21 +8,17 @@ import org.apache.commons.io.FileUtils
 import org.springframework.http.HttpStatus
 
 @GrailsCompileStatic(TypeCheckingMode.SKIP)
-class TransportRequestController extends RestfulController<TransportRequest> {
+class TransportRequestController extends RestfulController {
+
   static responseFormats = ['json', 'xml']
 
 //  AmazonS3Service amazonS3Service
   def haulageBucketService
-  def asyncTransportRequestService
+//  def asyncTransportRequestService
+  def transportRequestService
 
-// We need to provide the constructors, so the
-  // Resource transformation works.
-  TransportRequestController(Class<TransportRequest> domainClass) {
-    this(domainClass, false)
-  }
-
-  TransportRequestController(Class<TransportRequest> domainClass, boolean readOnly) {
-    super(domainClass, readOnly)
+  TransportRequestController() {
+    super(TransportRequest)
   }
 
   @Override
@@ -244,15 +240,50 @@ class TransportRequestController extends RestfulController<TransportRequest> {
       if (transportRequest.hasErrors()) {
         respond HttpStatus.BAD_REQUEST, message: 'failed to save RFT, check fields for mandatory inputs'
       } else {
-        asyncTransportRequestService.save(transportRequest).onComplete { transportRequestResult ->
-          respond status: HttpStatus.ACCEPTED, transportRequestResult
-        }.onError { Throwable err ->
+        Observable.from(transportRequestService.save(transportRequest)).subscribe({
+          respond status: HttpStatus.ACCEPTED, it
+        }, { Throwable err ->
           respond status: HttpStatus.INTERNAL_SERVER_ERROR, message: 'error saving transport request ' + err.message
-        }
+        })
+//        asyncTransportRequestService.save(transportRequest).onComplete { transportRequestResult ->
+//          respond status: HttpStatus.ACCEPTED, transportRequestResult
+//        }.onError { Throwable err ->
+//          respond status: HttpStatus.INTERNAL_SERVER_ERROR, message: 'error saving transport request ' + err.message
+//        }
       }
 
     } else {
       render status: HttpStatus.NOT_FOUND
     }
+  }
+
+  @Override
+  Object index(Integer max) {
+    return super.index(max)
+  }
+
+  @Override
+  Object show() {
+    return super.show()
+  }
+
+  @Override
+  Object create() {
+    return super.create()
+  }
+
+  @Override
+  Object edit() {
+    return super.edit()
+  }
+
+  @Override
+  Object patch() {
+    return super.patch()
+  }
+
+  @Override
+  Object delete() {
+    return super.delete()
   }
 }
