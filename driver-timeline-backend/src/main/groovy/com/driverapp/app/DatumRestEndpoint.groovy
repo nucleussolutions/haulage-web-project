@@ -28,7 +28,7 @@ class DatumRestEndpoint extends GroovyChainAction {
             Datum datum = new Datum()
             datum.driverId = input.get('driverId') as String
             datum.jobId = input.get('jobId') as String
-            datum.type = 'driver_updates'
+            datum.type = input.get('type') as String
             Value value = input.get('value') as Value
             datum.value = value
             dataService.insert(datum).subscribe{

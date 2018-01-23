@@ -4,6 +4,6 @@ import grails.async.DelegateAsync
 import haulage.project.HaulageBucketService
 
 class AsyncHaulageBucketService {
-  @DelegateAsync
-  HaulageBucketService haulageBucketService
+//  @DelegateAsync
+//  HaulageBucketService haulageBucketService
 }

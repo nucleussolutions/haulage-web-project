@@ -4,6 +4,6 @@ import grails.async.DelegateAsync
 import haulage.project.TransportRequestBucketService
 
 class AsyncTransportRequestBucketService {
-    @DelegateAsync
-    TransportRequestBucketService transportRequestBucketService
+//    @DelegateAsync
+//    TransportRequestBucketService transportRequestBucketService
 }

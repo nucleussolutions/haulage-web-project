@@ -82,7 +82,7 @@ dependencies {
 //    compile 'org.grails.plugins:hibernate-search:2.2.0'
   compile 'org.grails.plugins:elasticsearch:2.4.0.RC1'
   compile 'org.elasticsearch.plugin:mapper-attachments:2.3.3'
-  compile group: 'io.reactivex', name: 'rxgroovy', version: '1.0.3'
+//  compile group: 'io.reactivex', name: 'rxgroovy', version: '1.0.3'
 }
 
 bootRun {

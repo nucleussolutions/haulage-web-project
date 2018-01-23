@@ -1,23 +1,21 @@
 package haulage.project
 
 import com.amazonaws.services.s3.model.CannedAccessControlList
-import grails.async.Promise
-import grails.plugin.awssdk.s3.AmazonS3Service
-import grails.rest.*
-import grails.converters.*
-import haulage.project.async.AsyncHaulageBucketService
-import haulage.project.async.AsyncTransportRequestService
+import grails.compiler.GrailsCompileStatic
+import grails.rest.RestfulController
+import groovy.transform.TypeCheckingMode
 import org.apache.commons.io.FileUtils
 import org.springframework.http.HttpStatus
 
+@GrailsCompileStatic(TypeCheckingMode.SKIP)
 class TransportRequestController extends RestfulController<TransportRequest> {
   static responseFormats = ['json', 'xml']
 
-  AmazonS3Service amazonS3Service
-  AsyncTransportRequestService asyncTransportRequestService
-  AsyncHaulageBucketService asyncHaulageBucketService
+//  AmazonS3Service amazonS3Service
+  def haulageBucketService
+  def asyncTransportRequestService
 
-  // We need to provide the constructors, so the
+// We need to provide the constructors, so the
   // Resource transformation works.
   TransportRequestController(Class<TransportRequest> domainClass) {
     this(domainClass, false)
@@ -40,57 +38,9 @@ class TransportRequestController extends RestfulController<TransportRequest> {
       byte[] cmoBytes = request.JSON.cmoBase64String.decodeBase64()
       byte[] gatePassBytes = request.JSON.gatePassBase64String.decodeBase64()
 
-      //amazonS3Service.storeFile('my-bucket', 'asset/foo/someKey.jpg', new File('/Users/ben/Desktop/photo.jpg'), CannedAccessControlList.PublicRead)
       def transportRequest = new TransportRequest()
 
-      if (kOnekEightBytes) {
-        File tmpFile = new File('/tmp/kone-keight.jpg')
 
-
-        FileUtils.writeByteArrayToFile(tmpFile, kOnekEightBytes)
-
-        asyncHaulageBucketService.storeFile('transport-request/rft-number/kone-keight-files/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
-          transportRequest.kOnekEightFormImgUrl = it
-        }.onError { Throwable err ->
-          println 'error occurred in storing kone keight file ' + err.message
-        }
-        tmpFile.delete()
-      }
-
-      if (bookingConfirmationBytes) {
-        File tmpFile = new File('/tmp/booking-confirmation.jpg')
-        FileUtils.writeByteArrayToFile(tmpFile, bookingConfirmationBytes)
-        asyncHaulageBucketService.storeFile('transport-request/rft-number/booking-confirmation/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
-          transportRequest.bookingConfirmationImgUrl = it
-        }.onError { Throwable err ->
-          println 'error occurred in storing booking confirmation file ' + err.message
-        }
-
-        tmpFile.delete()
-      }
-
-      if (cmoBytes) {
-        File tmpFile = new File('/tmp/cmo.jpg')
-        FileUtils.writeByteArrayToFile(tmpFile, cmoBytes)
-        asyncHaulageBucketService.store.storeFile('transport-request/rft-number/cmo/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
-          transportRequest.cmoImgUrl = it
-        }.onError { Throwable err ->
-          println 'error occurred in storing cmo file ' + err.message
-        }
-        tmpFile.delete()
-      }
-
-      if (gatePassBytes) {
-        File tmpFile = new File('/tmp/gatepass.jpg')
-        FileUtils.writeByteArrayToFile(tmpFile, gatePassBytes)
-        asyncHaulageBucketService.storeFile('transport-request/rft-number/gate-pass/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
-          transportRequest.gatePassImgUrl = it
-        }.onError { Throwable err ->
-          println 'error occurring in storing gate pass file ' + err.message
-        }
-
-        tmpFile.delete()
-      }
 
       transportRequest.vesselName = request.JSON.vesselName
       transportRequest.vesselEtaOrEtd = request.JSON.vesselEtaOrEtd
@@ -115,7 +65,72 @@ class TransportRequestController extends RestfulController<TransportRequest> {
         respond status: HttpStatus.BAD_REQUEST, message: 'failed to save RFT, check fields'
       } else {
         // save your transportrequest
-        asyncTransportRequestService.transportRequestService.save(transportRequest).onComplete { transportRequestResult ->
+        asyncTransportRequestService.save(transportRequest).onComplete { transportRequestResult ->
+//          respond status: HttpStatus.ACCEPTED, transportRequestResult
+          transportRequest = transportRequestResult
+        }.onError { Throwable err ->
+          respond status: HttpStatus.INTERNAL_SERVER_ERROR, message: 'failed in saving transportrequest ' + err.message
+        }
+      }
+
+      if (kOnekEightBytes) {
+        File tmpFile = new File('/tmp/kone-keight.jpg')
+
+
+        FileUtils.writeByteArrayToFile(tmpFile, kOnekEightBytes)
+        transportRequest.kOnekEightFormImgUrl = haulageBucketService.storeFile("transport-request/{transportRequest.id}/kone-keight-files/", tmpFile, CannedAccessControlList.PublicRead)
+//        amazonS3Service.storeFile('transport-request/rft-number/kone-keight-files/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
+//          transportRequest.kOnekEightFormImgUrl = it
+//        }.onError { Throwable err ->
+//          println 'error occurred in storing kone keight file ' + err.message
+//        }
+        tmpFile.delete()
+      }
+
+      if (bookingConfirmationBytes) {
+        File tmpFile = new File('/tmp/booking-confirmation.jpg')
+        FileUtils.writeByteArrayToFile(tmpFile, bookingConfirmationBytes)
+        transportRequest.bookingConfirmationImgUrl = haulageBucketService.storeFile('transport-request/{transportRequest.id}/booking-confirmation/', tmpFile, CannedAccessControlList.PublicRead)
+//        amazonS3Service.storeFile('transport-request/rft-number/booking-confirmation/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
+//          transportRequest.bookingConfirmationImgUrl = it
+//        }.onError { Throwable err ->
+//          println 'error occurred in storing booking confirmation file ' + err.message
+//        }
+
+        tmpFile.delete()
+      }
+
+      if (cmoBytes) {
+        File tmpFile = new File('/tmp/cmo.jpg')
+        FileUtils.writeByteArrayToFile(tmpFile, cmoBytes)
+        transportRequest.cmoImgUrl = haulageBucketService.storeFile('transport-request/{transportRequest.id}/cmo/', tmpFile, CannedAccessControlList.PublicRead)
+//        asyncHaulageBucketService.storeFile('transport-request/rft-number/cmo/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
+//          transportRequest.cmoImgUrl = it
+//        }.onError { Throwable err ->
+//          println 'error occurred in storing cmo file ' + err.message
+//        }
+
+        tmpFile.delete()
+      }
+
+      if (gatePassBytes) {
+        File tmpFile = new File('/tmp/gatepass.jpg')
+        FileUtils.writeByteArrayToFile(tmpFile, gatePassBytes)
+        transportRequest.gatePassImgUrl = haulageBucketService.storeFile('transport-request/{transportRequest.id}/gate-pass/', tmpFile, CannedAccessControlList.PublicRead)
+//        amazonS3Service.storeFile('transport-request/rft-number/gate-pass/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
+//          transportRequest.gatePassImgUrl = it
+//        }.onError { Throwable err ->
+//          println 'error occurring in storing gate pass file ' + err.message
+//        }
+
+        tmpFile.delete()
+      }
+
+      if (customer.hasErrors() || transportRequest.hasErrors()) {
+        respond status: HttpStatus.BAD_REQUEST, message: 'failed to save RFT, check fields'
+      } else {
+        // save your transportrequest
+        asyncTransportRequestService.save(transportRequest).onComplete { transportRequestResult ->
           respond status: HttpStatus.ACCEPTED, transportRequestResult
         }.onError { Throwable err ->
           respond status: HttpStatus.INTERNAL_SERVER_ERROR, message: 'failed in saving transportrequest ' + err.message
@@ -136,53 +151,6 @@ class TransportRequestController extends RestfulController<TransportRequest> {
       byte[] bookingConfirmationBytes = request.JSON.bookingConfirmationBase64String.decodeBase64()
       byte[] cmoBytes = request.JSON.cmoBase64String.decodeBase64()
       byte[] gatePassBytes = request.JSON.gatePassBase64String.decodeBase64()
-
-      //todo call AWS to upload files
-
-
-      if (kOnekEightBytes) {
-        File tmpFile = new File('/tmp/kone-keight.jpg')
-        FileUtils.writeByteArrayToFile(tmpFile, kOnekEightBytes)
-        asyncHaulageBucketService.storeFile('transport-request/rft-number/kone-keight-files/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
-          transportRequest.kOnekEightFormImgUrl = it
-        }.onError { Throwable err ->
-          println 'error occurred in storing kone keight file ' + err.message
-        }
-        tmpFile.delete()
-      }
-
-      if (bookingConfirmationBytes) {
-        File tmpFile = new File('/tmp/booking-confirmation.jpg')
-        FileUtils.writeByteArrayToFile(tmpFile, bookingConfirmationBytes)
-        asyncHaulageBucketService.storeFile('transport-request/rft-number/booking-confirmation/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
-          transportRequest.bookingConfirmationImgUrl = it
-        }.onError { Throwable err ->
-          println 'failed to store booking confirmation file ' + err.message
-        }
-        tmpFile.delete()
-      }
-
-      if (cmoBytes) {
-        File tmpFile = new File('/tmp/cmo.jpg')
-        FileUtils.writeByteArrayToFile(tmpFile, cmoBytes)
-        asyncHaulageBucketService.storeFile('transport-request/rft-number/cmo/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
-          transportRequest.cmoImgUrl = it
-        }.onError {
-          println 'error occurred in storing cmo file ' + err.message
-        }
-        tmpFile.delete()
-      }
-
-      if (gatePassBytes) {
-        File tmpFile = new File('/tmp/gatepass.jpg')
-        FileUtils.writeByteArrayToFile(tmpFile, gatePassBytes)
-        asyncHaulageBucketService.storeFile('transport-request/rft-number/gate-pass/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
-          transportRequest.gatePassImgUrl = it
-        }.onError { Throwable err ->
-          respond status: HttpStatus.INTERNAL_SERVER_ERROR, message: err.message
-        }
-        tmpFile.delete()
-      }
 
       transportRequest.status = request.JSON.status
       transportRequest.equipment = request.JSON.equipment
@@ -211,6 +179,67 @@ class TransportRequestController extends RestfulController<TransportRequest> {
       transportRequest.consignments = request.JSON.consignments
       transportRequest.shipper = request.JSON.shipper
       transportRequest.shippingAgent = request.JSON.shippingAgent
+
+      if (transportRequest.hasErrors()) {
+        respond HttpStatus.BAD_REQUEST, message: 'failed to save RFT, check fields for mandatory inputs'
+      } else {
+        asyncTransportRequestService.save(transportRequest).onComplete { transportRequestResult ->
+//          respond status: HttpStatus.ACCEPTED, transportRequestResult
+          transportRequest =  transportRequestResult
+        }.onError { Throwable err ->
+          respond status: HttpStatus.INTERNAL_SERVER_ERROR, message: 'error saving transport request ' + err.message
+        }
+      }
+
+
+
+      if (kOnekEightBytes) {
+        File tmpFile = new File('/tmp/kone-keight.jpg')
+        FileUtils.writeByteArrayToFile(tmpFile, kOnekEightBytes)
+        transportRequest.kOnekEightFormImgUrl = haulageBucketService.storeFile('transport-request/{transportRequest.id}/kone-keight-files/', tmpFile, CannedAccessControlList.PublicRead)
+//        asyncHaulageBucketService.storeFile('transport-request/rft-number/kone-keight-files/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
+//          transportRequest.kOnekEightFormImgUrl = it
+//        }.onError { Throwable err ->
+//          println 'error occurred in storing kone keight file ' + err.message
+//        }
+        tmpFile.delete()
+      }
+
+      if (bookingConfirmationBytes) {
+        File tmpFile = new File('/tmp/booking-confirmation.jpg')
+        FileUtils.writeByteArrayToFile(tmpFile, bookingConfirmationBytes)
+        transportRequest.bookingConfirmationImgUrl = haulageBucketService.storeFile('transport-request/{transportRequest.id}/booking-confirmation/', tmpFile, CannedAccessControlList.PublicRead)
+//        amazonS3Service.storeFile('transport-request/rft-number/booking-confirmation/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
+//          transportRequest.bookingConfirmationImgUrl = it
+//        }.onError { Throwable err ->
+//          println 'failed to store booking confirmation file ' + err.message
+//        }
+        tmpFile.delete()
+      }
+
+      if (cmoBytes) {
+        File tmpFile = new File('/tmp/cmo.jpg')
+        FileUtils.writeByteArrayToFile(tmpFile, cmoBytes)
+        transportRequest.cmoImgUrl = haulageBucketService.storeFile('transport-request/{transportRequest.id}/cmo/', tmpFile, CannedAccessControlList.PublicRead)
+//        asyncHaulageBucketService.storeFile('transport-request/rft-number/cmo/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
+//          transportRequest.cmoImgUrl = it
+//        }.onError {
+//          println 'error occurred in storing cmo file ' + err.message
+//        }
+        tmpFile.delete()
+      }
+
+      if (gatePassBytes) {
+        File tmpFile = new File('/tmp/gatepass.jpg')
+        FileUtils.writeByteArrayToFile(tmpFile, gatePassBytes)
+        transportRequest.gatePassImgUrl = haulageBucketService.storeFile('transport-request/{transportRequest.id}/gate-pass/', tmpFile, CannedAccessControlList.PublicRead)
+//        amazonS3Service.storeFile('transport-request/rft-number/gate-pass/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
+//          transportRequest.gatePassImgUrl = it
+//        }.onError { Throwable err ->
+//          respond status: HttpStatus.INTERNAL_SERVER_ERROR, message: err.message
+//        }
+        tmpFile.delete()
+      }
 
       if (transportRequest.hasErrors()) {
         respond HttpStatus.BAD_REQUEST, message: 'failed to save RFT, check fields for mandatory inputs'
