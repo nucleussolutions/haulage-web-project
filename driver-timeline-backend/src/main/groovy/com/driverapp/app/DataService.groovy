@@ -21,4 +21,8 @@ class DataService {
       value.driverId == driverId
     }.list()
   }
+
+  Observable<Datum> insert(Datum datum){
+    datum.save()
+  }
 }
