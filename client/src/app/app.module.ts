@@ -50,11 +50,12 @@ import { TariffModule } from './tariff/tariff.module';
 import { BillingComponent } from './billing/billing.component';
 import { NotificationPaneComponent } from './notification-pane/notification-pane.component';
 import { MemberSubscriptionModule } from './memberSubscription/memberSubscription.module';
-import {PaginationComponent} from './pagination/pagination.component';
 import {PaginationModule} from './pagination/pagination.module';
 import { ConsignmentTemplateComponent } from './consignment-template/consignment-template.component';
 import { QuotationTemplateComponent } from './quotation-template/quotation-template.component';
 import {AgmCoreModule} from "@agm/core";
+import {NgbCalendar, NgbDatepickerModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 
 
 @NgModule({
@@ -113,6 +114,8 @@ import {AgmCoreModule} from "@agm/core";
     TariffModule,
     MemberSubscriptionModule,
     PaginationModule,
+    NgbModule.forRoot(),
+
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDwrBvVQ4vb99X-IUAn0ntKOK3zv4hokxc'
     })

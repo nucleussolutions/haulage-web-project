@@ -4,6 +4,7 @@ import {CloseGuard, DialogRef, ModalComponent} from "ngx-modialog";
 import {BSModalContext} from "ngx-modialog/plugins/bootstrap";
 import {CreateConsignmentEventService} from "../create-consignment-event.service";
 import {ConsignmentService} from "../consignment/consignment.service";
+import {NgbCalendar} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-create-consignment-modal',

@@ -245,11 +245,6 @@ class TransportRequestController extends RestfulController {
         }, { Throwable err ->
           respond status: HttpStatus.INTERNAL_SERVER_ERROR, message: 'error saving transport request ' + err.message
         })
-//        asyncTransportRequestService.save(transportRequest).onComplete { transportRequestResult ->
-//          respond status: HttpStatus.ACCEPTED, transportRequestResult
-//        }.onError { Throwable err ->
-//          respond status: HttpStatus.INTERNAL_SERVER_ERROR, message: 'error saving transport request ' + err.message
-//        }
       }
 
     } else {
