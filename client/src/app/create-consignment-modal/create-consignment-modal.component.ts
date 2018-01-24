@@ -20,6 +20,8 @@ export class CreateConsignmentModalComponent implements OnInit, CloseGuard, Moda
 
   create = true;
 
+  selectedDate: any;
+
   beforeClose(): boolean | Promise<boolean>{
     return false;
   }

@@ -54,7 +54,7 @@ import {PaginationModule} from './pagination/pagination.module';
 import { ConsignmentTemplateComponent } from './consignment-template/consignment-template.component';
 import { QuotationTemplateComponent } from './quotation-template/quotation-template.component';
 import {AgmCoreModule} from "@agm/core";
-import {NgbCalendar, NgbDatepickerModule, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { DatepickerComponent } from './datepicker/datepicker.component';
 
 
 
@@ -83,12 +83,12 @@ import {NgbCalendar, NgbDatepickerModule, NgbModule} from '@ng-bootstrap/ng-boot
     NotificationPaneComponent,
     ConsignmentTemplateComponent,
     QuotationTemplateComponent,
+    DatepickerComponent,
   ],
   entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent],
   imports: [
     BrowserModule,
     CookieModule.forRoot(),
-    FormsModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
@@ -114,8 +114,6 @@ import {NgbCalendar, NgbDatepickerModule, NgbModule} from '@ng-bootstrap/ng-boot
     TariffModule,
     MemberSubscriptionModule,
     PaginationModule,
-    NgbModule.forRoot(),
-
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDwrBvVQ4vb99X-IUAn0ntKOK3zv4hokxc'
     })

@@ -1,59 +1,61 @@
-<div class="col-sm-3 col-md-2 sidebar">
-  <ul class="nav nav-sidebar" *ngIf="!userObject?.token">
-    <li>
-      <a routerLinkActive="active" routerLink="/register">Register</a>
-    </li>
-    <li>
-      <a routerLinkActive="active" routerLink="/login">Login</a>
-    </li>
-    <li>
-      <a routerLink="/forget-password" routerLinkActive="active">Forget Password</a>
-    </li>
+<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+  <div class="sidebar-sticky">
+    <ul class="nav flex-column" *ngIf="!userObject?.token">
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" routerLink="/register">Register</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" routerLink="/login">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/forget-password" routerLinkActive="active">Forget Password</a>
+      </li>
+    </ul>
 
-  </ul>
+    <ul class="nav flex-column" *ngIf="userObject?.token">
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" routerLink="/index">Home</a>
+      </li>
+      <li class="nav-item" *ngIf="permission?.authority === 'Super Admin'">
+        <a class="nav-link" routerLinkActive="active" routerLink="/permission">User Permissions</a>
+      </li>
+      <li class="nav-item" *ngIf="permission?.authority === 'Super Admin'">
+        <a class="nav-link" routerLinkActive="active" routerLink="/location">Location</a>
+      </li>
+      <li class="nav-item" *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
+        <a class="nav-link" routerLinkActive="active" routerLink="/driverInfo">Drivers</a>
+      </li>
+      <li class="nav-item" *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
+        <a class="nav-link" routerLink="/job" routerLinkActive="active">Jobs</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" routerLink="/haulierInfo">Hauliers</a>
+      </li>
+      <li class="nav-item" *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
+        <a class="nav-link" routerLinkActive="active" routerLink="/forwarderInfo">Forwarders</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" routerLink="/quote">Quotations</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" routerLink="/consignment">Consignment</a>
+      </li>
+      <li class="nav-item" *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
+        <a class="nav-link" routerLinkActive="active" routerLink="/vehicle">Vehicles</a>
+      </li>
+      <li class="nav-item" *ngIf="permission?.authority === 'Super Admin'">
+        <a class="nav-link" routerLink="/tariff" routerLinkActive="active">Tariff</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active" routerLink="/transportRequest">RFT / ROT</a>
+      </li>
+      <li class="nav-item" *ngIf="permission?.authority === 'Super Admin'">
+        <a class="nav-link" routerLinkActive="active" routerLink="/pricing">Pricing</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logout()" href="#">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 
-  <ul class="nav nav-sidebar" *ngIf="userObject?.token">
-    <li>
-      <a routerLinkActive="active" routerLink="/index">Home</a>
-    </li>
-    <li *ngIf="permission?.authority === 'Super Admin'">
-      <a routerLinkActive="active" routerLink="/permission">User Permissions</a>
-    </li>
-    <li *ngIf="permission?.authority === 'Super Admin'">
-      <a routerLinkActive="active" routerLink="/location">Location</a>
-    </li>
-    <li *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
-      <a routerLinkActive="active" routerLink="/driverInfo">Drivers</a>
-    </li>
-    <li *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
-      <a routerLink="/job" routerLinkActive="active">Jobs</a>
-    </li>
-    <li>
-      <a routerLinkActive="active" routerLink="/haulierInfo">Hauliers</a>
-    </li>
-    <li *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
-      <a routerLinkActive="active" routerLink="/forwarderInfo">Forwarders</a>
-    </li>
-    <li>
-      <a routerLinkActive="active" routerLink="/quote">Quotations</a>
-    </li>
-    <li>
-      <a routerLinkActive="active" routerLink="/consignment">Consignment</a>
-    </li>
-    <li *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
-      <a routerLinkActive="active" routerLink="/vehicle">Vehicles</a>
-    </li>
-    <li *ngIf="permission?.authority === 'Super Admin'">
-      <a routerLink="/tariff" routerLinkActive="active">Tariff</a>
-    </li>
-    <li>
-      <a routerLinkActive="active" routerLink="/transportRequest">RFT / ROT</a>
-    </li>
-    <li *ngIf="permission?.authority === 'Super Admin'">
-      <a routerLinkActive="active" routerLink="/pricing">Pricing</a>
-    </li>
-    <li>
-      <a (click)="logout()" href="#">Logout</a>
-    </li>
-  </ul>
-</div>

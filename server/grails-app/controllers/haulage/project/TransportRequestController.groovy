@@ -1,6 +1,7 @@
 package haulage.project
 
 import com.amazonaws.services.s3.model.CannedAccessControlList
+import grails.async.Promise
 import grails.compiler.GrailsCompileStatic
 import grails.rest.RestfulController
 import groovy.transform.TypeCheckingMode
@@ -215,8 +216,12 @@ class TransportRequestController extends RestfulController {
 
       if (cmoBytes) {
         File tmpFile = new File('/tmp/cmo.jpg')
-        FileUtils.writeByteArrayToFile(tmpFile, cmoBytes)
-        transportRequest.cmoImgUrl = haulageBucketService.storeFile('transport-request/{transportRequest.id}/cmo/', tmpFile, CannedAccessControlList.PublicRead)
+        Promise fileWritePromise = task {
+          FileUtils.writeByteArrayToFile(tmpFile, cmoBytes)
+        }
+        fileWritePromise.onComplete {
+          transportRequest.cmoImgUrl = haulageBucketService.storeFile('transport-request/{transportRequest.id}/cmo/', tmpFile, CannedAccessControlList.PublicRead)
+        }
 //        asyncHaulageBucketService.storeFile('transport-request/rft-number/cmo/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
 //          transportRequest.cmoImgUrl = it
 //        }.onError {
@@ -227,8 +232,13 @@ class TransportRequestController extends RestfulController {
 
       if (gatePassBytes) {
         File tmpFile = new File('/tmp/gatepass.jpg')
-        FileUtils.writeByteArrayToFile(tmpFile, gatePassBytes)
-        transportRequest.gatePassImgUrl = haulageBucketService.storeFile('transport-request/{transportRequest.id}/gate-pass/', tmpFile, CannedAccessControlList.PublicRead)
+        Promise fileWritePromise = task {
+          FileUtils.writeByteArrayToFile(tmpFile, gatePassBytes)
+        }
+
+        fileWritePromise.onComplete {
+          transportRequest.gatePassImgUrl = haulageBucketService.storeFile('transport-request/{transportRequest.id}/gate-pass/', tmpFile, CannedAccessControlList.PublicRead)
+        }
 //        amazonS3Service.storeFile('transport-request/rft-number/gate-pass/', tmpFile, CannedAccessControlList.PublicRead).onComplete {
 //          transportRequest.gatePassImgUrl = it
 //        }.onError { Throwable err ->
