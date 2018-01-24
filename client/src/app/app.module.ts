@@ -112,7 +112,6 @@ import {NgbModalModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
     MemberSubscriptionModule,
     PaginationModule,
     NgbModule.forRoot(),
-    NgbModalModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDwrBvVQ4vb99X-IUAn0ntKOK3zv4hokxc'
     })

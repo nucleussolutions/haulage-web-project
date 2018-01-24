@@ -20,7 +20,7 @@ import { LoadingComponent } from "../loading/loading.component";
 import {S3Service} from "../service/s3.service";
 import { HaulierInfoService } from 'app/haulierInfo/haulierInfo.service';
 import {ReplaySubject} from "rxjs/ReplaySubject";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'transportRequest-persist',

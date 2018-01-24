@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Consignment} from "../consignment/consignment";
 import {CreateConsignmentEventService} from "../create-consignment-event.service";
-import {NgbActiveModal, NgbCalendar} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal, NgbCalendar, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-create-consignment-modal',

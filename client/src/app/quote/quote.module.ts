@@ -12,6 +12,7 @@ import {QuotePersistComponent} from './quote-persist.component';
 import { TermAndConditionModule } from '../termAndCondition/termAndCondition.module';
 import { QuoteItemModule } from '../quoteItem/quoteItem.module';
 import {PaginationModule} from "../pagination/pagination.module";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {PaginationModule} from "../pagination/pagination.module";
     QuoteRoutingModule,
     TermAndConditionModule,
     QuoteItemModule,
-    PaginationModule
+    PaginationModule,
+    NgbModule
 ],
   providers: [
     QuoteService
