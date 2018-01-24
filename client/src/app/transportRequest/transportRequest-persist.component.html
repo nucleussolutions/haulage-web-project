@@ -8,12 +8,11 @@
 <div class="row">
   <h1 class="col-xs-12">{{create ? "Create" : "Edit"}} RFT</h1>
   <form name="save{className}" (ngSubmit)="save()">
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    <div class="col">
       <div id="persist-transportRequest" class="content scaffold-edit" role="main">
         <ul class="errors" role="alert" *ngIf="errors">
           <li *ngFor="let error of errors">{{error.message}}</li>
         </ul>
-
 
         <div class="panel panel-primary">
           <div class="panel-heading">
@@ -120,7 +119,7 @@
       </div>
     </div>
 
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    <div class="col">
 
       <div class="panel panel-primary">
         <div class="panel-heading">
@@ -207,7 +206,7 @@
 
     </div>
 
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col">
 
       <div class="panel panel-primary">
         <div class="panel-heading">
@@ -279,7 +278,7 @@
       </div>
     </div>
 
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    <div class="col">
       <div class="form-group required">
         <label for="shippingAgent">Shipping Agent
           <span class="required-indicator">*</span>
@@ -339,7 +338,7 @@
 
     </div>
 
-    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    <div class="col">
       <div class="form-group required">
         <label for="productDesc">Product Desc
           <span class="required-indicator">*</span>
