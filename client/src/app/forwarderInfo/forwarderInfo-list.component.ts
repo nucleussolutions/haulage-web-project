@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ForwarderInfoService } from './forwarderInfo.service';
 import { ForwarderInfo } from './forwarderInfo';
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
 import { UserService } from 'app/user.service';
@@ -41,7 +40,7 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
   private userObject: any;
 
 
-  constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private modal: Modal, private titleService: Title, private userService: UserService, private router: Router) {
+  constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private titleService: Title, private userService: UserService, private router: Router) {
     this.titleService.setTitle('Forwarders');
 
   }
@@ -92,7 +91,7 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
       } else if (error.status === 400) {
         message = 'Bad request';
       }
-      this.modal.alert().title('Error').message(message).open();
+      // this.modal.alert().title('Error').message(message).open();
     });
   }
 

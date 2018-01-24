@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ChangePasswordService } from "../change-password.service";
-import { CookieService } from "ngx-cookie";
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { Router } from "@angular/router";
 import { Subscription } from 'rxjs/Subscription';
 import { UserService } from 'app/user.service';
@@ -24,7 +22,7 @@ export class ChangePasswordComponent implements OnInit {
 
     private code: string;
 
-    constructor(private formBuilder: FormBuilder, private changePasswordService: ChangePasswordService, public modal: Modal, private router: Router, private userService: UserService) {
+    constructor(private formBuilder: FormBuilder, private changePasswordService: ChangePasswordService, private router: Router, private userService: UserService) {
         this.credentials = this.formBuilder.group({
             password: ['', Validators.compose([Validators.minLength(6), Validators.required])],
             confirmPassword: ['', Validators.compose([Validators.minLength(6), Validators.required])]

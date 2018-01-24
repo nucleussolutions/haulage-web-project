@@ -2,8 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Pricing } from './pricing';
 import { PricingService } from './pricing.service';
-import { CookieService } from "ngx-cookie";
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
@@ -26,7 +24,7 @@ export class PricingShowComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private pricingService: PricingService, private router: Router, private userService: UserService, private modal: Modal) {
+  constructor(private route: ActivatedRoute, private pricingService: PricingService, private router: Router, private userService: UserService) {
 
 
   }
@@ -58,11 +56,11 @@ export class PricingShowComponent implements OnInit, OnDestroy {
         message = 'Bad request';
       }
 
-      const dialog = this.modal.alert().isBlocking(true).title('Error').message(message).open();
-
-      dialog.result.then(result => {
-        this.router.navigate(['/login']);
-      });
+      // const dialog = this.modal.alert().isBlocking(true).title('Error').message(message).open();
+      //
+      // dialog.result.then(result => {
+      //   this.router.navigate(['/login']);
+      // });
     });
   }
 

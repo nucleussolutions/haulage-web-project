@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DriverInfoService } from './driverInfo.service';
 import { DriverInfo } from './driverInfo';
 import { Title } from "@angular/platform-browser";
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { Subscription } from 'rxjs/Subscription';
 import { UserService } from 'app/user.service';
 import { ActivatedRoute, Router } from "@angular/router";
@@ -39,7 +38,7 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private titleService: Title, private modal: Modal, private userService: UserService, private router: Router) {
+  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private titleService: Title, private userService: UserService, private router: Router) {
     this.titleService.setTitle('Drivers');
   }
 
@@ -92,7 +91,7 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
         message = 'Bad request';
       }
 
-      this.modal.alert().title('Error').message(message).open();
+      // this.modal.alert().title('Error').message(message).open();
     });
   }
 

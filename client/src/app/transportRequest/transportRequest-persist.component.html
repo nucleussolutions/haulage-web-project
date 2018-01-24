@@ -71,6 +71,9 @@
                      placeholder="YYYY-MM-DD"
                      [value]="transportRequest.vesselEtaOrEtd | date:'y-MM-dd'"
                      (change)="transportRequest.vesselEtaOrEtd = $event.target.valueAsDate"/>
+
+
+
             </div>
 
 
@@ -211,7 +214,7 @@
 
         <div class="panel-body">
           <ngx-datatable
-              class="bootstrap"
+              class="material"
               [rows]="consignmentList"
               [loadingIndicator]="loadingIndicator"
               [columns]="columns"

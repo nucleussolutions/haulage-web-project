@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ConsignmentService } from './consignment.service';
 import { Consignment } from './consignment';
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { ActivatedRoute, Router } from "@angular/router";
 import { UserService } from 'app/user.service';
 import { PermissionService } from "../permission/permission.service";
@@ -43,7 +42,7 @@ export class ConsignmentListComponent implements OnInit {
 
   permission: Permission;
 
-  constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private modal: Modal, private router: Router, private userService: UserService, private permissionService: PermissionService) {
+  constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private router: Router, private userService: UserService, private permissionService: PermissionService) {
   }
 
   ngOnInit() {
@@ -103,11 +102,11 @@ export class ConsignmentListComponent implements OnInit {
       message = 'Bad request';
     }
 
-    const dialog = this.modal.alert().isBlocking(true).title('Error').message(message).open();
+    // const dialog = this.modal.alert().isBlocking(true).title('Error').message(message).open();
 
-    dialog.result.then(result => {
-      this.router.navigate(['/login']);
-    });
+    // dialog.result.then(result => {
+    //   this.router.navigate(['/login']);
+    // });
   }
 
   onPageChange(offset) {

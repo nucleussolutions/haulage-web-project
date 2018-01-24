@@ -8,7 +8,6 @@ import {Location} from '../location/location';
 import {Subscription} from "rxjs/Subscription";
 import {UserService} from "../user.service";
 import {PermissionService} from "../permission/permission.service";
-import {Modal} from 'ngx-modialog/plugins/bootstrap';
 
 @Component({
   selector: 'consignment-persist',
@@ -29,7 +28,7 @@ export class ConsignmentPersistComponent implements OnInit, OnDestroy {
   private userObject: any;
 
 
-  constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private router: Router, private locationService: LocationService, private userService: UserService, private permissionService: PermissionService, private modal: Modal) {
+  constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private router: Router, private locationService: LocationService, private userService: UserService, private permissionService: PermissionService) {
     this.subscription = this.userService.getUser().subscribe(response => {
       this.userObject = response;
       this.checkPermissions();
@@ -56,10 +55,10 @@ export class ConsignmentPersistComponent implements OnInit, OnDestroy {
           }
         });
       } else {
-        const dialog = this.modal.alert().title('Error').message('Unauthorized').open();
-        dialog.result.then(result => {
-          this.router.navigate(['/index']);
-        });
+        // const dialog = this.modal.alert().title('Error').message('Unauthorized').open();
+        // dialog.result.then(result => {
+        //   this.router.navigate(['/index']);
+        // });
       }
     });
   }

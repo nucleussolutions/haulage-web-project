@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PermissionService } from './permission.service';
 import { Permission } from './permission';
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'app/user.service';
 import { Subscription } from "rxjs/Subscription";
@@ -39,7 +38,7 @@ export class PermissionListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private modal: Modal, private router: Router, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private router: Router, private userService: UserService) {
   }
 
   ngOnInit() {
@@ -91,12 +90,12 @@ export class PermissionListComponent implements OnInit, OnDestroy {
         message = 'Bad request';
       }
 
-      const dialog = this.modal.alert().title('Error').message(message).open();
-
-      dialog.result.then(result => {
-        //todo might need to navigate them back to login
-        this.router.navigate(['/login']);
-      });
+      // const dialog = this.modal.alert().title('Error').message(message).open();
+      //
+      // dialog.result.then(result => {
+      //   //todo might need to navigate them back to login
+      //   this.router.navigate(['/login']);
+      // });
     });
   }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { VehicleService } from './vehicle.service';
 import { Vehicle } from './vehicle';
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
+// import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { Title } from "@angular/platform-browser";
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -38,7 +38,7 @@ export class VehicleListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private vehicleService: VehicleService, private userService: UserService, private modal: Modal, private titleService: Title, private router: Router) {
+  constructor(private route: ActivatedRoute, private vehicleService: VehicleService, private userService: UserService, private titleService: Title, private router: Router) {
 
     this.titleService.setTitle('Vehicles');
   }
@@ -92,7 +92,7 @@ export class VehicleListComponent implements OnInit, OnDestroy {
 
       console.log('error.status ' + error.status);
 
-      const dialog = this.modal.alert().title('Error').message(message).open();
+      // const dialog = this.modal.alert().title('Error').message(message).open();
 
     });
   }

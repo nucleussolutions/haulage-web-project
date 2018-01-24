@@ -1,7 +1,5 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {BSModalContext, Modal} from 'ngx-modialog/plugins/bootstrap';
 import {CreateProfileModalComponent} from "../create-profile-modal/create-profile-modal.component";
-import {overlayConfigFactory} from "ngx-modialog";
 import {NavDrawerComponent} from 'app/nav-drawer/nav-drawer.component';
 import {Title} from "@angular/platform-browser";
 import {Subscription} from 'rxjs/Subscription';
@@ -75,7 +73,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(public modal: Modal, private titleService: Title, private userService: UserService, private permissionService: PermissionService) {
+  constructor(private titleService: Title, private userService: UserService, private permissionService: PermissionService) {
     this.titleService.setTitle('Dashboard');
   }
 
@@ -105,15 +103,15 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
             if (error.status === 422) {
               setTimeout(() => {
                 if (this.userObject.token) {
-                  this.modal
-                    .open(CreateProfileModalComponent, overlayConfigFactory({
-                      isBlocking: false,
-                      size: 'lg'
-                    }, BSModalContext));
+                  // this.modal
+                  //   .open(CreateProfileModalComponent, overlayConfigFactory({
+                  //     isBlocking: false,
+                  //     size: 'lg'
+                  //   }, BSModalContext));
                 }
               });
             } else {
-              this.modal.alert().title('Error').message(error.message).open();
+              // this.modal.alert().title('Error').message(error.message).open();
             }
 
           });
@@ -123,11 +121,11 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         if (error.status == 400) {
           setTimeout(() => {
             if (this.userObject.token) {
-              this.modal
-                .open(CreateProfileModalComponent, overlayConfigFactory({
-                  isBlocking: false,
-                  size: 'lg'
-                }, BSModalContext));
+              // this.modal
+              //   .open(CreateProfileModalComponent, overlayConfigFactory({
+              //     isBlocking: false,
+              //     size: 'lg'
+              //   }, BSModalContext));
             }
           });
         }

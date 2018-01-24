@@ -9,7 +9,6 @@ import {HaulierInfoService} from "../haulierInfo/haulierInfo.service";
 import {ForwarderInfo} from "../forwarderInfo/forwarderInfo";
 import {HaulierInfo} from "../haulierInfo/haulierInfo";
 import { Subscription } from 'rxjs/Subscription';
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
 
 @Component({
   selector: 'app-quotation-template',
@@ -34,7 +33,7 @@ export class QuotationTemplateComponent implements OnInit, OnDestroy {
 
   private subscription:Subscription;
 
-  constructor(private userService: UserService, private quoteService: QuoteService, private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private haulierInfoService: HaulierInfoService, private modal: Modal) {
+  constructor(private userService: UserService, private quoteService: QuoteService, private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private haulierInfoService: HaulierInfoService) {
 
   }
 

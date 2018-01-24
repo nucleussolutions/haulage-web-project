@@ -2,7 +2,7 @@
 
 
   <div id="persist-consignment" class="content scaffold-edit row" role="main">
-    <div class="col-xs-12 ">
+    <div class="modal-content">
       <div class="modal-header">
         <h1>{{create ? "Create" : "Edit"}} Consignment</h1>
       </div>
@@ -38,11 +38,19 @@
           <label for="acceptTime">Accept Time
             <span class="required-indicator">*</span>
           </label>
-          <input class="form-control" required="" name="acceptTime" id="acceptTime" type="date" placeholder="YYYY-MM-DD"
-                 [value]="consignment.acceptTime | date:'y-MM-dd'"
-                 (change)="consignment.acceptTime = $event.target.valueAsDate"/>
 
-          <!--<app-datepicker></app-datepicker>-->
+          <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd" required id="acceptTime"
+                   name="acceptTime" [value]="consignment.acceptTime | date:'y-MM-dd'"
+                   (change)="consignment.acceptTime = $event.target.valueAsDate" ngbDatepicker #d="ngbDatepicker">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                <!--<img [src]="calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;" />-->
+                <span class="oi oi-calendar"></span>
+              </button>
+            </div>
+          </div>
+
 
         </div>
         <div class="form-group">

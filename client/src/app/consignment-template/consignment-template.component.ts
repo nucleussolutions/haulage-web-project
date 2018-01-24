@@ -9,7 +9,6 @@ import { HaulierInfo } from "../haulierInfo/haulierInfo";
 import { ForwarderInfo } from "../forwarderInfo/forwarderInfo";
 import { HaulierInfoService } from "../haulierInfo/haulierInfo.service";
 import { ForwarderInfoService } from "../forwarderInfo/forwarderInfo.service";
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { TransportRequestService } from "../transportRequest/transportRequest.service";
 import { JobService } from "../job/job.service";
 import { TransportRequest } from 'app/transportRequest/transportRequest';
@@ -38,7 +37,7 @@ export class ConsignmentTemplateComponent implements OnInit, OnDestroy {
 
   forwarderInfo: ForwarderInfo;
 
-  constructor(private userService: UserService, private route: ActivatedRoute, private consignmentService: ConsignmentService, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private modal: Modal, private transportRequestService: TransportRequestService, private jobService: JobService) { }
+  constructor(private userService: UserService, private route: ActivatedRoute, private consignmentService: ConsignmentService, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private transportRequestService: TransportRequestService, private jobService: JobService) { }
 
   ngOnInit() {
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
@@ -72,7 +71,7 @@ export class ConsignmentTemplateComponent implements OnInit, OnDestroy {
         message = 'Not found';
       }
 
-      this.modal.alert().title('Error').message(message).open();
+      // this.modal.alert().title('Error').message(message).open();
     });
   }
 

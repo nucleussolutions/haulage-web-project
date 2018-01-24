@@ -28,8 +28,6 @@ import {CustomerModule} from './customer/customer.module';
 import {TransportRequestModule} from './transportRequest/transportRequest.module';
 import {PricingModule} from './pricing/pricing.module';
 import {CookieModule} from 'ngx-cookie';
-import {ModalModule} from 'ngx-modialog';
-import {BootstrapModalModule} from 'ngx-modialog/plugins/bootstrap';
 import {CreateProfileModalComponent} from './create-profile-modal/create-profile-modal.component';
 import {ResendCodeComponent} from './resend-code/resend-code.component';
 import {AngularFireModule} from 'angularfire2';
@@ -55,6 +53,7 @@ import { ConsignmentTemplateComponent } from './consignment-template/consignment
 import { QuotationTemplateComponent } from './quotation-template/quotation-template.component';
 import {AgmCoreModule} from "@agm/core";
 import { DatepickerComponent } from './datepicker/datepicker.component';
+import {NgbModalModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 
@@ -103,8 +102,6 @@ import { DatepickerComponent } from './datepicker/datepicker.component';
     CustomerModule,
     TransportRequestModule,
     PricingModule,
-    ModalModule.forRoot(),
-    BootstrapModalModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     PermissionModule,
@@ -114,6 +111,8 @@ import { DatepickerComponent } from './datepicker/datepicker.component';
     TariffModule,
     MemberSubscriptionModule,
     PaginationModule,
+    NgbModule.forRoot(),
+    NgbModalModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDwrBvVQ4vb99X-IUAn0ntKOK3zv4hokxc'
     })

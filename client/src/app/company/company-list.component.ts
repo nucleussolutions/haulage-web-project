@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CompanyService} from './company.service';
 import {Company} from './company';
-import {Modal} from 'ngx-modialog/plugins/bootstrap';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from 'app/user.service';
 import {Subscription} from "rxjs/Subscription";
@@ -38,7 +37,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
 
   limit: number = 10;
 
-  constructor(private route: ActivatedRoute, private companyService: CompanyService, private modal: Modal, private router: Router, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private companyService: CompanyService, private router: Router, private userService: UserService) {
   }
 
   ngOnInit() {
@@ -78,12 +77,12 @@ export class CompanyListComponent implements OnInit, OnDestroy {
 
 
     }, error => {
-      const dialog = this.modal.alert().isBlocking(true)
-        .title('Error').message(error).open();
-
-      dialog.result.then(result => {
-        this.router.navigate(['/login']);
-      });
+      // const dialog = this.modal.alert().isBlocking(true)
+      //   .title('Error').message(error).open();
+      //
+      // dialog.result.then(result => {
+      //   this.router.navigate(['/login']);
+      // });
     });
   }
 }

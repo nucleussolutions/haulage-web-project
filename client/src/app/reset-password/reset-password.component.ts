@@ -3,7 +3,6 @@ import { ResetPasswordService } from "../reset-password.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { UserService } from 'app/user.service';
 
 @Component({
@@ -18,7 +17,7 @@ export class ResetPasswordComponent implements OnInit {
 
     private resetCode: string;
 
-    constructor(private formBuilder: FormBuilder, private router: Router, private titleService: Title, public modal: Modal, private userService: UserService) {
+    constructor(private formBuilder: FormBuilder, private router: Router, private titleService: Title, private userService: UserService) {
         this.credentials = this.formBuilder.group({
             password: ['', Validators.compose([Validators.minLength(6), Validators.required])],
             retypePassword: ['', Validators.compose([Validators.minLength(6), Validators.required])]

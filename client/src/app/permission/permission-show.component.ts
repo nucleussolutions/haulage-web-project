@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Permission } from './permission';
 import { PermissionService } from './permission.service';
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
@@ -25,7 +24,7 @@ export class PermissionShowComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private router: Router, private userService: UserService, private modal: Modal) {
+  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private router: Router, private userService: UserService) {
     
   }
 
@@ -54,7 +53,7 @@ export class PermissionShowComponent implements OnInit, OnDestroy {
         message = 'Not found';
       }
 
-      this.modal.alert().title('Error').message(message).open();
+      // this.modal.alert().title('Error').message(message).open();
     });
   }
 
@@ -67,7 +66,7 @@ export class PermissionShowComponent implements OnInit, OnDestroy {
           alert("Error occurred during delete");
         }
       }, error => {
-        this.modal.alert().title('Error').message(error).open();
+        // this.modal.alert().title('Error').message(error).open();
       });
     }
   }

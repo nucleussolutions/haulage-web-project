@@ -1,6 +1,4 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {BSModalContext, Modal} from "ngx-modialog/plugins/bootstrap";
-import {CloseGuard, DialogRef, ModalComponent} from "ngx-modialog";
 import {HaulierInfoService} from "../haulierInfo/haulierInfo.service";
 import {ForwarderInfoService} from "../forwarderInfo/forwarderInfo.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
@@ -15,15 +13,7 @@ import {Subscription} from 'rxjs/Subscription';
   templateUrl: './create-profile-modal.component.html',
   styleUrls: ['./create-profile-modal.component.css'],
 })
-export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuard, ModalComponent<CreateProfileModalContext> {
-
-  beforeClose(): boolean | Promise<boolean>{
-    return false;
-  }
-
-  beforeDismiss(): boolean | Promise<boolean>{
-    return false;
-  }
+export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -32,18 +22,13 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuar
   ngOnInit(): void {
   }
 
-  context: CreateProfileModalContext;
-
   private personalDetails: FormGroup;
 
   private userObject: any;
 
   private subscription: Subscription;
 
-  constructor(public dialog: DialogRef<CreateProfileModalContext>, private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private formBuilder: FormBuilder, private modal: Modal, private cdRef: ChangeDetectorRef, private userService: UserService) {
-    this.context = dialog.context;
-
-    this.dialog.setCloseGuard(this);
+  constructor(private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService) {
 
     this.personalDetails = this.formBuilder.group({
       name: ['', Validators.required],
@@ -103,12 +88,12 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuar
 
         response = JSON.parse(responseStr);
 
-        this.dialog.dismiss();
+        // this.dialog.dismiss();
       }, error => {
         console.log('haulierInfoService error ' + error.json());
-        this.modal.alert()
-          .title('Error')
-          .message(error.json().message).open();
+        // this.modal.alert()
+        //   .title('Error')
+        //   .message(error.json().message).open();
       });
 
     } else if (formData.value.usertype === 'Manager') {
@@ -125,42 +110,42 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy, CloseGuar
 
         response = JSON.parse(responseStr);
 
-        this.dialog.dismiss();
+        // this.dialog.dismiss();
       }, error => {
         console.log('forwarderInfoService error' + error.json());
-        this.modal.alert()
-          .title('Error')
-          .message(error.json().message).open();
+        // this.modal.alert()
+        //   .title('Error')
+        //   .message(error.json().message).open();
       });
     }
   }
 }
 
 
-export class CreateProfileModalContext extends BSModalContext {
-
-  public name: string;
-
-  public companyName: string;
-
-  public companyAddress1: string;
-
-  public companyAddress2: string;
-
-  public companyCity: string;
-
-  public companyState: string;
-
-  public companyCountry: string;
-
-  public companyOfficePhone: string;
-
-  public companyYardPhone: string;
-
-  public companyCode: string;
-
-  public companyImage: File;
-
-  public companyRegNo: string;
-
-}
+// export class CreateProfileModalContext extends BSModalContext {
+//
+//   public name: string;
+//
+//   public companyName: string;
+//
+//   public companyAddress1: string;
+//
+//   public companyAddress2: string;
+//
+//   public companyCity: string;
+//
+//   public companyState: string;
+//
+//   public companyCountry: string;
+//
+//   public companyOfficePhone: string;
+//
+//   public companyYardPhone: string;
+//
+//   public companyCode: string;
+//
+//   public companyImage: File;
+//
+//   public companyRegNo: string;
+//
+// }

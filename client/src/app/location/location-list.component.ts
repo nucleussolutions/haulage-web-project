@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LocationService } from './location.service';
 import { Location } from './location';
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { UserService } from 'app/user.service';
 import { Subscription } from "rxjs/Subscription";
@@ -46,7 +45,7 @@ export class LocationListComponent implements OnInit, OnDestroy {
   limit: number = 10;
 
 
-  constructor(private route: ActivatedRoute, private locationService: LocationService, private modal: Modal, private router: Router, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private locationService: LocationService, private router: Router, private userService: UserService) {
   }
 
   ngOnInit() {
@@ -98,11 +97,11 @@ export class LocationListComponent implements OnInit, OnDestroy {
         message = 'Bad request';
       }
 
-      const dialog = this.modal.alert().isBlocking(true).title('Error').message(message).open();
-
-      dialog.result.then(result => {
-        this.router.navigate(['/login']);
-      });
+      // const dialog = this.modal.alert().isBlocking(true).title('Error').message(message).open();
+      //
+      // dialog.result.then(result => {
+      //   this.router.navigate(['/login']);
+      // });
     });
   }
 

@@ -5,7 +5,6 @@ import {Subscription} from "rxjs/Subscription";
 import {UserService} from "../user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable} from "rxjs/Observable";
-import {Modal} from "ngx-modialog/plugins/bootstrap";
 
 @Component({
   selector: 'quote-list',
@@ -39,7 +38,7 @@ export class QuoteListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private quoteService: QuoteService, private userService: UserService, private modal: Modal, private router: Router) {
+  constructor(private route: ActivatedRoute, private quoteService: QuoteService, private userService: UserService, private router: Router) {
   }
 
   ngOnInit() {
@@ -92,7 +91,7 @@ export class QuoteListComponent implements OnInit, OnDestroy {
 
       console.log('error.status '+error.status);
 
-      const dialog = this.modal.alert().title('Error').message(message).open();
+      // const dialog = this.modal.alert().title('Error').message(message).open();
 
     });
   }

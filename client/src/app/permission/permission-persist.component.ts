@@ -3,7 +3,6 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Permission} from './permission';
 import {PermissionService} from './permission.service';
 import {Response} from "@angular/http";
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import {Title} from "@angular/platform-browser";
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -27,7 +26,7 @@ export class PermissionPersistComponent implements OnInit, OnDestroy {
 
   private subscription : Subscription;
 
-  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private userService: UserService, private router: Router, private modal : Modal, private titleService: Title) {
+  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private userService: UserService, private router: Router, private titleService: Title) {
     this.subscription = this.userService.getUser().subscribe(response => {
       this.userObject = response;
     });

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TransportRequestService} from './transportRequest.service';
 import {TransportRequest} from './transportRequest';
-import {Modal} from 'ngx-modialog/plugins/bootstrap';
+// import {Modal} from 'ngx-modialog/plugins/bootstrap';
 import {Title} from '@angular/platform-browser';
 import {UserService} from 'app/user.service';
 import {Subscription} from 'rxjs/Subscription';
@@ -46,7 +46,7 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
 
   permission: Permission;
 
-  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private userService: UserService, private modal: Modal, private titleService: Title, private router: Router, private permissionService: PermissionService) {
+  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private userService: UserService, private titleService: Title, private router: Router, private permissionService: PermissionService) {
     this.titleService.setTitle('Transport Request List');
   }
 
@@ -102,7 +102,7 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
         message = 'Bad request';
       }
 
-      this.modal.alert().title('Error').message(message).open();
+      // this.modal.alert().title('Error').message(message).open();
     });
 
   }

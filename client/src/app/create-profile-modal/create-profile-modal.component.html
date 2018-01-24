@@ -1,9 +1,9 @@
-  <form [formGroup]="personalDetails" (ngSubmit)="submitDetails(personalDetails)">
+<form [formGroup]="personalDetails" (ngSubmit)="submitDetails(personalDetails)">
 
+  <div class="modal-content">
     <div class="modal-header">
       <h2>Create Your Profile</h2>
     </div>
-
     <div class="modal-body">
 
       <div class="row">
@@ -85,7 +85,8 @@
 
           <div class="form-group">
             <label>Country</label>
-            <input class="form-control" type="text" readonly="readonly" value="Malaysia" id="companyCountry" formControlName="companyCountry">
+            <input class="form-control" type="text" readonly="readonly" value="Malaysia" id="companyCountry"
+                   formControlName="companyCountry">
           </div>
         </div>
       </div>
@@ -94,5 +95,6 @@
       <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
       <input type="submit" class="btn btn-primary" value="Submit">
     </div>
-  </form>
+  </div>
+</form>
 

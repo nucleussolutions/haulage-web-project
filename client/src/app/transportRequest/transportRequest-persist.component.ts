@@ -10,8 +10,6 @@ import { LocationService } from '../location/location.service';
 import { Location } from '../location/location';
 import { UserService } from "../user.service";
 import { Subscription } from "rxjs/Subscription";
-import { BSModalContext, Modal } from 'ngx-modialog/plugins/bootstrap';
-import { overlayConfigFactory } from "ngx-modialog";
 import { CreateConsignmentModalComponent } from "../create-consignment-modal/create-consignment-modal.component";
 import { PermissionService } from "../permission/permission.service";
 import { Permission } from "../permission/permission";
@@ -22,6 +20,7 @@ import { LoadingComponent } from "../loading/loading.component";
 import {S3Service} from "../service/s3.service";
 import { HaulierInfoService } from 'app/haulierInfo/haulierInfo.service';
 import {ReplaySubject} from "rxjs/ReplaySubject";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'transportRequest-persist',
@@ -59,7 +58,7 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
   gatePassImg: File;
 
-  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService, private modal: Modal, private permissionService: PermissionService, private createConsignmentEventService: CreateConsignmentEventService, private s3Service: S3Service, private haulierInfoService: HaulierInfoService) {
+  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService, private permissionService: PermissionService, private createConsignmentEventService: CreateConsignmentEventService, private haulierInfoService: HaulierInfoService, private modalService: NgbModal) {
 
   }
 
@@ -125,58 +124,61 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    let loadingDialogRef = this.modal.open(LoadingComponent, overlayConfigFactory({
-      isBlocking: false,
-      size: 'md',
-      message: 'Saving RFT...'
-    }, BSModalContext));
 
-    loadingDialogRef.result.then(result => {
 
-      Observable.of(this.kOnekEightFormImg).flatMap(kOnekEightFormImg => {
-        if(kOnekEightFormImg){
-          return this.readFile(kOnekEightFormImg);
-        }
-      }).subscribe(base64Observable => {
-        this.transportRequest.konekEightBase64String = base64Observable.result;
-      });
 
-      Observable.of(this.bookingConfirmationImg).flatMap(bookingConfirmationImg => {
-        if(bookingConfirmationImg){
-          return this.readFile(bookingConfirmationImg);
-        }
-      }).subscribe(base64Observable => {
-        this.transportRequest.bookingConfirmationBase64String = base64Observable.result;
-      });
+    // let loadingDialogRef = this.modal.open(LoadingComponent, overlayConfigFactory({
+    //   isBlocking: false,
+    //   size: 'md',
+    //   message: 'Saving RFT...'
+    // }, BSModalContext));
 
-      Observable.of(this.cmoImg).flatMap(cmoImg => {
-        if(cmoImg){
-          return this.readFile(cmoImg)
-        }
-      }).subscribe(base64Observable => {
-        this.transportRequest.cmoBase64String = base64Observable.result;
-      });
-
-      Observable.of(this.gatePassImg).flatMap(gatePassImg => {
-        if(this.gatePassImg){
-          return this.readFile(gatePassImg);
-        }
-      }).subscribe(base64Observable => {
-        this.transportRequest.gatePassBase64String = base64Observable.result;
-      });
-
-      console.log('transportRequest being sent to the server '+this.transportRequest);
-
-      this.transportRequestService.save(this.transportRequest, this.userObject).subscribe((transportRequest: TransportRequest) => {
-        this.router.navigate(['/transportRequest', 'show', transportRequest.id]);
-      }, (json: Response) => {
-        if (json.hasOwnProperty('message')) {
-          this.errors = [json];
-        } else {
-          // this.errors = json;
-        }
-      });
-    });
+    // loadingDialogRef.result.then(result => {
+    //
+    //   Observable.of(this.kOnekEightFormImg).flatMap(kOnekEightFormImg => {
+    //     if(kOnekEightFormImg){
+    //       return this.readFile(kOnekEightFormImg);
+    //     }
+    //   }).subscribe(base64Observable => {
+    //     this.transportRequest.konekEightBase64String = base64Observable.result;
+    //   });
+    //
+    //   Observable.of(this.bookingConfirmationImg).flatMap(bookingConfirmationImg => {
+    //     if(bookingConfirmationImg){
+    //       return this.readFile(bookingConfirmationImg);
+    //     }
+    //   }).subscribe(base64Observable => {
+    //     this.transportRequest.bookingConfirmationBase64String = base64Observable.result;
+    //   });
+    //
+    //   Observable.of(this.cmoImg).flatMap(cmoImg => {
+    //     if(cmoImg){
+    //       return this.readFile(cmoImg)
+    //     }
+    //   }).subscribe(base64Observable => {
+    //     this.transportRequest.cmoBase64String = base64Observable.result;
+    //   });
+    //
+    //   Observable.of(this.gatePassImg).flatMap(gatePassImg => {
+    //     if(this.gatePassImg){
+    //       return this.readFile(gatePassImg);
+    //     }
+    //   }).subscribe(base64Observable => {
+    //     this.transportRequest.gatePassBase64String = base64Observable.result;
+    //   });
+    //
+    //   console.log('transportRequest being sent to the server '+this.transportRequest);
+    //
+    //   this.transportRequestService.save(this.transportRequest, this.userObject).subscribe((transportRequest: TransportRequest) => {
+    //     this.router.navigate(['/transportRequest', 'show', transportRequest.id]);
+    //   }, (json: Response) => {
+    //     if (json.hasOwnProperty('message')) {
+    //       this.errors = [json];
+    //     } else {
+    //       // this.errors = json;
+    //     }
+    //   });
+    // });
   }
 
   readFile(fileToRead: File): Observable<MSBaseReader>{
@@ -192,68 +194,73 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
   }
 
   onAddConsignmentClick() {
-    const dialogRef = this.modal.open(CreateConsignmentModalComponent, overlayConfigFactory({
-      isBlocking: false,
-      size: 'md'
-    }, BSModalContext));
+    const modalRef = this.modalService.open(CreateConsignmentModalComponent);
+    modalRef.componentInstance.name = 'Create or Edit Consignment';
 
-    dialogRef.result.then(consignment => {
-      console.log('result ' + consignment);
-      //this adds another consignment into the list of consignments
-      this.consignmentList.push(consignment);
-    }, error => {
-      // console.log('error '+error);
-    });
+    // const dialogRef = this.modal.open(CreateConsignmentModalComponent, overlayConfigFactory({
+    //   isBlocking: false,
+    //   size: 'md'
+    // }, BSModalContext));
+    //
+    // dialogRef.result.then(consignment => {
+    //   console.log('result ' + consignment);
+    //   //this adds another consignment into the list of consignments
+    //   this.consignmentList.push(consignment);
+    // }, error => {
+    //   // console.log('error '+error);
+    // });
   }
 
   onDeleteConsignmentClick() {
-    const delDialogRef = this.modal.alert().title("Confirm Delete").message("Are you sure?").okBtn(null).okBtnClass('hidden')
-      .addButton('btn btn-primary', 'Accept', function (dialogFooter) {
-        console.log('ok callback');
-        dialogFooter.dialog.dismiss();
-        //todo delete selected consignment from the list of consignments
-        if (this.selectedConsignment) {
-          // this.consignmentService.destroy(this.selectedConsignment[0], this.userObject).subscribe(response => {
-          //   console.log('delete successful');
-          // });
-
-          //todo refresh the persist page again perhaps?
-          this.consignmentList.forEach((value, index) => {
-            console.log('value ' + value + ' index ' + index);
-            if (value == new Consignment(this.selectedConsignment[0])) {
-              this.consignmentList.splice(index, 1);
-            }
-          });
-
-          console.log('consignmentList count ' + this.consignmentList.length);
-        }
-        return false;
-      })
-      .addButton('btn btn-primary', 'Cancel', function (dialogFooter) {
-        dialogFooter.dialog.dismiss();
-        return false;
-      })
-      .open();
-    delDialogRef.result.then(result => {
-
-    });
+    // const delDialogRef = this.modal.alert().title("Confirm Delete").message("Are you sure?").okBtn(null).okBtnClass('hidden')
+    //   .addButton('btn btn-primary', 'Accept', function (dialogFooter) {
+    //     console.log('ok callback');
+    //     dialogFooter.dialog.dismiss();
+    //     //todo delete selected consignment from the list of consignments
+    //     if (this.selectedConsignment) {
+    //       // this.consignmentService.destroy(this.selectedConsignment[0], this.userObject).subscribe(response => {
+    //       //   console.log('delete successful');
+    //       // });
+    //
+    //       //todo refresh the persist page again perhaps?
+    //       this.consignmentList.forEach((value, index) => {
+    //         console.log('value ' + value + ' index ' + index);
+    //         if (value == new Consignment(this.selectedConsignment[0])) {
+    //           this.consignmentList.splice(index, 1);
+    //         }
+    //       });
+    //
+    //       console.log('consignmentList count ' + this.consignmentList.length);
+    //     }
+    //     return false;
+    //   })
+    //   .addButton('btn btn-primary', 'Cancel', function (dialogFooter) {
+    //     dialogFooter.dialog.dismiss();
+    //     return false;
+    //   })
+    //   .open();
+    // delDialogRef.result.then(result => {
+    //
+    // });
   }
 
   onEditConsignmentClick(consignment: Consignment) {
+    const modalRef = this.modalService.open(CreateConsignmentModalComponent);
+    modalRef.componentInstance.consignment = consignment;
     // this.modal.open(CustomModal, overlayConfigFactory({ num1: 2, num2: 3 }, BSModalContext));
-    const dialogRef = this.modal.open(CreateConsignmentModalComponent, overlayConfigFactory({
-      isBlocking: false,
-      size: 'md',
-      consignment: new Consignment(this.selectedConsignment[0])
-    }, BSModalContext));
-
-    dialogRef.result.then(consignment => {
-      console.log('result ' + consignment);
-      //this adds another consignment into the list of consignments
-      this.consignmentList.push(consignment);
-    }, error => {
-      // console.log('error '+error);
-    });
+    // const dialogRef = this.modal.open(CreateConsignmentModalComponent, overlayConfigFactory({
+    //   isBlocking: false,
+    //   size: 'md',
+    //   consignment: new Consignment(this.selectedConsignment[0])
+    // }, BSModalContext));
+    //
+    // dialogRef.result.then(consignment => {
+    //   console.log('result ' + consignment);
+    //   //this adds another consignment into the list of consignments
+    //   this.consignmentList.push(consignment);
+    // }, error => {
+    //   // console.log('error '+error);
+    // });
   }
 
 

@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Title} from "@angular/platform-browser";
 import {Router} from "@angular/router";
-import {Modal} from 'ngx-modialog/plugins/bootstrap';
 import {UserService} from 'app/user.service';
 
 
@@ -16,7 +15,7 @@ export class LoginComponent implements OnInit {
 
     private credentials: FormGroup;
 
-    constructor(private formBuilder: FormBuilder, private titleService: Title, private router: Router, private userService: UserService, private modal: Modal) {
+    constructor(private formBuilder: FormBuilder, private titleService: Title, private router: Router, private userService: UserService) {
         this.credentials = this.formBuilder.group({
             email: ['', Validators.compose([Validators.required, Validators.email])],
             password: ['', Validators.required],
@@ -38,7 +37,7 @@ export class LoginComponent implements OnInit {
             window.location.reload();
             this.router.navigate(['/index']);
         }, error => {
-            this.modal.alert().title('Error').message(error).open();
+            // this.modal.alert().title('Error').message(error).open();
         });
 
     }

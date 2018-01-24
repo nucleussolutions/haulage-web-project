@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DriverInfo } from './driverInfo';
 import { DriverInfoService } from './driverInfo.service';
-import { Response } from "@angular/http";
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
-import {Modal} from 'ngx-modialog/plugins/bootstrap';
 
 
 @Component({
@@ -22,7 +20,7 @@ export class DriverInfoPersistComponent implements OnInit {
 
   private userObject : any;
 
-  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private router: Router, private userService: UserService, private modal: Modal) {
+  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private router: Router, private userService: UserService) {
     this.subscription = this.userService.getUser().subscribe(userObject => {
       this.userObject = userObject;
     });
@@ -48,7 +46,7 @@ export class DriverInfoPersistComponent implements OnInit {
       if (json.hasOwnProperty('message')) {
         this.errors = [json];
       } else {
-        this.errors = json._embedded.errors;
+        // this.errors = json._embedded.errors;
       }
     });
   }

@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Pricing } from './pricing';
 import { PricingService } from './pricing.service';
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
 import {Observable} from "rxjs/Observable";
@@ -26,7 +25,7 @@ export class PricingPersistComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private pricingService: PricingService, private router: Router, private modal: Modal, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private pricingService: PricingService, private router: Router, private userService: UserService) {
 
   }
 
@@ -46,9 +45,9 @@ export class PricingPersistComponent implements OnInit, OnDestroy {
       this.create = false;
       this.pricing = pricing;
     }, error => {
-      this.modal.alert()
-        .title('Error')
-        .message(error).open();
+      // this.modal.alert()
+      //   .title('Error')
+      //   .message(error).open();
     });
   }
 

@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PricingService} from './pricing.service';
 import {Pricing} from './pricing';
-import {Modal} from 'ngx-modialog/plugins/bootstrap';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from 'app/user.service';
@@ -39,7 +38,7 @@ export class PricingListComponent implements OnInit, OnDestroy {
 
   limit: number = 10;
 
-  constructor(private route: ActivatedRoute, private pricingService: PricingService, private modal: Modal, private titleService: Title, private router: Router, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private pricingService: PricingService, private titleService: Title, private router: Router, private userService: UserService) {
     this.titleService.setTitle('Pricing List');
   }
 
@@ -87,11 +86,11 @@ export class PricingListComponent implements OnInit, OnDestroy {
         message = 'Bad request';
       }
 
-      const dialog = this.modal.alert().title('Error').message(message).open();
+      // const dialog = this.modal.alert().title('Error').message(message).open();
 
-      dialog.result.then(result => {
-        this.router.navigate(['/login']);
-      });
+      // dialog.result.then(result => {
+      //   this.router.navigate(['/login']);
+      // });
     });
   }
 }
