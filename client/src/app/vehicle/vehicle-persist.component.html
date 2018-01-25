@@ -6,8 +6,7 @@
 </div>
 
 <div class="row">
-
-  <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+  <div class="col-12 col-sm-4 col-md-4 col-lg-4">
       <div id="persist-vehicle" class="content scaffold-edit" role="main">
           <h1>{{create ? "Create" : "Edit"}} Vehicle</h1>
           <ul class="errors" role="alert" *ngIf="errors">
@@ -43,22 +42,45 @@
                   <label for="roadTaxRenewalDate">Road Tax Renewal Date
                     <span class="required-indicator">*</span>
                   </label>
-                  <input class="form-control" required="" name="roadTaxRenewalDate" id="roadTaxRenewalDate" type="date" placeholder="YYYY-MM-DD"
-                         [value]="vehicle.roadTaxRenewalDate | date:'y-MM-dd'" (change)="vehicle.roadTaxRenewalDate = $event.target.valueAsDate"/>
+                  <div class="input-group">
+                    <input class="form-control" required="" name="roadTaxRenewalDate" id="roadTaxRenewalDate" type="date" placeholder="YYYY-MM-DD"
+                           [value]="vehicle.roadTaxRenewalDate | date:'y-MM-dd'" (change)="vehicle.roadTaxRenewalDate = $event.target.valueAsDate" ngbDatepicker #roadTaxRenewalDate="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" (click)="roadTaxRenewalDate.toggle()" type="button">
+                        <span class="oi oi-calendar"></span>
+                      </button>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="form-group">
                   <label for="licenseExpiryDate">License Expiry Date
                     <span class="required-indicator">*</span>
                   </label>
-                  <input class="form-control" required="" name="licenseExpiryDate" id="licenseExpiryDate" type="date" placeholder="YYYY-MM-DD"
-                         [value]="vehicle.licenseExpiryDate | date:'y-MM-dd'" (change)="vehicle.licenseExpiryDate = $event.target.valueAsDate"/>
+
+                  <div class="input-group">
+                    <input class="form-control" required="" name="licenseExpiryDate" id="licenseExpiryDate" type="date" placeholder="YYYY-MM-DD"
+                           [value]="vehicle.licenseExpiryDate | date:'y-MM-dd'" (change)="vehicle.licenseExpiryDate = $event.target.valueAsDate" ngbDatepicker #licenseExpiryDate="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" (click)="licenseExpiryDate.toggle()" type="button">
+                        <span class="oi oi-calendar"></span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="puspakomExpiryDate">Puspakom Expiry Date
                     <span class="required-indicator">*</span>
                   </label>
-                  <input class="form-control" required="" name="puspakomExpiryDate" id="puspakomExpiryDate" type="date" placeholder="YYYY-MM-DD"
-                         [value]="vehicle.puspakomExpiryDate | date:'y-MM-dd'" (change)="vehicle.puspakomExpiryDate = $event.target.valueAsDate"/>
+                  <div class="input-group">
+                    <input class="form-control" required="" name="puspakomExpiryDate" id="puspakomExpiryDate" type="date" placeholder="YYYY-MM-DD"
+                           [value]="vehicle.puspakomExpiryDate | date:'y-MM-dd'" (change)="vehicle.puspakomExpiryDate = $event.target.valueAsDate" ngbDatepicker #puspakomExpiryDate="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" (click)="puspakomExpiryDate.toggle()" type="button">
+                        <span class="oi oi-calendar"></span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="model">Model
@@ -82,15 +104,31 @@
                   <label for="spadPermitExpiryDate">Spad Permit Expiry Date
                     <span class="required-indicator">*</span>
                   </label>
-                  <input class="form-control" required="" name="spadPermitExpiryDate" id="spadPermitExpiryDate" type="date" placeholder="YYYY-MM-DD"
-                         [value]="vehicle.spadPermitExpiryDate | date:'y-MM-dd'" (change)="vehicle.spadPermitExpiryDate = $event.target.valueAsDate"/>
+                  <div class="input-group">
+                    <input class="form-control" required="" name="spadPermitExpiryDate" id="spadPermitExpiryDate" type="date" placeholder="YYYY-MM-DD"
+                           [value]="vehicle.spadPermitExpiryDate | date:'y-MM-dd'" (change)="vehicle.spadPermitExpiryDate = $event.target.valueAsDate" ngbDatepicker #spadPermitExpiryDate="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" (click)="spadPermitExpiryDate.toggle()" type="button">
+                        <span class="oi oi-calendar"></span>
+                      </button>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="form-group">
                   <label for="insuranceExpiryDate">Insurance Expiry Date
                     <span class="required-indicator">*</span>
                   </label>
-                  <input class="form-control" required="" name="insuranceExpiryDate" id="insuranceExpiryDate" type="date" placeholder="YYYY-MM-DD"
-                         [value]="vehicle.insuranceExpiryDate | date:'y-MM-dd'" (change)="vehicle.insuranceExpiryDate = $event.target.valueAsDate"/>
+                  <div class="input-group">
+                    <input class="form-control" required="" name="insuranceExpiryDate" id="insuranceExpiryDate" type="date" placeholder="YYYY-MM-DD"
+                           [value]="vehicle.insuranceExpiryDate | date:'y-MM-dd'" (change)="vehicle.insuranceExpiryDate = $event.target.valueAsDate" ngbDatepicker #insuranceExpiryDate="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" (click)="insuranceExpiryDate.toggle()" type="button">
+                        <span class="oi oi-calendar"></span>
+                      </button>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="form-group">
                   <label for="userId">User Id
@@ -106,6 +144,5 @@
           </form>
         </div>
   </div>
-
 </div>
 
