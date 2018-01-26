@@ -1,208 +1,208 @@
 <div id="print-section">
   <div class="row">
-    <img class="consignment-note-company-image" src="{{haulierInfo?.company.companyImgUrl}}"/>
-    <p>{{haulierInfo?.company.registrationNo}}</p>
-    <p>{{haulierInfo?.company.address1}}</p>
-    <p>{{haulierInfo?.company.address2}}</p>
-    <p>{{haulierInfo?.company.city}}</p>
-    <p>{{haulierInfo?.company.state}}</p>
-    <p>{{haulierInfo?.company.country}}</p>
+    <div class="col-12">
+      <img class="consignment-note-company-image" src="{{haulierInfo?.company.companyImgUrl}}"/>
+      <p>{{haulierInfo?.company.registrationNo}}</p>
+      <p>{{haulierInfo?.company.address1}}</p>
+      <p>{{haulierInfo?.company.address2}}</p>
+      <p>{{haulierInfo?.company.city}}</p>
+      <p>{{haulierInfo?.company.state}}</p>
+      <p>{{haulierInfo?.company.country}}</p>
+    </div>
   </div>
-  <h1>CONSIGNMENT NOTE</h1>
   <div class="row">
-  
-  
-    <div class="form-group">
-      <label class="consignment-note-label">Job No.</label>
-      <p>{{consignment?.job != null ? consignment.job.id : 'Unassigned'}}</p>
-      <!--show job number, otherwise show unassigned-->
-    </div>
-  
-  
-    <div class="form-group">
-      <label class="consignment-note-label">RFT/ROT No.</label>
-      <p>{{consignment?.transportRequest.id}}</p>
-    </div>
-  
-    <div class="form-group">
-      <label class="consignment-note-label">Date</label>
-      <p></p>
-    </div>
-  
-  </div>
-  
-  <div class="row">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Consignment Details</h3>
+    <div class="col-12">
+      <h1 >CONSIGNMENT NOTE</h1>
+      <div class="form-group">
+        <label class="consignment-note-label">Job No.</label>
+        <p>{{consignment?.job != null ? consignment.job.id : 'Unassigned'}}</p>
+        <!--show job number, otherwise show unassigned-->
       </div>
-      <div class="panel-body">
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-          <div class="form-group">
-            <label class="consignment-note-label">Pickup Location</label>
-            <p>Test Pickup Location (should be a port)</p>
-          </div>
+      <div class="form-group">
+        <label class="consignment-note-label">RFT/ROT No.</label>
+        <p>{{consignment?.transportRequest.id}}</p>
+      </div>
+
+      <div class="form-group">
+        <label class="consignment-note-label">Date</label>
+        <p>{{consignment?.dateCreated}}</p>
+      </div>
+    </div>
+  </div>
   
-          <div class="form-group">
-            <label class="consignment-note-label">Drop Address</label>
-            <p></p>
-          </div>
-  
-          <div class="form-group">
-            <label class="consignment-note-label">Container No. </label>
-            <p>{{consignment?.containerNo}}</p>
-          </div>
-  
-          <div class="form-group">
-            <label class="consignment-note-label">Code</label>
-            <p>{{consignment?.consignmentCode}}</p>
-          </div>
-  
-          <div class="form-group">
-            <label class="consignment-note-label">Name</label>
-            <p>{{consignment?.name}}</p>
-          </div>
-  
-          <div class="form-group">
-            <label class="consignment-note-label">Size</label>
-            <p>{{consignment?.size}}</p>
-          </div>
-  
-          <div class="form-group">
-            <label class="consignment-note-label">Booking Number</label>
-            <p>Test booking number</p>
-          </div>
-  
-          <div class="form-group">
-            <label class="consignment-note-label">Shipping Agent</label>
-  
-            <p>{{consignment?.transportRequest.shippingAgent}}</p>
-          </div>
-  
-          <div class="form-group">
-            <label class="consignment-note-label">Operator Code</label>
-  
-            <p>{{consignment?.transportRequest.operatorCode}}</p>
-          </div>
-  
-  
-          <div class="form-group">
-            <label class="consignment-note-label">Vessel & Voyage No</label>
-  
-            <p>{{consignment?.transportRequest.voyageNo}}</p>
-          </div>
-  
-          <div class="form-group">
-            <label class="consignment-note-label">Vessel ETA</label>
-            <p>{{consignment?.transportRequest.vesselEtaOrEtd}}</p>
-          </div>
-  
-          <div class="form-group">
-            <label class="consignment-note-label">MT Laden Back</label>
-  
-            <p>Test KMT</p>
-          </div>
-  
-          <div class="form-group">
-            <label class="consignment-note-label">POL/POD</label>
-            
-            
-            <p *ngIf="consignment?.transportRequest.portOfLoading">{{consignment?.transportRequest.portOfLoading}}</p>
-            <p *ngIf="consignment?.transportRequest.portOfDischarge">{{consignment?.transportRequest.portOfDischarge}}</p>
-          </div>
-  
-          <div class="form-group">
-            <label class="consignment-note-label">Shipper Consignee</label>
-  
-            <p>{{consignment?.transportRequest.shipper}}</p>
-          </div>
-  
-          <div class="form-group">
-            <label class="consignment-note-label">Job Type</label>
-  
-            <p>{{consignment?.taskType}}</p>
-          </div>
-  
-          <div class="form-group">
-            <label class="consignment-note-label">Seal Number</label>
-  
-            <p>Test Seal Number</p>
-          </div>
-  
-          <div class="form-group">
-            <label class="consignment-note-label">Forwarding Agent</label>
-            <p>{{consignment?.transportRequest.forwardingAgent}}</p>
-          </div>
-  
+  <div class="row">
+    <div class="col-12">
+      <div class="card bg-secondary mb-3">
+        <div class="card-header">
+          <strong>Consignment Details</strong>
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-          <div class="panel panel-default">
-            <!--<div class="panel-heading">-->
+        <div class="card-body">
+          <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="form-group">
+              <label class="consignment-note-label">Pickup Location</label>
+              <p>Test Pickup Location (should be a port)</p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">Drop Address</label>
+              <p></p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">Container No. </label>
+              <p>{{consignment?.containerNo}}</p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">Code</label>
+              <p>{{consignment?.consignmentCode}}</p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">Name</label>
+              <p>{{consignment?.name}}</p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">Size</label>
+              <p>{{consignment?.size}}</p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">Booking Number</label>
+              <p>Test booking number</p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">Shipping Agent</label>
+
+              <p>{{consignment?.transportRequest.shippingAgent}}</p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">Operator Code</label>
+
+              <p>{{consignment?.transportRequest.operatorCode}}</p>
+            </div>
+
+
+            <div class="form-group">
+              <label class="consignment-note-label">Vessel & Voyage No</label>
+
+              <p>{{consignment?.transportRequest.voyageNo}}</p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">Vessel ETA</label>
+              <p>{{consignment?.transportRequest.vesselEtaOrEtd}}</p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">MT Laden Back</label>
+
+              <p>Test KMT</p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">POL/POD</label>
+
+
+              <p *ngIf="consignment?.transportRequest.portOfLoading">{{consignment?.transportRequest.portOfLoading}}</p>
+              <p *ngIf="consignment?.transportRequest.portOfDischarge">{{consignment?.transportRequest.portOfDischarge}}</p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">Shipper Consignee</label>
+
+              <p>{{consignment?.transportRequest.shipper}}</p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">Job Type</label>
+
+              <p>{{consignment?.taskType}}</p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">Seal Number</label>
+
+              <p>Test Seal Number</p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">Forwarding Agent</label>
+              <p>{{consignment?.transportRequest.forwardingAgent}}</p>
+            </div>
+
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="card bg-secondary mb-3">
+              <!--<div class="card-header">-->
               <!--<h3 class="panel-title">Panel title</h3>-->
-            <!--</div>-->
-            <div class="panel-body">
-              <div class="form-group">
-                <label class="consignment-note-label">Required Date</label>
-                <p></p>
-              </div>
-  
-              <div class="form-group">
-                <label class="consignment-note-label">Time</label>
-  
-                <p></p>
-              </div>
-  
-              <div class="form-group">
-                <label class="consignment-note-label">Opening Date</label>
-  
-                <p></p>
-              </div>
-  
-              <div class="form-group">
-                <label class="consignment-note-label">Closing Date</label>
-  
-                <p></p>
-              </div>
-              <div class="form-group">
-                <label class="consignment-note-label">Time</label>
-  
-                <p></p>
+              <!--</div>-->
+              <div class="card-body">
+                <div class="form-group">
+                  <label class="consignment-note-label">Required Date</label>
+                  <p></p>
+                </div>
+
+                <div class="form-group">
+                  <label class="consignment-note-label">Time</label>
+
+                  <p></p>
+                </div>
+
+                <div class="form-group">
+                  <label class="consignment-note-label">Opening Date</label>
+
+                  <p></p>
+                </div>
+
+                <div class="form-group">
+                  <label class="consignment-note-label">Closing Date</label>
+
+                  <p></p>
+                </div>
+                <div class="form-group">
+                  <label class="consignment-note-label">Time</label>
+
+                  <p></p>
+                </div>
               </div>
             </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">Bill To:</label>
+              <p>{{forwarderInfo?.company.name}}</p>
+            </div>
+
+            <div class="form-group">
+              <label class="consignment-note-label">Remarks</label>
+              <p>{{consignment?.transportRequest.containerRemarks}}</p>
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+
+            </div>
+
           </div>
-  
-          <div class="form-group">
-            <label class="consignment-note-label">Bill To:</label>
-            <p>{{forwarderInfo?.company.name}}</p>
-          </div>
-  
-          <div class="form-group">
-            <label class="consignment-note-label">Remarks</label>
-            <p>{{consignment?.transportRequest.containerRemarks}}</p>
-          </div>
-  
-          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-  
-          </div>
-  
-          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-  
-          </div>
-  
         </div>
       </div>
     </div>
-  
   </div>
   
   <div class="row">
-    <div class="panel panel-default">
+    <div class="card bg-secondary mb-3">
   
-      <div class="panel-heading">
+      <div class="card-header">
         <h3 class="panel-title">Delivery</h3>
       </div>
   
-      <div class="panel-body">
+      <div class="card-body">
   
         <div class="form-group">
           <label class="consignment-note-label">Prime Mover</label>
@@ -224,12 +224,12 @@
       </div>
     </div>
   
-    <div class="panel panel-default">
-      <div class="panel-heading">
+    <div class="card bg-secondary mb-3">
+      <div class="card-header">
         <h3 class="panel-title">Status</h3>
       </div>
   
-      <div class="panel-body">
+      <div class="card-body">
   
         <div class="form-group">
           <label class="consignment-note-label">Status</label>
