@@ -1,52 +1,66 @@
-<div class="nav" role="navigation">
-  <ul>
-    <li><a [routerLink]="['/index']" class="home">Home</a></li>
-    <li><a [routerLink]="['/tariff','create']" class="create">New Tariff</a></li>
-  </ul>
-</div>
-<div id="list-tariff" class="content scaffold-list" role="main">
-  <h1>Tariff List</h1>
-  <input type="text" class="form-control" placeholder="Search..." #searchBox id="search-box" (keyup)="search(searchBox.value)" />
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-      <tr>
-        <th>Id</th>
-        <th>Desc</th>
-        <th>Location</th>
-        <th>Zone</th>
-        <th>Toll Charges</th>
-        <th>Faf</th>
-        <th>Haulage Charges</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let tariff of tariffList; let e = even;">
-        <td>
-          <a [routerLink]="['/tariff','show',tariff.id]">{{tariff.id}}</a>
-        </td>
-        <td>
-          <span>{{tariff.desc}}</span>
-        </td>
-        <td>
-          <a *ngIf="tariff.location" [routerLink]="['/tariff','show', tariff.location.id]">{{tariff.location.toString()}}</a>
-        </td>
-        <td>
-          <span>{{tariff.zone}}</span>
-        </td>
-        <td>
-          <span>{{tariff.tollCharges}}</span>
-        </td>
-        <td>
-          <span>{{tariff.faf}}</span>
-        </td>
-        <td>
-          <span>{{tariff.haulageCharges}}</span>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+<div class="row">
+  <div class="col-12">
+    <div class="nav" role="navigation">
+      <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/tariff','create']" class="create">New Tariff</a></li>
+      </ul>
+    </div>
   </div>
 </div>
 
-<app-pagination [offset]="offset" [limit]="limit" [size]="count" (pageChange)="onPageChange($event)"></app-pagination>
+<div class="row">
+  <div class="col-12 col-sm-4 col-md-4 col-lg-4">
+    <div id="list-tariff" class="content scaffold-list" role="main">
+      <h1>Tariff List</h1>
+      <input type="text" class="form-control" placeholder="Search..." #searchBox id="search-box" (keyup)="search(searchBox.value)" />
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Id</th>
+            <th>Desc</th>
+            <th>Location</th>
+            <th>Zone</th>
+            <th>Toll Charges</th>
+            <th>Faf</th>
+            <th>Haulage Charges</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let tariff of tariffList; let e = even;">
+            <td>
+              <a [routerLink]="['/tariff','show',tariff.id]">{{tariff.id}}</a>
+            </td>
+            <td>
+              <span>{{tariff.desc}}</span>
+            </td>
+            <td>
+              <a *ngIf="tariff.location" [routerLink]="['/tariff','show', tariff.location.id]">{{tariff.location.toString()}}</a>
+            </td>
+            <td>
+              <span>{{tariff.zone}}</span>
+            </td>
+            <td>
+              <span>{{tariff.tollCharges}}</span>
+            </td>
+            <td>
+              <span>{{tariff.faf}}</span>
+            </td>
+            <td>
+              <span>{{tariff.haulageCharges}}</span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <app-pagination [offset]="offset" [limit]="limit" [size]="count" (pageChange)="onPageChange($event)"></app-pagination>
+  </div>
+</div>
+

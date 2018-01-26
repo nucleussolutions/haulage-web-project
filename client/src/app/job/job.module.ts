@@ -11,6 +11,7 @@ import {JobListComponent} from './job-list.component';
 import {JobPersistComponent} from './job-persist.component';
 import { ConsignmentModule } from '../consignment/consignment.module';
 import {PaginationModule} from "../pagination/pagination.module";
+import {CalendarModule} from "angular-calendar";
 
 @NgModule({
   declarations: [
@@ -23,8 +24,9 @@ import {PaginationModule} from "../pagination/pagination.module";
     FormsModule,
     JobRoutingModule,
     ConsignmentModule,
-    PaginationModule
-],
+    PaginationModule,
+    CalendarModule.forRoot()
+  ],
   providers: [
     JobService
   ]

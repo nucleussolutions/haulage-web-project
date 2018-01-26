@@ -1,55 +1,64 @@
-<div  role="navigation">
-  <ul class="nav nav-pills">
-    <li class="nav-item"><a [routerLink]="['/index']" class="home nav-link">Home</a></li>
-    <li class="nav-item"><a [routerLink]="['/driverInfo','create']" class="create nav-link">New DriverInfo</a></li>
-  </ul>
-</div>
-
-<div id="list-driverInfo" class="content scaffold-list" role="main">
-  <h1>DriverInfo List</h1>
-  <input type="text" class="form-control" placeholder="Search..." #searchBox id="search-box" (keyup)="search(searchBox.value)" />
-
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-      <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Ic Number</th>
-        <th>Passport Number</th>
-        <th>Phone</th>
-        <th>License Class</th>
-        <th>License Expiry</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let driverInfo of driverInfoList; let e = even;">
-        <td>
-          <a [routerLink]="['/driverInfo','show',driverInfo.id]">{{driverInfo.id}}</a>
-        </td>
-        <td>
-          <span>{{driverInfo.name}}</span>
-        </td>
-        <td>
-          <span>{{driverInfo.icNumber}}</span>
-        </td>
-        <td>
-          <span>{{driverInfo.passportNumber}}</span>
-        </td>
-        <td>
-          <span>{{driverInfo.phone}}</span>
-        </td>
-        <td>
-          <span>{{driverInfo.licenseClass}}</span>
-        </td>
-        <td>
-          <span>{{driverInfo.licenseExpiry | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+<div class="row">
+  <div class="col-12">
+    <div  role="navigation">
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a [routerLink]="['/index']" class="home nav-link">Home</a></li>
+        <li class="nav-item"><a [routerLink]="['/driverInfo','create']" class="create nav-link">New DriverInfo</a></li>
+      </ul>
+    </div>
   </div>
+</div>
+<div class="row">
+  <div class="col-12 col-sm-4 col-md-4 col-lg-4">
+    <div id="list-driverInfo" class="content scaffold-list" role="main">
+      <h1>DriverInfo List</h1>
+      <input type="text" class="form-control" placeholder="Search..." #searchBox id="search-box" (keyup)="search(searchBox.value)" />
 
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Ic Number</th>
+            <th>Passport Number</th>
+            <th>Phone</th>
+            <th>License Class</th>
+            <th>License Expiry</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let driverInfo of driverInfoList; let e = even;">
+            <td>
+              <a [routerLink]="['/driverInfo','show',driverInfo.id]">{{driverInfo.id}}</a>
+            </td>
+            <td>
+              <span>{{driverInfo.name}}</span>
+            </td>
+            <td>
+              <span>{{driverInfo.icNumber}}</span>
+            </td>
+            <td>
+              <span>{{driverInfo.passportNumber}}</span>
+            </td>
+            <td>
+              <span>{{driverInfo.phone}}</span>
+            </td>
+            <td>
+              <span>{{driverInfo.licenseClass}}</span>
+            </td>
+            <td>
+              <span>{{driverInfo.licenseExpiry | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
 </div>
 
-<app-pagination [offset]="offset" [limit]="limit" [size]="count" (pageChange)="onPageChange($event)"></app-pagination>
+<div class="row">
+  <app-pagination [offset]="offset" [limit]="limit" [size]="count" (pageChange)="onPageChange($event)"></app-pagination>
+</div>

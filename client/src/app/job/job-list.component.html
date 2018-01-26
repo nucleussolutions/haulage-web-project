@@ -1,56 +1,66 @@
-<div role="navigation">
-  <ul class="nav nav-pills">
-    <li class="nav-item"><a [routerLink]="['/index']" class="home nav-link">Home</a></li>
-    <li *ngIf="permission?.authority !== 'Manager' && permission?.authority !== 'User'" class="nav-item"><a [routerLink]="['/job','create']" class="create nav-link">New Job</a></li>
-  </ul>
-</div>
-<div id="list-job" class="content scaffold-list" role="main">
-  <h1>Job List</h1>
-  <input type="text" class="form-control" placeholder="Search..." #searchBox id="search-box" (keyup)="search(searchBox.value)" />
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-      <tr>
-        <th>Id</th>
-        <th>Consignments</th>
-        <th>Haulier Id</th>
-        <th>Driver Id</th>
-        <th>Status</th>
-        <th>Start Date Time</th>
-        <th>End Date Time</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let job of jobList; let e = even;">
-        <td>
-          <a [routerLink]="['/job','show',job.id]">{{job.id}}</a>
-        </td>
-        <td>
-          <ul>
-            <li *ngFor="let consignment of job.consignments">
-              <a [routerLink]="['/consignment', 'show', consignment.id]">{{consignment.toString()}}</a>
-            </li>
-          </ul>
-        </td>
-        <td>
-          <span>{{job.haulierId}}</span>
-        </td>
-        <td>
-          <span>{{job.driverId}}</span>
-        </td>
-        <td>
-          <span>{{job.status}}</span>
-        </td>
-        <td>
-          <span>{{job.startDateTime | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
-        </td>
-        <td>
-          <span>{{job.endDateTime | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+<div class="row">
+  <div class="col-12">
+    <div role="navigation">
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a [routerLink]="['/index']" class="home nav-link">Home</a></li>
+        <li *ngIf="permission?.authority !== 'Manager' && permission?.authority !== 'User'" class="nav-item"><a [routerLink]="['/job','create']" class="create nav-link">New Job</a></li>
+      </ul>
+    </div>
   </div>
 </div>
 
-<app-pagination [offset]="offset" [limit]="limit" [size]="count" (pageChange)="onPageChange($event)"></app-pagination>
+<div class="row">
+  <div id="list-job" class="content scaffold-list" role="main">
+    <h1>Job List</h1>
+    <input type="text" class="form-control" placeholder="Search..." #searchBox id="search-box" (keyup)="search(searchBox.value)" />
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Id</th>
+          <th>Consignments</th>
+          <th>Haulier Id</th>
+          <th>Driver Id</th>
+          <th>Status</th>
+          <th>Start Date Time</th>
+          <th>End Date Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let job of jobList; let e = even;">
+          <td>
+            <a [routerLink]="['/job','show',job.id]">{{job.id}}</a>
+          </td>
+          <td>
+            <ul>
+              <li *ngFor="let consignment of job.consignments">
+                <a [routerLink]="['/consignment', 'show', consignment.id]">{{consignment.toString()}}</a>
+              </li>
+            </ul>
+          </td>
+          <td>
+            <span>{{job.haulierId}}</span>
+          </td>
+          <td>
+            <span>{{job.driverId}}</span>
+          </td>
+          <td>
+            <span>{{job.status}}</span>
+          </td>
+          <td>
+            <span>{{job.startDateTime | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+          </td>
+          <td>
+            <span>{{job.endDateTime | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <app-pagination [offset]="offset" [limit]="limit" [size]="count" (pageChange)="onPageChange($event)"></app-pagination>
+  </div>
+</div>

@@ -1,57 +1,70 @@
-<div role="navigation">
-  <ul class="nav nav-pills">
-    <li class="nav-item">
-      <a [routerLink]="['/index']" class="home nav-link">Home</a>
-    </li>
-    <li class="nav-item">
-      <a [routerLink]="['/vehicle','create']" class="create nav-link">New Vehicle</a>
-    </li>
-  </ul>
-</div>
-<div id="list-vehicle" class="content scaffold-list" role="main">
-  <h1>Vehicle List</h1>
-  <input type="text" class="form-control" placeholder="Search..." #searchBox id="search-box" (keyup)="search(searchBox.value)" />
-  <div class="table-responsive">
-      <table class="table">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Internal Number</th>
-              <th>Registration Number</th>
-              <th>Type</th>
-              <th>Other Info</th>
-              <th>Road Tax Renewal Date</th>
-              <th>License Expiry Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let vehicle of vehicleList; let e = even;">
-              <td>
-                <a [routerLink]="['/vehicle','show',vehicle.id]">{{vehicle.id}}</a>
-              </td>
-              <td>
-                <span>{{vehicle.internalNumber}}</span>
-              </td>
-              <td>
-                <span>{{vehicle.registrationNumber}}</span>
-              </td>
-              <td>
-                <span>{{vehicle.type}}</span>
-              </td>
-              <td>
-                <span>{{vehicle.otherInfo}}</span>
-              </td>
-              <td>
-                <span>{{vehicle.roadTaxRenewalDate | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
-              </td>
-              <td>
-                <span>{{vehicle.licenseExpiryDate | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+<div class="row">
+  <div class="col-12">
+    <div role="navigation">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a [routerLink]="['/index']" class="home nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/vehicle','create']" class="create nav-link">New Vehicle</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 
-<app-pagination [offset]="offset" [limit]="limit" [size]="count" (pageChange)="onPageChange($event)"></app-pagination>
+<div class="row">
+  <div class="col-12 col-sm-4 col-md-4 col-lg-4">
+    <div id="list-vehicle" class="content scaffold-list" role="main">
+      <h1>Vehicle List</h1>
+      <input type="text" class="form-control" placeholder="Search..." #searchBox id="search-box" (keyup)="search(searchBox.value)" />
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Id</th>
+            <th>Internal Number</th>
+            <th>Registration Number</th>
+            <th>Type</th>
+            <th>Other Info</th>
+            <th>Road Tax Renewal Date</th>
+            <th>License Expiry Date</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let vehicle of vehicleList; let e = even;">
+            <td>
+              <a [routerLink]="['/vehicle','show',vehicle.id]">{{vehicle.id}}</a>
+            </td>
+            <td>
+              <span>{{vehicle.internalNumber}}</span>
+            </td>
+            <td>
+              <span>{{vehicle.registrationNumber}}</span>
+            </td>
+            <td>
+              <span>{{vehicle.type}}</span>
+            </td>
+            <td>
+              <span>{{vehicle.otherInfo}}</span>
+            </td>
+            <td>
+              <span>{{vehicle.roadTaxRenewalDate | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+            </td>
+            <td>
+              <span>{{vehicle.licenseExpiryDate | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <app-pagination [offset]="offset" [limit]="limit" [size]="count" (pageChange)="onPageChange($event)"></app-pagination>
+  </div>
+</div>
 
