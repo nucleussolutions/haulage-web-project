@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from "../user.service";
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs/Observable";
@@ -8,7 +8,7 @@ import {ForwarderInfoService} from "../forwarderInfo/forwarderInfo.service";
 import {HaulierInfoService} from "../haulierInfo/haulierInfo.service";
 import {ForwarderInfo} from "../forwarderInfo/forwarderInfo";
 import {HaulierInfo} from "../haulierInfo/haulierInfo";
-import { Subscription } from 'rxjs/Subscription';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-quotation-template',
@@ -53,8 +53,26 @@ export class QuotationTemplateComponent implements OnInit, OnDestroy {
       this.haulierInfo = haulierInfo;
 
       setTimeout(() => {
-        window.print();
+        this.print();
       });
     });
+  }
+
+  print(){
+    let printContents, popupWin;
+    printContents = document.getElementById('print-section').innerHTML;
+    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+    popupWin.document.open();
+    popupWin.document.write(`
+      <html>
+        <head>
+          <title>Print tab</title>
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+          <link rel="stylesheet" href="./quotation-template.component.css" />
+        </head>
+    <body onload="window.print();window.close()">${printContents}</body>
+      </html>`
+    );
+    popupWin.document.close();
   }
 }

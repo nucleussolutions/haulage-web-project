@@ -1,118 +1,122 @@
-<div class="row">
-  <div class="text-center">
-    <img class="company-logo" [src]="haulierInfo.company.companyImgUrl">
+<div id="print-section">
+  <div class="row">
+    <div class="text-center">
+      <img class="company-logo" [src]="haulierInfo.company.companyImgUrl">
+    </div>
+  </div>
+
+
+  <div class="row">
+    <h4 class="col-12 quote-title">Quotation</h4>
+    <div class="col-2 col-sm-2 col-md-2 col-lg-2">
+      <span class="title">Attention</span>
+    </div>
+    <div class="col-10 col-sm-10 col-md-10 col-lg-10">
+      <span>{{forwarderInfo.name}}</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2 col-sm-2 col-md-2 col-lg-2">
+      <span class="title">Company</span>
+    </div>
+
+    <div class="col-10 col-sm-10 col-md-10 col-lg-10">
+      <p>{{forwarderInfo?.company?.name}}</p>
+
+      <span>{{forwarderInfo?.company?.address1}}</span><br>
+
+      <span>{{forwarderInfo?.company?.address2}}</span><br>
+
+      <span>{{forwarderInfo?.company?.postalCode}} {{forwarderInfo?.company?.city}}</span>
+
+      <span>{{forwarderInfo?.company?.state}}</span><br>
+
+      <span>{{forwarderInfo?.company?.country}}</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <span class="title">Date</span>
+    </div>
+
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+      {{quote.dateCreated}}
+      <!--{{quote.lastUpdated}}-->
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-2 col-sm-2 col-md-2 col-lg-2">
+      <span class="title">From</span>
+    </div>
+
+    <div class="col-10 col-sm-10 col-md-10 col-lg-10">
+      {{haulierInfo.name}}
+    </div>
+  </div>
+  <br>
+  <div class="row">
+
+    <div class="col-12">
+      <h4 class="quote-title">Quotation for Haulage Services to Various Destinations</h4>
+
+      <p>We are glad to be given this opportunity to quote your esteemed company for our services. Your quotation is as
+        below :-</p>
+
+      <table class="table">
+
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Description</th>
+          <th>Rebate Percentage</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let item of quote.items; let i = index" [attr.data-index]="i">
+          <td>{{item.id}}</td>
+          <td>{{item.desc}}</td>
+          <td>{{item.rebatePercent}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+      <h4 class="quote-title">Terms and Conditions</h4>
+
+      <ol>
+        <li *ngFor="let term of quote.terms; let i = index" [attr.data-index]="i">{{term.desc}}</li>
+      </ol>
+
+      <p>We sincerely hope that our rate proposal will meet your requirement.</p>
+
+      <p>If you have any inquiries in regards to the rates or any of our services, please do not hesitate to give us a
+        call or drop a mail to be undersigned.</p>
+
+      <p>Thank you.</p>
+
+      <br>
+      <p>Best regards from</p>
+
+      <span>{{haulierInfo.name}}</span><br>
+      <span>{{haulierInfo.company?.address1}}</span><br>
+      <span>{{haulierInfo.company?.address2}}</span><br>
+      <span>{{haulierInfo.company?.postalCode}} {{haulierInfo.company?.city}}</span><br>
+      <span>{{haulierInfo.company?.state}}</span><br>
+      <span>{{haulierInfo.company?.country}}</span><br>
+      <span><strong>Mobile:</strong> {{haulierInfo.company?.officePhone}}</span><br>
+      <span><strong>Email:</strong> {{haulierInfo.company?.email}}</span>
+    </div>
   </div>
 </div>
 
-<h4 class="quote-title">Quotation</h4>
 
-<div class="row">
-  <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-    <span class="title">Attention</span>
-  </div>
-  <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-    <span>{{forwarderInfo.name}}</span>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-    <span class="title">Company</span>
-  </div>
-
-  <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-    <p>{{forwarderInfo?.company?.name}}</p>
-
-    <span>{{forwarderInfo?.company?.address1}}</span><br>
-
-    <span>{{forwarderInfo?.company?.address2}}</span><br>
-
-    <span>{{forwarderInfo?.company?.postalCode}} {{forwarderInfo?.company?.city}}</span>
-
-    <span>{{forwarderInfo?.company?.state}}</span><br>
-
-    <span>{{forwarderInfo?.company?.country}}</span>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-    <span class="title">Date</span>
-  </div>
-
-  <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-    {{quote.dateCreated}}
-    <!--{{quote.lastUpdated}}-->
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
-    <span class="title">From</span>
-  </div>
-
-  <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-    {{haulierInfo.name}}
-  </div>
-</div>
-
-<div class="row">
-  <h4 class="quote-title">Quotation for Haulage Services to Various Destinations</h4>
-
-  <p>We are glad to be given this opportunity to quote your esteemed company for our services. Your quotation is as below :-</p>
-
-  <table class="table">
-
-    <thead>
-      <tr>
-        <th >#</th>
-        <th >Description</th>
-        <th >Rebate Percentage</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr *ngFor="let item of quote.items; let i = index" [attr.data-index]="i">
-        <td>{{item.id}}</td>
-        <td>{{item.desc}}</td>
-        <td>{{item.rebatePercent}}</td>
-      </tr>
-    </tbody>
-
-
-  </table>
-</div>
-
-
-
-
-<div class="row">
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <h4 class="quote-title">Terms and Conditions</h4>
-
-    <ol >
-      <li *ngFor="let term of quote.terms; let i = index" [attr.data-index]="i">{{term.desc}}</li>
-    </ol>
-
-    <p>We sincerely hope that our rate proposal will meet your requirement.</p>
-
-    <p>If you have any inquiries in regards to the rates or any of our services, please do not hesitate to give us a
-      call or drop a mail to be undersigned.</p>
-
-    <p>Thank you.</p>
-
-    <br>
-    <p>Best regards from</p>
-
-    <span>{{haulierInfo.name}}</span><br>
-    <span>{{haulierInfo.company?.address1}}</span><br>
-    <span>{{haulierInfo.company?.address2}}</span><br>
-    <span>{{haulierInfo.company?.postalCode}} {{haulierInfo.company?.city}}</span><br>
-    <span>{{haulierInfo.company?.state}}</span><br>
-    <span>{{haulierInfo.company?.country}}</span><br>
-    <span><strong>Mobile:</strong> {{haulierInfo.company?.officePhone}}</span><br>
-    <span><strong>Email:</strong> {{haulierInfo.company?.email}}</span>
-  </div>
-</div>
 
 
