@@ -60,7 +60,7 @@
     </li>
   </ol>
 
-  <button [routerLink]="['/quote', 'printpreview', quote.id]">Print Quote</button>
+  <button class="btn btn-primary" [routerLink]="['/quote', 'printpreview', quote.id]">Print Quote</button>
   <a class="edit btn btn-primary" [routerLink]="['/quote', 'edit', quote.id]">Edit</a>
   <button class="btn btn-danger" type="button" (click)="destroy()">Delete</button>
 

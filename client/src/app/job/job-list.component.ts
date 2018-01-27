@@ -3,7 +3,6 @@ import { JobService } from './job.service';
 import { Job } from './job';
 import { Subscription } from "rxjs/Subscription";
 import { UserService } from "../user.service";
-import { PermissionService } from "../permission/permission.service";
 import { ActivatedRoute } from "@angular/router";
 import { Observable } from "rxjs/Observable";
 

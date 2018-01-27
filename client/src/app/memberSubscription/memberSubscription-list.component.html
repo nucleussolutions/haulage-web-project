@@ -1,9 +1,12 @@
-<div class="nav" role="navigation">
-  <ul>
-    <li><a [routerLink]="['/index']" class="home">Home</a></li>
-    <li><a [routerLink]="['/memberSubscription','create']" class="create">New MemberSubscription</a></li>
-  </ul>
+<div class="row">
+  <div class="nav" role="navigation">
+    <ul>
+      <li><a [routerLink]="['/index']" class="home">Home</a></li>
+      <li><a [routerLink]="['/memberSubscription','create']" class="create">New MemberSubscription</a></li>
+    </ul>
+  </div>
 </div>
+
 <div id="list-memberSubscription" class="content scaffold-list" role="main">
   <h1>MemberSubscription List</h1>
   <input type="text" class="form-control" placeholder="Search..." #searchBox id="search-box" (keyup)="search(searchBox.value)" />
