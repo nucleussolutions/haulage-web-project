@@ -58,6 +58,9 @@ class TransportRequestController extends RestfulController {
       def customer = new Customer(request.JSON.customer)
       transportRequest.customer = customer
 
+      customer.validate()
+      transportRequest.validate()
+
       if (customer.hasErrors() || transportRequest.hasErrors()) {
         respond status: HttpStatus.BAD_REQUEST, message: 'failed to save RFT, check fields'
       } else {
@@ -123,6 +126,9 @@ class TransportRequestController extends RestfulController {
         tmpFile.delete()
       }
 
+      customer.validate()
+      transportRequest.validate()
+
       if (customer.hasErrors() || transportRequest.hasErrors()) {
         respond status: HttpStatus.BAD_REQUEST, message: 'failed to save RFT, check fields'
       } else {
@@ -177,6 +183,8 @@ class TransportRequestController extends RestfulController {
       transportRequest.shipper = request.JSON.shipper
       transportRequest.shippingAgent = request.JSON.shippingAgent
 
+
+      transportRequest.validate()
       if (transportRequest.hasErrors()) {
         respond HttpStatus.BAD_REQUEST, message: 'failed to save RFT, check fields for mandatory inputs'
       } else {
@@ -246,6 +254,8 @@ class TransportRequestController extends RestfulController {
 //        }
         tmpFile.delete()
       }
+
+      transportRequest.validate()
 
       if (transportRequest.hasErrors()) {
         respond HttpStatus.BAD_REQUEST, message: 'failed to save RFT, check fields for mandatory inputs'
