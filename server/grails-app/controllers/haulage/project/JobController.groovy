@@ -30,7 +30,7 @@ class JobController extends RestfulController {
 
   @Override
   Object save() {
-    //modify here
+    //modify here to schedule
     return super.save()
   }
 
@@ -46,6 +46,7 @@ class JobController extends RestfulController {
 
   @Override
   Object update() {
+    //modify here as well for reschedule
     return super.update()
   }
 

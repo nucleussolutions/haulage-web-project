@@ -85,7 +85,7 @@ dependencies {
 //  compile group: 'io.reactivex', name: 'rxgroovy', version: '1.0.3'
 
   //todo this is for scheduling. refer to this article http://guides.grails.org/grails-schwartz/guide/index.html
-//  compile 'com.agileorbit:schwartz:1.0.1'
+  compile 'com.agileorbit:schwartz:1.0.1'
 
 }
 
