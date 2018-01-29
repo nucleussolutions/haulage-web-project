@@ -74,6 +74,10 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
       portOfLoading: ['', Validators.compose([Validators.required])],
       portOfDischarge: ['', Validators.compose([Validators.required])],
       pickupOrDropoffEmptyDepoh: ['', Validators.compose([Validators.required])],
+      shippingAgent: ['', Validators.compose([Validators.required])],
+      forwardingAgent: ['', Validators.compose([Validators.required])],
+      operatorCode: ['', Validators.compose([Validators.required])],
+      grossWeight: ['', Validators.compose([Validators.required])],
 
     });
   }
