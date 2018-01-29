@@ -17,6 +17,5 @@ class ReminderController {
   static responseFormats = ['json', 'xml']
 
   def scheduleReminder(){
-
   }
 }

@@ -21,6 +21,7 @@ import {S3Service} from "../service/s3.service";
 import { HaulierInfoService } from 'app/haulierInfo/haulierInfo.service';
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'transportRequest-persist',
@@ -58,8 +59,23 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
   gatePassImg: File;
 
-  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService, private permissionService: PermissionService, private createConsignmentEventService: CreateConsignmentEventService, private haulierInfoService: HaulierInfoService, private modalService: NgbModal) {
+  private formGroup: FormGroup;
 
+  constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService, private permissionService: PermissionService, private createConsignmentEventService: CreateConsignmentEventService, private haulierInfoService: HaulierInfoService, private modalService: NgbModal, private formBuilder: FormBuilder) {
+
+    //validation for fields including dates
+    this.formGroup = formBuilder.group({
+      type: ['', Validators.compose([Validators.required])],
+      equipment: ['', Validators.compose([Validators.required])],
+      terminal: ['', Validators.compose([Validators.required])],
+      vesselName: ['', Validators.compose([Validators.required])],
+      voyageNo: ['', Validators.compose([Validators.required])],
+      vesselEtaOrEtd: ['', Validators.compose([Validators.required])],
+      portOfLoading: ['', Validators.compose([Validators.required])],
+      portOfDischarge: ['', Validators.compose([Validators.required])],
+      pickupOrDropoffEmptyDepoh: ['', Validators.compose([Validators.required])],
+
+    });
   }
 
   ngOnInit() {
