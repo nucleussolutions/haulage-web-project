@@ -1,13 +1,13 @@
 package haulage.project
 
-
+import com.agileorbit.schwartz.QuartzService
 import grails.rest.*
 import grails.converters.*
 
 class JobController extends RestfulController {
   static responseFormats = ['json', 'xml']
 
-
+  QuartzService quartzService
 
   JobController() {
     super(Job)
@@ -54,4 +54,5 @@ class JobController extends RestfulController {
   Object delete() {
     return super.delete()
   }
+
 }
