@@ -61,25 +61,20 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
   private formGroup: FormGroup;
 
+  bookingEqualsCMO: boolean;
+
+  minDate : any;
+
   constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private router: Router, private consignmentService: ConsignmentService, private customerService: CustomerService, private locationService: LocationService, private userService: UserService, private permissionService: PermissionService, private createConsignmentEventService: CreateConsignmentEventService, private haulierInfoService: HaulierInfoService, private modalService: NgbModal, private formBuilder: FormBuilder) {
 
-    //validation for fields including dates
-    this.formGroup = formBuilder.group({
-      type: ['', Validators.compose([Validators.required])],
-      equipment: ['', Validators.compose([Validators.required])],
-      terminal: ['', Validators.compose([Validators.required])],
-      vesselName: ['', Validators.compose([Validators.required])],
-      voyageNo: ['', Validators.compose([Validators.required])],
-      vesselEtaOrEtd: ['', Validators.compose([Validators.required])],
-      portOfLoading: ['', Validators.compose([Validators.required])],
-      portOfDischarge: ['', Validators.compose([Validators.required])],
-      pickupOrDropoffEmptyDepoh: ['', Validators.compose([Validators.required])],
-      shippingAgent: ['', Validators.compose([Validators.required])],
-      forwardingAgent: ['', Validators.compose([Validators.required])],
-      operatorCode: ['', Validators.compose([Validators.required])],
-      grossWeight: ['', Validators.compose([Validators.required])],
 
-    });
+    let date = new Date();
+
+    this.minDate = {
+      year: date.getFullYear(),
+      month: date.getMonth(),
+      day: date.getDay()
+    };
   }
 
   ngOnInit() {

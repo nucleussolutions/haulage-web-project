@@ -26,22 +26,17 @@ export class VehiclePersistComponent implements OnInit {
 
   private permission: Permission;
 
+  minDate : any;
+
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private vehicleService: VehicleService, private router: Router, private userService: UserService, private haulierInfoService: HaulierInfoService, private permissionService: PermissionService) {
 
+    let date = new Date();
 
-    this.formGroup = this.formBuilder.group({
-      internalNumber: ['', Validators.compose([Validators.required])],
-      registrationNumber: ['', Validators.compose([Validators.required])],
-      type: ['', Validators.compose([Validators.required])],
-      roadTaxRenewalDate: ['', Validators.compose([Validators.required])],
-      licenseExpiryDate: ['', Validators.compose([Validators.required])],
-      puspakomExpiryDate: ['', Validators.compose([Validators.required])],
-      model: ['', Validators.compose([Validators.required])],
-      licensePlateNumber: ['', Validators.compose([Validators.required])],
-      netWeight: ['', Validators.compose([Validators.required])],
-      spadPermitExpiryDate: ['', Validators.compose([Validators.required])],
-      insuranceExpiryDate: ['', Validators.compose([Validators.required])]
-    })
+    this.minDate = {
+      year: date.getFullYear(),
+      month: date.getMonth(),
+      day: date.getDay()
+    };
   }
 
   ngOnInit() {
@@ -76,11 +71,15 @@ export class VehiclePersistComponent implements OnInit {
     this.vehicleService.save(this.vehicle, this.userObject).subscribe((vehicle: Vehicle) => {
       this.router.navigate(['/vehicle', 'show', vehicle.id]);
     }, (json) => {
+      console.log('json error '+JSON.stringify(json));
       if (json.hasOwnProperty('message')) {
-        this.errors = [json];
+        this.errors = json.error._embedded.errors;
+        console.info('[json.error]');
       } else {
         this.errors = json._embedded.errors;
+        console.info('json._embedded.errors');
       }
+      console.log('this.errors '+JSON.stringify(this.errors));
     });
   }
 }

@@ -98,13 +98,7 @@ export class VehicleService {
       headers: headers,
       body: body
     })
-      .map((r: Response) => new Vehicle(r)).catch(err => {
-        if (err.status === 401) {
-          return Observable.throw(new Error('Unauthorized'));
-        } else if (err.status === 500) {
-          return Observable.throw(new Error('Internal server error'));
-        }
-      });
+      .map(r => new Vehicle(r));
   }
 
   destroy(vehicle: Vehicle, userObject: any): Observable<boolean> {

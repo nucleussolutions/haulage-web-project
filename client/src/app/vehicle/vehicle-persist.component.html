@@ -10,7 +10,7 @@
     <div id="persist-vehicle" class="content scaffold-edit" role="main">
       <h1>{{create ? "Create" : "Edit"}} Vehicle</h1>
       <ul class="errors" role="alert" *ngIf="errors">
-        <li *ngFor="let error of errors">{{error.message}}</li>
+        <li *ngFor="let error of errors" class="text-danger">{{error.message}}</li>
       </ul>
 
       <form name="save{className}" (ngSubmit)="save()">
@@ -44,7 +44,7 @@
           </label>
           <div class="input-group">
             <input class="form-control" required="" name="roadTaxRenewalDate" id="roadTaxRenewalDate" type="date"
-                   placeholder="YYYY-MM-DD"
+                   placeholder="YYYY-MM-DD" [minDate]="minDate"
                    [value]="vehicle.roadTaxRenewalDate | date:'y-MM-dd'"
                    (change)="vehicle.roadTaxRenewalDate = $event.target.valueAsDate" ngbDatepicker
                    #roadTaxRenewalDate="ngbDatepicker">
@@ -63,7 +63,7 @@
 
           <div class="input-group">
             <input class="form-control" required="" name="licenseExpiryDate" id="licenseExpiryDate" type="date"
-                   placeholder="YYYY-MM-DD"
+                   placeholder="YYYY-MM-DD" [minDate]="minDate"
                    [value]="vehicle.licenseExpiryDate | date:'y-MM-dd'"
                    (change)="vehicle.licenseExpiryDate = $event.target.valueAsDate" ngbDatepicker
                    #licenseExpiryDate="ngbDatepicker">
@@ -80,7 +80,7 @@
           </label>
           <div class="input-group">
             <input class="form-control" required="" name="puspakomExpiryDate" id="puspakomExpiryDate" type="date"
-                   placeholder="YYYY-MM-DD"
+                   placeholder="YYYY-MM-DD" [minDate]="minDate"
                    [value]="vehicle.puspakomExpiryDate | date:'y-MM-dd'"
                    (change)="vehicle.puspakomExpiryDate = $event.target.valueAsDate" ngbDatepicker
                    #puspakomExpiryDate="ngbDatepicker">
@@ -117,7 +117,7 @@
           </label>
           <div class="input-group">
             <input class="form-control" required="" name="spadPermitExpiryDate" id="spadPermitExpiryDate" type="date"
-                   placeholder="YYYY-MM-DD"
+                   placeholder="YYYY-MM-DD" [minDate]="minDate"
                    [value]="vehicle.spadPermitExpiryDate | date:'y-MM-dd'"
                    (change)="vehicle.spadPermitExpiryDate = $event.target.valueAsDate" ngbDatepicker
                    #spadPermitExpiryDate="ngbDatepicker">
@@ -135,7 +135,7 @@
           </label>
           <div class="input-group">
             <input class="form-control" required="" name="insuranceExpiryDate" id="insuranceExpiryDate" type="date"
-                   placeholder="YYYY-MM-DD"
+                   placeholder="YYYY-MM-DD" [minDate]="minDate"
                    [value]="vehicle.insuranceExpiryDate | date:'y-MM-dd'"
                    (change)="vehicle.insuranceExpiryDate = $event.target.valueAsDate" ngbDatepicker
                    #insuranceExpiryDate="ngbDatepicker">
