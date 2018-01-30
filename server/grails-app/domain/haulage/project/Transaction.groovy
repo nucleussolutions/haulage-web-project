@@ -8,7 +8,7 @@ import groovy.transform.TypeCheckingMode
 @GrailsCompileStatic(TypeCheckingMode.SKIP)
 class Transaction {
   //belongs to which user, most likely haulier
-  TransactionStatus status
+  String status
   MemberSubscription subscription
 
   static constraints = {

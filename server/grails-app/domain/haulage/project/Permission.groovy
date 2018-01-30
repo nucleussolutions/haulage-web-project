@@ -16,7 +16,7 @@ class Permission {
   String grantedBy
 
   static constraints = {
-    email nullable: false, email: true, unique: true;
+    email nullable: false, email: true, unique: true
     userId nullable: false, unique: true
     authority nullable: false, inList: ['Admin', 'Manager', 'Super Admin', 'User']
     grantedBy nullable: false

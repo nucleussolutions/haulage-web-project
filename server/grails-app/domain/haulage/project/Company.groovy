@@ -31,7 +31,7 @@ class Company {
     state nullable: false, blank: false
     country nullable: false, blank: false
     officePhone nullable: false, blank: false
-    yardPhone nullable: false, blank: false
+    yardPhone nullable: true
     companyImgUrl nullable: true
     code nullable: false, blank: false, unique: true
     email nullable: false, email: true

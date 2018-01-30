@@ -17,7 +17,7 @@ class Pricing {
   Boolean published = false
 
   static constraints = {
-    discountPercent range: 0..99
+    discountPercent range: 0..99, nullable: false
     price nullable: false
     pricePerMove nullable: false
     minPrimeMover nullable: true

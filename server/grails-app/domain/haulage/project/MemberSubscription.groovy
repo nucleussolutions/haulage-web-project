@@ -11,7 +11,7 @@ class MemberSubscription {
   String userId
   Pricing pricing
 
-  Boolean monthlyRecurring
+  Boolean monthlyRecurring = false
 
   static constraints = {
     userId nullable: false

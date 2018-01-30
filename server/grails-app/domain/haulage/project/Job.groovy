@@ -23,6 +23,9 @@ class Job {
   //upon updating the status as complete, end date time will be recorded
   Date endDateTime
 
+  Vehicle primeMover
+  Vehicle trailer
+
   static constraints = {
     consignments nullable: false
     haulierId nullable: false
@@ -30,6 +33,8 @@ class Job {
     status nullable: false, inList: JobStatus.values()*.id
     startDateTime nullable: true
     endDateTime nullable: true
+    primeMover nullable: false
+    trailer nullable: false
   }
 
   static mapping = {
