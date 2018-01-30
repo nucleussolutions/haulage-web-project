@@ -35,11 +35,11 @@ export class TariffPersistComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
-      let userObject = result[0];
+      this.userObject = result[0];
       let params = result[1];
 
       //todo it's not supposed to be like this, think of another way
-      this.locationService.list(userObject, 1).subscribe((locationList: Location[]) => { this.locationList = locationList; });
+      this.locationService.list(this.userObject, 1).subscribe((locationList: Location[]) => { this.locationList = locationList; });
       return this.tariffService.get(+params['id'], this.userObject);
     }).subscribe((tariff: Tariff) => {
       this.create = false;
@@ -50,13 +50,16 @@ export class TariffPersistComponent implements OnInit, OnDestroy {
   save() {
     this.tariffService.save(this.tariff, this.userObject).subscribe((tariff: Tariff) => {
       this.router.navigate(['/tariff', 'show', tariff.id]);
-    }, (res: Response) => {
-      const json = res.json();
+    }, json => {
+      console.log('json error '+JSON.stringify(json));
       if (json.hasOwnProperty('message')) {
-        this.errors = [json];
+        this.errors = json.error._embedded.errors;
+        console.info('[json.error]');
       } else {
         this.errors = json._embedded.errors;
+        console.info('json._embedded.errors');
       }
+      console.log('this.errors '+JSON.stringify(this.errors));
     });
   }
 }

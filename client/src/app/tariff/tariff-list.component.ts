@@ -38,7 +38,9 @@ export class TariffListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private tariffService: TariffService, private userService: UserService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private tariffService: TariffService, private userService: UserService, private router: Router) {
+
+  }
 
   ngOnInit() {
     this.callTariffs();

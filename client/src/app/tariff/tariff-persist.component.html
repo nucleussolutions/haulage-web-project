@@ -7,7 +7,7 @@
 <div id="persist-tariff" class="content scaffold-edit" role="main">
   <h1>{{create ? "Create" : "Edit"}} Tariff</h1>
   <ul class="errors" role="alert" *ngIf="errors">
-    <li *ngFor="let error of errors">{{error.message}}</li>
+    <li class="text-danger" *ngFor="let error of errors">{{error.message}}</li>
   </ul>
 
   <form name="save{className}" (ngSubmit)="save()">

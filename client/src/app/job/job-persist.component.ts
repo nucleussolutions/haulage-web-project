@@ -56,8 +56,19 @@ export class JobPersistComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.consignmentService.list(this.userObject, 1).subscribe((consignmentList: Consignment[]) => {
-      this.consignmentList = consignmentList;
+
+    //this should fundamentally change
+    this.consignmentService.list(this.userObject, 0).subscribe(json => {
+      let data = json['data'];
+
+      this.consignmentList = [];
+
+      data.forEach(consignmentDatum => {
+        let consignment = new Consignment(consignmentDatum.attributes);
+        consignment.id = consignmentDatum.id;
+        this.consignmentList.push(consignment);
+      });
+
     });
 
   }
@@ -65,13 +76,16 @@ export class JobPersistComponent implements OnInit, OnDestroy {
   save() {
     this.jobService.save(this.job, this.userObject).subscribe((job: Job) => {
       this.router.navigate(['/job', 'show', job.id]);
-    }, (res: Response) => {
-      const json = res.json();
+    }, json => {
+      console.log('json error '+JSON.stringify(json));
       if (json.hasOwnProperty('message')) {
-        this.errors = [json];
+        this.errors = json.error._embedded.errors;
+        console.info('[json.error]');
       } else {
-        // this.errors = json._embedded.errors;
+        this.errors = json._embedded.errors;
+        console.info('json._embedded.errors');
       }
+      console.log('this.errors '+JSON.stringify(this.errors));
     });
   }
 }

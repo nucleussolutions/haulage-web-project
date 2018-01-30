@@ -48,13 +48,16 @@ export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
   save() {
     this.forwarderInfoService.save(this.forwarderInfo, this.userObject).subscribe((forwarderInfo: ForwarderInfo) => {
       this.router.navigate(['/forwarderInfo', 'show', forwarderInfo.id]);
-    }, (res: Response) => {
-      const json = res.json();
+    }, json => {
+      console.log('json error '+JSON.stringify(json));
       if (json.hasOwnProperty('message')) {
-        this.errors = [json];
+        this.errors = json.error._embedded.errors;
+        console.info('[json.error]');
       } else {
         this.errors = json._embedded.errors;
+        console.info('json._embedded.errors');
       }
+      console.log('this.errors '+JSON.stringify(this.errors));
     });
   }
 }

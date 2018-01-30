@@ -90,13 +90,7 @@ export class ForwarderInfoService {
       headers: headers,
       body: body
     })
-      .map((r: Response) => new ForwarderInfo(r.json())).catch(err => {
-        if (err.status === 401) {
-          return Observable.throw(new Error('Unauthorized'));
-        } else if (err.status === 500) {
-          return Observable.throw(new Error('Internal server error'));
-        }
-      });
+      .map(r => new ForwarderInfo(r));
   }
 
   destroy(forwarderInfo: ForwarderInfo, userObject: any): Observable<boolean> {
