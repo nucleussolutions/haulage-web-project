@@ -87,7 +87,7 @@ export class JobService {
       headers: headers,
       body: body
     })
-        .map((r: Response) => new Job(r.json()));
+        .map(r => new Job(r));
   }
 
   destroy(job: Job, userObject: any): Observable<boolean> {
