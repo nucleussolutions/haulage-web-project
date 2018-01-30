@@ -31,7 +31,7 @@ class Consignment {
   String signedBy
 
   static constraints = {
-    containerNo blank: false, nullable: false
+    containerNo nullable: true //this will be updated by the driver
     name blank: false, nullable: false
     type nullable: false, inList: ConsignmentType.values()*.id
     acceptTime nullable: false
