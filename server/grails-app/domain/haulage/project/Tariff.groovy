@@ -28,4 +28,16 @@ class Tariff {
     location geoPoint: true
     except = ['haulageCharges', 'fafPercent', 'tollCharges']
   }
+
+  static mapping = {
+//    table "`tariff`"
+//    version false
+//    id column: 'tariff_id'
+    desc column: 'description'
+//    location column: 'location'
+//    zone column: 'zone'
+//    tollCharges column: 'toll_charges'
+//    fafPercent column: 'faf_percent'
+//    haulageCharges column: 'haulage_charges'
+  }
 }

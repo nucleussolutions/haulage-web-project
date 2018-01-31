@@ -16,4 +16,9 @@ class QuoteItem {
     desc nullable: false
     rebatePercent nullable: false
   }
+
+  static mapping = {
+//    table "`quote_item`"
+    desc column: 'description'
+  }
 }

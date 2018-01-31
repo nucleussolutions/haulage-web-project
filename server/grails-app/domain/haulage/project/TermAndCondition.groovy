@@ -13,4 +13,9 @@ class TermAndCondition {
     static constraints = {
         desc nullable: false
     }
+
+    static mapping = {
+//        table "`term_and_condition`"
+        desc column: 'description'
+    }
 }

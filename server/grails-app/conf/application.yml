@@ -125,7 +125,13 @@ environments:
               bulkIndexOnStartup: true
         dataSource:
             dbCreate: create-drop
-            url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            driverClassName: org.postgresql.Driver
+            url: jdbc:postgresql://localhost:5432/haulageproject
+            username: postgres
+            password: 'kevintan'
+            logSql: true
+        hibernate:
+            dialect: net.kaleidos.hibernate.PostgresqlExtensionsDialect
     test:
         elasticSearch:
             client:
