@@ -184,26 +184,4 @@ export class JobService {
         });
     return subject.asObservable();
   }
-
-  findAllByHaulierId(haulierId: string, userObject: any, offset: number){
-    let subject = new Subject<Job[]>();
-
-    let headers = new HttpHeaders({
-      'token': userObject.token,
-      'apiKey': userObject.apiKey,
-      'userId': userObject.uid
-    });
-
-    let params = new HttpParams();
-    params = params.append('offset', offset.toString());
-
-    this.http.get(environment.serverUrl + '/job/haulier/'+haulierId, {
-      headers: headers,
-      params: params
-    })
-        .subscribe((json: any[]) => {
-          subject.next(json);
-        });
-    return subject.asObservable();
-  }
 }

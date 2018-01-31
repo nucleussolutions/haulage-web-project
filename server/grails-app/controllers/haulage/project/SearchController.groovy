@@ -175,5 +175,13 @@ class SearchController {
     }
   }
 
+
+  def transaction(){
+    if(params.term){
+      respond searchService.searchTransaction(params.term as String)
+    }else{
+      respond status: HttpStatus.NOT_FOUND, message: 'not found'
+    }
+  }
 }
 

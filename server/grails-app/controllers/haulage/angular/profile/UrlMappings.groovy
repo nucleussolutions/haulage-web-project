@@ -43,14 +43,26 @@ class UrlMappings {
     get "/search/location"(controller: 'search', action: 'location')
     get "/search/consignment"(controller: 'search', action: 'consignment')
     get "/search/permission"(controller: 'search', action: 'permission')
+    get "/search/permission/haulier/${haulierId}"(controller: 'search', action: 'permissionByHaulier')
     get "/search/transaction"(controller: 'search', action: 'transaction')
     get "/search/transportRequest"(controller: 'search', action: 'transportRequest')
+    get "/search/transportRequest/haulier/${haulierId}"(controller: 'search', action: 'transportRequestByHaulier')
+    get "/search/transportRequest/forwarder/${forwarderId}"(controller: 'search', action: 'transportRequestByForwarder')
+
+    get "/search/quote"(controller: 'search', action: 'quote')
+
+
     get "/search/vehicle"(controller: 'search', action: 'vehicle')
+    get "/search/vehicle/${haulierId}"(controller: 'search', action: 'vehicleByHaulier')
     get "/search/tariff"(controller: 'search', action: 'tariff')
     get "/search/job"(controller: 'job', action: 'job')
+    get "/search/job/haulier/${haulierId}"(controller: 'search', action: 'jobsByHaulier')
+
 
     get "/job/driver/${driverId}"(controller: 'custom', action: 'jobsByDriverId')
-    get "/job/haulier/${haulierId}"(controller: 'custom', action: 'jobsByHaulierId')
+    get "/job/haulier/${haulierId}"(controller: 'custom', action: 'jobByHaulierId')
+
+
 
     get "/quote/haulier/${haulierId}"(controller: 'custom', 'quotesByHaulier')
     get "/quote/forwarder/${forwarderId}"(controller: 'custom', 'quotesByForwarder')
