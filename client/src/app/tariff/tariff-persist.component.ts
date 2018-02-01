@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Tariff} from './tariff';
 import {TariffService} from './tariff.service';
-import {Response} from "@angular/http";
 import {LocationService} from '../location/location.service';
 import {Location} from '../location/location';
 import {PermissionService} from "../permission/permission.service";
@@ -24,28 +23,38 @@ export class TariffPersistComponent implements OnInit, OnDestroy {
   tariff = new Tariff();
   create = true;
   errors: any[];
-  locationList: Location[];
 
   private userObject: any;
 
   private subscription: Subscription;
 
+  private locationList: Location[];
+
   search = (text$: Observable<string>) =>
       text$
           .debounceTime(200)
           .distinctUntilChanged()
-          .switchMap(term => term.length < 2   // switch to new observable each time
+          .switchMap(term => term.length < 2 && this.userObject   // switch to new observable each time
               // return the http search observable
               ? [] : this.locationService.search(term, this.userObject)
               // or the observable of empty heroes if no search term
           .map(json => {
-            let locationList = json['searchResults'];
-            if(locationList){
+            this.locationList = json['searchResults'];
+            if(this.locationList){
               return json['searchResults'].map(item => item.name);
             }else{
               throw 'not found';
             }
           }));
+
+
+
+  selectedLocation(item){
+    console.log(item.item);
+    let listofSelectedLocation = this.locationList.filter(location => location.name == item.item);
+    this.tariff.location = listofSelectedLocation[0];
+    console.log(this.tariff.location);
+  }
 
 
   constructor(private route: ActivatedRoute, private tariffService: TariffService, private router: Router, private locationService: LocationService, private permissionService: PermissionService, private userService: UserService) {

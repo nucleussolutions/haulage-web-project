@@ -28,7 +28,7 @@
               <!--<option *ngFor="let location of locationList" [value]="location.id" [selected]="tariff.location?.id == location.id">{{location.toString()}}</option>-->
             <!--</select>-->
 
-            <input id="location" name="location" required type="text" class="form-control" [(ngModel)]="tariff.location" [ngbTypeahead]="search"/>
+            <input id="location" name="location" required type="text" class="form-control" (selectItem)="selectedLocation($event)" [(ngModel)]="tariff.location" [ngbTypeahead]="search"/>
 
           </div>
           <div class="form-group required">
