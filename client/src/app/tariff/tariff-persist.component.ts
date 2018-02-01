@@ -78,20 +78,4 @@ export class TariffPersistComponent implements OnInit, OnDestroy {
       console.log('this.errors ' + JSON.stringify(this.errors));
     });
   }
-
-  searchLocation(term: string) {
-    if (term.length > 2) {
-      Observable.of(term).debounceTime(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
-          // return the http search observable
-          ? this.locationService.search(term, this.userObject)
-          // or the observable of empty heroes if no search term
-          : Observable.of<Location[]>([]))
-          .subscribe(json => {
-            this.locationList = json['searchResults'];
-          }, error => {
-            console.log('Error searching location in tariff persist component ' + JSON.stringify(error));
-            return Observable.of<Location[]>([]);
-          });
-    }
-  }
 }
