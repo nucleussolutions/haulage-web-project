@@ -1,15 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { LocationService } from './location.service';
-import { Location } from './location';
-import { ActivatedRoute, Params, Router } from "@angular/router";
-import { UserService } from 'app/user.service';
-import { Subscription } from "rxjs/Subscription";
-import { Observable } from "rxjs/Observable";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {LocationService} from './location.service';
+import {Location} from './location';
+import {ActivatedRoute, Params, Router} from "@angular/router";
+import {UserService} from 'app/user.service';
+import {Subscription} from "rxjs/Subscription";
+import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/share";
-import { Subject } from "rxjs/Subject";
+import {Subject} from "rxjs/Subject";
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
-
 
 
 @Component({
@@ -19,7 +18,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 export class LocationListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    if(this.subscription){
+    if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
@@ -52,7 +51,7 @@ export class LocationListComponent implements OnInit, OnDestroy {
     this.callLocations();
   }
 
-  callLocations(){
+  callLocations() {
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
       this.userObject = result[0];
       //if params doesnt exist, let api call, if there is, then proceed to call the api by page number
@@ -108,24 +107,24 @@ export class LocationListComponent implements OnInit, OnDestroy {
   onPageChange(offset) {
     console.log('onPageChange offset ' + offset);
     this.offset = offset;
-    this.router.navigate(['/location', 'list'], { queryParams: { page: (offset / this.limit) + 1 } });
+    this.router.navigate(['/location', 'list'], {queryParams: {page: (offset / this.limit) + 1}});
   }
 
   search(term: string) {
     if (term.length > 2) {
       Observable.of(term).debounceTime(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
-        // return the http search observable
-        ? this.locationService.search(term, this.userObject)
-        // or the observable of empty heroes if no search term
-        : Observable.of<Location[]>([]))
-        .subscribe(json => {
-          this.locationList = json['searchResults'];
-          this.count = json['total'];
-        }, error => {
-          // TODO: real error handling
-          console.log('Error in component ' + JSON.stringify(error));
-          return Observable.of<Location[]>([]);
-        });
+          // return the http search observable
+          ? this.locationService.search(term, this.userObject)
+          // or the observable of empty heroes if no search term
+          : Observable.of<Location[]>([]))
+          .subscribe(json => {
+            this.locationList = json['searchResults'];
+            this.count = json['total'];
+          }, error => {
+            // TODO: real error handling
+            console.log('Error in component ' + JSON.stringify(error));
+            return Observable.of<Location[]>([]);
+          });
     } else {
       //todo should call the original page number to get the results again
       Observable.of(term).debounceTime(300).distinctUntilChanged().subscribe(() => {

@@ -1,7 +1,6 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-
 import {TariffService} from './tariff.service';
 
 
@@ -11,6 +10,7 @@ import {TariffListComponent} from './tariff-list.component';
 import {TariffPersistComponent} from './tariff-persist.component';
 import { LocationModule } from '../location/location.module';
 import {PaginationModule} from "../pagination/pagination.module";
+import {NgbTypeaheadModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -23,7 +23,8 @@ import {PaginationModule} from "../pagination/pagination.module";
     FormsModule,
     TariffRoutingModule,
     LocationModule,
-    PaginationModule
+    PaginationModule,
+    NgbTypeaheadModule
 ],
   providers: [
     TariffService
