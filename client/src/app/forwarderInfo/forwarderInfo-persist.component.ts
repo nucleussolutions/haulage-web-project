@@ -3,10 +3,11 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {ForwarderInfo} from './forwarderInfo';
 import {ForwarderInfoService} from './forwarderInfo.service';
 import {Response} from "@angular/http";
-import { CompanyService } from '../company/company.service';
-import { Company } from '../company/company';
-import { UserService } from 'app/user.service';
-import { Subscription } from 'rxjs/Subscription';
+import {CompanyService} from '../company/company.service';
+import {Company} from '../company/company';
+import {UserService} from 'app/user.service';
+import {Subscription} from 'rxjs/Subscription';
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'forwarderInfo-persist',
@@ -15,7 +16,9 @@ import { Subscription } from 'rxjs/Subscription';
 export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   forwarderInfo = new ForwarderInfo();
@@ -27,21 +30,44 @@ export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private router: Router, private companyService: CompanyService, private userService : UserService) {
-    this.subscription = this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    });
+  companySearch = (text$: Observable<string>) =>
+      text$
+          .debounceTime(200)
+          .distinctUntilChanged()
+          .switchMap(term => term.length < 2 && this.userObject   // switch to new observable each time
+              // return the http search observable
+              ? [] : this.companyService.search(term, this.userObject)
+              // or the observable of empty heroes if no search term
+                  .map(json => {
+                    this.companyList = json['searchResults'];
+                    if(this.companyList){
+                      return json['searchResults'].map(item => item.name);
+                    }else{
+                      throw 'not found';
+                    }
+                  }));
+
+
+  constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private router: Router, private companyService: CompanyService, private userService: UserService) {
+
   }
 
   ngOnInit() {
-    this.companyService.list(this.userObject,1 ).subscribe((companyList: Company[]) => { this.companyList = companyList; });
-    this.route.params.subscribe((params: Params) => {
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+
+      this.userObject = result[0];
+
+      let params = result[1];
+
       if (params.hasOwnProperty('id')) {
-        this.forwarderInfoService.get(+params['id'], this.userObject).subscribe((forwarderInfo: ForwarderInfo) => {
-          this.create = false;
-          this.forwarderInfo = forwarderInfo;
-        });
+        return this.forwarderInfoService.get(+params['id'], this.userObject);
+      } else {
+        throw 'params id not found. nothing to see here'
       }
+
+    }).subscribe((forwarderInfo: ForwarderInfo) => {
+      this.create = false;
+      this.forwarderInfo = forwarderInfo;
     });
   }
 
@@ -49,7 +75,7 @@ export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
     this.forwarderInfoService.save(this.forwarderInfo, this.userObject).subscribe((forwarderInfo: ForwarderInfo) => {
       this.router.navigate(['/forwarderInfo', 'show', forwarderInfo.id]);
     }, json => {
-      console.log('json error '+JSON.stringify(json));
+      console.log('json error ' + JSON.stringify(json));
       if (json.hasOwnProperty('message')) {
         this.errors = json.error._embedded.errors;
         console.info('[json.error]');
@@ -57,7 +83,7 @@ export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
         this.errors = json._embedded.errors;
         console.info('json._embedded.errors');
       }
-      console.log('this.errors '+JSON.stringify(this.errors));
+      console.log('this.errors ' + JSON.stringify(this.errors));
     });
   }
 }

@@ -52,6 +52,9 @@ class UrlMappings {
     get "/search/quote"(controller: 'search', action: 'quote')
 
 
+    get "/search/company"(controller: 'search', action: 'company')
+
+
     get "/search/vehicle"(controller: 'search', action: 'vehicle')
     get "/search/vehicle/${haulierId}"(controller: 'search', action: 'vehicleByHaulier')
     get "/search/tariff"(controller: 'search', action: 'tariff')

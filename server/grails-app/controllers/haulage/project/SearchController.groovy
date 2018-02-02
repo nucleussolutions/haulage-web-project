@@ -183,5 +183,13 @@ class SearchController {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
+
+  def company(){
+    if(params.term){
+      respond searchService.searchCompany(params.term as String)
+    }else{
+      respond status: HttpStatus.NOT_FOUND, message: 'not found'
+    }
+  }
 }
 
