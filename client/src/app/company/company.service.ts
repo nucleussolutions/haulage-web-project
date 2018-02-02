@@ -7,6 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import { environment } from 'environments/environment';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {Consignment} from "../consignment/consignment";
 
 @Injectable()
 export class CompanyService {
@@ -115,6 +116,26 @@ export class CompanyService {
       headers: headers
     }).subscribe(json => {
       subject.next(json['count']);
+    }, error => {
+      subject.error(error);
+    });
+
+    return subject.asObservable();
+  }
+
+  search(term: string, userObject: any): Observable<Company[]> {
+    let subject = new Subject<Company[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+    this.http.get(environment.serverUrl + '/search/company?term=' + term, {
+      headers: headers
+    }).subscribe((json: any[]) => {
+      subject.next(json);
     }, error => {
       subject.error(error);
     });

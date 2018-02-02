@@ -61,6 +61,10 @@ class SearchService {
     elasticSearchService.search(term, [ indices: Consignment, types: Consignment, from: 0, size: 10 ])
   }
 
+  def searchCompany(String term){
+    elasticSearchService.search(term, [ indices: Company, types: Company, from: 0, size: 10 ])
+  }
+
   def searchConsignmentByHaulier(String term, String haulierId){
 
   }
