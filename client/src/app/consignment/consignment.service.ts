@@ -47,6 +47,38 @@ export class ConsignmentService {
     return subject.asObservable();
   }
 
+  listByStatus(userObject: any, status: string){
+    let subject = new Subject<Consignment[]>();
+
+    let params = new HttpParams();
+    params = params.append('status', status);
+    // params = params.append('offset', offset.toString());
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+    this.permissionService.getByUserId(userObject).flatMap(permission => {
+      let urlPath;
+      if (permission.authority == 'Super Admin') {
+        urlPath = '/consignment';
+      } else if (permission.authority == 'Admin') {
+        urlPath = '/consignment/haulier/'+userObject.uid;
+      } else if (permission.authority == 'Manager') {
+        urlPath = '/consignment/forwarder/'+userObject.uid;
+      }
+      return this.http.get(environment.serverUrl + urlPath, {
+        headers: headers,
+        params: params
+      });
+    }).subscribe((json: any[]) => {
+      subject.next(json);
+    });
+    return subject.asObservable();
+  }
+
   get(id: number, userObject: any): Observable<Consignment> {
     let headers = new HttpHeaders({
       'token': userObject.token,

@@ -57,19 +57,26 @@ export class JobPersistComponent implements OnInit, OnDestroy {
     });
 
 
-    //this should fundamentally change
-    this.consignmentService.list(this.userObject, 0).subscribe(json => {
-      let data = json['data'];
+    this.consignmentService.listByStatus(this.userObject, 'Pending').subscribe(json => {
+      console.log('consignment listByStatus json '+JSON.stringify(json));
 
-      this.consignmentList = [];
 
-      data.forEach(consignmentDatum => {
-        let consignment = new Consignment(consignmentDatum.attributes);
-        consignment.id = consignmentDatum.id;
-        this.consignmentList.push(consignment);
-      });
 
     });
+
+    //this should fundamentally change
+    // this.consignmentService.list(this.userObject, 0).subscribe(json => {
+    //   let data = json['data'];
+    //
+    //   this.consignmentList = [];
+    //
+    //   data.forEach(consignmentDatum => {
+    //     let consignment = new Consignment(consignmentDatum.attributes);
+    //     consignment.id = consignmentDatum.id;
+    //     this.consignmentList.push(consignment);
+    //   });
+    //
+    // });
 
   }
 
