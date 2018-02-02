@@ -186,7 +186,7 @@ class SearchController {
 
   def company(){
     if(params.term){
-      respond searchService.searchComp
+      respond searchService.searchCompany(params.term as String)
     }else{
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
