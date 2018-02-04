@@ -31,9 +31,11 @@
               <label for="company">Company
                 <span class="required-indicator">*</span>
               </label>
-              <select class="form-control" required="" name="company" id="company" [(ngModel)]="forwarderInfo.company">
-                <option *ngFor="let company of companyList" [value]="company.id" [selected]="forwarderInfo.company?.id == company.id">{{company.toString()}}</option>
-              </select>
+              <!--<select class="form-control" required="" name="company" id="company" [(ngModel)]="forwarderInfo.company">-->
+                <!--<option *ngFor="let company of companyList" [value]="company.id" [selected]="forwarderInfo.company?.id == company.id">{{company.toString()}}</option>-->
+              <!--</select>-->
+              <input id="company" name="company" required type="text" class="form-control" (selectItem)="selectedCompany($event)" [(ngModel)]="forwarderInfo.company" [ngbTypeahead]="companySearch"/>
+
             </div>
             <div class="form-group">
               <label for="userId">User Id

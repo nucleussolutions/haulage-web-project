@@ -25,15 +25,17 @@
               </label>
               <input class="form-control" required="" name="name" id="name" [(ngModel)]="haulierInfo.name" type="text" />
             </div>
-            <div class="fieldcontain required">
+            <div class="form-group">
               <label for="company">Company
                 <span class="required-indicator">*</span>
               </label>
-              <select required="" name="company" id="company" [(ngModel)]="haulierInfo.company">
-                <option *ngFor="let company of companyList" [value]="company.id" [selected]="haulierInfo.company?.id == company.id">{{company.toString()}}</option>
-              </select>
+              <!--<select required="" name="company" id="company" [(ngModel)]="haulierInfo.company">-->
+                <!--<option *ngFor="let company of companyList" [value]="company.id" [selected]="haulierInfo.company?.id == company.id">{{company.toString()}}</option>-->
+              <!--</select>-->
+              <input id="company" name="company" required type="text" class="form-control" (selectItem)="selectedCompany($event)" [(ngModel)]="forwarderInfo.company" [ngbTypeahead]="companySearch"/>
+
             </div>
-            <div class="fieldcontain required">
+            <div class="form-group">
               <label for="userId">User Id
                 <span class="required-indicator">*</span>
               </label>
