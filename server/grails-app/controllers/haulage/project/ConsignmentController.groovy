@@ -1,10 +1,12 @@
 package haulage.project
 
-
+import grails.compiler.GrailsCompileStatic
 import grails.rest.*
 import grails.converters.*
+import groovy.transform.TypeCheckingMode
 import org.springframework.http.HttpStatus
 
+@GrailsCompileStatic(TypeCheckingMode.SKIP)
 class ConsignmentController extends RestfulController {
   static responseFormats = ['json', 'xml']
 

@@ -3,10 +3,10 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {HaulierInfo} from './haulierInfo';
 import {HaulierInfoService} from './haulierInfo.service';
 import {Response} from "@angular/http";
-import { CompanyService } from '../company/company.service';
-import { Company } from '../company/company';
-import { Subscription } from 'rxjs/Subscription';
-import { UserService } from 'app/user.service';
+import {CompanyService} from '../company/company.service';
+import {Company} from '../company/company';
+import {Subscription} from 'rxjs/Subscription';
+import {UserService} from 'app/user.service';
 import {Observable} from "rxjs/Observable";
 
 
@@ -35,36 +35,41 @@ export class HaulierInfoPersistComponent implements OnInit {
               // or the observable of empty heroes if no search term
                   .map(json => {
                     this.companyList = json['searchResults'];
-                    if(this.companyList){
+                    if (this.companyList) {
                       return json['searchResults'].map(item => item.name);
-                    }else{
+                    } else {
                       throw 'not found';
                     }
                   }));
 
   constructor(private route: ActivatedRoute, private haulierInfoService: HaulierInfoService, private router: Router, private companyService: CompanyService, private userService: UserService) {
-    this.subscription = this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    });
+
   }
 
   ngOnInit() {
-    this.companyService.list(this.userObject, 1).subscribe((companyList: Company[]) => { this.companyList = companyList; });
-    this.route.params.subscribe((params: Params) => {
+
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+      this.userObject = result[0];
+
+      let params = result[1];
+
       if (params.hasOwnProperty('id')) {
-        this.haulierInfoService.get(+params['id'], this.userObject).subscribe((haulierInfo: HaulierInfo) => {
-          this.create = false;
-          this.haulierInfo = haulierInfo;
-        });
+        return this.haulierInfoService.get(+params['id'], this.userObject);
+      } else {
+        throw 'params id not found. nothing to see here';
       }
+
+    }).subscribe((haulierInfo: HaulierInfo) => {
+      this.create = false;
+      this.haulierInfo = haulierInfo;
     });
+
   }
 
   save() {
     this.haulierInfoService.save(this.haulierInfo, this.userObject).subscribe((haulierInfo: HaulierInfo) => {
       this.router.navigate(['/haulierInfo', 'show', haulierInfo.id]);
-    }, (res: Response) => {
-      const json = res.json();
+    }, json => {
       if (json.hasOwnProperty('message')) {
         this.errors = [json];
       } else {
