@@ -1,53 +1,55 @@
 <div class="nav" role="navigation">
-    <ul>
-        <li><a [routerLink]="['/index']" class="home">Home</a></li>
-        <li><a [routerLink]="['/company','create']" class="create">New Company</a></li>
-    </ul>
+  <ul>
+    <li><a [routerLink]="['/index']" class="home">Home</a></li>
+    <li><a [routerLink]="['/company','create']" class="create">New Company</a></li>
+  </ul>
 </div>
 <div id="list-company" class="content scaffold-list" role="main">
-    <h1>Company List</h1>
-    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Registration No</th>
-      <th>Code</th>
-      <th>Address1</th>
-      <th>Address2</th>
-      <th>City</th>
-      <th>State</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let company of companyList; let e = even;">
-      <td>
-        <a [routerLink]="['/company','show',company.id]">{{company.id}}</a>
-      </td>
-      <td>
-        <span>{{company.name}}</span>
-      </td>
-      <td>
-        <span>{{company.registrationNo}}</span>
-      </td>
-      <td>
-        <span>{{company.code}}</span>
-      </td>
-      <td>
-        <span>{{company.address1}}</span>
-      </td>
-      <td>
-        <span>{{company.address2}}</span>
-      </td>
-      <td>
-        <span>{{company.city}}</span>
-      </td>
-      <td>
-        <span>{{company.state}}</span>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <h1>Company List</h1>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Registration No</th>
+        <th>Code</th>
+        <th>Address1</th>
+        <th>Address2</th>
+        <th>City</th>
+        <th>State</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let company of companyList; let e = even;">
+        <td>
+          <a [routerLink]="['/company','show',company.id]">{{company.id}}</a>
+        </td>
+        <td>
+          <span>{{company.name}}</span>
+        </td>
+        <td>
+          <span>{{company.registrationNo}}</span>
+        </td>
+        <td>
+          <span>{{company.code}}</span>
+        </td>
+        <td>
+          <span>{{company.address1}}</span>
+        </td>
+        <td>
+          <span>{{company.address2}}</span>
+        </td>
+        <td>
+          <span>{{company.city}}</span>
+        </td>
+        <td>
+          <span>{{company.state}}</span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <app-pagination [offset]="offset" [limit]="limit" [size]="count" (pageChange)="onPageChange($event)"></app-pagination>

@@ -11,6 +11,7 @@ import {ForwarderInfoListComponent} from './forwarderInfo-list.component';
 import {ForwarderInfoPersistComponent} from './forwarderInfo-persist.component';
 import { CompanyModule } from '../company/company.module';
 import {PaginationModule} from "../pagination/pagination.module";
+import {NgbTypeaheadModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {PaginationModule} from "../pagination/pagination.module";
     FormsModule,
     ForwarderInfoRoutingModule,
     CompanyModule,
-    PaginationModule
+    PaginationModule,
+    NgbTypeaheadModule
 ],
   providers: [
     ForwarderInfoService

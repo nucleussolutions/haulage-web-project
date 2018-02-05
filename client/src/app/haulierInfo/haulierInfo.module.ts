@@ -11,6 +11,7 @@ import {HaulierInfoListComponent} from './haulierInfo-list.component';
 import {HaulierInfoPersistComponent} from './haulierInfo-persist.component';
 import { CompanyModule } from '../company/company.module';
 import {PaginationModule} from "../pagination/pagination.module";
+import {NgbTypeaheadModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {PaginationModule} from "../pagination/pagination.module";
     FormsModule,
     HaulierInfoRoutingModule,
     CompanyModule,
-    PaginationModule
+    PaginationModule,
+    NgbTypeaheadModule
 ],
   providers: [
     HaulierInfoService
