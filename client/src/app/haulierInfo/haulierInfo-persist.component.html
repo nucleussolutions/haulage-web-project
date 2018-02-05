@@ -35,6 +35,14 @@
               <input id="company" name="company" required type="text" class="form-control" (selectItem)="selectedCompany($event)" [(ngModel)]="forwarderInfo.company" [ngbTypeahead]="companySearch"/>
 
             </div>
+
+            <div class="form-group">
+              <label for="email">Email
+                <span class="required-indicator">*</span>
+              </label>
+              <input class="form-control" required="" name="email" id="email" [(ngModel)]="haulierInfo.email" type="text" />
+            </div>
+
             <div class="form-group">
               <label for="userId">User Id
                 <span class="required-indicator">*</span>

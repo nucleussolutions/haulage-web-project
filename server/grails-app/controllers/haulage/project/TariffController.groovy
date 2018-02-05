@@ -1,9 +1,11 @@
 package haulage.project
 
-
+import grails.compiler.GrailsCompileStatic
 import grails.rest.*
 import grails.converters.*
+import groovy.transform.TypeCheckingMode
 
+@GrailsCompileStatic(TypeCheckingMode.SKIP)
 class TariffController extends RestfulController {
 
     def tariffService
