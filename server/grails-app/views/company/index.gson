@@ -1,0 +1,11 @@
+import haulage.project.Company
+
+model {
+	Iterable<Company> companyList
+	Integer total
+}
+
+//json tmpl.company(companyList ?: [])
+
+json jsonapi.render(companyList, [pagination: [total: total, resource: Company]])
+

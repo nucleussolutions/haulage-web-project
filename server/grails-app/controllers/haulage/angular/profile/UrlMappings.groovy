@@ -21,6 +21,7 @@ class UrlMappings {
 
     get "/forwarderInfo/userId/${userId}"(controller:'custom', action: 'forwarderByUserId')
 
+    get "/company/count"(controller: 'company', action: 'count')
     get "/location/count"(controller: 'custom', action: 'locationCount')
     get "/haulierInfo/count"(controller: 'custom', action: 'haulierInfoCount')
     get "/pricing/count"(controller: 'custom', action: 'pricingCount')

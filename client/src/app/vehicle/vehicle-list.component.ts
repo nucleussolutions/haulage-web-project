@@ -15,7 +15,9 @@ import { Observable } from "rxjs/Observable";
 export class VehicleListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   vehicleList: Vehicle[] = [];

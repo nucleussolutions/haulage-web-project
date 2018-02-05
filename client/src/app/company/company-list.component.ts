@@ -24,13 +24,6 @@ export class CompanyListComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private nextLink: string;
-
-  private firstLink: string;
-
-  private lastLink: string;
-
-
   private page: number = 1;
 
   offset: number = 0;
@@ -64,10 +57,10 @@ export class CompanyListComponent implements OnInit, OnDestroy {
     }).subscribe(json => {
       // this.companyList = companyList;
       let data = json['data'];
-      let links = json['links'];
-      this.nextLink = links.next;
-      this.firstLink = links.first;
-      this.lastLink = links.last;
+      // let links = json['links'];
+      // this.nextLink = links.next;
+      // this.firstLink = links.first;
+      // this.lastLink = links.last;
 
       this.companyList = [];
 
