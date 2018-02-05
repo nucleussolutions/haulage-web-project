@@ -17,7 +17,7 @@ class Permission {
 
   static constraints = {
     email nullable: false, email: true, unique: true
-    userId nullable: false, unique: true
+    userId nullable: true, unique: true
     authority nullable: false, inList: ['Admin', 'Manager', 'Super Admin', 'User']
     grantedBy nullable: false
   }

@@ -15,34 +15,30 @@
       </ul>
 
       <form name="save{className}" (ngSubmit)="save()">
-        <fieldset class="form">
-          <fieldset class="form">
-            <div class="form-group">
-              <label for="email">Email
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="email" id="email" [(ngModel)]="permission.email" type="email"/>
-            </div>
-            <div class="form-group">
-              <label for="userId">User Id
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="userId" id="userId" [(ngModel)]="permission.userId" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="authority">Authority
-                <span class="required-indicator">*</span>
-              </label>
-              <select class="form-control" required="" name="authority" id="authority" [(ngModel)]="permission.authority">
-                <option value="Admin">Admin</option>
-                <option value="Manager">Manager</option>
-                <option value="Super Admin">Super Admin</option>
-                <option value="User">User</option>
-              </select>
-            </div>
-          </fieldset>
-        </fieldset>
-          <input type="submit" class="save btn btn-primary" [value]="create ? 'Save' : 'Update'"/>
+        <div class="form-group">
+          <label for="email">Email
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="form-control" required="" name="email" id="email" [(ngModel)]="permission.email" type="email"/>
+        </div>
+        <div class="form-group">
+          <label for="userId">User Id (optional)
+          </label>
+          <input class="form-control" required="" name="userId" id="userId" [(ngModel)]="permission.userId"
+                 type="text"/>
+        </div>
+        <div class="form-group">
+          <label for="authority">Authority
+            <span class="required-indicator">*</span>
+          </label>
+          <select class="form-control" required="" name="authority" id="authority" [(ngModel)]="permission.authority">
+            <option value="Admin">Admin</option>
+            <option value="Manager">Manager</option>
+            <option *ngIf="permission.authority == 'Super Admin'" value="Super Admin">Super Admin</option>
+            <option value="User">User</option>
+          </select>
+        </div>
+        <input type="submit" class="save btn btn-primary" [value]="create ? 'Save' : 'Update'"/>
       </form>
     </div>
   </div>

@@ -2,7 +2,6 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Permission} from './permission';
 import {PermissionService} from './permission.service';
-import {Response} from "@angular/http";
 import {Title} from "@angular/platform-browser";
 import {UserService} from 'app/user.service';
 import {Subscription} from 'rxjs/Subscription';
@@ -16,7 +15,9 @@ import {Observable} from "rxjs/Observable";
 export class PermissionPersistComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   permission = new Permission();
@@ -54,13 +55,16 @@ export class PermissionPersistComponent implements OnInit, OnDestroy {
   save() {
     this.permissionService.save(this.permission, this.userObject).subscribe((permission: Permission) => {
       this.router.navigate(['/permission', 'show', permission.id]);
-    }, (res: Response) => {
-      const json = res.json();
+    }, json => {
+      console.log('json error '+JSON.stringify(json));
       if (json.hasOwnProperty('message')) {
-        this.errors = [json];
+        this.errors = json.error._embedded.errors;
+        console.info('[json.error]');
       } else {
         this.errors = json._embedded.errors;
+        console.info('json._embedded.errors');
       }
+      console.log('this.errors '+JSON.stringify(this.errors));
     });
   }
 }
