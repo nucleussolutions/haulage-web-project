@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {RegisterService} from "../register.service";
 import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import {Title} from "@angular/platform-browser";
@@ -19,6 +19,8 @@ export class RegisterComponent implements OnInit {
 
   private verificationResponse: any;
 
+  @ViewChild('verificationsentmodal') private content;
+
   constructor(private formBuilder: FormBuilder, private titleService: Title, private router: Router, private userService: UserService, private modalService: NgbModal) {
     this.credentials = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.email])],
@@ -34,8 +36,8 @@ export class RegisterComponent implements OnInit {
 
   closeResult: string;
 
-  openModal(content) {
-    this.modalService.open(content).result.then((result) => {
+  openModal() {
+    this.modalService.open(this.content).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -54,10 +56,7 @@ export class RegisterComponent implements OnInit {
 
   register(formData) {
     this.userService.register(formData.value.email, formData.value.password).then(response => {
-      // this.modal.alert().title('Status')
-      // .message('Verification email has been sent to your inbox')
-      // .open();
-      this.openModal('verificationsentmodal');
+      this.openModal();
     }, error => {
       // this.modal.alert().title('Error').message(error).open();
       console.log('failed to register ' + error);

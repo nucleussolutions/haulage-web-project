@@ -1,6 +1,6 @@
 <div class="row">
 
-  <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+  <div class="col-12 col-sm-4 col-md-4 col-lg-4">
     <form [formGroup]="credentials" (ngSubmit)="register(credentials)">
       <div class="mdl-card__title mdl-color--primary mdl-color-text--white relative">
         <!--<a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button&#45;&#45;icon"-->
@@ -32,17 +32,19 @@
 </div>
 
 <ng-template #verificationsentmodal let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h4 class="modal-title">Registration Status</h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <p>Verification email sent</p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
-  </div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Registration Status</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Verification email sent</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+      </div>
+    </div>
 </ng-template>
 
