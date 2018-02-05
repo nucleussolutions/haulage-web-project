@@ -6,6 +6,7 @@ export class Permission {
   email: string;
   userId: string;
   authority: string;
+  grantedBy: string;
 
   constructor (object?: any) {
     if (object) {

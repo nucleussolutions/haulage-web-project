@@ -4,8 +4,9 @@ import {Permission} from './permission';
 import {PermissionService} from './permission.service';
 import {Response} from "@angular/http";
 import {Title} from "@angular/platform-browser";
-import { UserService } from 'app/user.service';
-import { Subscription } from 'rxjs/Subscription';
+import {UserService} from 'app/user.service';
+import {Subscription} from 'rxjs/Subscription';
+import {Observable} from "rxjs/Observable";
 
 
 @Component({
@@ -22,26 +23,31 @@ export class PermissionPersistComponent implements OnInit, OnDestroy {
   create = true;
   errors: any[];
 
-  private userObject : any;
+  private userObject: any;
 
-  private subscription : Subscription;
+  private subscription: Subscription;
 
   constructor(private route: ActivatedRoute, private permissionService: PermissionService, private userService: UserService, private router: Router, private titleService: Title) {
-    this.subscription = this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    });
-
     this.titleService.setTitle('Create Permission');
   }
 
   ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
+
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+      this.userObject = result[0];
+
+      let params = result[1];
+
+      this.permission.grantedBy = this.userObject.uid;
+
       if (params.hasOwnProperty('id')) {
-        this.permissionService.get(+params['id'], this.userObject).subscribe((permission: Permission) => {
-          this.create = false;
-          this.permission = permission;
-        });
+        return this.permissionService.get(+params['id'], this.userObject);
+      } else {
+        throw 'params id not found. nothing to see here'
       }
+    }).subscribe((permission: Permission) => {
+      this.create = false;
+      this.permission = permission;
     });
   }
 
