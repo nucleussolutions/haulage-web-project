@@ -8,12 +8,15 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 import {environment} from 'environments/environment';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {AngularFireAuth} from "angularfire2/auth";
+import {PermissionService} from "../permission/permission.service";
+import {Permission} from "../permission/permission";
 
 @Injectable()
 export class ForwarderInfoService {
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private firebaseAuth: AngularFireAuth, private permissionService: PermissionService) {
   }
 
   list(userObject: any, offset: number): Observable<ForwarderInfo[]> {
@@ -85,6 +88,15 @@ export class ForwarderInfoService {
       'apiKey': userObject.apiKey,
       'userId': userObject.uid
     });
+
+    //todo create a user in firebase then save data in the main server with permissions
+    // this.firebaseAuth.auth.createUserWithEmailAndPassword()
+
+    // let permission = new Permission();
+    // permission.authority = 'Admin';
+    // permission.email = forwarderInfo.email;
+    // permission.userId =
+
 
     return this.http.request(requestMethodStr, url, {
       headers: headers,

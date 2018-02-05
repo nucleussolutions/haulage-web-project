@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { UserService } from 'app/user.service';
 import { Observable } from "rxjs/Observable";
 import { ActivatedRoute, Router } from "@angular/router";
+import {PermissionService} from "../permission/permission.service";
+import {Permission} from "../permission/permission";
 
 
 @Component({
@@ -25,12 +27,6 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
 
   private page: number = 1;
 
-  private nextLink: string;
-
-  private firstLink: string;
-
-  private lastLink: string;
-
   offset: number = 0;
 
   count: number = 0;
@@ -39,8 +35,9 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
+  permission: Permission;
 
-  constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private titleService: Title, private userService: UserService, private router: Router) {
+  constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private titleService: Title, private userService: UserService, private router: Router, private permissionService: PermissionService) {
     this.titleService.setTitle('Forwarders');
 
   }
@@ -65,14 +62,14 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
         this.count = count;
       });
 
+      this.permissionService.getByUserId(this.userObject).subscribe(permission => {
+        this.permission = permission;
+      });
+
       return this.forwarderInfoService.list(this.userObject, this.offset);
     }).subscribe(json => {
       // this.forwarderInfoList = forwarderInfoList;
       let data = json['data'];
-      let links = json['links'];
-      this.nextLink = links.next;
-      this.firstLink = links.first;
-      this.lastLink = links.last;
 
       this.forwarderInfoList = [];
 

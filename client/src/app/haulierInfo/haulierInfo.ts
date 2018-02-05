@@ -6,7 +6,6 @@ export class HaulierInfo {
   name: string;
   company: Company;
   userId: string;
-  email: string;
 
   constructor (object?: any) {
     if (object) {

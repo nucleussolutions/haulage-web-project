@@ -19,8 +19,6 @@
       </ul>
 
       <form name="save{className}" (ngSubmit)="save()">
-        <fieldset class="form">
-          <fieldset class="form">
             <div class="form-group">
               <label for="name">Name
                 <span class="required-indicator">*</span>
@@ -31,29 +29,24 @@
               <label for="company">Company
                 <span class="required-indicator">*</span>
               </label>
-              <!--<select class="form-control" required="" name="company" id="company" [(ngModel)]="forwarderInfo.company">-->
-                <!--<option *ngFor="let company of companyList" [value]="company.id" [selected]="forwarderInfo.company?.id == company.id">{{company.toString()}}</option>-->
-              <!--</select>-->
+
               <input id="company" name="company" required type="text" class="form-control" (selectItem)="selectedCompany($event)" [(ngModel)]="forwarderInfo.company" [ngbTypeahead]="companySearch"/>
 
             </div>
 
-            <div class="form-group">
-              <label for="email">Email
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="email" id="email" [(ngModel)]="forwarderInfo.email" type="text" />
-            </div>
+            <!--<div class="form-group">-->
+              <!--<label for="email">Email-->
+                <!--<span class="required-indicator">*</span>-->
+              <!--</label>-->
+              <!--<input class="form-control" required="" name="email" id="email" [(ngModel)]="forwarderInfo.email" type="text" />-->
+            <!--</div>-->
 
-            <!-- once angular fire creates user by email, user id will be obtained, then forwarder information will be stored -->
             <div class="form-group">
               <label for="userId">User Id
                 <span class="required-indicator">*</span>
               </label>
               <input class="form-control" required="" name="userId" id="userId" [(ngModel)]="forwarderInfo.userId" type="text" />
             </div>
-          </fieldset>
-        </fieldset>
         <input type="submit" class="save btn btn-primary" [value]="create ? 'Save' : 'Update'" />
       </form>
     </div>

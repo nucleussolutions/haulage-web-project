@@ -11,13 +11,11 @@ class ForwarderInfo {
   String userId
   String name
   Company company
-  String email
 
   static constraints = {
     name nullable: false
     company nullable: false
     userId nullable: false, unique: true
-    email nullable: false, unique: true, email: true
   }
 
   static searchable = true
