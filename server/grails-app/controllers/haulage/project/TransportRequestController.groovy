@@ -301,4 +301,8 @@ class TransportRequestController extends RestfulController {
   Object delete() {
     return super.delete()
   }
+
+  def count(){
+    respond count: transportRequestService.count()
+  }
 }

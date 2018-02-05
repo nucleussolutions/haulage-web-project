@@ -1,17 +1,17 @@
 package haulage.project
 
-import com.agileorbit.schwartz.QuartzService
+
 import grails.rest.*
 import grails.converters.*
 
-class JobController extends RestfulController {
+class ForwarderInfoController extends RestfulController {
+
+  def forwarderInfoService
+
   static responseFormats = ['json', 'xml']
 
-  def jobService
-  def quartzService
-
-  JobController() {
-    super(Job)
+  ForwarderInfoController() {
+    super(ForwarderInfo)
   }
 
   @Override
@@ -31,7 +31,6 @@ class JobController extends RestfulController {
 
   @Override
   Object save() {
-    //modify here to schedule
     return super.save()
   }
 
@@ -47,7 +46,6 @@ class JobController extends RestfulController {
 
   @Override
   Object update() {
-    //modify here as well for reschedule
     return super.update()
   }
 
@@ -56,8 +54,7 @@ class JobController extends RestfulController {
     return super.delete()
   }
 
-  def count(){
-    respond count: jobService.count()
+  def count() {
+    respond count: forwarderInfoService.count()
   }
-
 }

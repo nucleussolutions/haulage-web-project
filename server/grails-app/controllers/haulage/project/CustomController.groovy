@@ -110,66 +110,6 @@ class CustomController {
     }
   }
 
-  def locationCount() {
-    respond count: locationService.count()
-  }
-
-  def haulierInfoCount() {
-    respond count: haulierInfoService.count()
-  }
-
-  def forwarderInfoCount() {
-    respond count: forwarderInfoService.count()
-  }
-
-  def consignmentCount() {
-    respond count: consignmentService.count()
-  }
-
-  def tariffCount() {
-    respond count: tariffService.count()
-  }
-
-  def memberSubscriptionCount() {
-    respond count: memberSubscriptionService.count()
-  }
-
-  def transactionCount() {
-    respond count: transactionService.count()
-  }
-
-  def driverInfoCount() {
-    respond count: driverInfoService.count()
-  }
-
-  def quoteCount() {
-    respond count: quoteService.count()
-  }
-
-  def companyCount() {
-    respond count: companyService.count()
-  }
-
-  def pricingCount() {
-    respond count: pricingService.count()
-  }
-
-  def vehicleCount() {
-    respond count: vehicleService.count()
-  }
-
-  def transportRequestCount() {
-    respond count: transportRequestService.count()
-  }
-
-  def jobCount(){
-    respond count: jobService.count()
-  }
-
-  def permissionCount(){
-    respond count: permissionService.count()
-  }
-
   def jobsByDriverId(String driverId){
     if(driverId){
       respond jobService.findAllByDriverId(driverId, [offset: params.offset])

@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus
 class ConsignmentController extends RestfulController {
   static responseFormats = ['json', 'xml']
 
+  def consignmentService
+
   ConsignmentController() {
     super(Consignment)
   }
@@ -115,5 +117,9 @@ class ConsignmentController extends RestfulController {
       }
       respond consignments
     }
+  }
+
+  def count(){
+    respond count: consignmentService.count()
   }
 }
