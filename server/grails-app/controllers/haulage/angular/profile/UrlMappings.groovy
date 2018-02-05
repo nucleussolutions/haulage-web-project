@@ -75,7 +75,8 @@ class UrlMappings {
 //    get "/consignment/haulier"(controller: 'custom', action: 'consignmentsByHaulier')
 //    get "/consignment/forwarder"(controller: 'custom', action: 'consignmentsByForwarder')
     get "/consignment/transportRequest/${rftId}"(controller: 'custom', action: 'consignmentsByRFT')
-
+    get "/consignment/forwarder/${forwarderId}"(controller: 'consignment', action: 'listByStatusAndForwarder')
+    get "/consignment/haulier/${haulierId}"(controller: 'consignment', action: 'listByStatusAndHaulier')
 
     get "/vehicle/haulier/${haulierId}"(controller: 'custom', action: 'vehicleByHaulier')
 
