@@ -10,6 +10,7 @@ import {PricingShowComponent} from './pricing-show.component';
 import {PricingListComponent} from './pricing-list.component';
 import {PricingPersistComponent} from './pricing-persist.component';
 import {PaginationModule} from "../pagination/pagination.module";
+import {NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {PaginationModule} from "../pagination/pagination.module";
     CommonModule,
     FormsModule,
     PricingRoutingModule,
-    PaginationModule
+    PaginationModule,
+      NgbModalModule
   ],
   providers: [
     PricingService

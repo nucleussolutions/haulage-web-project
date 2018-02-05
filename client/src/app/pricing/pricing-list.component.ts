@@ -6,6 +6,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from 'app/user.service';
 import {Subscription} from "rxjs/Subscription";
 import {Observable} from "rxjs/Observable";
+import {ErrorModalComponent} from "../error-modal/error-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 
 @Component({
@@ -26,19 +28,13 @@ export class PricingListComponent implements OnInit, OnDestroy {
 
   private page: number = 1;
 
-  private nextLink: string;
-
-  private firstLink: string;
-
-  private lastLink: string;
-
   offset: number = 0;
 
   count: number = 0;
 
   limit: number = 10;
 
-  constructor(private route: ActivatedRoute, private pricingService: PricingService, private titleService: Title, private router: Router, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private pricingService: PricingService, private titleService: Title, private router: Router, private userService: UserService, private modalService: NgbModal) {
     this.titleService.setTitle('Pricing List');
   }
 
@@ -64,10 +60,6 @@ export class PricingListComponent implements OnInit, OnDestroy {
       return this.pricingService.list(userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
-      let links = json['links'];
-      this.nextLink = links.next;
-      this.firstLink = links.first;
-      this.lastLink = links.last;
 
       this.pricingList = [];
 
@@ -86,11 +78,9 @@ export class PricingListComponent implements OnInit, OnDestroy {
         message = 'Bad request';
       }
 
-      // const dialog = this.modal.alert().title('Error').message(message).open();
-
-      // dialog.result.then(result => {
-      //   this.router.navigate(['/login']);
-      // });
+      let modalRef = this.modalService.open(ErrorModalComponent);
+      modalRef.componentInstance.modalTitle = 'Error';
+      modalRef.componentInstance.modalMessage = message;
     });
   }
 }

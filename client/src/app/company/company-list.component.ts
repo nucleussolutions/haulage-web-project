@@ -57,11 +57,6 @@ export class CompanyListComponent implements OnInit, OnDestroy {
     }).subscribe(json => {
       // this.companyList = companyList;
       let data = json['data'];
-      // let links = json['links'];
-      // this.nextLink = links.next;
-      // this.firstLink = links.first;
-      // this.lastLink = links.last;
-
       this.companyList = [];
 
       data.forEach(companyDatum => {
@@ -69,15 +64,8 @@ export class CompanyListComponent implements OnInit, OnDestroy {
         company.id = companyDatum.id;
         this.companyList.push(company);
       });
-
-
     }, error => {
-      // const dialog = this.modal.alert().isBlocking(true)
-      //   .title('Error').message(error).open();
-      //
-      // dialog.result.then(result => {
-      //   this.router.navigate(['/login']);
-      // });
+
     });
   }
 }

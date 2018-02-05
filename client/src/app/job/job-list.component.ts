@@ -80,10 +80,6 @@ export class JobListComponent implements OnInit, OnDestroy {
       console.log('job list json');
 
       let data = json['data'];
-      let links = json['links'];
-      this.nextLink = links.next;
-      this.firstLink = links.first;
-      this.lastLink = links.last;
 
       this.jobList = [];
 

@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'app/user.service';
 import { Subscription } from "rxjs/Subscription";
 import { Observable } from "rxjs/Observable";
+import {ErrorModalComponent} from "../error-modal/error-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 
 @Component({
@@ -40,7 +42,7 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private haulierInfoService: HaulierInfoService, private titleService: Title, private router: Router, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private haulierInfoService: HaulierInfoService, private titleService: Title, private router: Router, private userService: UserService, private modalService: NgbModal) {
     this.titleService.setTitle('Hauliers');
   }
 
@@ -90,11 +92,10 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
       } else if (error.status === 400) {
         message = 'Bad request';
       }
-      // const dialog = this.modal.alert().title('Error').message(message).open();
-      // dialog.result.then(result => {
-      //   //todo might need to navigate them back to login
-      //   this.router.navigate(['/login']);
-      // });
+
+      let modalRef = this.modalService.open(ErrorModalComponent);
+      modalRef.componentInstance.modalTitle = 'Error';
+      modalRef.componentInstance.modalMessage = message;
     });
   }
 

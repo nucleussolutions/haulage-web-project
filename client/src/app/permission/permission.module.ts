@@ -10,6 +10,7 @@ import {PermissionShowComponent} from './permission-show.component';
 import {PermissionListComponent} from './permission-list.component';
 import {PermissionPersistComponent} from './permission-persist.component';
 import {PaginationModule} from "../pagination/pagination.module";
+import {NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {PaginationModule} from "../pagination/pagination.module";
     CommonModule,
     FormsModule,
     PermissionRoutingModule,
-    PaginationModule
+    PaginationModule,
+      NgbModalModule
   ],
   providers: [
     PermissionService

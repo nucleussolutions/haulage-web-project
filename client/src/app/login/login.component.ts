@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Title} from "@angular/platform-browser";
 import {Router} from "@angular/router";
 import {UserService} from 'app/user.service';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 
 @Component({
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
 
     private credentials: FormGroup;
 
-    constructor(private formBuilder: FormBuilder, private titleService: Title, private router: Router, private userService: UserService) {
+    constructor(private formBuilder: FormBuilder, private titleService: Title, private router: Router, private userService: UserService, private modalService: NgbModal) {
         this.credentials = this.formBuilder.group({
             email: ['', Validators.compose([Validators.required, Validators.email])],
             password: ['', Validators.required],
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/index']);
         }, error => {
             // this.modal.alert().title('Error').message(error).open();
+
         });
 
     }

@@ -9,6 +9,8 @@ import "rxjs/add/operator/share";
 import {Subject} from "rxjs/Subject";
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
+import {ErrorModalComponent} from "../error-modal/error-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 
 @Component({
@@ -31,12 +33,6 @@ export class LocationListComponent implements OnInit, OnDestroy {
 
   private page: number = 1;
 
-  private nextLink: string;
-
-  private firstLink: string;
-
-  private lastLink: string;
-
   offset: number = 0;
 
   count: number = 0;
@@ -44,7 +40,7 @@ export class LocationListComponent implements OnInit, OnDestroy {
   limit: number = 10;
 
 
-  constructor(private route: ActivatedRoute, private locationService: LocationService, private router: Router, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private locationService: LocationService, private router: Router, private userService: UserService, private modalService: NgbModal) {
   }
 
   ngOnInit() {
@@ -65,10 +61,6 @@ export class LocationListComponent implements OnInit, OnDestroy {
       return this.locationService.list(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
-      let links = json['links'];
-      this.nextLink = links.next;
-      this.firstLink = links.first;
-      this.lastLink = links.last;
 
       this.locationList = [];
 
@@ -96,11 +88,9 @@ export class LocationListComponent implements OnInit, OnDestroy {
         message = 'Bad request';
       }
 
-      // const dialog = this.modal.alert().isBlocking(true).title('Error').message(message).open();
-      //
-      // dialog.result.then(result => {
-      //   this.router.navigate(['/login']);
-      // });
+      let modalRef = this.modalService.open(ErrorModalComponent);
+      modalRef.componentInstance.modalTitle = 'Error';
+      modalRef.componentInstance.modalMessage = message;
     });
   }
 

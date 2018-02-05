@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { UserService } from 'app/user.service';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs/Observable";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ErrorModalComponent} from "../error-modal/error-modal.component";
 
 
 @Component({
@@ -38,7 +40,7 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private titleService: Title, private userService: UserService, private router: Router) {
+  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private titleService: Title, private userService: UserService, private router: Router, private modalService: NgbModal) {
     this.titleService.setTitle('Drivers');
   }
 
@@ -91,7 +93,9 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
         message = 'Bad request';
       }
 
-      // this.modal.alert().title('Error').message(message).open();
+      let modalRef = this.modalService.open(ErrorModalComponent);
+      modalRef.componentInstance.modalTitle = 'Error';
+      modalRef.componentInstance.modalMessage = message;
     });
   }
 

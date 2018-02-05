@@ -9,8 +9,8 @@ import {DriverInfoRoutingModule} from './driverInfo-routing.module';
 import {DriverInfoShowComponent} from './driverInfo-show.component';
 import {DriverInfoListComponent} from './driverInfo-list.component';
 import {DriverInfoPersistComponent} from './driverInfo-persist.component';
-import {PaginationComponent} from "../pagination/pagination.component";
 import {PaginationModule} from "../pagination/pagination.module";
+import {NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -22,7 +22,8 @@ import {PaginationModule} from "../pagination/pagination.module";
     CommonModule,
     FormsModule,
     DriverInfoRoutingModule,
-    PaginationModule
+    PaginationModule,
+    NgbModalModule
   ],
   providers: [
     DriverInfoService

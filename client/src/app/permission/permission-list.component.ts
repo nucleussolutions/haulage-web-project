@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'app/user.service';
 import { Subscription } from "rxjs/Subscription";
 import { Observable } from "rxjs/Observable";
+import {ErrorModalComponent} from "../error-modal/error-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'permission-list',
@@ -30,15 +32,9 @@ export class PermissionListComponent implements OnInit, OnDestroy {
 
   limit: number = 10;
 
-  private nextLink: string;
-
-  private firstLink: string;
-
-  private lastLink: string;
-
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private router: Router, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private router: Router, private userService: UserService, private modalService: NgbModal) {
   }
 
   ngOnInit() {
@@ -66,10 +62,6 @@ export class PermissionListComponent implements OnInit, OnDestroy {
       return this.permissionService.list(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
-      let links = json['links'];
-      this.nextLink = links.next;
-      this.firstLink = links.first;
-      this.lastLink = links.last;
 
       this.permissionList = [];
 
@@ -90,12 +82,9 @@ export class PermissionListComponent implements OnInit, OnDestroy {
         message = 'Bad request';
       }
 
-      // const dialog = this.modal.alert().title('Error').message(message).open();
-      //
-      // dialog.result.then(result => {
-      //   //todo might need to navigate them back to login
-      //   this.router.navigate(['/login']);
-      // });
+      let modalRef = this.modalService.open(ErrorModalComponent);
+      modalRef.componentInstance.modalTitle = 'Error';
+      modalRef.componentInstance.modalMessage = message;
     });
   }
 

@@ -11,6 +11,7 @@ import {ConsignmentListComponent} from './consignment-list.component';
 import {ConsignmentPersistComponent} from './consignment-persist.component';
 import { LocationModule } from '../location/location.module';
 import {PaginationModule} from "../pagination/pagination.module";
+import {NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {PaginationModule} from "../pagination/pagination.module";
     FormsModule,
     ConsignmentRoutingModule,
     LocationModule,
-    PaginationModule
+    PaginationModule,
+      NgbModalModule
 ],
   providers: [
     ConsignmentService

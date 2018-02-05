@@ -55,6 +55,7 @@ import {AgmCoreModule} from "@agm/core";
 import { DatepickerComponent } from './datepicker/datepicker.component';
 import {NgbModalModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { CreateCompanyModalComponent } from './create-company-modal/create-company-modal.component';
+import { ErrorModalComponent } from './error-modal/error-modal.component';
 
 
 
@@ -85,6 +86,7 @@ import { CreateCompanyModalComponent } from './create-company-modal/create-compa
     QuotationTemplateComponent,
     DatepickerComponent,
     CreateCompanyModalComponent,
+    ErrorModalComponent,
   ],
   entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent],
   imports: [

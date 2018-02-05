@@ -7,6 +7,8 @@ import { PermissionService } from "../permission/permission.service";
 import { Subscription } from "rxjs/Subscription";
 import { Observable } from "rxjs/Observable";
 import { Permission } from "../permission/permission";
+import {ErrorModalComponent} from "../error-modal/error-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'consignment-list',
@@ -42,7 +44,7 @@ export class ConsignmentListComponent implements OnInit {
 
   permission: Permission;
 
-  constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private router: Router, private userService: UserService, private permissionService: PermissionService) {
+  constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private router: Router, private userService: UserService, private permissionService: PermissionService, private modalService: NgbModal) {
   }
 
   ngOnInit() {
@@ -102,11 +104,9 @@ export class ConsignmentListComponent implements OnInit {
       message = 'Bad request';
     }
 
-    // const dialog = this.modal.alert().isBlocking(true).title('Error').message(message).open();
-
-    // dialog.result.then(result => {
-    //   this.router.navigate(['/login']);
-    // });
+    let modalRef = this.modalService.open(ErrorModalComponent);
+    modalRef.componentInstance.modalTitle = 'Error';
+    modalRef.componentInstance.modalMessage = message;
   }
 
   onPageChange(offset) {
