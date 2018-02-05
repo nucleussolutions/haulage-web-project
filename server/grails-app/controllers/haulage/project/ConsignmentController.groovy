@@ -92,5 +92,28 @@ class ConsignmentController extends RestfulController {
     }
   }
 
+  def listByStatusAndUserType(){
+    def userId = request.getHeader('userId')
+    def userType = params.userType
+    def status = params.status
+    if(!userId){
+      respond status: HttpStatus.BAD_REQUEST, message: 'user id not found'
+      return
+    }
 
+    if(!userType){
+      respond status: HttpStatus.BAD_REQUEST, message: 'user type not found'
+      return
+    }
+
+    if(!status){
+      respond status: HttpStatus.NOT_FOUND, message: 'not found'
+    }else{
+      def consignments = Consignment.withCriteria {
+        like('status', params.status)
+        like(userType == 'forwarder' ? 'transportRequest.forwarderId' : 'transportRequest.haulierId', userId)
+      }
+      respond consignments
+    }
+  }
 }
