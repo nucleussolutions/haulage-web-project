@@ -7,6 +7,8 @@ import {UserService} from 'app/user.service';
 import {PermissionService} from "../permission/permission.service";
 
 import { MouseEvent } from '@agm/core';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ErrorModalComponent} from "../error-modal/error-modal.component";
 
 
 @Component({
@@ -73,7 +75,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(private titleService: Title, private userService: UserService, private permissionService: PermissionService) {
+  constructor(private titleService: Title, private userService: UserService, private permissionService: PermissionService, private modalService: NgbModal) {
     this.titleService.setTitle('Dashboard');
   }
 
@@ -103,6 +105,8 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
             if (error.status === 422) {
               setTimeout(() => {
                 if (this.userObject.token) {
+
+                  this.modalService.open(CreateProfileModalComponent);
                   // this.modal
                   //   .open(CreateProfileModalComponent, overlayConfigFactory({
                   //     isBlocking: false,
@@ -111,7 +115,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
                 }
               });
             } else {
-              // this.modal.alert().title('Error').message(error.message).open();
+              let errorModalRef = this.modalService.open(ErrorModalComponent);
+              errorModalRef.componentInstance.modalTitle = 'Error';
+              errorModalRef.componentInstance.modalMessage = error.message;
             }
 
           });
@@ -126,6 +132,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
               //     isBlocking: false,
               //     size: 'lg'
               //   }, BSModalContext));
+              this.modalService.open(CreateProfileModalComponent);
             }
           });
         }

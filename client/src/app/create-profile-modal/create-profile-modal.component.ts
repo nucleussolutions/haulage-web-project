@@ -16,7 +16,9 @@ import {Subscription} from 'rxjs/Subscription';
 export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   ngOnInit(): void {
@@ -122,30 +124,4 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 }
 
 
-// export class CreateProfileModalContext extends BSModalContext {
-//
-//   public name: string;
-//
-//   public companyName: string;
-//
-//   public companyAddress1: string;
-//
-//   public companyAddress2: string;
-//
-//   public companyCity: string;
-//
-//   public companyState: string;
-//
-//   public companyCountry: string;
-//
-//   public companyOfficePhone: string;
-//
-//   public companyYardPhone: string;
-//
-//   public companyCode: string;
-//
-//   public companyImage: File;
-//
-//   public companyRegNo: string;
-//
-// }
+
