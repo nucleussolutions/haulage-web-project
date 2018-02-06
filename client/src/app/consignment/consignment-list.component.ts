@@ -13,6 +13,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 @Component({
   selector: 'consignment-list',
   templateUrl: './consignment-list.component.html',
+
 })
 export class ConsignmentListComponent implements OnInit {
 
