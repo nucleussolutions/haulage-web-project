@@ -39,7 +39,7 @@ export class HaulierInfoShowComponent implements OnInit, OnDestroy {
       if (params.hasOwnProperty('id')) {
         return this.haulierInfoService.get(+params['id'], this.userObject);
       } else {
-        throw 'params id not found'
+        throw 'params id not found';
       }
     }).subscribe((haulierInfo: HaulierInfo) => {
       this.haulierInfo = haulierInfo;

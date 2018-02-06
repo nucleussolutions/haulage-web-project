@@ -76,10 +76,6 @@ export class ConsignmentListComponent implements OnInit {
       return this.consignmentService.list(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
-      let links = json['links'];
-      this.nextLink = links.next;
-      this.firstLink = links.first;
-      this.lastLink = links.last;
 
       this.consignmentList = [];
 
@@ -124,9 +120,8 @@ export class ConsignmentListComponent implements OnInit {
         // or the observable of empty heroes if no search term
         : Observable.of<Consignment[]>([]))
         .subscribe(json => {
-          console.log('json ' + JSON.stringify(json));
-          this.consignmentList = json['data'];
-          this.count = json['total'];
+          this.consignmentList = json['searchResults'];
+
         }, error => {
           // TODO: real error handling
           console.log(`Error in component ... ${error}`);

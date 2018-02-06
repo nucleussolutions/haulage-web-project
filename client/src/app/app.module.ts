@@ -52,7 +52,6 @@ import {PaginationModule} from './pagination/pagination.module';
 import { ConsignmentTemplateComponent } from './consignment-template/consignment-template.component';
 import { QuotationTemplateComponent } from './quotation-template/quotation-template.component';
 import {AgmCoreModule} from "@agm/core";
-import { DatepickerComponent } from './datepicker/datepicker.component';
 import {NgbModalModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { CreateCompanyModalComponent } from './create-company-modal/create-company-modal.component';
 import { GeneralModalComponent } from './general-modal/general-modal.component';
@@ -84,7 +83,6 @@ import { GeneralModalComponent } from './general-modal/general-modal.component';
     NotificationPaneComponent,
     ConsignmentTemplateComponent,
     QuotationTemplateComponent,
-    DatepickerComponent,
     CreateCompanyModalComponent,
     GeneralModalComponent,
   ],
