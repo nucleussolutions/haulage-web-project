@@ -8,7 +8,7 @@ import {PermissionService} from "../permission/permission.service";
 
 import { MouseEvent } from '@agm/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {ErrorModalComponent} from "../error-modal/error-modal.component";
+import {GeneralModalComponent} from "../general-modal/general-modal.component";
 
 
 @Component({
@@ -117,7 +117,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
                 }
               });
             } else {
-              let errorModalRef = this.modalService.open(ErrorModalComponent);
+              let errorModalRef = this.modalService.open(GeneralModalComponent);
               errorModalRef.componentInstance.modalTitle = 'Error';
               errorModalRef.componentInstance.modalMessage = error.message;
             }

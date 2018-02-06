@@ -4,6 +4,8 @@ import {Location} from './location';
 import {LocationService} from './location.service';
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {GeneralModalComponent} from "../general-modal/general-modal.component";
 
 @Component({
   selector: 'location-persist',
@@ -23,7 +25,7 @@ export class LocationShowComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private locationService: LocationService, private router: Router, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private locationService: LocationService, private router: Router, private userService: UserService, private modalService: NgbModal) {
 
     this.subscription = this.userService.getUser().subscribe(response => {
       this.userObject = response;
@@ -36,7 +38,9 @@ export class LocationShowComponent implements OnInit, OnDestroy {
         this.location = location;
       });
     }, error => {
-      // this.modal.alert().title('Error').message(error).open();
+      let errorModalRef = this.modalService.open(GeneralModalComponent);
+      errorModalRef.componentInstance.modalTitle = 'Error';
+      errorModalRef.componentInstance.modalMessage = error;
     });
   }
 
@@ -49,7 +53,9 @@ export class LocationShowComponent implements OnInit, OnDestroy {
           alert("Error occurred during delete");
         }
       }, error => {
-          // this.modal.alert().title('Error').message(error).open();
+        let errorModalRef = this.modalService.open(GeneralModalComponent);
+        errorModalRef.componentInstance.modalTitle = 'Error';
+        errorModalRef.componentInstance.modalMessage = error;
       });
     }
   }

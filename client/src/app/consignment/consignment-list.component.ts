@@ -7,7 +7,7 @@ import { PermissionService } from "../permission/permission.service";
 import { Subscription } from "rxjs/Subscription";
 import { Observable } from "rxjs/Observable";
 import { Permission } from "../permission/permission";
-import {ErrorModalComponent} from "../error-modal/error-modal.component";
+import {GeneralModalComponent} from "../general-modal/general-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
@@ -105,7 +105,7 @@ export class ConsignmentListComponent implements OnInit {
       message = 'Bad request';
     }
 
-    let modalRef = this.modalService.open(ErrorModalComponent);
+    let modalRef = this.modalService.open(GeneralModalComponent);
     modalRef.componentInstance.modalTitle = 'Error';
     modalRef.componentInstance.modalMessage = message;
   }

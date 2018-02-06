@@ -5,6 +5,8 @@ import { PermissionService } from './permission.service';
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
+import {GeneralModalComponent} from "../general-modal/general-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'permission-persist',
@@ -24,7 +26,7 @@ export class PermissionShowComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private router: Router, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private permissionService: PermissionService, private router: Router, private userService: UserService, private modalService: NgbModal) {
     
   }
 
@@ -53,7 +55,9 @@ export class PermissionShowComponent implements OnInit, OnDestroy {
         message = 'Not found';
       }
 
-      // this.modal.alert().title('Error').message(message).open();
+      let modalRef = this.modalService.open(GeneralModalComponent);
+      modalRef.componentInstance.modalTitle = 'Error';
+      modalRef.componentInstance.modalMessage = message;
     });
   }
 
@@ -66,7 +70,9 @@ export class PermissionShowComponent implements OnInit, OnDestroy {
           alert("Error occurred during delete");
         }
       }, error => {
-        // this.modal.alert().title('Error').message(error).open();
+        let modalRef = this.modalService.open(GeneralModalComponent);
+        modalRef.componentInstance.modalTitle = 'Error';
+        modalRef.componentInstance.modalMessage = error;
       });
     }
   }

@@ -4,6 +4,9 @@ import { DriverInfo } from './driverInfo';
 import { DriverInfoService } from './driverInfo.service';
 import { Subscription } from 'rxjs/Subscription';
 import { UserService } from 'app/user.service';
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {GeneralModalComponent} from "../general-modal/general-modal.component";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'driverInfo-persist',
@@ -23,21 +26,28 @@ export class DriverInfoShowComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private router: Router, private userService: UserService) {
-    this.subscription = this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    });
+  constructor(private route: ActivatedRoute, private driverInfoService: DriverInfoService, private router: Router, private userService: UserService, private modalService: NgbModal) {
+
   }
 
   ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
-      this.driverInfoService.get(+params['id'], this.userObject).subscribe((driverInfo: DriverInfo) => {
-        this.driverInfo = driverInfo;
-      }, error => {
-        // this.modal.alert().title('Error').message(error).open();
-        //todo direct them back to login
-      });
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+      this.userObject = result[0];
+      let params = result[1];
+
+      if(params.hasOwnProperty('id')){
+        return this.driverInfoService.get(+params['id'], this.userObject);
+      }else{
+        throw 'params id not found'
+      }
+    }).subscribe((driverInfo: DriverInfo) => {
+      this.driverInfo = driverInfo;
+    }, error => {
+      let errorModalRef = this.modalService.open(GeneralModalComponent);
+      errorModalRef.componentInstance.modalTitle = 'Error';
+      errorModalRef.componentInstance.modalMessage = error;
     });
+
   }
 
   destroy() {
@@ -49,8 +59,9 @@ export class DriverInfoShowComponent implements OnInit, OnDestroy {
           alert("Error occurred during delete");
         }
       }, error => {
-          // this.modal.alert().title('Error').message(error).open();
-          //todo direct them back to login
+        let errorModalRef = this.modalService.open(GeneralModalComponent);
+        errorModalRef.componentInstance.modalTitle = 'Error';
+        errorModalRef.componentInstance.modalMessage = error;
       });
     }
   }

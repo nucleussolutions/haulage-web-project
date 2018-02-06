@@ -7,7 +7,7 @@ import { UserService } from 'app/user.service';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs/Observable";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {ErrorModalComponent} from "../error-modal/error-modal.component";
+import {GeneralModalComponent} from "../general-modal/general-modal.component";
 
 
 @Component({
@@ -93,7 +93,7 @@ export class DriverInfoListComponent implements OnInit, OnDestroy {
         message = 'Bad request';
       }
 
-      let modalRef = this.modalService.open(ErrorModalComponent);
+      let modalRef = this.modalService.open(GeneralModalComponent);
       modalRef.componentInstance.modalTitle = 'Error';
       modalRef.componentInstance.modalMessage = message;
     });

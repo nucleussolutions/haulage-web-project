@@ -9,7 +9,7 @@ import "rxjs/add/operator/share";
 import {Subject} from "rxjs/Subject";
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
-import {ErrorModalComponent} from "../error-modal/error-modal.component";
+import {GeneralModalComponent} from "../general-modal/general-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 
@@ -88,7 +88,7 @@ export class LocationListComponent implements OnInit, OnDestroy {
         message = 'Bad request';
       }
 
-      let modalRef = this.modalService.open(ErrorModalComponent);
+      let modalRef = this.modalService.open(GeneralModalComponent);
       modalRef.componentInstance.modalTitle = 'Error';
       modalRef.componentInstance.modalMessage = message;
     });

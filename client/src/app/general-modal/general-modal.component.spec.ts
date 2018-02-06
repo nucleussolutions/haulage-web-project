@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ErrorModalComponent } from './error-modal.component';
+import { GeneralModalComponent } from './general-modal.component';
 
-describe('ErrorModalComponent', () => {
-  let component: ErrorModalComponent;
-  let fixture: ComponentFixture<ErrorModalComponent>;
+describe('GeneralModalComponent', () => {
+  let component: GeneralModalComponent;
+  let fixture: ComponentFixture<GeneralModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ErrorModalComponent ]
+      declarations: [ GeneralModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ErrorModalComponent);
+    fixture = TestBed.createComponent(GeneralModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
