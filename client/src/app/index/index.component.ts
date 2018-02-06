@@ -106,7 +106,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
               setTimeout(() => {
                 if (this.userObject.token) {
 
-                  this.modalService.open(CreateProfileModalComponent);
+                  this.modalService.open(CreateProfileModalComponent, {
+                    size: 'lg'
+                  });
                   // this.modal
                   //   .open(CreateProfileModalComponent, overlayConfigFactory({
                   //     isBlocking: false,
@@ -132,7 +134,9 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
               //     isBlocking: false,
               //     size: 'lg'
               //   }, BSModalContext));
-              this.modalService.open(CreateProfileModalComponent);
+              this.modalService.open(CreateProfileModalComponent, {
+                size: 'lg'
+              });
             }
           });
         }
