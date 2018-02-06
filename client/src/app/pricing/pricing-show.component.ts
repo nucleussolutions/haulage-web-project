@@ -5,6 +5,8 @@ import { PricingService } from './pricing.service';
 import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {GeneralModalComponent} from "../general-modal/general-modal.component";
 
 @Component({
   selector: 'pricing-persist',
@@ -24,7 +26,7 @@ export class PricingShowComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private pricingService: PricingService, private router: Router, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private pricingService: PricingService, private router: Router, private userService: UserService, private modalService: NgbModal) {
 
 
   }
@@ -56,11 +58,9 @@ export class PricingShowComponent implements OnInit, OnDestroy {
         message = 'Bad request';
       }
 
-      // const dialog = this.modal.alert().isBlocking(true).title('Error').message(message).open();
-      //
-      // dialog.result.then(result => {
-      //   this.router.navigate(['/login']);
-      // });
+      let errorModalRef = this.modalService.open(GeneralModalComponent);
+      errorModalRef.componentInstance.modalTitle = 'Error';
+      errorModalRef.componentInstance.modalMessage = message;
     });
   }
 

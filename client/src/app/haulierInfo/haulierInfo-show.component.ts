@@ -1,5 +1,5 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {HaulierInfo} from './haulierInfo';
 import {HaulierInfoService} from './haulierInfo.service';
 import {Subscription} from 'rxjs/Subscription';

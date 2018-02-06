@@ -1,33 +1,49 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Vehicle} from './vehicle';
 import {VehicleService} from './vehicle.service';
 import {UserService} from "../user.service";
+import {Subscription} from "rxjs/Subscription";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'vehicle-persist',
   templateUrl: './vehicle-show.component.html',
 })
-export class VehicleShowComponent implements OnInit {
+export class VehicleShowComponent implements OnInit, OnDestroy {
+
+
+  ngOnDestroy(): void {
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
+  }
 
   vehicle = new Vehicle();
 
   private userObject : any;
+
+  private subscription: Subscription;
 
   constructor(private route: ActivatedRoute, private vehicleService: VehicleService, private router: Router, private userService: UserService) {
   }
 
   ngOnInit() {
 
-    this.userService.getUser().subscribe(userObject => {
-      this.userObject = userObject;
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+      this.userObject = result[0];
+
+      let params = result[1];
+
+      if(params.hasOwnProperty('id')){
+        return this.vehicleService.get(+params['id'], this.userObject);
+      }else{
+        throw 'params id not found';
+      }
+    }).subscribe((vehicle: Vehicle) => {
+      this.vehicle = vehicle;
     });
 
-    this.route.params.subscribe((params: Params) => {
-      this.vehicleService.get(+params['id'], this.userObject).subscribe((vehicle: Vehicle) => {
-        this.vehicle = vehicle;
-      });
-    });
   }
 
   destroy() {
