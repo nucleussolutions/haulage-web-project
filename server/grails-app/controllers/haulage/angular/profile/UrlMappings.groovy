@@ -27,7 +27,6 @@ class UrlMappings {
     get "/pricing/count"(controller: 'pricing', action: 'count')
     get "/forwarderInfo/count"(controller: 'forwarderInfo', action: 'count')
     get "/driverInfo/count"(controller: 'driverInfo', action:'count')
-    get "/vehicle/count"(controller: 'vehicle', action: 'count')
     get "/job/count"(controller: 'job', action: 'count')
     get "/memberSubscription/count"(controller: 'memberSubscription', action: 'count')
     get "/quote/count"(controller: 'quote', action: 'count')
@@ -36,6 +35,8 @@ class UrlMappings {
     get "/tariff/count"(controller: 'tariff', action: 'count')
     get "/transportRequest/count"(controller: 'transportRequest', action: 'count')
     get "/consignment/count"(controller:'consignment', action: 'count')
+
+    get "/vehicle/count"(controller: 'vehicle', action: 'count')
 
     get "/permission/count/grantedBy/${userId}"(controller: 'custom', action: 'permissionCountByGrantedBy')
 

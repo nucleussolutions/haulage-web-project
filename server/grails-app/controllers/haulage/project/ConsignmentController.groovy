@@ -1,16 +1,18 @@
 package haulage.project
 
 import grails.compiler.GrailsCompileStatic
+import grails.gorm.transactions.Transactional
 import grails.rest.*
 import grails.converters.*
 import groovy.transform.TypeCheckingMode
 import org.springframework.http.HttpStatus
 
+@Transactional(readOnly=false)
 @GrailsCompileStatic(TypeCheckingMode.SKIP)
 class ConsignmentController extends RestfulController {
   static responseFormats = ['json', 'xml']
 
-  def consignmentService
+  ConsignmentService consignmentService
 
   ConsignmentController() {
     super(Consignment)
@@ -120,6 +122,7 @@ class ConsignmentController extends RestfulController {
   }
 
   def count(){
+    println 'test consignment count'
     respond count: consignmentService.count()
   }
 }

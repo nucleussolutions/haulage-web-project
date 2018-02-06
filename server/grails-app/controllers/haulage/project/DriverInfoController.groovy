@@ -1,9 +1,13 @@
 package haulage.project
 
-
+import grails.compiler.GrailsCompileStatic
+import grails.gorm.transactions.Transactional
 import grails.rest.*
 import grails.converters.*
+import groovy.transform.TypeCheckingMode
 
+@Transactional(readOnly=false)
+@GrailsCompileStatic(TypeCheckingMode.SKIP)
 class DriverInfoController extends RestfulController {
 
     def driverInfoService
