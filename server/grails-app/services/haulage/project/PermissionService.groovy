@@ -17,7 +17,7 @@ interface PermissionService {
 
   Permission save(Permission permission)
 
-  Permission findByUserId(String userId)
+//  Permission findByUserId(String userId)
 
   List<Permission> findAllByGrantedBy(String userId, Map paginateParams)
 

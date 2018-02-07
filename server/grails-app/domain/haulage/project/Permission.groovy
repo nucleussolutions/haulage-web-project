@@ -8,15 +8,15 @@ import groovy.transform.TypeCheckingMode
 class Permission {
 
   String email
-  String userId
   String authority
 
   //this admin id is the user id of who granted access to the forwarder, from the haulier
   String grantedBy
 
+  static belongsTo = [UserInfo]
+
   static constraints = {
-    email nullable: false, email: true, unique: true
-    userId nullable: true, unique: true
+    email nullable: false, email: true
     authority nullable: false, inList: ['Admin', 'Manager', 'Super Admin', 'User']
     grantedBy nullable: false
   }

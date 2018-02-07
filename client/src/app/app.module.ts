@@ -55,6 +55,7 @@ import {AgmCoreModule} from "@agm/core";
 import {NgbModalModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { CreateCompanyModalComponent } from './create-company-modal/create-company-modal.component';
 import { GeneralModalComponent } from './general-modal/general-modal.component';
+import { UserInfoModule } from './userInfo/userInfo.module';
 
 
 
@@ -114,9 +115,8 @@ import { GeneralModalComponent } from './general-modal/general-modal.component';
     MemberSubscriptionModule,
     PaginationModule,
     NgbModule.forRoot(),
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDwrBvVQ4vb99X-IUAn0ntKOK3zv4hokxc'
-    })
+    AgmCoreModule.forRoot({apiKey:'AIzaSyDwrBvVQ4vb99X-IUAn0ntKOK3zv4hokxc'}),
+    UserInfoModule
 ],
   exports: [ReactiveFormsModule],
   providers: [{
