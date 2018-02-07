@@ -16,7 +16,9 @@ class VehicleInterceptor {
   boolean before() {
     String userId = request.getHeader('userId')
     if(userId){
-      Permission userPermission = permissionService.findByUserId(userId)
+      Permission userPermission = Permission.where {
+        userInfo.userId == userId
+      }
       if(userPermission){
         if(userPermission.authority == 'Super Admin' || userPermission.authority == 'Admin'){
           true

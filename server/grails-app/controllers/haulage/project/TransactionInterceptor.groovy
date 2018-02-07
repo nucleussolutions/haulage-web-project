@@ -15,7 +15,9 @@ class TransactionInterceptor {
   boolean before() {
     String userId = request.getHeader('userId')
     if(userId){
-      Permission userPermission = permissionService.findByUserId(userId)
+      def userPermission = Permission.where {
+        userInfo.userId == userId
+      }
       if(userPermission){
         userPermission.authority == 'Super Admin'
       }else{

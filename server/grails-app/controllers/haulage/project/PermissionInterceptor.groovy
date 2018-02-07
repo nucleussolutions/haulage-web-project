@@ -20,7 +20,9 @@ class PermissionInterceptor {
       false
     } else {
       //find permission that belongs to this user
-      Permission userPermission = permissionService.findByUserId(userId)
+      def userPermission = Permission.where {
+        userInfo.userId == userId
+      }
       if(!userPermission){
         false
       }else {

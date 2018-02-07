@@ -17,7 +17,9 @@ class QuoteInterceptor {
   boolean before() {
     def userId = request.getHeader('userId')
     if(userId){
-      def userPermission = permissionService.findByUserId(userId)
+      def userPermission = Permission.where {
+        userInfo.userId == userId
+      }
       println 'quote permission'+userPermission.authority
       if(userPermission){
         if(userPermission.authority == 'User'){

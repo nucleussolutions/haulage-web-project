@@ -36,7 +36,10 @@ class CustomController {
     if (!userId) {
       render([status: NOT_FOUND, message: 'user id not found'])
     } else {
-      def permission = permissionService.findByUserId(userId)
+      def permission = Permission.where {
+        userInfo.userId == userId
+      }
+
       if (!permission) {
         response.status = 400
         render([message: 'user permission not found'])
@@ -54,7 +57,10 @@ class CustomController {
     } else {
 
       //todo check if super admin display all
-      Permission userPermission = permissionService.findByUserId(userId)
+
+      def userPermission = Permission.where {
+        userInfo.userId == userId
+      }
 
       def permissions
 

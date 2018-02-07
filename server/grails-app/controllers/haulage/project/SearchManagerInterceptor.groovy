@@ -10,7 +10,9 @@ class SearchManagerInterceptor {
   boolean before() {
     def userId = request.getHeader('userId')
     if(userId){
-      Permission userPermission = Permission.findByUserId(userId)
+      def userPermission = Permission.where {
+        userInfo.userId == userId
+      }
       userPermission && userPermission.authority == 'Manager'
     }else{
       false

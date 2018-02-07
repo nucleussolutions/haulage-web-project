@@ -9,7 +9,9 @@ class SearchSuperAdminInterceptor {
   boolean before() {
     def userId = request.getHeader('userId')
     if(userId){
-      def userPermission = Permission.findByUserId(userId)
+      def userPermission = Permission.where {
+        userInfo.userId == userId
+      }
       userPermission && userPermission.authority == 'Super Admin'
     }else{
       false

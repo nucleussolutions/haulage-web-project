@@ -6,7 +6,7 @@ import grails.converters.*
 
 class QuoteController extends RestfulController {
 
-    def quoteService
+    QuoteService quoteService
 
     static responseFormats = ['json', 'xml']
     QuoteController() {

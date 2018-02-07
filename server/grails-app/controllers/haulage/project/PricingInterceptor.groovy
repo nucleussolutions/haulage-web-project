@@ -17,7 +17,9 @@ class PricingInterceptor {
   boolean before() {
     def userId = request.getHeader('userId')
     if(userId){
-      def userPermission = permissionService.findByUserId(userId)
+      def userPermission = Permission.where {
+        userInfo.userId == userId
+      }
 
       if(userPermission){
         if(userPermission.authority == 'Super Admin' || userPermission.authority == 'Admin'){

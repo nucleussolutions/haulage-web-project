@@ -11,7 +11,9 @@ class ConsignmentInterceptor {
     def userId = request.getHeader('userId')
 
     if(userId){
-      def userPermission = Permission.findByUserId(userId)
+      def userPermission = Permission.where {
+        userInfo.userId == userId
+      }
       if(userPermission){
         userPermission.authority != 'User'
       }else{
