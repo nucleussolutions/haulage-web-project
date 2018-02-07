@@ -1,7 +1,8 @@
 import haulage.project.UserInfo
 
 model {
-	UserInfo userInfo
+  UserInfo userInfo
 }
 
-json tmpl.userInfo(userInfo)
+//json tmpl.userInfo(userInfo)
+json g.render(userInfo, [resolveTemplate: false, deep: true])
