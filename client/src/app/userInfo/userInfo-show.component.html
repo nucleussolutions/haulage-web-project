@@ -1,0 +1,44 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a class="list" [routerLink]="['/userInfo', 'list']" class="list">UserInfo List</a></li>
+        <li><a class="create" [routerLink]="['/userInfo', 'create']" class="create">New UserInfo</a></li>
+    </ul>
+</div>
+<div id="show-part" class="content scaffold-show" role="main">
+    <h1>Show UserInfo</h1>
+    <ol class="property-list userInfo">
+  <li class="fieldcontain">
+    <span id="name-label" class="property-label">Name</span>
+    <div class="property-value" aria-labelledby="name-label">
+      <span>{{userInfo.name}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="company-label" class="property-label">Company</span>
+    <div class="property-value" aria-labelledby="company-label">
+      <a *ngIf="userInfo.company" [routerLink]="['/userInfo','show', userInfo.company.id]">{{userInfo.company.toString()}}</a>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="userId-label" class="property-label">User Id</span>
+    <div class="property-value" aria-labelledby="userId-label">
+      <span>{{userInfo.userId}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="permissions-label" class="property-label">Permissions</span>
+    <div class="property-value" aria-labelledby="permissions-label">
+      <ul>
+        <li *ngFor="let permission of userInfo.permissions">
+          <a [routerLink]="['/permission', 'show', permission.id]">{{permission.toString()}}</a>
+        </li>
+      </ul>
+    </div>
+  </li>
+</ol>
+
+    <a class="edit" [routerLink]="['/userInfo', 'edit', userInfo.id]">Edit</a>
+    <button type="button" (click)="destroy()">Delete</button>
+
+</div>

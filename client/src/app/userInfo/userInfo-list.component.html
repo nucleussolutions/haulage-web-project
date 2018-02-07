@@ -1,0 +1,43 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/userInfo','create']" class="create">New UserInfo</a></li>
+    </ul>
+</div>
+<div id="list-userInfo" class="content scaffold-list" role="main">
+    <h1>UserInfo List</h1>
+    <table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Company</th>
+      <th>User Id</th>
+      <th>Permissions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let userInfo of userInfoList; let e = even;">
+      <td>
+        <a [routerLink]="['/userInfo','show',userInfo.id]">{{userInfo.id}}</a>
+      </td>
+      <td>
+        <span>{{userInfo.name}}</span>
+      </td>
+      <td>
+        <a *ngIf="userInfo.company" [routerLink]="['/userInfo','show', userInfo.company.id]">{{userInfo.company.toString()}}</a>
+      </td>
+      <td>
+        <span>{{userInfo.userId}}</span>
+      </td>
+      <td>
+        <ul>
+          <li *ngFor="let permission of userInfo.permissions">
+            <a [routerLink]="['/permission', 'show', permission.id]">{{permission.toString()}}</a>
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>

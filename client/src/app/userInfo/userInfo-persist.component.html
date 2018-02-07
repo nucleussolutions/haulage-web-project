@@ -1,0 +1,48 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/userInfo','list']" class="list">UserInfo List</a></li>
+    </ul>
+</div>
+<div id="persist-userInfo" class="content scaffold-edit" role="main">
+    <h1>{{create ? "Create" : "Edit"}} UserInfo</h1>
+    <ul class="errors" role="alert" *ngIf="errors">
+        <li *ngFor="let error of errors">{{error.message}}</li>
+    </ul>
+
+    <form name="save{className}" (ngSubmit)="save()">
+        <fieldset class="form">
+            <fieldset class="form">
+  <div class="fieldcontain required">
+    <label for="name">Name
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="name" id="name" [(ngModel)]="userInfo.name" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="company">Company
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="company" id="company" [(ngModel)]="userInfo.company">
+      <option *ngFor="let company of companyList" [value]="company.id" [selected]="userInfo.company?.id == company.id">{{company.toString()}}</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
+    <label for="userId">User Id
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="userId" id="userId" [(ngModel)]="userInfo.userId" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="permissions">Permissions</label>
+    <select name="permissions" id="permissions" [(ngModel)]="userInfo.permissions" multiple="">
+      <option *ngFor="let permission of permissionList" [value]="permission.id" [selected]="userInfo.permissions?.id == permission.id">{{permission.toString()}}</option>
+    </select>
+  </div>
+</fieldset>
+        </fieldset>
+        <fieldset class="buttons">
+            <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" />
+        </fieldset>
+    </form>
+</div>
