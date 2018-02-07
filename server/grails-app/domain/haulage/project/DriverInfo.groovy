@@ -7,7 +7,6 @@ import groovy.transform.TypeCheckingMode
 @GrailsCompileStatic(TypeCheckingMode.SKIP)
 class DriverInfo {
 
-    String name
     String icNumber
     String passportNumber
     String icFrontImgUrl
@@ -34,7 +33,6 @@ class DriverInfo {
     String haulierId
 
     static constraints = {
-        name nullable: false, blank: false
         //but the front end will be implemented as required
         icNumber nullable: false, blank: true
 
