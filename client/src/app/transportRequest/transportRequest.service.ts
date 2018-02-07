@@ -14,7 +14,7 @@ import {PermissionService} from "../permission/permission.service";
 @Injectable()
 export class TransportRequestService {
 
-  constructor(private http: HttpClient, private permissionService: PermissionService) {
+  constructor(private http: HttpClient) {
   }
 
   list(userObject: any, offset: number): Observable<TransportRequest[]> {
@@ -29,27 +29,16 @@ export class TransportRequestService {
       'userId': userObject.uid
     });
 
-    this.permissionService.getByUserId(userObject).flatMap(permission => {
-      let urlPath;
-      if(permission.authority == 'Super Admin'){
-        urlPath = '/transportRequest';
-      }else if(permission.authority == 'Admin'){
-        urlPath = '/transportRequest/haulier/'+userObject.uid;
-      }else if(permission.authority == 'Manager'){
-        urlPath = '/transportRequest/forwarder/'+userObject.uid;
-      }
-
-      return this.http.get(environment.serverUrl + urlPath, {
-        headers: headers,
-        params: params
-      });
+    this.http.get(environment.serverUrl + '/transportRequest', {
+      headers: headers,
+      params: params
     }).catch(err => {
-        subject.error(err);
-        return subject.asObservable();
-      })
-      .subscribe((json: any[]) => {
-        subject.next(json);
-      });
+      subject.error(err);
+      return subject.asObservable();
+    })
+        .subscribe((json: any[]) => {
+          subject.next(json);
+        });
     return subject.asObservable();
   }
 
@@ -64,7 +53,7 @@ export class TransportRequestService {
     return this.http.get(environment.serverUrl + '/transportRequest/' + id, {
       headers: headers
     })
-      .map((r: Response) => new TransportRequest(r));
+        .map((r: Response) => new TransportRequest(r));
   }
 
   save(transportRequest: TransportRequest, userObject: any): Observable<TransportRequest> {
@@ -93,7 +82,7 @@ export class TransportRequestService {
       headers: headers,
       body: body
     })
-      .map((r: Response) => new TransportRequest(r));
+        .map((r: Response) => new TransportRequest(r));
   }
 
   destroy(transportRequest: TransportRequest, userObject: any): Observable<boolean> {
@@ -112,7 +101,7 @@ export class TransportRequestService {
     });
   }
 
-  count(userObject: any) : Observable<number>{
+  count(userObject: any): Observable<number> {
     let subject = new Subject<number>();
     let headers = new HttpHeaders({
       'token': userObject.token,
@@ -120,7 +109,7 @@ export class TransportRequestService {
       'userId': userObject.uid
 
     });
-    this.http.get(environment.serverUrl+ '/transportRequest/count', {
+    this.http.get(environment.serverUrl + '/transportRequest/count', {
       headers: headers
     }).subscribe(json => {
       subject.next(json['count']);
@@ -131,7 +120,7 @@ export class TransportRequestService {
     return subject.asObservable();
   }
 
-  search(term: string, userObject: any): Observable<TransportRequest[]>{
+  search(term: string, userObject: any): Observable<TransportRequest[]> {
     let subject = new Subject<TransportRequest[]>();
 
     let headers = new HttpHeaders({
@@ -142,8 +131,7 @@ export class TransportRequestService {
     });
 
 
-
-    this.http.get(environment.serverUrl+ '/transportRequest?term='+term, {
+    this.http.get(environment.serverUrl + '/transportRequest?term=' + term, {
       headers: headers
     }).subscribe((json: any[]) => {
       subject.next(json.map((item: any) => new TransportRequest(item)));

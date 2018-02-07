@@ -274,6 +274,11 @@ class TransportRequestController extends RestfulController {
 
   @Override
   Object index(Integer max) {
+
+    def userId = request.getHeader('userId')
+    //todo check if userid belongs to a super admin, haulier or forwarder
+
+
     return super.index(max)
   }
 
