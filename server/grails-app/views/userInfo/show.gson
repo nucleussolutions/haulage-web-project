@@ -1,0 +1,7 @@
+import haulage.project.UserInfo
+
+model {
+	UserInfo userInfo
+}
+
+json tmpl.userInfo(userInfo)
