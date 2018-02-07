@@ -3,6 +3,7 @@ package haulage.project
 
 import grails.rest.*
 
+
 class UserInfo {
 
   String userId

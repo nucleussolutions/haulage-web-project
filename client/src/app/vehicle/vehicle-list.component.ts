@@ -7,6 +7,8 @@ import { UserService } from 'app/user.service';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs/Observable";
+import {GeneralModalComponent} from "../general-modal/general-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'vehicle-list',
@@ -40,7 +42,7 @@ export class VehicleListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private vehicleService: VehicleService, private userService: UserService, private titleService: Title, private router: Router) {
+  constructor(private route: ActivatedRoute, private vehicleService: VehicleService, private userService: UserService, private titleService: Title, private router: Router, private modalService: NgbModal) {
 
     this.titleService.setTitle('Vehicles');
   }
@@ -94,8 +96,9 @@ export class VehicleListComponent implements OnInit, OnDestroy {
 
       console.log('error.status ' + error.status);
 
-      // const dialog = this.modal.alert().title('Error').message(message).open();
-
+      const errorModalComponent = this.modalService.open(GeneralModalComponent);
+      errorModalComponent.componentInstance.modalTitle = 'Error';
+      errorModalComponent.componentInstance.modalMessage = message;
     });
   }
 

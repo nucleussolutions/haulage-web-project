@@ -11,6 +11,7 @@ import {UserInfoListComponent} from './userInfo-list.component';
 import {UserInfoPersistComponent} from './userInfo-persist.component';
 import { CompanyModule } from '../company/company.module';
 import { PermissionModule } from '../permission/permission.module';
+import {PaginationModule} from "../pagination/pagination.module";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { PermissionModule } from '../permission/permission.module';
     FormsModule,
     UserInfoRoutingModule,
     CompanyModule,
-    PermissionModule
+    PermissionModule,
+    PaginationModule
 ],
   providers: [
     UserInfoService

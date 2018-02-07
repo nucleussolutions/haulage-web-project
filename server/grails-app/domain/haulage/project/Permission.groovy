@@ -13,12 +13,13 @@ class Permission {
   //this admin id is the user id of who granted access to the forwarder, from the haulier
   String grantedBy
 
-  static belongsTo = [UserInfo]
+  static belongsTo = [userInfo: UserInfo]
 
   static constraints = {
     email nullable: false, email: true
     authority nullable: false, inList: ['Admin', 'Manager', 'Super Admin', 'User']
     grantedBy nullable: false
+    userInfo nullable: false
   }
 
   static searchable = true

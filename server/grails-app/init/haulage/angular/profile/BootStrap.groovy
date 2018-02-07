@@ -39,10 +39,33 @@ class BootStrap {
     def pricing3 = new Pricing(minPrimeMover: 1, maxPrimeMover: 5, price: 120.1, pricePerMove: 20, discountPercent: 0).save(flush: true)
     def pricing4 = new Pricing(minPrimeMover: 1, maxPrimeMover: 5, price: 120.1, pricePerMove: 20, discountPercent: 0).save(flush: true)
 
-    def kevinAdminPermission = new Permission(email: 'kevintanhongann@gmail.com', userId: 'Wcd1ixuFLLStcm0GN4YylfU1nNx2', authority: 'Super Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93').save(flush: true)
-    def jordanAdminPermission = new Permission(email: 'jordan@nucleus.my', userId: 'OFrQip85jPRRmXkBR544ROU51y93', authority: 'Super Admin', grantedBy: 'Wcd1ixuFLLStcm0GN4YylfU1nNx2').save(flush: true)
+    def kevinUserInfo = new UserInfo()
+    kevinUserInfo.name = 'kevin tan'
+    kevinUserInfo.company = company1
+    kevinUserInfo.userId = 'Wcd1ixuFLLStcm0GN4YylfU1nNx2'
+    kevinUserInfo.save()
 
-    def interceptorPermission = new Permission(email: 'interceptorz3r0@gmail.com', userId: '1rCeH7yNVzX8OB7dMyFcURPkwi33', authority: 'Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93').save(flush: true)
+    def jordanUserInfo = new UserInfo()
+    jordanUserInfo.name = 'jordan nucleus'
+    jordanUserInfo.company = company2
+    jordanUserInfo.userId = 'OFrQip85jPRRmXkBR544ROU51y93'
+    jordanUserInfo.save()
+
+    def interceptorUserInfo = new UserInfo()
+    interceptorUserInfo.name = 'interceptor'
+    interceptorUserInfo.company = company2
+    interceptorUserInfo.userId = '1rCeH7yNVzX8OB7dMyFcURPkwi33'
+    interceptorUserInfo.save()
+
+    def kevinAdminPermission = new Permission(email: 'kevintanhongann@gmail.com', userInfo: kevinUserInfo, authority: 'Super Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93')
+    kevinUserInfo.permissions = [kevinAdminPermission]
+    kevinUserInfo.save(flush: true)
+    def jordanAdminPermission = new Permission(email: 'jordan@nucleus.my', userInfo: jordanUserInfo, authority: 'Super Admin', grantedBy: 'Wcd1ixuFLLStcm0GN4YylfU1nNx2')
+    jordanUserInfo.permissions = [jordanAdminPermission]
+    jordanUserInfo.save(flush: true)
+    def interceptorPermission = new Permission(email: 'interceptorz3r0@gmail.com', userInfo: interceptorUserInfo, authority: 'Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93')
+    interceptorUserInfo.permissions = [interceptorPermission]
+    interceptorUserInfo.save(flush: true)
 
     def consignments = []
 
@@ -121,8 +144,13 @@ class BootStrap {
 
     testRFT2.save(flush: true, failOnError: true)
 
+    def forwarderUserInfo = new UserInfo()
+    forwarderUserInfo.name = 'forwarder name'
+    forwarderUserInfo.company = company2
+    forwarderUserInfo.userId = 'GWQOYWnAxxVPtnUODGCWe8cXllK2'
+    forwarderUserInfo.save()
 
-    def forwarderPermission = new Permission(email: 'kevin@kevin.com', userId: 'GWQOYWnAxxVPtnUODGCWe8cXllK2', authority: 'Manager', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93').save(flush: true, failOnError: true)
+    def forwarderPermission = new Permission(email: 'kevin@kevin.com', userInfo: forwarderUserInfo, authority: 'Manager', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93').save(flush: true, failOnError: true)
 
     def forwarderInfo1 = new ForwarderInfo(userId: 'GWQOYWnAxxVPtnUODGCWe8cXllK2', company: company2, name: 'asdl;asdkd;').save(flush: true, failOnError: true)
 
@@ -147,9 +175,13 @@ class BootStrap {
 
 
 //    def quote2 = new Quote(haulierId: '', forwarderId: '', status: QuotationStatus.PENDING_ACCEPTANCE, )
+    def driverUserInfo = new UserInfo()
+    driverUserInfo.name = 'driver name'
+    driverUserInfo.company = company2
+    driverUserInfo.userId = '6p3vO6jiPCenw3gXnq0tv2ylL4h1'
+    driverUserInfo.save()
 
-
-    def driverPermission = new Permission(email: 'driver@kevin.com', userId: '6p3vO6jiPCenw3gXnq0tv2ylL4h1', authority: 'User', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93').save(flush: true, failOnError: true)
+    def driverPermission = new Permission(email: 'driver@kevin.com', userInfo: driverUserInfo, authority: 'User', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93').save(flush: true, failOnError: true)
 
   }
   def destroy = {
