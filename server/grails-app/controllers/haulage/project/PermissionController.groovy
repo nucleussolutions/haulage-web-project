@@ -4,6 +4,9 @@ package haulage.project
 import grails.rest.*
 import grails.converters.*
 
+import static org.springframework.http.HttpStatus.NOT_FOUND
+import static org.springframework.http.HttpStatus.OK
+
 class PermissionController extends RestfulController {
 
   def permissionService
@@ -56,5 +59,24 @@ class PermissionController extends RestfulController {
 
   def count(){
     respond count: permissionService.count()
+  }
+
+  def getByUserId() {
+    def userId = request.getHeader('userId')
+    println 'userId ' + userId
+    if (!userId) {
+      render([status: NOT_FOUND, message: 'user id not found'])
+    } else {
+      def permissions = Permission.where {
+        userInfo.userId == userId
+      }
+
+      if (!permissions) {
+        response.status = 400
+        render([message: 'user permissions not found'])
+      } else {
+        respond permissions, status: OK
+      }
+    }
   }
 }

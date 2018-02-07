@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Permission } from './permission';
-import { Subject } from 'rxjs/Subject';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {Permission} from './permission';
+import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
-import { environment } from 'environments/environment';
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import {environment} from 'environments/environment';
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 
 @Injectable()
 export class PermissionService {
@@ -29,13 +29,13 @@ export class PermissionService {
       headers: headers,
       params: params
     })
-      .catch(err => {
-        subject.error(err);
-        return subject.asObservable();
-      })
-      .subscribe((json: any[]) => {
-        subject.next(json);
-      });
+        .catch(err => {
+          subject.error(err);
+          return subject.asObservable();
+        })
+        .subscribe((json: any[]) => {
+          subject.next(json);
+        });
     return subject.asObservable();
   }
 
@@ -50,20 +50,28 @@ export class PermissionService {
     return this.http.get(environment.serverUrl + '/permission/' + id, {
       headers: headers
     })
-      .map((r: Response) => new Permission(r));
+        .map((r: Response) => new Permission(r));
   }
 
-  getByUserId(userObject: any): Observable<Permission> {
-
+  getByUserId(userObject: any): Observable<Permission[]> {
+    let subject = new Subject<Permission[]>();
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey,
       'userId': userObject.uid
     });
 
-    return this.http.get(environment.serverUrl + '/permissionByUserId/' + userObject.uid, {
-      headers: headers
-    }).map((r: Response) => new Permission(r));
+    this.http.get(environment.serverUrl + '/permission', {
+      headers: headers,
+    })
+        .catch(err => {
+          subject.error(err);
+          return subject.asObservable();
+        })
+        .subscribe((json: any[]) => {
+          subject.next(json.map((item: any) => new Permission(item)))
+        });
+    return subject.asObservable();
   }
 
   save(permission: Permission, userObject: any): Observable<Permission> {
@@ -88,7 +96,7 @@ export class PermissionService {
       headers: headers,
       body: body
     })
-      .map((r: Response) => new Permission(r));
+        .map((r: Response) => new Permission(r));
   }
 
   destroy(permission: Permission, userObject: any): Observable<boolean> {

@@ -4,4 +4,5 @@ model {
 	Permission permission
 }
 
-json tmpl.permission(permission)
+//json tmpl.permission(permission)
+json g.render(permission, [resolveTemplate: false, expand:['userInfo']])

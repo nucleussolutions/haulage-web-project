@@ -24,7 +24,7 @@ export class VehiclePersistComponent implements OnInit {
 
   private formGroup: FormGroup;
 
-  private permission: Permission;
+  private permissions: Permission[];
 
   minDate : any;
 
@@ -47,13 +47,13 @@ export class VehiclePersistComponent implements OnInit {
 
       let params = result[1];
 
-      this.permissionService.getByUserId(this.userObject).subscribe(permission => {
-        this.permission = permission;
+      this.permissionService.getByUserId(this.userObject).subscribe(permissions => {
+        this.permissions = permissions;
         //todo autofill userId with haulier id from userObject
 
-        if(this.permission.authority == 'Admin'){
-          this.vehicle.userId = this.userObject.uid;
-        }
+        // if(this.permissions.authority == 'Admin'){
+        //   this.vehicle.userId = this.userObject.uid;
+        // }
       });
 
       if (params.hasOwnProperty('id')) {

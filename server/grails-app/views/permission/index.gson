@@ -7,6 +7,6 @@ model {
 
 //json tmpl.permission(permissionList ?: [])
 
-json jsonapi.render(permissionList, [pagination: [total: total, resource: Permission]])
+json jsonapi.render(permissionList, [pagination: [total: total, resource: Permission], deep: true])
 
 

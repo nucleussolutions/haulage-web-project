@@ -17,7 +17,7 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    if( typeof this.subscription !== 'undefined' ) {
+    if(this.subscription){
       // foo could get resolved and it's defined
       this.subscription.unsubscribe();
     }
@@ -25,7 +25,7 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private subscription: Subscription;
 
-  private permission: Permission;
+  private permissions: Permission[];
 
   private userObject: any;
 
@@ -49,8 +49,8 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.userObject = userObject;
       console.log('userObject '+JSON.stringify(userObject));
       return this.permissionService.getByUserId(this.userObject);
-    }).subscribe(permission => {
-      this.permission = permission;
+    }).subscribe(permissions => {
+      this.permissions = permissions;
     }, error => {
       console.log('NavDrawerComponent permissionService error ' + error);
     });

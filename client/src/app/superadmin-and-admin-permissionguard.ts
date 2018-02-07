@@ -12,9 +12,9 @@ export class SuperAdminAndAdminPermissionGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
     return new Promise(resolve => {
-      this.userService.getUser().flatMap(userObject => this.permissionService.getByUserId(userObject)).subscribe(permission => {
-        resolve(permission.authority == 'Super Admin' || permission.authority == 'Admin');
-      });
+      this.userService.getUser().flatMap(userObject => this.permissionService.getByUserId(userObject)).flatMap(permissions => {
+        return permissions;
+      }).map(permission => resolve(permission.authority == 'Super Admin' || permission.authority == 'Admin'));
     })
   }
 }

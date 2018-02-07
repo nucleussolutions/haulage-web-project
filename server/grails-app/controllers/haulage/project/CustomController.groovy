@@ -31,32 +31,12 @@ class CustomController {
 
   static responseFormats = ['json', 'xml']
 
-  def permissionByUserId(String userId) {
-    println 'userId ' + userId
-    if (!userId) {
-      render([status: NOT_FOUND, message: 'user id not found'])
-    } else {
-      def permission = Permission.where {
-        userInfo.userId == userId
-      }
-
-      if (!permission) {
-        response.status = 400
-        render([message: 'user permission not found'])
-      } else {
-        respond permission, status: OK
-      }
-    }
-  }
-
   def permissionByGrantedBy(String userId) {
     println 'userId ' + userId
 
     if (!userId) {
       render([status: NOT_FOUND, message: 'user id not found'])
     } else {
-
-      //todo check if super admin display all
 
       def userPermission = Permission.where {
         userInfo.userId == userId

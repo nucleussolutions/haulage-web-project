@@ -92,37 +92,6 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(permission => {
         if (permission.authority !== 'Super Admin') {
           // check if user exists in hauliers and forwarders table
-          this.userService.checkUserType(this.userObject.uid, this.userObject.token, this.userObject.apiKey).then(response => {
-
-            console.log('checkUserType response '+response);
-
-            //todo do something
-
-
-
-
-          }, error => {
-            if (error.status === 422) {
-              setTimeout(() => {
-                if (this.userObject.token) {
-
-                  this.modalService.open(CreateProfileModalComponent, {
-                    size: 'lg'
-                  });
-                  // this.modal
-                  //   .open(CreateProfileModalComponent, overlayConfigFactory({
-                  //     isBlocking: false,
-                  //     size: 'lg'
-                  //   }, BSModalContext));
-                }
-              });
-            } else {
-              let errorModalRef = this.modalService.open(GeneralModalComponent);
-              errorModalRef.componentInstance.modalTitle = 'Error';
-              errorModalRef.componentInstance.modalMessage = error.message;
-            }
-
-          });
 
         }
       }, error => {

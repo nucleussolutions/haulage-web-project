@@ -6,7 +6,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {IndexComponent} from './index/index.component';
 import {AppComponent} from './app.component';
-import {NavService} from './nav/nav.service';
 import {AppRoutingModule} from './app-routing.module';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {RegisterComponent} from './register/register.component';
@@ -122,7 +121,7 @@ import { UserInfoModule } from './userInfo/userInfo.module';
   providers: [{
     provide: LocationStrategy,
     useClass: PathLocationStrategy
-  }, NavService],
+  }],
   bootstrap: [AppComponent, NavDrawerComponent]
 })
 export class AppModule {

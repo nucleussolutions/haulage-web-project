@@ -66,7 +66,7 @@ export class ConsignmentListComponent implements OnInit {
       this.permissionService.getByUserId(this.userObject).subscribe(permission => {
         this.permission = permission;
       });
-
+      console.log('executing paged consignment list');
       return this.consignmentService.list(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];

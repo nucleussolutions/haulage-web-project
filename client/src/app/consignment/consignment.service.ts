@@ -101,7 +101,7 @@ export class ConsignmentService {
 
     return this.http.get(environment.serverUrl + '/consignment/transportRequest/' + rftId, {
       headers: headers
-    }).map((r: Response) => new Consignment(r));
+    }).map(r => new Consignment(r));
   }
 
   save(consignment: Consignment, userObject: any): Observable<Consignment> {
@@ -127,7 +127,7 @@ export class ConsignmentService {
       headers: headers,
       body: body
     })
-        .map((r: Response) => new Consignment(r.json())).catch(err => {
+        .map(r => new Consignment(r)).catch(err => {
           if (err.status === 401) {
             return Observable.throw('Unauthorized');
           } else if (err.status === 500) {

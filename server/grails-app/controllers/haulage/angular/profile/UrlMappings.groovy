@@ -13,7 +13,7 @@ class UrlMappings {
     "/"(controller: 'application', action: 'index')
     "500"(view: '/error')
     "404"(view: '/notFound')
-    get "/permissionByUserId/${userId}"(controller: 'custom', action: 'permissionByUserId')
+    get "/permission/userId/"(controller: 'permission', action: 'getByUserId')
     get "/permission/grantedBy/${userId}"(controller: 'custom', action: 'permissionByGrantedBy')
     get "/location/type/${type}"(controller: 'custom', action: 'locationByType')
 

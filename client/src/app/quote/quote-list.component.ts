@@ -5,6 +5,8 @@ import {Subscription} from "rxjs/Subscription";
 import {UserService} from "../user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable} from "rxjs/Observable";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {GeneralModalComponent} from "../general-modal/general-modal.component";
 
 @Component({
   selector: 'quote-list',
@@ -24,12 +26,6 @@ export class QuoteListComponent implements OnInit, OnDestroy {
 
   private page: number = 1;
 
-  private nextLink: string;
-
-  private firstLink: string;
-
-  private lastLink: string;
-
   offset: number = 0;
 
   count: number = 0;
@@ -38,7 +34,7 @@ export class QuoteListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private quoteService: QuoteService, private userService: UserService, private router: Router) {
+  constructor(private route: ActivatedRoute, private quoteService: QuoteService, private userService: UserService, private router: Router, private modalService: NgbModal) {
   }
 
   ngOnInit() {
@@ -66,10 +62,6 @@ export class QuoteListComponent implements OnInit, OnDestroy {
       return this.quoteService.list(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
-      let links = json['links'];
-      this.nextLink = links.next;
-      this.firstLink = links.first;
-      this.lastLink = links.last;
 
       this.quoteList = [];
 
@@ -91,8 +83,9 @@ export class QuoteListComponent implements OnInit, OnDestroy {
 
       console.log('error.status '+error.status);
 
-      // const dialog = this.modal.alert().title('Error').message(message).open();
-
+      const errorModalRef = this.modalService.open(GeneralModalComponent)
+      errorModalRef.componentInstance.modalTitle = 'Error';
+      errorModalRef.componentInstance.modalMessage = message;
     });
   }
 

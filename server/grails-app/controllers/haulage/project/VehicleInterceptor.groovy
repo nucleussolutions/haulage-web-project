@@ -16,7 +16,7 @@ class VehicleInterceptor {
   boolean before() {
     String userId = request.getHeader('userId')
     if(userId){
-      Permission userPermission = Permission.where {
+      def userPermission = Permission.where {
         userInfo.userId == userId
       }
       if(userPermission){

@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
 
         this.userService.login(formData.value.email, formData.value.password).then(response => {
             //fixme
-            window.location.reload();
+            // window.location.reload();
             this.router.navigate(['/index']);
         }, error => {
             // this.modal.alert().title('Error').message(error).open();
