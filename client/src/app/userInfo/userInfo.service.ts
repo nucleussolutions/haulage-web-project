@@ -1,54 +1,124 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, RequestOptions, RequestMethod, Request, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {UserInfo} from './userInfo';
 import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {environment} from "../../environments/environment";
 
 @Injectable()
 export class UserInfoService {
 
-  private baseUrl = 'http://localhost:8080/';
-
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
   }
 
-  list(): Observable<UserInfo[]> {
+  list(userObject: any, offset: number): Observable<UserInfo[]> {
     let subject = new Subject<UserInfo[]>();
-    this.http.get(this.baseUrl + 'userInfo')
-      .map((r: Response) => r.json())
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+    let params = new HttpParams();
+    params = params.append('offset', offset.toString());
+
+    this.http.get(environment.serverUrl + '/userInfo', {
+      headers: headers,
+      params: params
+    })
       .subscribe((json: any[]) => {
-        subject.next(json.map((item: any) => new UserInfo(item)))
+        subject.next(json);
       });
     return subject.asObservable();
   }
 
-  get(id: number): Observable<UserInfo> {
-    return this.http.get(this.baseUrl + 'userInfo/'+id)
+  get(id: number, userObject: any): Observable<UserInfo> {
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+    return this.http.get(environment.serverUrl + '/userInfo/'+id, {
+      headers: headers
+    })
       .map((r: Response) => new UserInfo(r.json()));
   }
 
-  save(userInfo: UserInfo): Observable<UserInfo> {
-    const requestOptions = new RequestOptions();
-    if (userInfo.id) {
-      requestOptions.method = RequestMethod.Put;
-      requestOptions.url = this.baseUrl + 'userInfo/' + userInfo.id;
-    } else {
-      requestOptions.method = RequestMethod.Post;
-      requestOptions.url = this.baseUrl + 'userInfo';
-    }
-    requestOptions.body = JSON.stringify(userInfo);
-    requestOptions.headers = new Headers({"Content-Type": "application/json"});
+  save(userInfo: UserInfo, userObject: any): Observable<UserInfo> {
 
-    return this.http.request(new Request(requestOptions))
-      .map((r: Response) => new UserInfo(r.json()));
+    let requestMethodStr;
+    let url;
+
+    if (userInfo.id) {
+      requestMethodStr = 'PUT';
+      url = environment.serverUrl + '/userInfo/' + userInfo.id;
+    } else {
+      requestMethodStr = 'POST';
+      url = environment.serverUrl + '/userInfo';
+    }
+    let body = JSON.stringify(userInfo);
+    let headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+    return this.http.request(requestMethodStr, url, {
+      headers: headers,
+      body: body
+    })
+      .map((r: Response) => new UserInfo(r));
   }
 
   destroy(userInfo: UserInfo): Observable<boolean> {
-    return this.http.delete(this.baseUrl + 'userInfo/' + userInfo.id).map((res: Response) => res.ok).catch(() => {
+    return this.http.delete(environment.serverUrl + '/userInfo/' + userInfo.id).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
+  }
+
+  count(userObject: any): Observable<number> {
+    let subject = new Subject<number>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
+    });
+
+    this.http.get(environment.serverUrl + '/userInfo/count', {
+      headers: headers
+    }).subscribe(json => {
+      subject.next(json['count']);
+    }, error => {
+      subject.error(error);
+    });
+    return subject.asObservable();
+  }
+
+  search(term: string, userObject: any): Observable<any[]> {
+    let subject = new Subject<any[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+    this.http.get(environment.serverUrl + '/userInfo?term=' + term, {
+      headers: headers
+    }).subscribe((json: any[]) => {
+      subject.next(json);
+    }, error => {
+      subject.error(error);
+    });
+
+    return subject.asObservable();
   }
 }
