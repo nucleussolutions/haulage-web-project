@@ -7,7 +7,7 @@ import grails.converters.*
 import groovy.transform.TypeCheckingMode
 import org.springframework.http.HttpStatus
 
-@Transactional(readOnly=false)
+@Transactional(readOnly = false)
 @GrailsCompileStatic(TypeCheckingMode.SKIP)
 class ConsignmentController extends RestfulController {
   static responseFormats = ['json', 'xml']
@@ -20,7 +20,22 @@ class ConsignmentController extends RestfulController {
 
   @Override
   Object index(Integer max) {
-    return super.index(max)
+    //todo list based on permissions
+    def userId = request.getHeader('userId')
+    def permission = Permission.where {
+      userInfo.userId == userId
+      authority == 'Super Admin'
+    }.first()
+    //todo if user has super admin permissions, return all
+    if(permission){
+      return super.index(max)
+    }else{
+      //todo list by haulier
+      def consignments = Consignment.where {
+        transportRequest.haulierId == userId
+      }
+      return consignments
+    }
   }
 
   @Override
@@ -58,61 +73,61 @@ class ConsignmentController extends RestfulController {
     return super.delete()
   }
 
-  def listByStatusAndHaulier(){
+  def listByStatusAndHaulier() {
     //expect status and userid to come in, status via query params and user id via request header
     def haulierId = request.getHeader('userId')
-    if(!haulierId){
+    if (!haulierId) {
       respond status: HttpStatus.BAD_REQUEST, message: 'user id not found'
       return
     }
 
-    if(params.status){
+    if (params.status) {
       def consignments = Consignment.withCriteria {
         like('status', params.status)
         like('transportRequest.haulierId', haulierId)
       }
       respond consignments
-    }else{
+    } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
 
-  def listByStatusAndForwarder(){
+  def listByStatusAndForwarder() {
     //expect status and userid to come in, status via query params and user id via request header
     def forwarderId = request.getHeader('userId')
-    if(!forwarderId){
+    if (!forwarderId) {
       respond status: HttpStatus.BAD_REQUEST, message: 'user id not found'
       return
     }
 
-    if(params.status){
-      def consignments = Consignment.withCriteria {
-        like('status', params.status)
-        like('transportRequest.forwarderId', forwarderId)
+    if (params.status) {
+      def consignments = Consignment.where {
+        status == params.status
+        transportRequest.forwarderId == forwarderId
       }
       respond consignments
-    }else{
+    } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
 
-  def listByStatusAndUserType(){
+  def listByStatusAndUserType() {
     def userId = request.getHeader('userId')
     def userType = params.userType
     def status = params.status
-    if(!userId){
+    if (!userId) {
       respond status: HttpStatus.BAD_REQUEST, message: 'user id not found'
       return
     }
 
-    if(!userType){
+    if (!userType) {
       respond status: HttpStatus.BAD_REQUEST, message: 'user type not found'
       return
     }
 
-    if(!status){
+    if (!status) {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
-    }else{
+    } else {
       def consignments = Consignment.withCriteria {
         like('status', params.status)
         like(userType == 'forwarder' ? 'transportRequest.forwarderId' : 'transportRequest.haulierId', userId)
@@ -121,7 +136,7 @@ class ConsignmentController extends RestfulController {
     }
   }
 
-  def count(){
+  def count() {
     println 'test consignment count'
     respond count: consignmentService.count()
   }
