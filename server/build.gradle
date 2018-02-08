@@ -88,6 +88,8 @@ dependencies {
   //todo this is for scheduling. refer to this article http://guides.grails.org/grails-schwartz/guide/index.html
   compile 'com.agileorbit:schwartz:1.0.1'
 
+  //for firebase cloud messaging
+  compile group: 'com.google.api-client', name: 'google-api-client', version: '1.23.0'
 }
 
 bootRun {
