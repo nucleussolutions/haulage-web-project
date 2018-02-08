@@ -37,7 +37,7 @@ export class ConsignmentListComponent implements OnInit {
 
   private userObject: any;
 
-  permission: Permission;
+  permissions: Permission[];
 
   constructor(private route: ActivatedRoute, private consignmentService: ConsignmentService, private router: Router, private userService: UserService, private permissionService: PermissionService, private modalService: NgbModal) {
   }
@@ -63,8 +63,8 @@ export class ConsignmentListComponent implements OnInit {
         this.count = count;
       });
 
-      this.permissionService.getByUserId(this.userObject).subscribe(permission => {
-        this.permission = permission;
+      this.permissionService.getByUserId(this.userObject).subscribe(permissions => {
+        this.permissions = permissions;
       });
       console.log('executing paged consignment list');
       return this.consignmentService.list(this.userObject, this.offset);
