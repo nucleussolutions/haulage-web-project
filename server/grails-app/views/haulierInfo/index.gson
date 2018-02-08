@@ -1,9 +1,0 @@
-import haulage.project.HaulierInfo
-
-model {
-	Iterable<HaulierInfo> haulierInfoList
-	Integer total
-}
-
-//json tmpl.haulierInfo(haulierInfoList ?: [])
-json jsonapi.render(haulierInfoList, [pagination: [total: total, resource: HaulierInfo]])

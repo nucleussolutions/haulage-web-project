@@ -11,6 +11,7 @@ import {UserService} from "../user.service";
 import {PermissionService} from "../permission/permission.service";
 import {Subscription} from "rxjs/Subscription";
 import {Permission} from "../permission/permission";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'quote-persist',
@@ -28,48 +29,52 @@ export class QuotePersistComponent implements OnInit {
 
   private subscription: Subscription;
 
-  permission: Permission;
+  permissions: Permission[];
 
   constructor(private route: ActivatedRoute, private quoteService: QuoteService, private router: Router, private termAndConditionService: TermAndConditionService, private quoteItemService: QuoteItemService, private userService: UserService, private permissionService: PermissionService) {
   }
 
   ngOnInit() {
 
-    this.userService.getUser().subscribe(userObject => {
-      this.userObject = userObject;
-    });
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+      this.userObject = result[0];
+      let params = result[1];
 
-    this.permissionService.getByUserId(this.userObject).subscribe(permission => {
-      this.permission = permission;
-    });
+      this.permissionService.getByUserId(this.userObject).subscribe(permissions => {
+        this.permissions = permissions;
+      });
 
-
-    this.termAndConditionService.list(this.userObject).subscribe((termAndConditionList: TermAndCondition[]) => {
-      this.termAndConditionList = termAndConditionList;
-    });
-    this.quoteItemService.list(this.userObject).subscribe((quoteItemList: QuoteItem[]) => {
-      this.quoteItemList = quoteItemList;
-    });
-    this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
-        this.quoteService.get(+params['id'], this.userObject).subscribe((quote: Quote) => {
-          this.create = false;
-          this.quote = quote;
-        });
+        return this.quoteService.get(+params['id'], this.userObject);
+      }else{
+        throw 'params id not found, nothing to see here';
       }
+    }).subscribe((quote: Quote) => {
+      this.create = false;
+      this.quote = quote;
     });
+
+    // this.termAndConditionService.list(this.userObject).subscribe((termAndConditionList: TermAndCondition[]) => {
+    //   this.termAndConditionList = termAndConditionList;
+    // });
+    // this.quoteItemService.list(this.userObject).subscribe((quoteItemList: QuoteItem[]) => {
+    //   this.quoteItemList = quoteItemList;
+    // });
   }
 
   save() {
     this.quoteService.save(this.quote, this.userObject).subscribe((quote: Quote) => {
       this.router.navigate(['/quote', 'show', quote.id]);
-    }, (res: Response) => {
-      const json = res.json();
+    }, (json) => {
+      console.log('json error ' + JSON.stringify(json));
       if (json.hasOwnProperty('message')) {
-        this.errors = [json];
+        this.errors = json.error._embedded.errors;
+        console.info('[json.error]');
       } else {
         this.errors = json._embedded.errors;
+        console.info('json._embedded.errors');
       }
+      console.log('this.errors ' + JSON.stringify(this.errors));
     });
   }
 }

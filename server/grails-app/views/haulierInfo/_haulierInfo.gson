@@ -1,7 +1,0 @@
-import haulage.project.HaulierInfo
-
-model {
-	HaulierInfo haulierInfo
-}
-
-json g.render(haulierInfo, [resolveTemplate: false])

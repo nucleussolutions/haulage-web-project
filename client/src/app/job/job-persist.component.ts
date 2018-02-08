@@ -32,7 +32,7 @@ export class JobPersistComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  private permission: Permission;
+  private permissions: Permission[];
 
   // tslint:disable-next-line:max-line-length
   constructor(private route: ActivatedRoute, private jobService: JobService, private router: Router, private consignmentService: ConsignmentService, private userService: UserService, private permissionService: PermissionService) {
@@ -40,29 +40,30 @@ export class JobPersistComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.subscription = this.userService.getUser().flatMap(userObject => {
-      this.userObject = userObject;
-      return this.permissionService.getByUserId(this.userObject);
-    }).subscribe(permission => {
-      this.permission = permission;
-    });
+    Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+      this.userObject = result[0];
+      let params = result[1];
 
-    this.route.params.subscribe((params: Params) => {
       if (params.hasOwnProperty('id')) {
-        this.jobService.get(+params['id'], this.userObject).subscribe((job: Job) => {
-          this.create = false;
-          this.job = job;
-        });
+        return this.jobService.get(+params['id'], this.userObject);
+      }else{
+        throw 'params id not found, nothing to see here';
       }
+    }).subscribe((job: Job) => {
+      this.create = false;
+      this.job = job;
     });
 
+    this.permissionService.getByUserId(this.userObject).subscribe(permissions => {
+      this.permissions = permissions;
+    });
 
     this.consignmentService.listByStatus(this.userObject, 'Pending').subscribe(json => {
-      console.log('consignment listByStatus json '+JSON.stringify(json));
-
-
-
+      console.log('consignment listByStatus json ' + JSON.stringify(json));
     });
+
+
+    //show pending consignments by user
 
     //this should fundamentally change
     // this.consignmentService.list(this.userObject, 0).subscribe(json => {
@@ -84,7 +85,7 @@ export class JobPersistComponent implements OnInit, OnDestroy {
     this.jobService.save(this.job, this.userObject).subscribe((job: Job) => {
       this.router.navigate(['/job', 'show', job.id]);
     }, json => {
-      console.log('json error '+JSON.stringify(json));
+      console.log('json error ' + JSON.stringify(json));
       if (json.hasOwnProperty('message')) {
         this.errors = json.error._embedded.errors;
         console.info('[json.error]');
@@ -92,7 +93,7 @@ export class JobPersistComponent implements OnInit, OnDestroy {
         this.errors = json._embedded.errors;
         console.info('json._embedded.errors');
       }
-      console.log('this.errors '+JSON.stringify(this.errors));
+      console.log('this.errors ' + JSON.stringify(this.errors));
     });
   }
 }

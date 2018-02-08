@@ -26,7 +26,7 @@ export class VehiclePersistComponent implements OnInit {
 
   private permissions: Permission[];
 
-  minDate : any;
+  minDate: any;
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private vehicleService: VehicleService, private router: Router, private userService: UserService, private haulierInfoService: HaulierInfoService, private permissionService: PermissionService) {
 
@@ -49,16 +49,13 @@ export class VehiclePersistComponent implements OnInit {
 
       this.permissionService.getByUserId(this.userObject).subscribe(permissions => {
         this.permissions = permissions;
-        //todo autofill userId with haulier id from userObject
-
-        // if(this.permissions.authority == 'Admin'){
-        //   this.vehicle.userId = this.userObject.uid;
-        // }
+        //autofill userId with haulier id from userObject
+        this.vehicle.userId = this.userObject.uid;
       });
 
       if (params.hasOwnProperty('id')) {
         return this.vehicleService.get(+params['id'], this.userObject);
-      }else {
+      } else {
         throw 'params id not found, moving along';
       }
     }).subscribe((vehicle: Vehicle) => {
@@ -71,7 +68,7 @@ export class VehiclePersistComponent implements OnInit {
     this.vehicleService.save(this.vehicle, this.userObject).subscribe((vehicle: Vehicle) => {
       this.router.navigate(['/vehicle', 'show', vehicle.id]);
     }, (json) => {
-      console.log('json error '+JSON.stringify(json));
+      console.log('json error ' + JSON.stringify(json));
       if (json.hasOwnProperty('message')) {
         this.errors = json.error._embedded.errors;
         console.info('[json.error]');
@@ -79,7 +76,7 @@ export class VehiclePersistComponent implements OnInit {
         this.errors = json._embedded.errors;
         console.info('json._embedded.errors');
       }
-      console.log('this.errors '+JSON.stringify(this.errors));
+      console.log('this.errors ' + JSON.stringify(this.errors));
     });
   }
 }

@@ -82,34 +82,34 @@ class ConsignmentController extends RestfulController {
     }
 
     if (params.status) {
-      def consignments = Consignment.withCriteria {
-        like('status', params.status)
-        like('transportRequest.haulierId', haulierId)
-      }
-      respond consignments
-    } else {
-      respond status: HttpStatus.NOT_FOUND, message: 'not found'
-    }
-  }
-
-  def listByStatusAndForwarder() {
-    //expect status and userid to come in, status via query params and user id via request header
-    def forwarderId = request.getHeader('userId')
-    if (!forwarderId) {
-      respond status: HttpStatus.BAD_REQUEST, message: 'user id not found'
-      return
-    }
-
-    if (params.status) {
       def consignments = Consignment.where {
-        status == params.status
-        transportRequest.forwarderId == forwarderId
+        status = params.status
+        transportRequest.haulierId = userId
       }
       respond consignments
     } else {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
+
+//  def listByStatusAndForwarder() {
+//    //expect status and userid to come in, status via query params and user id via request header
+//    def forwarderId = request.getHeader('userId')
+//    if (!forwarderId) {
+//      respond status: HttpStatus.BAD_REQUEST, message: 'user id not found'
+//      return
+//    }
+//
+//    if (params.status) {
+//      def consignments = Consignment.where {
+//        status == params.status
+//        transportRequest.forwarderId == forwarderId
+//      }
+//      respond consignments
+//    } else {
+//      respond status: HttpStatus.NOT_FOUND, message: 'not found'
+//    }
+//  }
 
   def listByStatusAndUserType() {
     def userId = request.getHeader('userId')
