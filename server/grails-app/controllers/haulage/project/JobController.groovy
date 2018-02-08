@@ -16,7 +16,19 @@ class JobController extends RestfulController {
 
   @Override
   Object index(Integer max) {
-    return super.index(max)
+    def userId = request.getHeader('userId')
+    def permission = Permission.where {
+      userInfo.userId = userId
+    }.first()
+    if(permission){
+      return super.index(max)
+    }else{
+      //return jobs based on haulier id
+      def jobs = Job.where {
+        haulierId == userId
+      }
+      return jobs
+    }
   }
 
   @Override
