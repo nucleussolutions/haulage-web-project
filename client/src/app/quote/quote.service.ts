@@ -29,20 +29,9 @@ export class QuoteService {
 
     let subject = new Subject<Quote[]>();
 
-    this.permissionService.getByUserId(userObject).flatMap(permission => {
-      let urlPath;
-      if (permission.authority == 'Super Admin') {
-        urlPath = '/quote'
-      } else if (permission.authority == 'Manager') {
-        urlPath = '/quote/forwarder/'+userObject.uid;
-      } else if (permission.authority == 'Admin') {
-        urlPath = '/quote/haulier/'+userObject.uid;
-      }
-
-      return this.http.get(environment.serverUrl + urlPath, {
-        headers: headers,
-        params: params
-      });
+    this.http.get(environment.serverUrl + '/quote', {
+      headers: headers,
+      params: params
     }).subscribe((json: any[]) => {
       subject.next(json);
     });

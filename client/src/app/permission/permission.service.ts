@@ -69,7 +69,7 @@ export class PermissionService {
           return subject.asObservable();
         })
         .subscribe((json: any[]) => {
-          subject.next(json.map((item: any) => new Permission(item)))
+          subject.next(json);
         });
     return subject.asObservable();
   }

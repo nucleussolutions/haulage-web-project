@@ -47,7 +47,7 @@ export class UserInfoService {
     return this.http.get(environment.serverUrl + '/userInfo/'+id, {
       headers: headers
     })
-      .map((r: Response) => new UserInfo(r.json()));
+      .map((r: Response) => new UserInfo(r));
   }
 
   save(userInfo: UserInfo, userObject: any): Observable<UserInfo> {
@@ -93,6 +93,46 @@ export class UserInfoService {
     });
 
     this.http.get(environment.serverUrl + '/userInfo/count', {
+      headers: headers
+    }).subscribe(json => {
+      subject.next(json['count']);
+    }, error => {
+      subject.error(error);
+    });
+    return subject.asObservable();
+  }
+
+  countHauliers(userObject: any){
+    let subject = new Subject<number>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
+    });
+
+    this.http.get(environment.serverUrl + '/userInfo/haulier/count', {
+      headers: headers
+    }).subscribe(json => {
+      subject.next(json['count']);
+    }, error => {
+      subject.error(error);
+    });
+    return subject.asObservable();
+  }
+
+  countForwarders(userObject:any){
+    let subject = new Subject<number>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+
+    });
+
+    this.http.get(environment.serverUrl + '/userInfo/forwarder/count', {
       headers: headers
     }).subscribe(json => {
       subject.next(json['count']);

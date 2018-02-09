@@ -18,7 +18,7 @@ class JobController extends RestfulController {
   Object index(Integer max) {
     def userId = request.getHeader('userId')
     def permission = Permission.where {
-      userInfo.userId = userId
+      userInfo.userId == userId
     }.first()
     if(permission){
       return super.index(max)

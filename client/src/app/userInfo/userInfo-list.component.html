@@ -1,13 +1,13 @@
 <div class="nav" role="navigation">
-    <ul>
-        <li><a [routerLink]="['/index']" class="home">Home</a></li>
-        <li><a [routerLink]="['/userInfo','create']" class="create">New UserInfo</a></li>
-    </ul>
+  <ul>
+    <li><a [routerLink]="['/index']" class="home">Home</a></li>
+    <li><a [routerLink]="['/userInfo','create']" class="create">New UserInfo</a></li>
+  </ul>
 </div>
 <div id="list-userInfo" class="content scaffold-list" role="main">
-    <h1>UserInfo List</h1>
-    <table>
-  <thead>
+  <h1>UserInfo List</h1>
+  <table class="table">
+    <thead>
     <tr>
       <th>Id</th>
       <th>Name</th>
@@ -15,8 +15,8 @@
       <th>User Id</th>
       <th>Permissions</th>
     </tr>
-  </thead>
-  <tbody>
+    </thead>
+    <tbody>
     <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let userInfo of userInfoList; let e = even;">
       <td>
         <a [routerLink]="['/userInfo','show',userInfo.id]">{{userInfo.id}}</a>
@@ -38,12 +38,13 @@
         </ul>
       </td>
     </tr>
-  </tbody>
-</table>
+    </tbody>
+  </table>
 </div>
 
 <div class="row">
   <div class="col-12">
-    <app-pagination [offset]="offset" [limit]="limit" [size]="count" (pageChange)="onPageChange($event)"></app-pagination>
+    <app-pagination [offset]="offset" [limit]="limit" [size]="count"
+                    (pageChange)="onPageChange($event)"></app-pagination>
   </div>
 </div>

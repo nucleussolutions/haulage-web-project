@@ -11,10 +11,10 @@ import {QuotationTemplateComponent} from "../quotation-template/quotation-templa
 
 const routes: Routes = [
   {path: 'quote', redirectTo: 'quote/list', pathMatch: 'full'},
-  {path: 'quote/list', canActivate: [RestrictUserPermissionGuard], component: QuoteListComponent},
-  {path: 'quote/create', canActivate: [SuperAdminAndManagerPermissionGuard], component: QuotePersistComponent},
-  {path: 'quote/edit/:id',canActivate: [SuperAdminAndManagerPermissionGuard], component: QuotePersistComponent},
-  {path: 'quote/show/:id', canActivate: [RestrictUserPermissionGuard], component: QuoteShowComponent},
+  {path: 'quote/list', component: QuoteListComponent},
+  {path: 'quote/create', component: QuotePersistComponent},
+  {path: 'quote/edit/:id', component: QuotePersistComponent},
+  {path: 'quote/show/:id', component: QuoteShowComponent},
   {path: 'quote/printpreview/:id', component: QuotationTemplateComponent}
 ];
 

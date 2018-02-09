@@ -47,7 +47,7 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private permission: Permission;
+  private permissions: Permission[];
 
   selectedConsignment = [];
 
@@ -89,14 +89,9 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
       this.userObject = response[0];
       let params = response[1];
 
-      this.permissionService.getByUserId(this.userObject).subscribe(permission => {
-        this.permission = permission;
-
-        if(this.permission.authority == 'Manager' && this.transportRequest.forwarderId === null){
-          //check permissions before setting this
-          this.transportRequest.forwarderId = this.userObject.uid;
-        }
-
+      this.permissionService.getByUserId(this.userObject).subscribe(permissions => {
+        this.permissions = permissions;
+        this.transportRequest.forwarderId = this.userObject.uid;
       }, error => {
         console.log('transportrequest persist permission error '+error);
       });

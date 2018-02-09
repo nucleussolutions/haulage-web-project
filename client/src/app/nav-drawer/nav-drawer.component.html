@@ -16,28 +16,28 @@
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" routerLink="/index">Home</a>
       </li>
-      <li class="nav-item" *ngIf="permission?.authority === 'Super Admin'">
+      <li class="nav-item" *ngIf="superAdminPermission?.authority === 'Super Admin'">
         <a class="nav-link" routerLinkActive="active" routerLink="/permission">User Permissions</a>
       </li>
-      <li class="nav-item" *ngIf="permission?.authority === 'Super Admin'">
+      <li class="nav-item" *ngIf="superAdminPermission?.authority === 'Super Admin'">
         <a class="nav-link" routerLinkActive="active" routerLink="/location">Location</a>
       </li>
-      <li class="nav-item" *ngIf="permission?.authority === 'Super Admin'">
+      <li class="nav-item" *ngIf="superAdminPermission?.authority === 'Super Admin'">
         <a class="nav-link" routerLinkActive="active" routerLink="/company">Company</a>
       </li>
-      <li class="nav-item" *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
+      <li class="nav-item" *ngIf="superAdminPermission?.authority === 'Admin' || superAdminPermission?.authority === 'Super Admin'">
         <a class="nav-link" routerLinkActive="active" routerLink="/driverInfo">Drivers</a>
       </li>
-      <li class="nav-item" *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
+      <li class="nav-item" *ngIf="superAdminPermission?.authority === 'Admin' || superAdminPermission?.authority === 'Super Admin'">
         <a class="nav-link" routerLink="/job" routerLinkActive="active">Jobs</a>
       </li>
-      <li class="nav-item" *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
+      <li class="nav-item" *ngIf="superAdminPermission?.authority === 'Admin' || superAdminPermission?.authority === 'Super Admin'">
         <a class="nav-link" routerLinkActive="active" routerLink="/userInfo">Users</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" routerLink="/haulierInfo">Hauliers</a>
       </li>
-      <li class="nav-item" *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
+      <li class="nav-item" *ngIf="superAdminPermission?.authority === 'Admin' || superAdminPermission?.authority === 'Super Admin'">
         <a class="nav-link" routerLinkActive="active" routerLink="/forwarderInfo">Forwarders</a>
       </li>
       <li class="nav-item">
@@ -46,16 +46,16 @@
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" routerLink="/consignment">Consignment</a>
       </li>
-      <li class="nav-item" *ngIf="permission?.authority === 'Admin' || permission?.authority === 'Super Admin'">
+      <li class="nav-item" *ngIf="superAdminPermission?.authority === 'Admin' || superAdminPermission?.authority === 'Super Admin'">
         <a class="nav-link" routerLinkActive="active" routerLink="/vehicle">Vehicles</a>
       </li>
-      <li class="nav-item" *ngIf="permission?.authority === 'Super Admin'">
+      <li class="nav-item" *ngIf="superAdminPermission?.authority === 'Super Admin'">
         <a class="nav-link" routerLink="/tariff" routerLinkActive="active">Tariff</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" routerLink="/transportRequest">RFT / ROT</a>
       </li>
-      <li class="nav-item" *ngIf="permission?.authority === 'Super Admin'">
+      <li class="nav-item" *ngIf="superAdminPermission?.authority === 'Super Admin'">
         <a class="nav-link" routerLinkActive="active" routerLink="/pricing">Pricing</a>
       </li>
       <li class="nav-item">

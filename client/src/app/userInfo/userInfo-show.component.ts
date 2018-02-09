@@ -36,12 +36,13 @@ export class UserInfoShowComponent implements OnInit, OnDestroy {
       let params = result[1];
 
       if(params.hasOwnProperty('id')){
-        return this.userInfoService.get(+params['id'], this.userObject);
+        return this.userInfoService.get(params['id'], this.userObject);
       }else{
         throw 'params id not found'
       }
     }).subscribe((userInfo: UserInfo) => {
       this.userInfo = userInfo;
+      console.log('userInfo '+this.userInfo);
     });
   }
 

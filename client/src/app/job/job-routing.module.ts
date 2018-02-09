@@ -9,10 +9,10 @@ import {SuperAdminAndAdminPermissionGuard} from "../superadmin-and-admin-permiss
 
 const routes: Routes = [
   {path: 'job', redirectTo: 'job/list', pathMatch: 'full'},
-  {path: 'job/list', canActivate: [SuperAdminAndAdminPermissionGuard], component: JobListComponent},
-  {path: 'job/create', canActivate: [SuperAdminAndAdminPermissionGuard], component: JobPersistComponent},
-  {path: 'job/edit/:id', canActivate: [SuperAdminAndAdminPermissionGuard], component: JobPersistComponent},
-  {path: 'job/show/:id', canActivate: [SuperAdminAndAdminPermissionGuard], component: JobShowComponent},
+  {path: 'job/list', component: JobListComponent},
+  {path: 'job/create', component: JobPersistComponent},
+  {path: 'job/edit/:id', component: JobPersistComponent},
+  {path: 'job/show/:id', component: JobShowComponent},
 ];
 
 @NgModule({

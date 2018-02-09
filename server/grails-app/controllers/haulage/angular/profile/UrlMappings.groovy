@@ -17,15 +17,11 @@ class UrlMappings {
     get "/permission/grantedBy/${userId}"(controller: 'custom', action: 'permissionByGrantedBy')
     get "/location/type/${type}"(controller: 'custom', action: 'locationByType')
 
-    get "/haulierInfo/userId/${userId}"(controller: 'custom', action: 'haulierByUserId')
 
-    get "/forwarderInfo/userId/${userId}"(controller:'custom', action: 'forwarderByUserId')
 
     get "/company/count"(controller: 'company', action: 'count')
     get "/location/count"(controller: 'location', action: 'count')
-    get "/haulierInfo/count"(controller: 'haulierInfo', action: 'count')
     get "/pricing/count"(controller: 'pricing', action: 'count')
-    get "/forwarderInfo/count"(controller: 'forwarderInfo', action: 'count')
     get "/driverInfo/count"(controller: 'driverInfo', action:'count')
     get "/job/count"(controller: 'job', action: 'count')
     get "/memberSubscription/count"(controller: 'memberSubscription', action: 'count')
@@ -37,6 +33,12 @@ class UrlMappings {
     get "/consignment/count"(controller:'consignment', action: 'count')
 
     get "/vehicle/count"(controller: 'vehicle', action: 'count')
+    get "/userInfo/count"(controller: 'userInfo', action: 'count')
+
+    get "/userInfo/haulier"(controller: 'userInfo', action: 'getHauliers')
+    get "/userInfo/haulier/count"(controller: 'userInfo', action: 'countHauliers')
+    get "/userInfo/forwarder"(controller: 'userInfo', action: 'getForwarders')
+    get "/userInfo/forwarder/count"(controller: 'userInfo', action: 'countForwarders')
 
     get "/permission/count/grantedBy/${userId}"(controller: 'custom', action: 'permissionCountByGrantedBy')
 
@@ -74,8 +76,6 @@ class UrlMappings {
 
 
 
-//    get "/consignment/haulier"(controller: 'custom', action: 'consignmentsByHaulier')
-//    get "/consignment/forwarder"(controller: 'custom', action: 'consignmentsByForwarder')
     get "/consignment/transportRequest/${rftId}"(controller: 'custom', action: 'consignmentsByRFT')
     get "/consignment/forwarder/${forwarderId}"(controller: 'consignment', action: 'listByStatusAndForwarder')
     get "/consignment/haulier/${haulierId}"(controller: 'consignment', action: 'listByStatusAndHaulier')

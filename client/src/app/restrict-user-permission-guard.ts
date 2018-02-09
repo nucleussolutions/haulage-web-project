@@ -16,9 +16,10 @@ export class RestrictUserPermissionGuard implements CanActivate {
   //restricts drivers from logging into the system
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     return new Promise(resolve => {
-      this.userService.getUser().flatMap(userObject => this.permissionService.getByUserId(userObject)).flatMap(permissions => {
-        return permissions;
-      }).map(permission => resolve(permission.authority !== 'User'));
+      this.userService.getUser().flatMap(userObject => this.permissionService.getByUserId(userObject)).flatMap(response => {
+        console.log('permission response '+JSON.stringify(response));
+        return response['data'];
+      }).map(permission => resolve(permission['attributes'].authority !== 'User'));
     });
   }
 }

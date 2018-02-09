@@ -9,10 +9,10 @@ import {PermissionService} from "../permission/permission.service";
 
 const routes: Routes = [
   {path: 'location', redirectTo: 'location/list', pathMatch: 'full'},
-  {path: 'location/list',canActivate: [AdminOnlyPermissionGuard], component: LocationListComponent},
-  {path: 'location/create',canActivate: [AdminOnlyPermissionGuard], component: LocationPersistComponent},
-  {path: 'location/edit/:id',canActivate: [AdminOnlyPermissionGuard], component: LocationPersistComponent},
-  {path: 'location/show/:id',canActivate: [AdminOnlyPermissionGuard], component: LocationShowComponent},
+  {path: 'location/list', component: LocationListComponent},
+  {path: 'location/create', component: LocationPersistComponent},
+  {path: 'location/edit/:id', component: LocationPersistComponent},
+  {path: 'location/show/:id', component: LocationShowComponent},
 ];
 
 @NgModule({

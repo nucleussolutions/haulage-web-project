@@ -11,22 +11,10 @@ class CustomController {
 
   def permissionService
   def locationService
-  def haulierInfoService
   def driverInfoService
-  def companyService
   def consignmentService
-  def forwarderInfoService
   def quoteService
-  def pricingService
-  def tariffService
-
-  def memberSubscriptionService
-  def transactionService
-
   def vehicleService
-
-  def transportRequestService
-
   def jobService
 
   static responseFormats = ['json', 'xml']
@@ -63,28 +51,6 @@ class CustomController {
       respond count: permissionService.countByGrantedBy(userId)
     }else{
       respond status: NOT_FOUND, message: 'user id not found'
-    }
-  }
-
-  def haulierByUserId(String userId){
-    println 'haulierByUserId '+userId
-
-    def haulierInfo = haulierInfoService.findByUserId(userId)
-    if(haulierInfo){
-      respond haulierInfo
-    }else{
-      respond status: NOT_FOUND, message: 'haulier info not found'
-    }
-  }
-
-  def forwarderByUserId(String userId){
-    println 'forwarderByUserId '+userId
-
-    def forwarderInfo = forwarderInfoService.findByUserId(userId)
-    if(forwarderInfo){
-      respond forwarderInfo
-    }else{
-      respond status: NOT_FOUND, message: 'forwarder info not found'
     }
   }
 

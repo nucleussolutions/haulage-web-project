@@ -57,4 +57,64 @@ class UserInfoController extends RestfulController {
   def count(){
     respond count: userInfoService.count()
   }
+
+  def getHauliers(){
+    def userId = request.getHeader('userId')
+    def permission = Permission.where {
+      userInfo.userId == userId
+      authority == 'Super Admin'
+    }
+
+    if(permission){
+      def userInfos = UserInfo.createCriteria().list(max: limit, offset: offset) {
+        permissions {
+          eq('permission.authority', 'Admin')
+        }
+      }
+      userInfos
+    }else{
+      def userInfos = UserInfo.createCriteria().list(max: limit, offset: offset) {
+        permissions {
+          eq('permission.authority', 'Admin')
+          eq('permission.grantedBy', userId)
+        }
+      }
+      userInfos
+    }
+  }
+
+  def countHauliers(){
+    respond count: getHauliers().count()
+  }
+
+  def countForwarders(){
+    respond count: getForwarders().count()
+  }
+
+  def getForwarders(){
+    def userId = request.getHeader('userId')
+    def permission = Permission.where {
+      userInfo.userId == userId
+      authority == 'Super Admin'
+    }
+
+    if(permission){
+      // display all forwarders
+      def userInfos = UserInfo.createCriteria().list(max: limit, offset: offset) {
+        permissions {
+          eq('permission.authority', 'Manager')
+        }
+      }
+      userInfos
+    }else{
+      //list forwarders granted by the hauliers themselves
+      def userInfos = UserInfo.createCriteria().list(max: limit, offset: offset) {
+        permissions {
+          eq('permission.authority', 'Manager')
+          eq('permission.grantedBy', userId)
+        }
+      }
+      userInfos
+    }
+  }
 }

@@ -22,7 +22,7 @@ class DriverInfoController extends RestfulController {
   Object index(Integer max) {
     def userId = request.getHeader('userId')
     def permission = Permission.where {
-      userInfo.userId = userId
+      userInfo.userId == userId
       authority == 'Super Admin'
     }
     if (permission) {

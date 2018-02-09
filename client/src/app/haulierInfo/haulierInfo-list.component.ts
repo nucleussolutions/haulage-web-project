@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HaulierInfoService } from './haulierInfo.service';
 import { HaulierInfo } from './haulierInfo';
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,6 +7,8 @@ import { Subscription } from "rxjs/Subscription";
 import { Observable } from "rxjs/Observable";
 import {GeneralModalComponent} from "../general-modal/general-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {UserInfo} from "../userInfo/userInfo";
+import {UserInfoService} from "../userInfo/userInfo.service";
 
 
 @Component({
@@ -22,17 +23,11 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
     }
   }
 
-  haulierInfoList: HaulierInfo[] = [];
+  haulierInfoList: UserInfo[] = [];
 
   private subscription: Subscription;
 
   private page: number = 1;
-
-  private nextLink: string;
-
-  private firstLink: string;
-
-  private lastLink: string;
 
   offset: number = 0;
 
@@ -42,7 +37,7 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private route: ActivatedRoute, private haulierInfoService: HaulierInfoService, private titleService: Title, private router: Router, private userService: UserService, private modalService: NgbModal) {
+  constructor(private route: ActivatedRoute, private titleService: Title, private router: Router, private userService: UserService, private modalService: NgbModal, private userInfoService: UserInfoService) {
     this.titleService.setTitle('Hauliers');
   }
 
@@ -63,22 +58,18 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
 
       this.offset = (this.page - 1) * this.limit;
 
-      this.haulierInfoService.count(this.userObject).subscribe(count => {
+      this.userInfoService.countHauliers(this.userObject).subscribe(count => {
         this.count = count;
       });
 
-      return this.haulierInfoService.list(this.userObject, this.offset);
+      return this.userInfoService.list(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
-      let links = json['links'];
-      this.nextLink = links.next;
-      this.firstLink = links.first;
-      this.lastLink = links.last;
 
       this.haulierInfoList = [];
 
       data.forEach(haulierInfoDatum => {
-        let haulierInfo = new HaulierInfo(haulierInfoDatum.attributes);
+        let haulierInfo = new UserInfo(haulierInfoDatum.attributes);
         haulierInfo.id = haulierInfoDatum.id;
         this.haulierInfoList.push(haulierInfo);
       });
@@ -103,7 +94,7 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
     if (term.length > 2) {
       Observable.of(term).debounceTime(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
         // return the http search observable
-        ? this.haulierInfoService.search(term, this.userObject)
+        ? this.userInfoService.search(term, this.userObject)
         // or the observable of empty heroes if no search term
         : Observable.of<HaulierInfo[]>([]))
         .subscribe(json => {

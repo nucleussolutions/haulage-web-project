@@ -44,7 +44,7 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  permission: Permission;
+  permissions: Permission[];
 
   constructor(private route: ActivatedRoute, private transportRequestService: TransportRequestService, private userService: UserService, private titleService: Title, private router: Router, private permissionService: PermissionService) {
     this.titleService.setTitle('Transport Request List');
@@ -71,8 +71,8 @@ export class TransportRequestListComponent implements OnInit, OnDestroy {
         this.count = count;
       });
 
-      this.permissionService.getByUserId(this.userObject).subscribe(permission => {
-        this.permission = permission;
+      this.permissionService.getByUserId(this.userObject).subscribe(permissions => {
+        this.permissions = permissions;
       });
 
       return this.transportRequestService.list(this.userObject, this.offset);

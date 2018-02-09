@@ -83,8 +83,8 @@ class ConsignmentController extends RestfulController {
 
     if (params.status) {
       def consignments = Consignment.where {
-        status = params.status
-        transportRequest.haulierId = userId
+        status == params.status
+        transportRequest.haulierId == userId
       }
       respond consignments
     } else {

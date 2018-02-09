@@ -24,7 +24,7 @@ class VehicleController extends RestfulController {
       return super.index(max)
     } else {
       return Vehicle.where {
-        haulierId == userId
+        userId == userId
       }
     }
   }

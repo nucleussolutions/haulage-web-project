@@ -63,7 +63,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   ngOnDestroy(): void {
-    if( typeof this.subscription !== 'undefined' ) {
+    if(this.subscription) {
       this.subscription.unsubscribe();
     }
   }
@@ -89,11 +89,8 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         this.userObject = userObject;
         return this.permissionService.getByUserId(userObject);
       })
-      .subscribe(permission => {
-        if (permission.authority !== 'Super Admin') {
-          // check if user exists in hauliers and forwarders table
+      .subscribe(permissions => {
 
-        }
       }, error => {
         if (error.status == 400) {
           setTimeout(() => {

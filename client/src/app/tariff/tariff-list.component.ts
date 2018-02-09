@@ -24,12 +24,6 @@ export class TariffListComponent implements OnInit, OnDestroy {
 
   private page: number = 1;
 
-  private nextLink: string;
-
-  private firstLink: string;
-
-  private lastLink: string;
-
   offset: number = 0;
 
   count: number = 0;
@@ -66,10 +60,6 @@ export class TariffListComponent implements OnInit, OnDestroy {
       return this.tariffService.list(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
-      let links = json['links'];
-      this.nextLink = links.next;
-      this.firstLink = links.first;
-      this.lastLink = links.last;
 
       this.tariffList = [];
 

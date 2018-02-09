@@ -28,26 +28,16 @@ export class VehicleService {
       'userId': userObject.uid
     });
 
-    this.permissionService.getByUserId(userObject).flatMap(permission => {
-      let urlPath;
-
-      if(permission.authority == 'Super Admin'){
-        urlPath = '/vehicle';
-      }else if(permission.authority == 'Admin'){
-        urlPath = '/vehicle/haulier';
-      }
-
-      return this.http.get(environment.serverUrl + urlPath, {
-        headers: headers,
-        params: params
-      });
+    this.http.get(environment.serverUrl + '/vehicle', {
+      headers: headers,
+      params: params
     }).catch(err => {
-        subject.error(err);
-        return subject.asObservable();
-      })
-      .subscribe((json: any[]) => {
-        subject.next(json);
-      });
+      subject.error(err);
+      return subject.asObservable();
+    })
+        .subscribe((json: any[]) => {
+          subject.next(json);
+        });
     return subject.asObservable();
   }
 

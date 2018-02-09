@@ -8,6 +8,8 @@ import { Observable } from "rxjs/Observable";
 import { ActivatedRoute, Router } from "@angular/router";
 import {PermissionService} from "../permission/permission.service";
 import {Permission} from "../permission/permission";
+import {GeneralModalComponent} from "../general-modal/general-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 
 @Component({
@@ -35,9 +37,9 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  permission: Permission;
+  permissions: Permission[];
 
-  constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private titleService: Title, private userService: UserService, private router: Router, private permissionService: PermissionService) {
+  constructor(private route: ActivatedRoute, private titleService: Title, private userService: UserService, private router: Router, private permissionService: PermissionService, private modalService: NgbModal) {
     this.titleService.setTitle('Forwarders');
 
   }
@@ -62,13 +64,12 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
         this.count = count;
       });
 
-      this.permissionService.getByUserId(this.userObject).subscribe(permission => {
-        this.permission = permission;
+      this.permissionService.getByUserId(this.userObject).subscribe(permissions => {
+        this.permissions = permissions;
       });
 
       return this.forwarderInfoService.list(this.userObject, this.offset);
     }).subscribe(json => {
-      // this.forwarderInfoList = forwarderInfoList;
       let data = json['data'];
 
       this.forwarderInfoList = [];
@@ -89,6 +90,9 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
         message = 'Bad request';
       }
       // this.modal.alert().title('Error').message(message).open();
+      const errorModalRef = this.modalService.open(GeneralModalComponent);
+      errorModalRef.componentInstance.modalTitle = 'Error';
+      errorModalRef.componentInstance.modalMessage = message;
     });
   }
 

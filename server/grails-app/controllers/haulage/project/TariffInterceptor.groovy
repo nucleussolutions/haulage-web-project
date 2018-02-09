@@ -20,7 +20,7 @@ class TariffInterceptor {
       def userPermission = Permission.where {
         userInfo.userId == userId
         authority == 'Super Admin'
-      }.first()
+      }
       if(userPermission){
         true
       }else {

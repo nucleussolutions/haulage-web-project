@@ -9,10 +9,10 @@ import {PermissionService} from "../permission/permission.service";
 
 const routes: Routes = [
   {path: 'tariff', redirectTo: 'tariff/list', pathMatch: 'full'},
-  {path: 'tariff/list', canActivate: [AdminOnlyPermissionGuard], component: TariffListComponent},
-  {path: 'tariff/create', canActivate: [AdminOnlyPermissionGuard], component: TariffPersistComponent},
-  {path: 'tariff/edit/:id', canActivate: [AdminOnlyPermissionGuard], component: TariffPersistComponent},
-  {path: 'tariff/show/:id', canActivate: [AdminOnlyPermissionGuard], component: TariffShowComponent},
+  {path: 'tariff/list', component: TariffListComponent},
+  {path: 'tariff/create', component: TariffPersistComponent},
+  {path: 'tariff/edit/:id', component: TariffPersistComponent},
+  {path: 'tariff/show/:id', component: TariffShowComponent},
 ];
 
 @NgModule({

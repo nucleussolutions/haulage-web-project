@@ -9,10 +9,10 @@ import {PermissionService} from "../permission/permission.service";
 
 const routes: Routes = [
   {path: 'driverInfo', redirectTo: 'driverInfo/list', pathMatch: 'full'},
-  {path: 'driverInfo/list', canActivate: [SuperAdminAndAdminPermissionGuard], component: DriverInfoListComponent},
-  {path: 'driverInfo/create', canActivate: [SuperAdminAndAdminPermissionGuard], component: DriverInfoPersistComponent},
-  {path: 'driverInfo/edit/:id', canActivate: [SuperAdminAndAdminPermissionGuard], component: DriverInfoPersistComponent},
-  {path: 'driverInfo/show/:id', canActivate: [SuperAdminAndAdminPermissionGuard], component: DriverInfoShowComponent},
+  {path: 'driverInfo/list', component: DriverInfoListComponent},
+  {path: 'driverInfo/create', component: DriverInfoPersistComponent},
+  {path: 'driverInfo/edit/:id', component: DriverInfoPersistComponent},
+  {path: 'driverInfo/show/:id', component: DriverInfoShowComponent},
 ];
 
 @NgModule({

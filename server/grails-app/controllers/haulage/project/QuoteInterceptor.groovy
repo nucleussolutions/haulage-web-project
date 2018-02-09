@@ -19,20 +19,14 @@ class QuoteInterceptor {
     if(userId){
       def userPermission = Permission.where {
         userInfo.userId == userId
+        authority == 'User'
       }
-      println 'quote permission'+userPermission.authority
+      println 'permission '+userPermission
       if(userPermission){
-        if(userPermission.authority == 'User'){
-          respond HttpStatus.METHOD_NOT_ALLOWED, message: 'forbidden user/driver'
-          false
-        }else{
-          true
-        }
-      }else{
-        respond status: HttpStatus.NOT_FOUND, message: 'user permission not found'
         false
+      }else{
+        true
       }
-
     }else{
       respond status: HttpStatus.NOT_FOUND, message: 'user id not found'
       false

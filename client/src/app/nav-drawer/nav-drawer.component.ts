@@ -3,6 +3,7 @@ import {PermissionService} from "../permission/permission.service";
 import {Subscription} from 'rxjs/Subscription';
 import {Permission} from "../permission/permission";
 import {UserService} from 'app/user.service';
+import {Observable} from "rxjs/Observable";
 
 
 @Component({
@@ -27,6 +28,8 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private permissions: Permission[];
 
+  superAdminPermission : any;
+
   private userObject: any;
 
   constructor(private permissionService: PermissionService, private userService: UserService) {
@@ -49,10 +52,22 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.userObject = userObject;
       console.log('userObject '+JSON.stringify(userObject));
       return this.permissionService.getByUserId(this.userObject);
-    }).subscribe(permissions => {
-      this.permissions = permissions;
-    }, error => {
-      console.log('NavDrawerComponent permissionService error ' + error);
+    }).subscribe(json => {
+      let data = json['data'];
+
+      this.permissions = [];
+
+      data.forEach(permissionDatum => {
+        let permission = new Permission(permissionDatum.attributes);
+        permission.id = permissionDatum.id;
+        this.permissions.push(permission);
+
+        this.permissions.forEach(permission => {
+          if(permission.authority == 'Super Admin'){
+            this.superAdminPermission = permission;
+          }
+        })
+      });
     });
   }
 
