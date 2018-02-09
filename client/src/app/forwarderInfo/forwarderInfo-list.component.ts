@@ -10,6 +10,8 @@ import {PermissionService} from "../permission/permission.service";
 import {Permission} from "../permission/permission";
 import {GeneralModalComponent} from "../general-modal/general-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {UserInfoService} from "../userInfo/userInfo.service";
+import {UserInfo} from "../userInfo/userInfo";
 
 
 @Component({
@@ -23,7 +25,7 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
     }
   }
 
-  forwarderInfoList: ForwarderInfo[] = [];
+  forwarderInfoList: UserInfo[] = [];
 
   private subscription: Subscription;
 
@@ -39,7 +41,7 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
 
   permissions: Permission[];
 
-  constructor(private route: ActivatedRoute, private titleService: Title, private userService: UserService, private router: Router, private permissionService: PermissionService, private modalService: NgbModal) {
+  constructor(private route: ActivatedRoute, private titleService: Title, private userService: UserService, private userInfoService: UserInfoService, private router: Router, private permissionService: PermissionService, private modalService: NgbModal) {
     this.titleService.setTitle('Forwarders');
 
   }
@@ -60,7 +62,7 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
       }
       this.offset = (this.page - 1) * this.limit;
 
-      this.forwarderInfoService.count(this.userObject).subscribe(count => {
+      this.userInfoService.countForwarders(this.userObject).subscribe(count => {
         this.count = count;
       });
 
@@ -68,14 +70,14 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
         this.permissions = permissions;
       });
 
-      return this.forwarderInfoService.list(this.userObject, this.offset);
+      return this.userInfoService.listForwarders(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
 
       this.forwarderInfoList = [];
 
       data.forEach(forwarderInfoDatum => {
-        let forwarderInfo = new ForwarderInfo(forwarderInfoDatum.attributes);
+        let forwarderInfo = new UserInfo(forwarderInfoDatum.attributes);
         forwarderInfo.id = forwarderInfoDatum.id;
         this.forwarderInfoList.push(forwarderInfo);
       });
@@ -106,16 +108,15 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
     if (term.length > 2) {
       Observable.of(term).debounceTime(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
         // return the http search observable
-        ? this.forwarderInfoService.search(term, this.userObject)
+        ? this.userInfoService.searchForwarders(term, this.userObject)
         // or the observable of empty heroes if no search term
-        : Observable.of<ForwarderInfo[]>([]))
+        : Observable.of<UserInfo[]>([]))
         .subscribe(json => {
           this.forwarderInfoList = json['searchResults'];
           this.count = json['total'];
         }, error => {
-          // TODO: real error handling
           console.log(`Error in component ... ${error}`);
-          return Observable.of<ForwarderInfo[]>([]);
+          return Observable.of<UserInfo[]>([]);
         });
     }else{
       Observable.of(term).debounceTime(300).distinctUntilChanged().subscribe(() => {

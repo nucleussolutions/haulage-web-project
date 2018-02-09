@@ -36,6 +36,50 @@ export class UserInfoService {
     return subject.asObservable();
   }
 
+  listHauliers(userObject: any, offset: number): Observable<UserInfo[]> {
+    let subject = new Subject<UserInfo[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+    let params = new HttpParams();
+    params = params.append('offset', offset.toString());
+
+    this.http.get(environment.serverUrl + '/userInfo/haulier', {
+      headers: headers,
+      params: params
+    })
+        .subscribe((json: any[]) => {
+          subject.next(json);
+        });
+    return subject.asObservable();
+  }
+
+  listForwarders(userObject: any, offset: number): Observable<UserInfo[]> {
+    let subject = new Subject<UserInfo[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+    let params = new HttpParams();
+    params = params.append('offset', offset.toString());
+
+    this.http.get(environment.serverUrl + '/userInfo/forwarder', {
+      headers: headers,
+      params: params
+    })
+        .subscribe((json: any[]) => {
+          subject.next(json);
+        });
+    return subject.asObservable();
+  }
+
   get(id: number, userObject: any): Observable<UserInfo> {
 
     let headers = new HttpHeaders({
@@ -151,7 +195,47 @@ export class UserInfoService {
       'userId': userObject.uid
     });
 
-    this.http.get(environment.serverUrl + '/userInfo?term=' + term, {
+    this.http.get(environment.serverUrl + '/search/userInfo?term=' + term, {
+      headers: headers
+    }).subscribe((json: any[]) => {
+      subject.next(json);
+    }, error => {
+      subject.error(error);
+    });
+
+    return subject.asObservable();
+  }
+
+  searchHauliers(term: string, userObject: any): Observable<any[]> {
+    let subject = new Subject<any[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+    this.http.get(environment.serverUrl + '/search/userInfo/haulier?term=' + term, {
+      headers: headers
+    }).subscribe((json: any[]) => {
+      subject.next(json);
+    }, error => {
+      subject.error(error);
+    });
+
+    return subject.asObservable();
+  }
+
+  searchForwarders(term: string, userObject: any): Observable<any[]> {
+    let subject = new Subject<any[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+    this.http.get(environment.serverUrl + '/search/userInfo/forwarder?term=' + term, {
       headers: headers
     }).subscribe((json: any[]) => {
       subject.next(json);

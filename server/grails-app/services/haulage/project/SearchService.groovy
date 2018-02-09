@@ -12,7 +12,7 @@ import org.elasticsearch.search.sort.SortOrder
 //@Transactional
 class SearchService {
 
-  def elasticSearchService
+  ElasticSearchService elasticSearchService
 
   // import the ElasticSearchService provided by the plugin
 //  def ElasticSearchService
@@ -54,14 +54,6 @@ class SearchService {
     }
   }
 
-  def searchHaulierInfo(String term){
-    elasticSearchService.search(term, [ indices: HaulierInfo, types: HaulierInfo, from: 0, size: 10 ])
-  }
-
-  def searchForwarderInfo(String term){
-    elasticSearchService.search(term, [ indices: ForwarderInfo, types: ForwarderInfo, from: 0, size: 10 ])
-  }
-
   def searchConsignment(String term){
     elasticSearchService.search(term, [ indices: Consignment, types: Consignment, from: 0, size: 10 ])
   }
@@ -74,6 +66,24 @@ class SearchService {
 
   def searchConsignmentByForwarder(String term, String forwarderId){
 
+  }
+
+  def searchHaulier(String term){
+    Closure filter = {
+      permissions(
+          'authority': 'Admin'
+      )
+    }
+    elasticSearchService.search(term, filter)
+  }
+
+  def searchForwarder(String term){
+    Closure filter = {
+      permissions(
+          'authority': 'Manager'
+      )
+    }
+    elasticSearchService.search(term, filter)
   }
 
   def searchCompany(String term){

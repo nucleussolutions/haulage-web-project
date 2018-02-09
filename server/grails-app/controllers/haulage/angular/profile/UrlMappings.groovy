@@ -58,6 +58,9 @@ class UrlMappings {
 
     get "/search/company"(controller: 'search', action: 'company')
 
+    get "/search/userInfo/forwarder"(controller: 'search', action: '')
+    get "/search/userInfo/haulier"(controller: 'search', action: '')
+
 
     get "/search/vehicle"(controller: 'search', action: 'vehicle')
     get "/search/vehicle/${haulierId}"(controller: 'search', action: 'vehicleByHaulier')

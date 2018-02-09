@@ -1,0 +1,10 @@
+import haulage.project.UserInfo
+
+model {
+  Iterable<UserInfo> userInfoList
+  Integer total
+}
+
+//json tmpl.userInfo(userInfoList ?: [])
+json jsonapi.render(userInfoList, [associations: false, pagination: [total: total, resource: UserInfo]])
+

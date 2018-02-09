@@ -54,67 +54,112 @@ class UserInfoController extends RestfulController {
     return super.delete()
   }
 
-  def count(){
+  def count() {
     respond count: userInfoService.count()
   }
 
-  def getHauliers(){
+  def getHauliers() {
     def userId = request.getHeader('userId')
     def permission = Permission.where {
       userInfo.userId == userId
       authority == 'Super Admin'
     }
+    def userInfos
+    if (permission) {
+       userInfos = UserInfo.createCriteria().list(max: params.limit, offset: params.offset) {
+        permissions {
+          'in'('authority', 'Admin')
+        }
+      }
 
-    if(permission){
-      def userInfos = UserInfo.createCriteria().list(max: limit, offset: offset) {
+    } else {
+       userInfos = UserInfo.createCriteria().list(max: params.limit, offset: params.offset) {
         permissions {
-          eq('permission.authority', 'Admin')
+          'in'('grantedBy', userId)
+          'in'('authority', 'Admin')
         }
       }
-      userInfos
-    }else{
-      def userInfos = UserInfo.createCriteria().list(max: limit, offset: offset) {
-        permissions {
-          eq('permission.authority', 'Admin')
-          eq('permission.grantedBy', userId)
-        }
-      }
-      userInfos
     }
+    println 'userInfos '+userInfos
+    respond userInfos
   }
 
-  def countHauliers(){
-    respond count: getHauliers().count()
-  }
-
-  def countForwarders(){
-    respond count: getForwarders().count()
-  }
-
-  def getForwarders(){
+  def countHauliers() {
     def userId = request.getHeader('userId')
     def permission = Permission.where {
       userInfo.userId == userId
       authority == 'Super Admin'
     }
+    def userInfos
+    if (permission) {
+       userInfos = UserInfo.createCriteria().list(max: params.limit, offset: params.offset) {
+        permissions {
+          'in'('authority', 'Admin')
+        }
+      }
 
-    if(permission){
+      println userInfos
+    } else {
+       userInfos = UserInfo.createCriteria().list(max: params.limit, offset: params.offset) {
+        permissions {
+          'in'('grantedBy', userId)
+          'in'('authority', 'Admin')
+        }
+      }
+      println userInfos
+    }
+    respond count: userInfos.size()
+  }
+
+  def countForwarders() {
+    def userId = request.getHeader('userId')
+    def permission = Permission.where {
+      userInfo.userId == userId
+      authority == 'Super Admin'
+    }
+    def userInfos
+    if (permission) {
       // display all forwarders
-      def userInfos = UserInfo.createCriteria().list(max: limit, offset: offset) {
+      userInfos = UserInfo.createCriteria().list(max: params.limit, offset: params.offset) {
         permissions {
-          eq('permission.authority', 'Manager')
+          'in'('authority', 'Manager')
         }
       }
-      userInfos
-    }else{
+    } else {
       //list forwarders granted by the hauliers themselves
-      def userInfos = UserInfo.createCriteria().list(max: limit, offset: offset) {
+      userInfos = UserInfo.createCriteria().list(max: params.limit, offset: params.offset) {
         permissions {
-          eq('permission.authority', 'Manager')
-          eq('permission.grantedBy', userId)
+          'in'('authority', 'Manager')
+          'in'('grantedBy', userId)
         }
       }
-      userInfos
     }
+    respond count: userInfos.size()
+  }
+
+  def getForwarders() {
+    def userId = request.getHeader('userId')
+    def permission = Permission.where {
+      userInfo.userId == userId
+      authority == 'Super Admin'
+    }
+    def userInfos
+    if (permission) {
+      // display all forwarders
+      userInfos = UserInfo.createCriteria().list(max: params.limit, offset: params.offset) {
+        permissions {
+          'in'('authority', 'Manager')
+        }
+      }
+    } else {
+      //list forwarders granted by the hauliers themselves
+      userInfos = UserInfo.createCriteria().list(max: params.limit, offset: params.offset) {
+        permissions {
+          'in'('authority', 'Manager')
+          'in'('grantedBy', userId)
+        }
+      }
+    }
+    respond userInfos
   }
 }

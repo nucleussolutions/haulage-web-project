@@ -62,7 +62,7 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
         this.count = count;
       });
 
-      return this.userInfoService.list(this.userObject, this.offset);
+      return this.userInfoService.listHauliers(this.userObject, this.offset);
     }).subscribe(json => {
       let data = json['data'];
 
@@ -94,7 +94,7 @@ export class HaulierInfoListComponent implements OnInit, OnDestroy {
     if (term.length > 2) {
       Observable.of(term).debounceTime(300).distinctUntilChanged().switchMap(term => term   // switch to new observable each time
         // return the http search observable
-        ? this.userInfoService.search(term, this.userObject)
+        ? this.userInfoService.searchHauliers(term, this.userObject)
         // or the observable of empty heroes if no search term
         : Observable.of<HaulierInfo[]>([]))
         .subscribe(json => {

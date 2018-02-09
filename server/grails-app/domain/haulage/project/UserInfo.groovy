@@ -24,4 +24,16 @@ class UserInfo {
   }
 
   static searchable = true
+
+
+  @Override
+  public String toString() {
+    return "UserInfo{" +
+        "permissions=" + permissions +
+        ", userId='" + userId + '\'' +
+        ", name='" + name + '\'' +
+        ", company=" + company +
+        ", driverInfo=" + driverInfo +
+        '}';
+  }
 }
