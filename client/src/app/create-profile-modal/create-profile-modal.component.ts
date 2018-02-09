@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {HaulierInfoService} from "../haulierInfo/haulierInfo.service";
 import {ForwarderInfoService} from "../forwarderInfo/forwarderInfo.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
@@ -7,6 +7,10 @@ import {Company} from "../company/company";
 import {HaulierInfo} from "../haulierInfo/haulierInfo";
 import {UserService} from 'app/user.service';
 import {Subscription} from 'rxjs/Subscription';
+import {UserInfoService} from "../userInfo/userInfo.service";
+import {UserInfo} from "../userInfo/userInfo";
+import {Permission} from "../permission/permission";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-create-profile-modal',
@@ -15,6 +19,8 @@ import {Subscription} from 'rxjs/Subscription';
 })
 export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
+  @Input() userObject: any;
+
   ngOnDestroy(): void {
     if(this.subscription){
       this.subscription.unsubscribe();
@@ -22,15 +28,22 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
   }
 
   private personalDetails: FormGroup;
 
-  private userObject: any;
-
   private subscription: Subscription;
 
-  constructor(private haulierInfoService: HaulierInfoService, private forwarderInfoService: ForwarderInfoService, private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService) {
+  private fileReader: FileReader;
+
+  private base64Encoded: string;
+
+  encodeFile(file : File) {
+    this.fileReader.readAsDataURL(file);
+  }
+
+  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal) {
 
     this.personalDetails = this.formBuilder.group({
       name: ['', Validators.required],
@@ -48,18 +61,18 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       usertype: new FormControl('Admin'),
     });
 
-    this.subscription = this.userService.getUser().subscribe(response => {
-      this.userObject = response;
-    })
+    this.fileReader.onload = (file) => {
+      this.base64Encoded = this.fileReader.result;
+      console.log("Encoded file!");
+    }
   }
-
 
   submitDetails(formData) {
     //check if user id belongs to a haulier or forwarder, then make a submit call to the backend
 
     //todo perhaps check the uniqueness of the user id first then save
 
-    let loadingSpinner = document.getElementById('loading-spinner');
+    // let loadingSpinner = document.getElementById('loading-spinner');
 
 
     let company = new Company();
@@ -73,53 +86,38 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     company.code = formData.value.companyCode;
     company.yardPhone = formData.value.companyYardPhone;
     company.officePhone = formData.value.companyOfficePhone;
-    // company.companyImgUrl =
+    //todo convert companyImage to base64 string
+
+    this.encodeFile(formData.value.companyImage);
+
+    company.companyImgUrl = this.base64Encoded;
 
     //upload photos to amazon s3 or firebase storage
 
+    let userInfo = new UserInfo();
+    userInfo.name = formData.value.name;
+    userInfo.userId = this.userObject.uid;
+    userInfo.company = company;
+
+    let permission = new Permission();
+    permission.userId = this.userObject.uid;
+    permission.email = this.userObject.email;
+
     if (formData.value.usertype === 'Admin') {
-      let haulierInfo = new HaulierInfo();
-      haulierInfo.name = formData.value.name;
-      haulierInfo.userId = this.userObject.uid;
-      haulierInfo.company = company;
-
-      this.haulierInfoService.save(haulierInfo, this.userObject).subscribe(response => {
-        console.log('haulier service save response ' + JSON.stringify(response));
-
-        let responseStr = JSON.stringify(response);
-
-        response = JSON.parse(responseStr);
-
-        // this.dialog.dismiss();
-      }, error => {
-        console.log('haulierInfoService error ' + error.json());
-        // this.modal.alert()
-        //   .title('Error')
-        //   .message(error.json().message).open();
-      });
-
+      permission.authority = 'Admin';
     } else if (formData.value.usertype === 'Manager') {
-      let forwarderInfo = new ForwarderInfo();
-
-      forwarderInfo.userId = this.userObject.uid;
-      forwarderInfo.company = company;
-      forwarderInfo.name = formData.value.name;
-
-      this.forwarderInfoService.save(forwarderInfo, this.userObject).subscribe(response => {
-        console.log('forwarder service save response ' + JSON.stringify(response));
-
-        let responseStr = JSON.stringify(response);
-
-        response = JSON.parse(responseStr);
-
-        // this.dialog.dismiss();
-      }, error => {
-        console.log('forwarderInfoService error' + error.json());
-        // this.modal.alert()
-        //   .title('Error')
-        //   .message(error.json().message).open();
-      });
+      permission.authority = 'Manager'
     }
+
+    userInfo.permissions.push(permission);
+
+
+
+    this.userInfoService.save(userInfo, this.userObject).subscribe(userInfo => {
+      this.activeModal.dismiss();
+    }, error => {
+
+    });
   }
 }
 
