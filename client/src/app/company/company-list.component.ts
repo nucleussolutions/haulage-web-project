@@ -68,4 +68,10 @@ export class CompanyListComponent implements OnInit, OnDestroy {
 
     });
   }
+
+  onPageChange(offset) {
+    console.log('onPageChange offset ' + offset);
+    this.offset = offset;
+    this.router.navigate(['/company', 'list'], { queryParams: { page: (offset / this.limit) + 1 } });
+  }
 }
