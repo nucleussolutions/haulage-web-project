@@ -28,22 +28,12 @@ export class JobService {
       'userId': userObject.uid
     });
 
-    this.permissionService.getByUserId(userObject).flatMap(permission => {
-      let urlPath;
-
-      if(permission.authority == 'Super Admin'){
-        urlPath = '/job';
-      }else{
-        urlPath = '/job/haulier/'+userObject.uid
-      }
-
-      return this.http.get(environment.serverUrl + urlPath, {
-        headers: headers,
-        params: params
-      });
+    this.http.get(environment.serverUrl + '/job', {
+      headers: headers,
+      params: params
     }).subscribe((json: any[]) => {
-          subject.next(json);
-        });
+      subject.next(json);
+    });
     return subject.asObservable();
   }
 
@@ -57,7 +47,7 @@ export class JobService {
     return this.http.get(environment.serverUrl + '/job/' + id, {
       headers: headers
     })
-        .map((r: Response) => new Job(r.json()));
+        .map((r) => new Job(r));
   }
 
   save(job: Job, userObject: any): Observable<Job> {
@@ -111,19 +101,8 @@ export class JobService {
       'apiKey': userObject.apiKey,
       'userId': userObject.uid
     });
-
-    this.permissionService.getByUserId(userObject).flatMap(permission => {
-      let urlPath;
-
-      if(permission.authority == 'Super Admin'){
-        urlPath = '/job/count'
-      }else{
-        urlPath = '/job/countByHaulier/'+userObject.uid;
-      }
-
-      return this.http.get(environment.serverUrl + urlPath, {
-        headers: headers
-      });
+    this.http.get(environment.serverUrl + '/job/count', {
+      headers: headers
     }).subscribe(json => {
       subject.next(json['count']);
     }, error => {
@@ -143,14 +122,6 @@ export class JobService {
     });
 
     //todo need to search taking account of user permissions as well
-
-    // this.permissionService.getByUserId(userObject.uid).flatMap(permission => {
-    //
-    //
-    //
-    //
-    //
-    // });
 
     this.http.get(environment.serverUrl + '/search/job?term=' + term, {
       headers: headers
