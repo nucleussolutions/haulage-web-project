@@ -6,54 +6,76 @@ import grails.converters.*
 
 class QuoteController extends RestfulController {
 
-    QuoteService quoteService
+  QuoteService quoteService
 
-    static responseFormats = ['json', 'xml']
-    QuoteController() {
-        super(Quote)
-    }
+  static responseFormats = ['json', 'xml']
 
-    @Override
-    Object index(Integer max) {
-        return super.index(max)
-    }
+  QuoteController() {
+    super(Quote)
+  }
 
-    @Override
-    Object show() {
-        return super.show()
+  @Override
+  Object index(Integer max) {
+    def userId = request.getHeader('userId')
+    def permission = Permission.where {
+      userInfo.userId == userId
+      authority == 'Super Admin'
+    }.first()
+    if (permission) {
+      return super.index(max)
+    } else {
+      //return quote by haulier or quote by forwarder
+      //this is annoying
+      def quotes = quoteService.findAllByHaulierIdOrForwarderId(userId, userId)
+      quotes
     }
+  }
 
-    @Override
-    Object create() {
-        return super.create()
-    }
+  @Override
+  Object show() {
+    return super.show()
+  }
 
-    @Override
-    Object save() {
-        return super.save()
-    }
+  @Override
+  Object create() {
+    return super.create()
+  }
 
-    @Override
-    Object edit() {
-        return super.edit()
-    }
+  @Override
+  Object save() {
+    return super.save()
+  }
 
-    @Override
-    Object patch() {
-        return super.patch()
-    }
+  @Override
+  Object edit() {
+    return super.edit()
+  }
 
-    @Override
-    Object update() {
-        return super.update()
-    }
+  @Override
+  Object patch() {
+    return super.patch()
+  }
 
-    @Override
-    Object delete() {
-        return super.delete()
-    }
+  @Override
+  Object update() {
+    return super.update()
+  }
 
-    def count(){
-        respond count: quoteService.count()
+  @Override
+  Object delete() {
+    return super.delete()
+  }
+
+  def count() {
+    def userId = request.getHeader('userId')
+    def permission = Permission.where {
+      userInfo.userId == userId
+      authority == 'Super Admin'
+    }.first()
+    if(permission){
+      respond count: quoteService.count()
+    }else{
+      respond count: quoteService.countByHaulierIdOrForwarderId(userId, userId)
     }
+  }
 }

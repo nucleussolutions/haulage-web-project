@@ -20,10 +20,11 @@ class LocationInterceptor {
     if(userId){
       def userPermission = Permission.where {
         userInfo.userId == userId
-      }
+        authority == 'Super Admin'
+      }.first()
 
       if(userPermission){
-        userPermission.authority == 'Super Admin'
+        true
       }else {
         false
       }

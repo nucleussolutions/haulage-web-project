@@ -12,8 +12,9 @@ class SearchManagerInterceptor {
     if(userId){
       def userPermission = Permission.where {
         userInfo.userId == userId
-      }
-      userPermission && userPermission.authority == 'Manager'
+        authority == 'Manager'
+      }.first()
+      userPermission ? true : false
     }else{
       false
     }

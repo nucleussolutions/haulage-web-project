@@ -22,15 +22,12 @@ class PermissionInterceptor {
       //find permission that belongs to this user
       def userPermission = Permission.where {
         userInfo.userId == userId
-      }
+        authority  == 'Super Admin' || authority == 'Admin'
+      }.first()
       if(!userPermission){
         false
       }else {
-        if(userPermission.authority == 'Super Admin' || 'Admin'){
-          true
-        }else{
-          false
-        }
+        true
       }
     }
   }

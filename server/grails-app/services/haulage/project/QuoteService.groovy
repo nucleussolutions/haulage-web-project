@@ -10,8 +10,13 @@ interface QuoteService {
 
   List<Quote> list(Map args)
 
+  List<Quote> findAllByHaulierIdOrForwarderId(String haulierId, String forwarderId)
+
   @Cacheable('quoteCount')
   Long count()
+
+  @Cacheable('quoteCountByHaulierIdOrForwarderId')
+  Long countByHaulierIdOrForwarderId(String haulierId, String forwarderId)
 
   void delete(Serializable id)
 

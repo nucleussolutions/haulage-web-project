@@ -11,7 +11,7 @@ class PricingInterceptor {
   def permissionService
 
   PricingInterceptor() {
-    match controller: 'pricing'
+    match controller: 'pricing' except(action: 'index')
   }
 
   boolean before() {
@@ -19,14 +19,11 @@ class PricingInterceptor {
     if(userId){
       def userPermission = Permission.where {
         userInfo.userId == userId
-      }
+        authority == 'Super Admin'
+      }.first()
 
       if(userPermission){
-        if(userPermission.authority == 'Super Admin' || userPermission.authority == 'Admin'){
-          true
-        }else{
-          false
-        }
+        true
       }else{
         false
       }

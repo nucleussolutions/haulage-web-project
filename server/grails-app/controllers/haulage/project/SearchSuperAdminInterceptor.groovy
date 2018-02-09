@@ -11,8 +11,9 @@ class SearchSuperAdminInterceptor {
     if(userId){
       def userPermission = Permission.where {
         userInfo.userId == userId
-      }
-      userPermission && userPermission.authority == 'Super Admin'
+        authority == 'Super Admin'
+      }.first()
+      userPermission ? true : false
     }else{
       false
     }
