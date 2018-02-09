@@ -6,58 +6,71 @@ import grails.rest.*
 import grails.converters.*
 import groovy.transform.TypeCheckingMode
 
-@Transactional(readOnly=false)
+@Transactional(readOnly = false)
 @GrailsCompileStatic(TypeCheckingMode.SKIP)
 class DriverInfoController extends RestfulController {
 
-    def driverInfoService
+  def driverInfoService
 
-    static responseFormats = ['json', 'xml']
-    DriverInfoController() {
-        super(DriverInfo)
-    }
+  static responseFormats = ['json', 'xml']
 
-    @Override
-    Object index(Integer max) {
-        return super.index(max)
-    }
+  DriverInfoController() {
+    super(DriverInfo)
+  }
 
-    @Override
-    Object show() {
-        return super.show()
+  @Override
+  Object index(Integer max) {
+    def userId = request.getHeader('userId')
+    def permission = Permission.where {
+      userInfo.userId = userId
+      authority == 'Super Admin'
     }
+    if (permission) {
+      return super.index(max)
+    } else {
+      def driverInfos = DriverInfo.where {
+        haulierId == userId
+      }
+      return driverInfos
+    }
+  }
 
-    @Override
-    Object create() {
-        return super.create()
-    }
+  @Override
+  Object show() {
+    return super.show()
+  }
 
-    @Override
-    Object save() {
-        return super.save()
-    }
+  @Override
+  Object create() {
+    return super.create()
+  }
 
-    @Override
-    Object edit() {
-        return super.edit()
-    }
+  @Override
+  Object save() {
+    return super.save()
+  }
 
-    @Override
-    Object patch() {
-        return super.patch()
-    }
+  @Override
+  Object edit() {
+    return super.edit()
+  }
 
-    @Override
-    Object update() {
-        return super.update()
-    }
+  @Override
+  Object patch() {
+    return super.patch()
+  }
 
-    @Override
-    Object delete() {
-        return super.delete()
-    }
+  @Override
+  Object update() {
+    return super.update()
+  }
 
-    def count(){
-        respond count: driverInfoService.count()
-    }
+  @Override
+  Object delete() {
+    return super.delete()
+  }
+
+  def count() {
+    respond count: driverInfoService.count()
+  }
 }

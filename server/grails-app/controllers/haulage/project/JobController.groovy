@@ -69,7 +69,15 @@ class JobController extends RestfulController {
   }
 
   def count(){
-    respond count: jobService.count()
+    def userId = request.getHeader('userId')
+    def permission = Permission.where {
+      authority == 'Super Admin'
+    }.first()
+    if(permission){
+      respond count: jobService.count()
+    }else{
+      respond count: jobService.countByHaulierId(userId)
+    }
   }
 
 }
