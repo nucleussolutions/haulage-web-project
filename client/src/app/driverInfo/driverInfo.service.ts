@@ -1,22 +1,19 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { DriverInfo } from './driverInfo';
-import { Subject } from 'rxjs/Subject';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {DriverInfo} from './driverInfo';
+import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
-import { environment } from "../../environments/environment";
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { int } from "aws-sdk/clients/datapipeline";
-import { Job } from "../job/job";
-import {PermissionService} from "../permission/permission.service";
+import {environment} from "../../environments/environment";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 
 @Injectable()
 export class DriverInfoService {
 
 
-  constructor(private http: HttpClient, private permissionService: PermissionService) {
+  constructor(private http: HttpClient) {
   }
 
   list(userObject: any, offset: number): Observable<DriverInfo[]> {
@@ -30,26 +27,16 @@ export class DriverInfoService {
       'userId': userObject.uid
     });
 
-    this.permissionService.getByUserId(userObject).flatMap(permission => {
-      let urlPath;
-
-      if(permission.authority == 'Super Admin'){
-        urlPath = '/driverInfo';
-      }else if(permission.authority == 'Admin'){
-        urlPath = '/driverInfo/haulier/'+userObject.uid;
-      }
-
-      return this.http.get(environment.serverUrl + urlPath, {
-        headers: headers,
-        params: params
-      });
+    this.http.get(environment.serverUrl + '/driverInfo', {
+      headers: headers,
+      params: params
     }).catch(err => {
-        subject.error(err);
-        return subject.asObservable();
-      })
-      .subscribe((json: any[]) => {
-        subject.next(json);
-      });
+      subject.error(err);
+      return subject.asObservable();
+    })
+        .subscribe((json: any[]) => {
+          subject.next(json);
+        });
     return subject.asObservable();
   }
 
@@ -64,7 +51,7 @@ export class DriverInfoService {
     return this.http.get(environment.serverUrl + '/driverInfo/' + id, {
       headers: headers
     })
-      .map((r: Response) => new DriverInfo(r));
+        .map((r: Response) => new DriverInfo(r));
   }
 
   save(driverInfo: DriverInfo, userObject: any): Observable<DriverInfo> {
@@ -91,7 +78,7 @@ export class DriverInfoService {
       headers: headers,
       body: body
     })
-      .map((r: Response) => new DriverInfo(r));
+        .map((r: Response) => new DriverInfo(r));
   }
 
   destroy(driverInfo: DriverInfo, userObject: any): Observable<boolean> {
