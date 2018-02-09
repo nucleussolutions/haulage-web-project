@@ -6,9 +6,10 @@ import {Subscription} from 'rxjs/Subscription';
 import {UserService} from 'app/user.service';
 import {PermissionService} from "../permission/permission.service";
 
-import { MouseEvent } from '@agm/core';
+import {MouseEvent} from '@agm/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {GeneralModalComponent} from "../general-modal/general-modal.component";
+import {UserInfoService} from "../userInfo/userInfo.service";
 
 
 @Component({
@@ -63,7 +64,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   ngOnDestroy(): void {
-    if(this.subscription) {
+    if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
@@ -75,7 +76,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(private titleService: Title, private userService: UserService, private permissionService: PermissionService, private modalService: NgbModal) {
+  constructor(private titleService: Title, private userService: UserService, private permissionService: PermissionService, private modalService: NgbModal, private userInfoService: UserInfoService) {
     this.titleService.setTitle('Dashboard');
   }
 
@@ -84,30 +85,44 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
 
-    this.subscription = this.userService.getUser()
-      .flatMap(userObject => {
-        this.userObject = userObject;
-        return this.permissionService.getByUserId(userObject);
-      })
-      .subscribe(permissions => {
+    // this.subscription = this.userService.getUser()
+    //     .flatMap(userObject => {
+    //       this.userObject = userObject;
+    //       return this.permissionService.getByUserId(userObject);
+    //     })
+    //     .subscribe(permissions => {
+    //
+    //     }, error => {
+    //       if (error.status == 400) {
+    //         setTimeout(() => {
+    //           if (this.userObject.token) {
+    //             // this.modal
+    //             //   .open(CreateProfileModalComponent, overlayConfigFactory({
+    //             //     isBlocking: false,
+    //             //     size: 'lg'
+    //             //   }, BSModalContext));
+    //             this.modalService.open(CreateProfileModalComponent, {
+    //               size: 'lg'
+    //             });
+    //           }
+    //         });
+    //       }
+    //       console.log('NavDrawerComponent permissionService error ' + error);
+    //     });
 
-      }, error => {
-        if (error.status == 400) {
-          setTimeout(() => {
-            if (this.userObject.token) {
-              // this.modal
-              //   .open(CreateProfileModalComponent, overlayConfigFactory({
-              //     isBlocking: false,
-              //     size: 'lg'
-              //   }, BSModalContext));
-              this.modalService.open(CreateProfileModalComponent, {
-                size: 'lg'
-              });
-            }
-          });
-        }
-        console.log('NavDrawerComponent permissionService error ' + error);
+    //todo check if user info exists, if not, pop up a dialog
+    this.userService.getUser().flatMap(userObject => {
+      this.userObject = userObject;
+      return this.userInfoService.getByUserId(this.userObject);
+    }).subscribe(userInfo => {
+      //nothing to do here
+    }, error => {
+      this.modalService.open(CreateProfileModalComponent, {
+        size: 'lg'
       });
+    })
+
+
   }
 }
 

@@ -58,6 +58,12 @@ class UserInfoController extends RestfulController {
     respond count: userInfoService.count()
   }
 
+  def getByUserId(){
+    def userId = request.getHeader('userId')
+    def userInfo = UserInfo.findByUserId(userId)
+    userInfo
+  }
+
   def getHauliers() {
     def userId = request.getHeader('userId')
     def permission = Permission.where {

@@ -61,7 +61,7 @@ export class PermissionService {
       'userId': userObject.uid
     });
 
-    this.http.get(environment.serverUrl + '/permission', {
+    this.http.get(environment.serverUrl + '/permission/userId', {
       headers: headers,
     })
         .catch(err => {

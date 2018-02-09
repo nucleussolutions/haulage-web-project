@@ -94,6 +94,19 @@ export class UserInfoService {
       .map((r: Response) => new UserInfo(r));
   }
 
+  getByUserId(userObject: any): Observable<UserInfo> {
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+    return this.http.get(environment.serverUrl + '/userInfo/me', {
+      headers: headers
+    })
+        .map((r: Response) => new UserInfo(r));
+  }
+
   save(userInfo: UserInfo, userObject: any): Observable<UserInfo> {
 
     let requestMethodStr;
