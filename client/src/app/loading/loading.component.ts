@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-loading',
@@ -7,10 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoadingComponent implements OnInit {
 
+  @Input() message: string;
 
-  constructor() {
-    // this.context = dialog.context;
-    // dialog.setCloseGuard(this);
+  constructor(public activeModal: NgbActiveModal) {
   }
 
   ngOnInit() {
