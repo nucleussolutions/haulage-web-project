@@ -11,8 +11,6 @@ import {NgbActiveModal, NgbCalendar, NgbModule} from "@ng-bootstrap/ng-bootstrap
 })
 export class CreateConsignmentModalComponent implements OnInit {
 
-  // context: CustomModalContext;
-
   @Input() consignment: Consignment;
 
   create: boolean = true;
