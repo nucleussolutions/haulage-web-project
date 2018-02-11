@@ -86,7 +86,7 @@ import { UserInfoModule } from './userInfo/userInfo.module';
     CreateCompanyModalComponent,
     GeneralModalComponent,
   ],
-  entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent],
+  entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent, GeneralModalComponent],
   imports: [
     BrowserModule,
     CookieModule.forRoot(),

@@ -11,10 +11,6 @@ import 'rxjs/add/operator/publish';
 @Injectable()
 export class UserService {
 
-  private userObjectUpdatedSource = new BehaviorSubject<Boolean>(false);
-
-  userObjectUpdated$ = this.userObjectUpdatedSource.asObservable();
-
   constructor(private http: HttpClient, private firebaseAuth: AngularFireAuth, private cookieService: CookieService) {
   }
 
@@ -33,14 +29,12 @@ export class UserService {
         this.cookieService.put('refreshToken', response.stsTokenManager.refreshToken);
         this.cookieService.put('token', response.stsTokenManager.accessToken);
         this.cookieService.put('expiresIn', response.stsTokenManager.expiresIn);
-
-        this.userObjectUpdatedSource.next(true);
-
         this.firebaseAuth.auth.currentUser.sendEmailVerification().then(verificationResponse => {
           console.log('verification email sent');
         }, error => {
           console.log('faied to send verification email ' + error);
         });
+
         resolve(response);
       }, error => {
         reject(error);
@@ -52,9 +46,7 @@ export class UserService {
     return new Promise((resolve, reject) => {
       this.firebaseAuth.auth.signInWithEmailAndPassword(email, password).then(response => {
         let responseStr = JSON.stringify(response);
-
         response = JSON.parse(responseStr);
-
         this.cookieService.put('uid', response.uid);
         this.cookieService.put('emailVerified', response.emailVerified);
         this.cookieService.put('displayName', response.displayName);
@@ -64,8 +56,6 @@ export class UserService {
         this.cookieService.put('token', response.stsTokenManager.accessToken);
         this.cookieService.put('expiresIn', response.stsTokenManager.expiresIn);
 
-        this.userObjectUpdatedSource.next(true);
-        //todo store information in cookie so that it can be accessed by the ui
         resolve(response);
       }, error => {
         reject(error);
@@ -74,7 +64,7 @@ export class UserService {
   }
 
   logout() {
-    this.userObjectUpdatedSource.next(false);
+    // this.userObjectUpdatedSource.next(false);
     this.cookieService.removeAll();
     return new Promise((resolve, reject) => {
       this.firebaseAuth.auth.signOut().then(response => {

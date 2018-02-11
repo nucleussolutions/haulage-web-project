@@ -10,6 +10,7 @@ import {MouseEvent} from '@agm/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {GeneralModalComponent} from "../general-modal/general-modal.component";
 import {UserInfoService} from "../userInfo/userInfo.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -25,6 +26,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   // initial center position for the map
   lat: number = 51.673858;
   lng: number = 7.815982;
+
 
   clickedMarker(label: string, index: number) {
     console.log(`clicked the marker: ${label || index}`)
@@ -76,7 +78,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private subscription: Subscription;
 
-  constructor(private titleService: Title, private userService: UserService, private permissionService: PermissionService, private modalService: NgbModal, private userInfoService: UserInfoService) {
+  constructor(private titleService: Title, private userService: UserService, private permissionService: PermissionService, private modalService: NgbModal, private userInfoService: UserInfoService, private router: Router) {
     this.titleService.setTitle('Dashboard');
   }
 
@@ -84,45 +86,22 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-
-    // this.subscription = this.userService.getUser()
-    //     .flatMap(userObject => {
-    //       this.userObject = userObject;
-    //       return this.permissionService.getByUserId(userObject);
-    //     })
-    //     .subscribe(permissions => {
-    //
-    //     }, error => {
-    //       if (error.status == 400) {
-    //         setTimeout(() => {
-    //           if (this.userObject.token) {
-    //             // this.modal
-    //             //   .open(CreateProfileModalComponent, overlayConfigFactory({
-    //             //     isBlocking: false,
-    //             //     size: 'lg'
-    //             //   }, BSModalContext));
-    //             this.modalService.open(CreateProfileModalComponent, {
-    //               size: 'lg'
-    //             });
-    //           }
-    //         });
-    //       }
-    //       console.log('NavDrawerComponent permissionService error ' + error);
-    //     });
-
-    //todo check if user info exists, if not, pop up a dialog
+    // check if user info exists, if not, pop up a dialog
     this.userService.getUser().flatMap(userObject => {
       this.userObject = userObject;
-      return this.userInfoService.getByUserId(this.userObject);
+      if(this.userObject.uid){
+        return this.userInfoService.getByUserId(this.userObject);
+      }else{
+        this.router.navigate(['/login']);
+      }
     }).subscribe(userInfo => {
       //nothing to do here
     }, error => {
-      this.modalService.open(CreateProfileModalComponent, {
+      const createProfileModalRef = this.modalService.open(CreateProfileModalComponent, {
         size: 'lg'
       });
+      createProfileModalRef.componentInstance.userObject = this.userObject;
     })
-
-
   }
 }
 
