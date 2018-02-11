@@ -2,7 +2,7 @@
   <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">OMS</a>
   <!--<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">-->
   <div class="navbar-nav px-3">
-    <span>Welcome {{userInfo?.name}}</span>
+    <span> {{userInfo ? 'Welcome '+userInfo.name : 'Not signed in'}}</span>
   </div>
   <!--<ul class="navbar-nav px-3">-->
     <!--<li class="nav-item text-nowrap">-->
