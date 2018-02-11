@@ -100,7 +100,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     userInfo.company = company;
 
     let permission = new Permission();
-    permission.userId = this.userObject.uid;
     permission.email = this.userObject.email;
 
     if (formData.value.usertype === 'Admin') {

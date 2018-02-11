@@ -56,13 +56,13 @@ class BootStrap {
 
     def kevinAdminPermission = new Permission(email: 'kevintanhongann@gmail.com', userInfo: kevinUserInfo, authority: 'Super Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93')
     kevinUserInfo.permissions = [kevinAdminPermission]
-    kevinUserInfo.save(flush: true)
+    kevinUserInfo.save(flush: true, failOnError: true)
     def jordanAdminPermission = new Permission(email: 'jordan@nucleus.my', userInfo: jordanUserInfo, authority: 'Super Admin', grantedBy: 'Wcd1ixuFLLStcm0GN4YylfU1nNx2')
     jordanUserInfo.permissions = [jordanAdminPermission]
-    jordanUserInfo.save(flush: true)
+    jordanUserInfo.save(flush: true, failOnError: true)
     def interceptorPermission = new Permission(email: 'interceptorz3r0@gmail.com', userInfo: interceptorUserInfo, authority: 'Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93')
     interceptorUserInfo.permissions = [interceptorPermission]
-    interceptorUserInfo.save(flush: true)
+    interceptorUserInfo.save(flush: true, failOnError: true)
 
     def consignments = []
 
