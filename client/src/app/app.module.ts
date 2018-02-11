@@ -55,6 +55,7 @@ import {NgbModalModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { CreateCompanyModalComponent } from './create-company-modal/create-company-modal.component';
 import { GeneralModalComponent } from './general-modal/general-modal.component';
 import { UserInfoModule } from './userInfo/userInfo.module';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 
@@ -85,6 +86,7 @@ import { UserInfoModule } from './userInfo/userInfo.module';
     QuotationTemplateComponent,
     CreateCompanyModalComponent,
     GeneralModalComponent,
+    NavbarComponent,
   ],
   entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent, GeneralModalComponent],
   imports: [
@@ -122,7 +124,7 @@ import { UserInfoModule } from './userInfo/userInfo.module';
     provide: LocationStrategy,
     useClass: PathLocationStrategy
   }],
-  bootstrap: [AppComponent, NavDrawerComponent]
+  bootstrap: [AppComponent, NavDrawerComponent, NavbarComponent]
 })
 export class AppModule {
 }

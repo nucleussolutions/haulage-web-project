@@ -1,12 +1,15 @@
+import {UserInfo} from "../userInfo/userInfo";
 
 
 export class Permission {
   id: number;
 
   email: string;
-  userId: string;
+  // userId: string;
   authority: string;
   grantedBy: string;
+
+  userInfo: UserInfo;
 
   constructor (object?: any) {
     if (object) {
