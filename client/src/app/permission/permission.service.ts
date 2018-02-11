@@ -69,7 +69,7 @@ export class PermissionService {
           return subject.asObservable();
         })
         .subscribe((json: any[]) => {
-          subject.next(json);
+          subject.next(json.map((item: any) => new Permission(item)))
         });
     return subject.asObservable();
   }
@@ -141,7 +141,7 @@ export class PermissionService {
       'userId': userObject.uid
     });
 
-    this.http.get(environment.serverUrl + '/permission?term=' + term, {
+    this.http.get(environment.serverUrl + '/search/permission?term=' + term, {
       headers: headers
     }).subscribe((json: any[]) => {
       subject.next(json);

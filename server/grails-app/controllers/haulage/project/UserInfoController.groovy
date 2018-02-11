@@ -60,7 +60,7 @@ class UserInfoController extends RestfulController {
 
   def getByUserId(){
     def userId = request.getHeader('userId')
-    def userInfo = UserInfo.findByUserId(userId)
+    def userInfo = userInfoService.findByUserId(userId)
     userInfo
   }
 

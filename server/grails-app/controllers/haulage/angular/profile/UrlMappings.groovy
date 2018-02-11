@@ -40,6 +40,8 @@ class UrlMappings {
     get "/userInfo/forwarder"(controller: 'userInfo', action: 'getForwarders')
     get "/userInfo/forwarder/count"(controller: 'userInfo', action: 'countForwarders')
 
+    get "/userInfo/me"(controller: 'userInfo', action: 'getByUserId')
+
     get "/permission/count/grantedBy/${userId}"(controller: 'custom', action: 'permissionCountByGrantedBy')
 
     "/api/usertype"(controller: 'userType', action: 'checkUserExist', method: 'GET')

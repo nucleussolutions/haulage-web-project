@@ -13,6 +13,8 @@ interface UserInfoService {
   @Cacheable('userInfoCount')
   Long count()
 
+  UserInfo findByUserId(String userId)
+
   void delete(Serializable id)
 
   UserInfo save(UserInfo userInfo)

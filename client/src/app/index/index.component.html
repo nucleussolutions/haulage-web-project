@@ -20,53 +20,55 @@
 
 <div class="row">
 
-  <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+  <div class="col-12 col-sm-3 col-md-3 col-lg-3">
 
   </div>
 
-  <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+  <div class="col-12 col-sm-3 col-md-3 col-lg-3">
 
   </div>
 
-  <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+  <div class="col-12 col-sm-3 col-md-3 col-lg-3">
 
   </div>
 
-  <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+  <div class="col-12 col-sm-3 col-md-3 col-lg-3">
 
   </div>
 </div>
 
 <div class="row">
-  <agm-map
-      [latitude]="lat"
-      [longitude]="lng"
-      [zoom]="zoom"
-      [disableDefaultUI]="false"
-      [zoomControl]="false"
-      (mapClick)="mapClicked($event)">
+  <div class="col-12">
+    <agm-map
+        [latitude]="lat"
+        [longitude]="lng"
+        [zoom]="zoom"
+        [disableDefaultUI]="false"
+        [zoomControl]="false"
+        (mapClick)="mapClicked($event)">
 
-    <agm-marker
-        *ngFor="let m of markers; let i = index"
-        (markerClick)="clickedMarker(m.label, i)"
-        [latitude]="m.lat"
-        [longitude]="m.lng"
-        [label]="m.label"
-        [markerDraggable]="m.draggable"
-        (dragEnd)="markerDragEnd(m, $event)">
+      <agm-marker
+          *ngFor="let m of markers; let i = index"
+          (markerClick)="clickedMarker(m.label, i)"
+          [latitude]="m.lat"
+          [longitude]="m.lng"
+          [label]="m.label"
+          [markerDraggable]="m.draggable"
+          (dragEnd)="markerDragEnd(m, $event)">
 
-      <agm-info-window>
-        <strong>InfoWindow content</strong>
-      </agm-info-window>
+        <agm-info-window>
+          <strong>InfoWindow content</strong>
+        </agm-info-window>
 
-    </agm-marker>
+      </agm-marker>
 
-    <agm-circle [latitude]="lat + 0.3" [longitude]="lng"
-                [radius]="5000"
-                [fillColor]="'red'"
-                [circleDraggable]="true"
-                [editable]="true">
-    </agm-circle>
+      <agm-circle [latitude]="lat + 0.3" [longitude]="lng"
+                  [radius]="5000"
+                  [fillColor]="'red'"
+                  [circleDraggable]="true"
+                  [editable]="true">
+      </agm-circle>
 
-  </agm-map>
+    </agm-map>
+  </div>
 </div>

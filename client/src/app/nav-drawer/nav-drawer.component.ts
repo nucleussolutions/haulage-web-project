@@ -40,21 +40,12 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
       this.userObject = userObject;
       console.log('userObject ' + JSON.stringify(userObject));
       return this.permissionService.getByUserId(this.userObject);
-    }).subscribe(json => {
-      let data = json['data'];
-
-      this.permissions = [];
-
-      data.forEach(permissionDatum => {
-        let permission = new Permission(permissionDatum.attributes);
-        permission.id = permissionDatum.id;
-        this.permissions.push(permission);
-
-        this.permissions.forEach(permission => {
-          if (permission.authority == 'Super Admin') {
-            this.superAdminPermission = permission;
-          }
-        })
+    }).subscribe(permissions => {
+      this.permissions = permissions;
+      this.permissions.forEach(permission => {
+        if (permission.authority == 'Super Admin') {
+          this.superAdminPermission = permission;
+        }
       });
     });
   }

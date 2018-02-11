@@ -18,13 +18,10 @@ class VehicleInterceptor {
     if(userId){
       def userPermission = Permission.where {
         userInfo.userId == userId
+        authority == 'Super Admin' || authority == 'Admin'
       }
       if(userPermission){
-        if(userPermission.authority == 'Super Admin' || userPermission.authority == 'Admin'){
-          true
-        }else{
-          false
-        }
+        true
       }else{
         false
       }
