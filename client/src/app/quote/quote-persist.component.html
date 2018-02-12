@@ -51,6 +51,20 @@
           </option>
         </select>
       </div>
+
+      <ngx-datatable
+          class="material"
+          [loadingIndicator]="loadingIndicator"
+          [columns]="columns"
+
+      >
+
+      </ngx-datatable>
+
+      <button type="button" (click)="addTerm()">Add Term</button>
+      <button type="button" (click)="editTerm()">Edit Term</button>
+
+
       <div class="form-group">
         <label for="items">Items
           <span class="required-indicator">*</span>
@@ -61,6 +75,17 @@
           </option>
         </select>
       </div>
+
+      <!-- ngx datatable for quote items -->
+
+      <ngx-datatable>
+
+      </ngx-datatable>
+
+      <button type="button" (click)="addQuoteItem()">Add Quote Item</button>
+      <button type="button" (click)="editQuoteItem()">Edit Quote Item</button>
+
+
       <div class="form-group">
         <label for="endDate">End Date
           <span class="required-indicator">*</span>
