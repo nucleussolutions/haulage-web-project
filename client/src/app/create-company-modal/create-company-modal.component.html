@@ -1,96 +1,91 @@
-<div class="modal fade" id="modal-id">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Create Company</h4>
-      </div>
-      <div class="modal-body">
-        <div id="persist-company" class="content scaffold-edit" role="main">
-          <h1>{{create ? "Create" : "Edit"}} Company</h1>
-          <ul class="errors" role="alert" *ngIf="errors">
-            <li *ngFor="let error of errors">{{error.message}}</li>
-          </ul>
+<form name="save{className}" (ngSubmit)="save()">
 
-          <form name="save{className}" (ngSubmit)="save()">
-            <div class="form-group">
-              <label for="name">Name
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="name" id="name" [(ngModel)]="company.name" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="registrationNo">Registration No
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="registrationNo" id="registrationNo"
-                     [(ngModel)]="company.registrationNo" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="address1">Address1
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="address1" id="address1" [(ngModel)]="company.address1"
-                     type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="address2">Address2</label>
-              <input class="form-control" name="address2" id="address2" [(ngModel)]="company.address2" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="city">City
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="city" id="city" [(ngModel)]="company.city" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="state">State
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="state" id="state" [(ngModel)]="company.state" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="country">Country
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="country" id="country" [(ngModel)]="company.country"
-                     type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="officePhone">Office Phone
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="officePhone" id="officePhone"
-                     [(ngModel)]="company.officePhone" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="yardPhone">Yard Phone
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="yardPhone" id="yardPhone" [(ngModel)]="company.yardPhone"
-                     type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="companyImgUrl">Company Img Url
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="companyImgUrl" id="companyImgUrl"
-                     [(ngModel)]="company.companyImgUrl" type="text"/>
-            </div>
-            <div class="form-group">
-              <label for="code">Code
-                <span class="required-indicator">*</span>
-              </label>
-              <input class="form-control" required="" name="code" id="code" [(ngModel)]="company.code" type="text"/>
-            </div>
-            <input type="submit" class="save" [value]="create ? 'Save' : 'Update'"/>
-          </form>
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title">Create Company</h4>
+    </div>
+    <div class="modal-body">
+      <div id="persist-company" class="content scaffold-edit" role="main">
+        <h1>{{create ? "Create" : "Edit"}} Company</h1>
+        <ul class="errors" role="alert" *ngIf="errors">
+          <li *ngFor="let error of errors">{{error.message}}</li>
+        </ul>
+
+        <div class="form-group">
+          <label for="name">Name
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="form-control" required="" name="name" id="name" [(ngModel)]="company.name" type="text"/>
+        </div>
+        <div class="form-group">
+          <label for="registrationNo">Registration No
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="form-control" required="" name="registrationNo" id="registrationNo"
+                 [(ngModel)]="company.registrationNo" type="text"/>
+        </div>
+        <div class="form-group">
+          <label for="address1">Address1
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="form-control" required="" name="address1" id="address1" [(ngModel)]="company.address1"
+                 type="text"/>
+        </div>
+        <div class="form-group">
+          <label for="address2">Address2</label>
+          <input class="form-control" name="address2" id="address2" [(ngModel)]="company.address2" type="text"/>
+        </div>
+        <div class="form-group">
+          <label for="city">City
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="form-control" required="" name="city" id="city" [(ngModel)]="company.city" type="text"/>
+        </div>
+        <div class="form-group">
+          <label for="state">State
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="form-control" required="" name="state" id="state" [(ngModel)]="company.state" type="text"/>
+        </div>
+        <div class="form-group">
+          <label for="country">Country
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="form-control" required="" name="country" id="country" [(ngModel)]="company.country"
+                 type="text"/>
+        </div>
+        <div class="form-group">
+          <label for="officePhone">Office Phone
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="form-control" required="" name="officePhone" id="officePhone"
+                 [(ngModel)]="company.officePhone" type="text"/>
+        </div>
+        <div class="form-group">
+          <label for="yardPhone">Yard Phone
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="form-control" required="" name="yardPhone" id="yardPhone" [(ngModel)]="company.yardPhone"
+                 type="text"/>
+        </div>
+        <div class="form-group">
+          <label for="companyImgUrl">Company Img Url
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="form-control" required="" name="companyImgUrl" id="companyImgUrl"
+                 [(ngModel)]="company.companyImgUrl" type="text"/>
+        </div>
+        <div class="form-group">
+          <label for="code">Code
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="form-control" required="" name="code" id="code" [(ngModel)]="company.code" type="text"/>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div>
+    <div class="modal-footer">
+      <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" data-dismiss="modal" />
+    </div>
+  </div><!-- /.modal-content -->
+</form>

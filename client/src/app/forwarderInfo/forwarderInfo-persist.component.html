@@ -48,7 +48,7 @@
           <input id="company" name="company" required type="text" class="form-control"
                  (selectItem)="selectedCompany($event)" [(ngModel)]="forwarderInfo.company"
                  [ngbTypeahead]="companySearch"/>
-
+          <button type="button" class="btn btn-primary" (click)="addCompany()">Add Company</button>
         </div>
 
         <input type="submit" class="save btn btn-primary" [value]="create ? 'Save' : 'Update'"/>

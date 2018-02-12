@@ -88,7 +88,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     GeneralModalComponent,
     NavbarComponent,
   ],
-  entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent, GeneralModalComponent],
+  entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent, GeneralModalComponent, CreateCompanyModalComponent],
   imports: [
     BrowserModule,
     CookieModule.forRoot(),

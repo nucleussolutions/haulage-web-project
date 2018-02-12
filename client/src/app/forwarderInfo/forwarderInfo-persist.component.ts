@@ -12,6 +12,8 @@ import {UserInfo} from "../userInfo/userInfo";
 import {UserInfoService} from "../userInfo/userInfo.service";
 import {Permission} from "../permission/permission";
 import {AngularFireAuth} from "angularfire2/auth";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {CreateCompanyModalComponent} from "../create-company-modal/create-company-modal.component";
 
 @Component({
   selector: 'forwarderInfo-persist',
@@ -56,7 +58,7 @@ export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
                   }));
 
 
-  constructor(private route: ActivatedRoute, private userInfoService: UserInfoService, private router: Router, private companyService: CompanyService, private userService: UserService, private firebaseAuth: AngularFireAuth) {
+  constructor(private route: ActivatedRoute, private userInfoService: UserInfoService, private router: Router, private companyService: CompanyService, private userService: UserService, private firebaseAuth: AngularFireAuth, private modalService: NgbModal) {
 
   }
 
@@ -104,5 +106,10 @@ export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
       }
       console.log('this.errors ' + JSON.stringify(this.errors));
     });
+  }
+
+  addCompany(){
+    const createCompanyModalRef = this.modalService.open(CreateCompanyModalComponent);
+    createCompanyModalRef.componentInstance.userObject = this.userObject;
   }
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {Company} from "../company/company";
 import {CompanyService} from "../company/company.service";
@@ -17,21 +17,17 @@ export class CreateCompanyModalComponent implements OnInit {
   create = true;
   errors: any[];
 
-  private userObject: any;
+  @Input() userObject: any;
 
-  constructor(public activeModal: NgbActiveModal, private companyService: CompanyService, private userService: UserService, private router: Router) {
+  constructor(public activeModal: NgbActiveModal, private companyService: CompanyService, private router: Router) {
   }
 
   ngOnInit() {
-    this.userService.getUser().subscribe(userObject => {
-      this.userObject = userObject;
-    });
   }
 
   save() {
     this.companyService.save(this.company, this.userObject).subscribe((company: Company) => {
-      // this.router.navigate(['/company', 'show', company.id]);
-
+      this.activeModal.dismiss();
     }, json => {
       if (json.hasOwnProperty('message')) {
         this.errors = [json];
