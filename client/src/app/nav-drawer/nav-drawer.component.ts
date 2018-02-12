@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {Permission} from "../permission/permission";
 import {UserService} from 'app/user.service';
 import {Observable} from "rxjs/Observable";
+import {UserInfoService} from "../userInfo/userInfo.service";
 
 
 @Component({
@@ -20,9 +21,15 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy(): void {
   }
 
-  private permissions: Permission[];
+  permissions: Permission[];
 
   superAdminPermission: any;
+
+  managerPermission: any;
+
+  adminPermission: any;
+
+  userPermission: any;
 
   private userObject: any;
 
@@ -42,11 +49,10 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
       return this.permissionService.getByUserId(this.userObject);
     }).subscribe(permissions => {
       this.permissions = permissions;
-      this.permissions.forEach(permission => {
-        if (permission.authority == 'Super Admin') {
-          this.superAdminPermission = permission;
-        }
-      });
+      this.superAdminPermission = this.permissions.find(permission => permission.authority == 'Super Admin');
+      this.adminPermission = this.permissions.find(permission => permission.authority == 'Admin');
+      this.managerPermission = this.permissions.find(permission => permission.authority == 'Manager');
+      this.userPermission = this.permissions.find(permission => permission.authority == 'User');
     });
   }
 

@@ -1,7 +1,7 @@
 <div  role="navigation">
   <ul class="nav nav-pills">
     <li class="nav-item"><a [routerLink]="['/index']" class="home nav-link">Home</a></li>
-    <li *ngIf="permission.authority == 'Super Admin'" class="nav-item"><a [routerLink]="['/forwarderInfo','create']" class="create nav-link">New ForwarderInfo</a></li>
+    <li *ngIf="permission?.authority == 'Super Admin'" class="nav-item"><a [routerLink]="['/forwarderInfo','create']" class="create nav-link">New ForwarderInfo</a></li>
   </ul>
 </div>
 <div id="list-forwarderInfo" class="content scaffold-list" role="main">

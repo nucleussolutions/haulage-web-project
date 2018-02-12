@@ -65,11 +65,14 @@ export class QuoteListComponent implements OnInit, OnDestroy {
 
       this.quoteList = [];
 
-      data.forEach(quoteDatum => {
-        let quote = new Quote(quoteDatum.attributes);
-        quote.id = quoteDatum.id;
-        this.quoteList.push(quote);
-      });
+      if(data){
+        data.forEach(quoteDatum => {
+          let quote = new Quote(quoteDatum.attributes);
+          quote.id = quoteDatum.id;
+          this.quoteList.push(quote);
+        });
+      }
+
     }, error => {
       let message;
 

@@ -25,7 +25,7 @@ class ConsignmentController extends RestfulController {
     def permission = Permission.where {
       userInfo.userId == userId
       authority == 'Super Admin'
-    }.first()
+    }
     //todo if user has super admin permissions, return all
     if(permission){
       return super.index(max)
