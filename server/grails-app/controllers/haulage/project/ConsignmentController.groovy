@@ -92,25 +92,6 @@ class ConsignmentController extends RestfulController {
     }
   }
 
-//  def listByStatusAndForwarder() {
-//    //expect status and userid to come in, status via query params and user id via request header
-//    def forwarderId = request.getHeader('userId')
-//    if (!forwarderId) {
-//      respond status: HttpStatus.BAD_REQUEST, message: 'user id not found'
-//      return
-//    }
-//
-//    if (params.status) {
-//      def consignments = Consignment.where {
-//        status == params.status
-//        transportRequest.forwarderId == forwarderId
-//      }
-//      respond consignments
-//    } else {
-//      respond status: HttpStatus.NOT_FOUND, message: 'not found'
-//    }
-//  }
-
   def listByStatusAndUserType() {
     def userId = request.getHeader('userId')
     def userType = params.userType
@@ -137,7 +118,18 @@ class ConsignmentController extends RestfulController {
   }
 
   def count() {
-    println 'test consignment count'
-    respond count: consignmentService.count()
+    def userId = request.getHeader('userId')
+    def permission = Permission.where {
+      userInfo.userId == userId
+      authority == 'Super Admin'
+    }
+    if(permission){
+      respond count: consignmentService.count()
+    }else{
+      def consignments = Consignment.where {
+        transportRequest.haulierId == userId || transportRequest.forwarderId == userId
+      }
+      respond count: consignments.size()
+    }
   }
 }

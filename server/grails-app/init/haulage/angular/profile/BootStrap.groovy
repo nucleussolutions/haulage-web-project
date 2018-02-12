@@ -145,9 +145,11 @@ class BootStrap {
     forwarderUserInfo.name = 'forwarder name'
     forwarderUserInfo.company = company2
     forwarderUserInfo.userId = 'GWQOYWnAxxVPtnUODGCWe8cXllK2'
-    forwarderUserInfo.save()
+    forwarderUserInfo.save(flush: true)
 
-    def forwarderPermission = new Permission(email: 'kevin@kevin.com', userInfo: forwarderUserInfo, authority: 'Manager', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93').save(flush: true, failOnError: true)
+    def forwarderPermission = new Permission(email: 'kevin@kevin.com', userInfo: forwarderUserInfo, authority: 'Manager', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93')
+    forwarderUserInfo.permissions = [forwarderPermission]
+    forwarderUserInfo.save(flush: true)
 
     def quoteItem1 = new QuoteItem(desc: 'desc 1', rebatePercent: 20, name: 'quote item 1')
     def quoteItem2 = new QuoteItem(desc: 'desc 2', rebatePercent: 20, name: 'quote item 1')

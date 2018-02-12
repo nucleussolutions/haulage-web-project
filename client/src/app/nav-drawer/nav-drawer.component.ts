@@ -33,7 +33,7 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private userObject: any;
 
-  constructor(private permissionService: PermissionService, private userService: UserService) {
+  constructor(private permissionService: PermissionService, private userService: UserService, private userInfoService: UserInfoService) {
 
   }
 

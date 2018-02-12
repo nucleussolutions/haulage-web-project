@@ -58,6 +58,9 @@
       <li class="nav-item" *ngIf="superAdminPermission">
         <a class="nav-link" routerLinkActive="active" routerLink="/pricing">Pricing</a>
       </li>
+
+    </ul>
+    <ul class="nav flex-column" *ngIf="userObject?.token">
       <li class="nav-item">
         <a class="nav-link" (click)="logout()" href="#">Logout</a>
       </li>

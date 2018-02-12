@@ -71,7 +71,7 @@ class QuoteController extends RestfulController {
     def permission = Permission.where {
       userInfo.userId == userId
       authority == 'Super Admin'
-    }.first()
+    }
     if(permission){
       respond count: quoteService.count()
     }else{

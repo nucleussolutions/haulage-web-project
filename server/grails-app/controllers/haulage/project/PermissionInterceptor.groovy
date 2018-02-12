@@ -11,7 +11,7 @@ class PermissionInterceptor {
   //todo permissions are strictly for hauliers and super admin only
 
   PermissionInterceptor() {
-    match(controller: 'permission').except(action: 'get')
+    match(controller: 'permission').except(action: 'get').except(action: 'getByUserId')
   }
 
   boolean before() {
@@ -23,7 +23,7 @@ class PermissionInterceptor {
       def userPermission = Permission.where {
         userInfo.userId == userId
         authority  == 'Super Admin' || authority == 'Admin'
-      }.first()
+      }
       if(!userPermission){
         false
       }else {

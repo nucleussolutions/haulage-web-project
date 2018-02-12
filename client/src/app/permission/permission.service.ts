@@ -53,6 +53,8 @@ export class PermissionService {
         .map((r: Response) => new Permission(r));
   }
 
+
+  //todo permissions should be cached so that it can be reused without calling the server again and again
   getByUserId(userObject: any): Observable<Permission[]> {
     let subject = new Subject<Permission[]>();
     let headers = new HttpHeaders({
