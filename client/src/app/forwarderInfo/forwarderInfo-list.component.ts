@@ -41,6 +41,10 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
 
   permissions: Permission[];
 
+  adminPermission: Permission;
+
+  superAdminPermission: Permission;
+
   constructor(private route: ActivatedRoute, private titleService: Title, private userService: UserService, private userInfoService: UserInfoService, private router: Router, private permissionService: PermissionService, private modalService: NgbModal) {
     this.titleService.setTitle('Forwarders');
 
@@ -68,6 +72,8 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
 
       this.permissionService.getByUserId(this.userObject).subscribe(permissions => {
         this.permissions = permissions;
+        this.adminPermission = this.permissions.find(permission => permission.authority == 'Admin');
+        this.superAdminPermission = this.permissions.find(permission => permission.authority == 'Super Admin');
       });
 
       return this.userInfoService.listForwarders(this.userObject, this.offset);

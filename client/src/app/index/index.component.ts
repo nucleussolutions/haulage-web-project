@@ -96,6 +96,10 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }).subscribe(userInfo => {
       //nothing to do here
+      const createProfileModalRef = this.modalService.open(CreateProfileModalComponent, {
+        size: 'lg'
+      });
+      createProfileModalRef.componentInstance.userObject = this.userObject;
     }, error => {
       const createProfileModalRef = this.modalService.open(CreateProfileModalComponent, {
         size: 'lg'

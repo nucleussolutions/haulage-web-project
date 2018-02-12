@@ -16,13 +16,24 @@
 
       <form name="save{className}" (ngSubmit)="save()">
         <div class="form-group">
+          <label for="email">Name
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="form-control" required="" name="name" id="name" [(ngModel)]="name" type="name"/>
+        </div>
+        <div class="form-group">
           <label for="email">Email
             <span class="required-indicator">*</span>
           </label>
           <input class="form-control" required="" name="email" id="email" [(ngModel)]="permission.email" type="email"/>
         </div>
 
-
+        <div class="form-group">
+          <label for="password">Password
+            <span class="required-indicator">*</span>
+          </label>
+          <input class="form-control" required="" name="password" id="password" [(ngModel)]="password" type="password"/>
+        </div>
 
         <div class="form-group">
           <label for="userId">User Id (optional)
@@ -35,10 +46,10 @@
             <span class="required-indicator">*</span>
           </label>
           <select class="form-control" required="" name="authority" id="authority" [(ngModel)]="permission.authority">
-            <option value="Admin">Admin</option>
-            <option value="Manager">Manager</option>
+            <option value="Admin">Haulier</option>
+            <option value="Manager">Forwarder</option>
             <option *ngIf="permission.authority == 'Super Admin'" value="Super Admin">Super Admin</option>
-            <option value="User">User</option>
+            <option value="User">Driver</option>
           </select>
         </div>
         <input type="submit" class="save btn btn-primary" [value]="create ? 'Save' : 'Update'"/>

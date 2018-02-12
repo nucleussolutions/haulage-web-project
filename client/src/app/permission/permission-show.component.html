@@ -1,34 +1,40 @@
-<div  role="navigation">
-    <ul class="nav nav-pills">
-        <li class="nav-item"><a [routerLink]="['/index']" class="home nav-link">Home</a></li>
-        <li class="nav-item"><a class="list" [routerLink]="['/permission', 'list']" class="list nav-link">Permission List</a></li>
-        <li class="nav-item"><a class="create" [routerLink]="['/permission', 'create']" class="create nav-link">New Permission</a></li>
-    </ul>
+<div role="navigation">
+  <ul class="nav nav-pills">
+    <li class="nav-item"><a [routerLink]="['/index']" class="home nav-link">Home</a></li>
+    <li class="nav-item"><a class="list" [routerLink]="['/permission', 'list']" class="list nav-link">Permission
+      List</a></li>
+  </ul>
 </div>
 <div id="show-part" class="content scaffold-show" role="main">
-    <h1>Show Permission</h1>
-    <ol class="property-list permission">
-  <li class="fieldcontain">
-    <span id="email-label" class="property-label">Email</span>
-    <div class="property-value" aria-labelledby="email-label">
-      <span>{{permission?.email}}</span>
-    </div>
-  </li>
-  <li class="fieldcontain">
-    <span id="userId-label" class="property-label">User Id</span>
-    <div class="property-value" aria-labelledby="userId-label">
-      <span>{{permission?.userInfo.userId}}</span>
-    </div>
-  </li>
-  <li class="fieldcontain">
-    <span id="authority-label" class="property-label">Authority</span>
-    <div class="property-value" aria-labelledby="authority-label">
-      <span>{{permission?.authority}}</span>
-    </div>
-  </li>
-</ol>
+  <h1>Show Permission</h1>
+  <ol class="property-list permission">
+    <li class="fieldcontain">
+      <span id="email-label" class="property-label">Email</span>
+      <div class="property-value" aria-labelledby="email-label">
+        <span>{{permission?.email}}</span>
+      </div>
+    </li>
+    <li class="fieldcontain">
+      <span id="userId-label" class="property-label">User Id</span>
+      <div class="property-value" aria-labelledby="userId-label">
+        <span>{{permission?.userInfo?.userId}}</span>
+      </div>
+    </li>
+    <li class="fieldcontain">
+      <span id="authority-label" class="property-label">Authority</span>
+      <div class="property-value" aria-labelledby="authority-label">
+        <span>{{permission?.authority}}</span>
+      </div>
+    </li>
+    <li class="fieldcontain">
+      <span id="grantedBy-label" class="property-label">Granted By</span>
+      <div class="property-value" aria-labelledby="authority-label">
+        <span>{{permission?.grantedBy}}</span>
+      </div>
+    </li>
+  </ol>
 
-    <a class="edit btn btn-primary" [routerLink]="['/permission', 'edit', permission.id]">Edit</a>
-    <button type="button" class="btn btn-danger" (click)="destroy()">Delete</button>
+  <a class="edit btn btn-primary" [routerLink]="['/permission', 'edit', permission.id]">Edit</a>
+  <button type="button" class="btn btn-danger" (click)="destroy()">Delete</button>
 
 </div>

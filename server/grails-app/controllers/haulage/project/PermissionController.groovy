@@ -3,6 +3,7 @@ package haulage.project
 
 import grails.rest.*
 import grails.converters.*
+import org.springframework.http.HttpStatus
 
 import static org.springframework.http.HttpStatus.NOT_FOUND
 import static org.springframework.http.HttpStatus.OK
@@ -28,7 +29,7 @@ class PermissionController extends RestfulController {
     if(permission){
       return super.index(max)
     }else{
-      respond permissionService.findAllByGrantedBy(userId: userId, [
+      respond permissionService.findAllByGrantedBy(userId, [
         max: params.max,
         offset: params.offset
       ])
@@ -78,15 +79,16 @@ class PermissionController extends RestfulController {
     def userId = request.getHeader('userId')
     println 'userId ' + userId
     if (!userId) {
-      render([status: NOT_FOUND, message: 'user id not found'])
+      response.status = NOT_FOUND.value()
+      respond status: NOT_FOUND, message: 'user id not found'
     } else {
       def permissions = Permission.where {
         userInfo.userId == userId
       }
 
       if (!permissions) {
-        response.status = 400
-        render([message: 'user permissions not found'])
+        response.status = NOT_FOUND.value()
+        respond status: NOT_FOUND, message: 'user permissions not found'
       } else {
         respond permissions, status: OK
       }

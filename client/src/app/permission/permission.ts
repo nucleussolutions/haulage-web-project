@@ -5,7 +5,6 @@ export class Permission {
   id: number;
 
   email: string;
-  // userId: string;
   authority: string;
   grantedBy: string;
 

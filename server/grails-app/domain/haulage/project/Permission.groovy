@@ -19,7 +19,7 @@ class Permission {
     email nullable: false, email: true
     authority nullable: false, inList: ['Admin', 'Manager', 'Super Admin', 'User']
     grantedBy nullable: false
-    userInfo nullable: false
+    userInfo nullable: true
   }
 
   static searchable = true

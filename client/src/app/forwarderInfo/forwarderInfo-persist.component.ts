@@ -8,6 +8,10 @@ import {Company} from '../company/company';
 import {UserService} from 'app/user.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Observable} from "rxjs/Observable";
+import {UserInfo} from "../userInfo/userInfo";
+import {UserInfoService} from "../userInfo/userInfo.service";
+import {Permission} from "../permission/permission";
+import {AngularFireAuth} from "angularfire2/auth";
 
 @Component({
   selector: 'forwarderInfo-persist',
@@ -21,10 +25,14 @@ export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
     }
   }
 
-  forwarderInfo = new ForwarderInfo();
+  forwarderInfo = new UserInfo();
   create = true;
   errors: any[];
   companyList: Company[];
+
+  email: string;
+
+  password: string;
 
   private subscription: Subscription;
 
@@ -48,7 +56,7 @@ export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
                   }));
 
 
-  constructor(private route: ActivatedRoute, private forwarderInfoService: ForwarderInfoService, private router: Router, private companyService: CompanyService, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private userInfoService: UserInfoService, private router: Router, private companyService: CompanyService, private userService: UserService, private firebaseAuth: AngularFireAuth) {
 
   }
 
@@ -60,19 +68,30 @@ export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
       let params = result[1];
 
       if (params.hasOwnProperty('id')) {
-        return this.forwarderInfoService.get(+params['id'], this.userObject);
+        return this.userInfoService.get(+params['id'], this.userObject);
       } else {
         throw 'params id not found. nothing to see here'
       }
 
-    }).subscribe((forwarderInfo: ForwarderInfo) => {
+    }).subscribe((forwarderInfo: UserInfo) => {
       this.create = false;
       this.forwarderInfo = forwarderInfo;
     });
   }
 
   save() {
-    this.forwarderInfoService.save(this.forwarderInfo, this.userObject).subscribe((forwarderInfo: ForwarderInfo) => {
+    if(this.create){
+      const permission = new Permission();
+      permission.authority = 'Manager';
+      permission.userInfo = this.forwarderInfo;
+      permission.email = this.email;
+      permission.grantedBy = this.userObject.uid;
+      this.forwarderInfo.permissions.push(permission);
+    }
+    this.userInfoService.save(this.forwarderInfo, this.userObject).subscribe((forwarderInfo: ForwarderInfo) => {
+      this.firebaseAuth.auth.createUserWithEmailAndPassword(this.email, this.password).then(value => {
+        console.log('user account created. User may proceed to login and fill in user details');
+      });
       this.router.navigate(['/forwarderInfo', 'show', forwarderInfo.id]);
     }, json => {
       console.log('json error ' + JSON.stringify(json));
