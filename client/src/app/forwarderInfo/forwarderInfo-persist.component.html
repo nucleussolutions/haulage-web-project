@@ -13,7 +13,7 @@
 
   <div class="col-12 col-sm-4 col-md-4 col-lg-4">
     <div id="persist-forwarderInfo" class="content scaffold-edit" role="main">
-      <h1>{{create ? "Create" : "Edit"}} ForwarderInfo</h1>
+      <h1>{{create ? "Create" : "Edit"}} Forwarder</h1>
       <ul class="errors" role="alert" *ngIf="errors">
         <li class="text-danger" *ngFor="let error of errors">{{error.message}}</li>
       </ul>
@@ -44,11 +44,17 @@
           <label for="company">Company
             <span class="required-indicator">*</span>
           </label>
+          <div class="input-group mb-3">
+            <input id="company" name="company" required type="text" class="form-control"
+                   (selectItem)="selectedCompany($event)" [(ngModel)]="forwarderInfo.company"
+                   [ngbTypeahead]="companySearch"/>
+            <div class="input-group-append">
+              <button type="button" class="btn btn-primary" (click)="addCompany()">Add Company</button>
+            </div>
+            </div>
 
-          <input id="company" name="company" required type="text" class="form-control"
-                 (selectItem)="selectedCompany($event)" [(ngModel)]="forwarderInfo.company"
-                 [ngbTypeahead]="companySearch"/>
-          <button type="button" class="btn btn-primary" (click)="addCompany()">Add Company</button>
+
+
         </div>
 
         <input type="submit" class="save btn btn-primary" [value]="create ? 'Save' : 'Update'"/>

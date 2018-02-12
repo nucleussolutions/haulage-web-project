@@ -5,11 +5,13 @@ import {CompanyService} from "../company/company.service";
 import {Response} from "@angular/http";
 import {UserService} from "../user.service";
 import {Router} from "@angular/router";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-create-company-modal',
   templateUrl: './create-company-modal.component.html',
-  styleUrls: ['./create-company-modal.component.css']
+  styleUrls: ['./create-company-modal.component.css'],
+
 })
 export class CreateCompanyModalComponent implements OnInit {
 
