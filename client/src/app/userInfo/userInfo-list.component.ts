@@ -8,6 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Vehicle} from "../vehicle/vehicle";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {GeneralModalComponent} from "../general-modal/general-modal.component";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'userInfo-list',
@@ -29,7 +30,9 @@ export class UserInfoListComponent implements OnInit {
 
   limit: number = 10;
 
-  constructor(private userInfoService: UserInfoService, private userService: UserService, private route: ActivatedRoute, private router: Router, private modalService: NgbModal) { }
+  constructor(private userInfoService: UserInfoService, private userService: UserService, private route: ActivatedRoute, private router: Router, private modalService: NgbModal, private titleService: Title) {
+    this.titleService.setTitle('User Info');
+  }
 
   ngOnInit() {
 

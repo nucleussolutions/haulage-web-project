@@ -19,7 +19,20 @@ class PermissionController extends RestfulController {
 
   @Override
   Object index(Integer max) {
-    return super.index(max)
+    def userId = request.getHeader('userId')
+    def permission = Permission.where {
+      userInfo.userId == userId
+      authority == 'Super Admin'
+    }
+
+    if(permission){
+      return super.index(max)
+    }else{
+      respond permissionService.findAllByGrantedBy(userId: userId, [
+        max: params.max,
+        offset: params.offset
+      ])
+    }
   }
 
   @Override

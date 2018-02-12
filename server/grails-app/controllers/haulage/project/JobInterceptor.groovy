@@ -18,9 +18,10 @@ class JobInterceptor {
     if(userId){
       def userPermission = Permission.where {
         userInfo.userId == userId
+        authority == 'Super Admin' || authority == 'Admin'
       }
       if(userPermission){
-        userPermission.authority != 'Manager'
+        true
       }else{
         false
       }

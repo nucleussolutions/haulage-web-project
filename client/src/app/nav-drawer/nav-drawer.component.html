@@ -16,7 +16,7 @@
       <li class="nav-item">
         <a class="nav-link" routerLinkActive="active" routerLink="/index">Home</a>
       </li>
-      <li class="nav-item" *ngIf="superAdminPermission">
+      <li class="nav-item" *ngIf="superAdminPermission || adminPermission">
         <a class="nav-link" routerLinkActive="active" routerLink="/permission">User Permissions</a>
       </li>
       <li class="nav-item" *ngIf="superAdminPermission">
