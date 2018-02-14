@@ -13,6 +13,7 @@ import { TermAndConditionModule } from '../termAndCondition/termAndCondition.mod
 import { QuoteItemModule } from '../quoteItem/quoteItem.module';
 import {PaginationModule} from "../pagination/pagination.module";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     TermAndConditionModule,
     QuoteItemModule,
     PaginationModule,
-    NgbModule
+    NgbModule,
+    NgxDatatableModule
 ],
   providers: [
     QuoteService

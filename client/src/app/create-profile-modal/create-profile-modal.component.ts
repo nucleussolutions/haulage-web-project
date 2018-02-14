@@ -39,9 +39,23 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   private base64Encoded: string;
 
-  encodeFile(file : File) {
-    this.fileReader.readAsDataURL(file);
+  changeListener($event) : void {
+    this.readThis($event.target);
   }
+
+  errors: any[];
+
+  readThis(inputValue: any): void {
+    var file:File = inputValue.files[0];
+    var myReader:FileReader = new FileReader();
+
+    myReader.onloadend = (e) => {
+      this.base64Encoded = myReader.result;
+      console.log("Encoded file!");
+    }
+    myReader.readAsDataURL(file);
+  }
+
 
   constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal) {
 
@@ -55,16 +69,12 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       companyCountry: new FormControl('Malaysia'),
       companyOfficePhone: ['', Validators.required],
       companyYardPhone: ['', Validators.required],
+      companyPostalCode: ['', Validators.required],
       companyCode: ['', Validators.required],
       companyImage: [''],
       companyRegNo: ['', Validators.required],
       usertype: new FormControl('Admin'),
     });
-
-    this.fileReader.onload = (file) => {
-      this.base64Encoded = this.fileReader.result;
-      console.log("Encoded file!");
-    }
   }
 
   submitDetails(formData) {
@@ -86,12 +96,10 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     company.code = formData.value.companyCode;
     company.yardPhone = formData.value.companyYardPhone;
     company.officePhone = formData.value.companyOfficePhone;
+    company.email = this.userObject.email;
     //todo convert companyImage to base64 string
 
-    this.encodeFile(formData.value.companyImage);
-
     company.companyImgUrl = this.base64Encoded;
-
     //upload photos to amazon s3 or firebase storage
 
     let userInfo = new UserInfo();
@@ -108,14 +116,20 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       permission.authority = 'Manager'
     }
 
-    userInfo.permissions.push(permission);
-
-
+    userInfo.permissions = [permission];
 
     this.userInfoService.save(userInfo, this.userObject).subscribe(userInfo => {
       this.activeModal.dismiss();
-    }, error => {
-
+    }, json => {
+      console.log('json error ' + JSON.stringify(json));
+      if (json.hasOwnProperty('message')) {
+        this.errors = json.error._embedded.errors;
+        console.info('[json.error]');
+      } else {
+        this.errors = json._embedded.errors;
+        console.info('json._embedded.errors');
+      }
+      console.log('this.errors ' + JSON.stringify(this.errors));
     });
   }
 }
