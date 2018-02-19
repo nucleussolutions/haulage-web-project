@@ -22,6 +22,7 @@ export class UserService {
         response = JSON.parse(responseStr);
 
         this.cookieService.put('uid', response.uid);
+        this.cookieService.put('email', email);
         this.cookieService.put('emailVerified', response.emailVerified);
         this.cookieService.put('displayName', response.displayName);
         this.cookieService.put('photoUrl', response.photoURL);
@@ -48,6 +49,7 @@ export class UserService {
         let responseStr = JSON.stringify(response);
         response = JSON.parse(responseStr);
         this.cookieService.put('uid', response.uid);
+        this.cookieService.put('email', email);
         this.cookieService.put('emailVerified', response.emailVerified);
         this.cookieService.put('displayName', response.displayName);
         this.cookieService.put('photoUrl', response.photoURL);
@@ -112,21 +114,21 @@ export class UserService {
     });
   }
 
-  checkUserType(userId: string, token: string, apiKey: string) {
-
-    let headers = new HttpHeaders({
-      'token': token,
-      'apiKey': apiKey
-    });
-
-    return new Promise((resolve, reject) => {
-      this.http.get(environment.serverUrl + '/api/usertype?userId=' + userId, {
-        headers: headers
-      }).subscribe(response => {
-        resolve(response);
-      }, error => {
-        reject(error);
-      });
-    });
-  }
+  // checkUserType(userId: string, token: string, apiKey: string) {
+  //
+  //   let headers = new HttpHeaders({
+  //     'token': token,
+  //     'apiKey': apiKey
+  //   });
+  //
+  //   return new Promise((resolve, reject) => {
+  //     this.http.get(environment.serverUrl + '/api/usertype?userId=' + userId, {
+  //       headers: headers
+  //     }).subscribe(response => {
+  //       resolve(response);
+  //     }, error => {
+  //       reject(error);
+  //     });
+  //   });
+  // }
 }
