@@ -12,6 +12,7 @@ export class Company {
   country: string;
   officePhone: string;
   yardPhone: string;
+  companyImageBase64: string;
   companyImgUrl: string;
   code: string;
   email: string;
