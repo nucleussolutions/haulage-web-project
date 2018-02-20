@@ -156,7 +156,7 @@ class UserInfoController extends RestfulController {
       return
     }
 
-    T instance = queryForResource(params.id)
+    UserInfo instance = userInfoService.get(params.id as Long)
     if (instance == null) {
       transactionStatus.setRollbackOnly()
       notFound()
@@ -164,6 +164,35 @@ class UserInfoController extends RestfulController {
     }
 
     instance.properties = getObjectToBind()
+
+    //todo
+
+    if(request.JSON.driverInfo.icBackImageBase64){
+      byte[] decoded = request.JSON.driverInfo.icBackImageBase64.decodeBase64()
+      File file = new File('icBack.jpg').withOutputStream {
+        it.write(decoded)
+      }
+      //todo delete existing file
+      instance.driverInfo.icBackImgUrl = haulageBucketService.storeFile('/home/driver/${request.JSON.driverInfo.icNumber}/icBack/', file)
+    }
+
+    if(request.JSON.driverInfo.icFrontImageBase64) {
+      byte[] decoded = request.JSON.driverInfo.icFrontImageBase64.decodeBase64()
+      File file = new File('icFront.jpg').withOutputStream {
+        it.write(decoded)
+      }
+      //todo delete existing file
+      instance.driverInfo.icFrontImgUrl = haulageBucketService.storeFile('/home/driver/${request.JSON.driverInfo.icNumber}/icFront/', file)
+    }
+
+    if(request.JSON.driverInfo.passportImageBase64){
+      byte[] decoded = request.JSON.driverInfo.passportImageBase64.decodeBase64()
+      File file = new File('passportimage.jpg').withOutputStream {
+        it.write(decoded)
+      }
+      //todo delete existing file
+      instance.driverInfo.passportImgUrl = haulageBucketService.storeFile('/home/driver/${request.JSON.driverInfo.icNumber}/passport/', file)
+    }
 
     if (instance.hasErrors()) {
       transactionStatus.setRollbackOnly()
@@ -188,6 +217,10 @@ class UserInfoController extends RestfulController {
 
   @Override
   Object delete() {
+
+    //todo delete all the files
+
+
     return super.delete()
   }
 
