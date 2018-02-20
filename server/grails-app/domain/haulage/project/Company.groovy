@@ -34,7 +34,7 @@ class Company {
     companyImgUrl nullable: true
     code nullable: false, blank: false, unique: true
     email nullable: false, email: true
-    postalCode nullable: false
+    postalCode nullable: true
   }
 
   static searchable = true

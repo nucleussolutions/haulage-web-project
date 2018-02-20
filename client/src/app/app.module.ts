@@ -56,6 +56,7 @@ import { CreateCompanyModalComponent } from './create-company-modal/create-compa
 import { GeneralModalComponent } from './general-modal/general-modal.component';
 import { UserInfoModule } from './userInfo/userInfo.module';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -87,6 +88,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     CreateCompanyModalComponent,
     GeneralModalComponent,
     NavbarComponent,
+    ProfileComponent,
   ],
   entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent, GeneralModalComponent, CreateCompanyModalComponent],
   imports: [

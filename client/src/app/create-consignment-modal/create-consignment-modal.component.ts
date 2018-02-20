@@ -50,8 +50,3 @@ export class CreateConsignmentModalComponent implements OnInit {
   }
 
 }
-
-// export class CustomModalContext extends BSModalContext {
-//   public create: boolean;
-//   public consignment: Consignment;
-// }

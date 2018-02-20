@@ -35,8 +35,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
 
-  private fileReader: FileReader;
-
   private base64Encoded: string;
 
   changeListener($event) : void {
@@ -73,18 +71,12 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       companyCode: ['', Validators.required],
       companyImage: [''],
       companyRegNo: ['', Validators.required],
-      usertype: new FormControl('Admin'),
     });
   }
 
   submitDetails(formData) {
-    //check if user id belongs to a haulier or forwarder, then make a submit call to the backend
-
     //todo perhaps check the uniqueness of the user id first then save
-
     // let loadingSpinner = document.getElementById('loading-spinner');
-
-
     let company = new Company();
     company.name = formData.value.companyName;
     company.address1 = formData.value.companyAddress1;
@@ -97,9 +89,11 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     company.yardPhone = formData.value.companyYardPhone;
     company.officePhone = formData.value.companyOfficePhone;
     company.email = this.userObject.email;
+    company.postalCode = formData.value.companyPostalCode;
     //todo convert companyImage to base64 string
 
-    company.companyImgUrl = this.base64Encoded;
+    company.companyImageBase64 = this.base64Encoded;
+    // company.companyImgUrl = this.base64Encoded;
     //upload photos to amazon s3 or firebase storage
 
     let userInfo = new UserInfo();
@@ -110,16 +104,14 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     let permission = new Permission();
     permission.email = this.userObject.email;
 
-    if (formData.value.usertype === 'Admin') {
-      permission.authority = 'Admin';
-    } else if (formData.value.usertype === 'Manager') {
-      permission.authority = 'Manager'
-    }
-
+    //user permission will always be haulier since create profile is for the haulier
+    permission.authority = 'Admin';
     userInfo.permissions = [permission];
 
     this.userInfoService.save(userInfo, this.userObject).subscribe(userInfo => {
       this.activeModal.dismiss();
+      //dismiss modal and reload the whole screen
+      window.location.reload();
     }, json => {
       console.log('json error ' + JSON.stringify(json));
       if (json.hasOwnProperty('message')) {
