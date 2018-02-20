@@ -1,5 +1,6 @@
 package haulage.project
 
+import com.amazonaws.services.s3.transfer.Upload
 import grails.gorm.transactions.Transactional
 import grails.plugin.awssdk.s3.AmazonS3Service
 import grails.rest.*
@@ -8,6 +9,7 @@ import grails.web.http.HttpHeaders
 import org.apache.commons.io.FileUtils
 
 import static org.springframework.http.HttpStatus.CREATED
+import static org.springframework.http.HttpStatus.NO_CONTENT
 import static org.springframework.http.HttpStatus.OK
 
 class UserInfoController extends RestfulController {
@@ -150,7 +152,7 @@ class UserInfoController extends RestfulController {
   }
 
   @Transactional
-  Object update() {
+  def update() {
 //    return super.update()
     if(handleReadOnly()) {
       return
@@ -165,14 +167,13 @@ class UserInfoController extends RestfulController {
 
     instance.properties = getObjectToBind()
 
-    //todo
-
     if(request.JSON.driverInfo.icBackImageBase64){
       byte[] decoded = request.JSON.driverInfo.icBackImageBase64.decodeBase64()
       File file = new File('icBack.jpg').withOutputStream {
         it.write(decoded)
       }
       //todo delete existing file
+      haulageBucketService.deleteFile(instance.driverInfo.icBackImgUrl)
       instance.driverInfo.icBackImgUrl = haulageBucketService.storeFile('/home/driver/${request.JSON.driverInfo.icNumber}/icBack/', file)
     }
 
@@ -182,6 +183,7 @@ class UserInfoController extends RestfulController {
         it.write(decoded)
       }
       //todo delete existing file
+      haulageBucketService.deleteFile(instance.driverInfo.icFrontImgUrl)
       instance.driverInfo.icFrontImgUrl = haulageBucketService.storeFile('/home/driver/${request.JSON.driverInfo.icNumber}/icFront/', file)
     }
 
@@ -190,8 +192,11 @@ class UserInfoController extends RestfulController {
       File file = new File('passportimage.jpg').withOutputStream {
         it.write(decoded)
       }
-      //todo delete existing file
+      //todo delete existing file by using the file key
+      haulageBucketService.deleteFile(instance.driverInfo.passportImgUrl)
       instance.driverInfo.passportImgUrl = haulageBucketService.storeFile('/home/driver/${request.JSON.driverInfo.icNumber}/passport/', file)
+      println 'instance.driverInfo.passportImgUrl '+instance.driverInfo.passportImgUrl
+//      Upload upload = haulageBucketService.transferFile('/home/driver/${request.JSON.driverInfo.icNumber}/passport/', file)
     }
 
     if (instance.hasErrors()) {
@@ -215,13 +220,44 @@ class UserInfoController extends RestfulController {
     }
   }
 
-  @Override
-  Object delete() {
+  @Transactional
+  def delete() {
+    if(handleReadOnly()) {
+      return
+    }
+
+    def instance = userInfoService.get(params.id)
+    if (instance == null) {
+      transactionStatus.setRollbackOnly()
+      notFound()
+      return
+    }
 
     //todo delete all the files
+    if(instance.driverInfo){
+      if(instance.driverInfo.icFrontImgUrl){
+        haulageBucketService.deleteFile(instance.driverInfo.icFrontImgUrl)
+      }
 
+      if(instance.driverInfo.icBackImgUrl){
+        haulageBucketService.deleteFile(instance.driverInfo.icBackImgUrl)
+      }
 
-    return super.delete()
+      if(instance.driverInfo.passportImgUrl){
+        haulageBucketService.deleteFile(instance.driverInfo.passportImgUrl)
+      }
+    }
+
+    deleteResource instance
+
+    request.withFormat {
+      form multipartForm {
+        flash.message = message(code: 'default.deleted.message', args: [classMessageArg, instance.id])
+        redirect action:"index", method:"GET"
+      }
+      '*'{ render status: NO_CONTENT } // NO CONTENT STATUS CODE
+    }
+
   }
 
   def count() {
