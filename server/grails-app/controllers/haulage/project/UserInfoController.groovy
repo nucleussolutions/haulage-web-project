@@ -1,12 +1,14 @@
 package haulage.project
 
-
+import grails.plugin.awssdk.s3.AmazonS3Service
 import grails.rest.*
 import grails.converters.*
 
 class UserInfoController extends RestfulController {
 
   UserInfoService userInfoService
+  AmazonS3Service s3Service
+  HaulageBucketService haulageBucketService
 
   static responseFormats = ['json', 'xml']
 
@@ -58,7 +60,7 @@ class UserInfoController extends RestfulController {
     respond count: userInfoService.count()
   }
 
-  def getByUserId(){
+  def getByUserId() {
     def userId = request.getHeader('userId')
     def userInfo = userInfoService.findByUserId(userId)
     respond userInfo
@@ -72,21 +74,21 @@ class UserInfoController extends RestfulController {
     }
     def userInfos
     if (permission) {
-       userInfos = UserInfo.createCriteria().list(max: params.limit, offset: params.offset) {
+      userInfos = UserInfo.createCriteria().list(max: params.limit, offset: params.offset) {
         permissions {
           'in'('authority', 'Admin')
         }
       }
 
     } else {
-       userInfos = UserInfo.createCriteria().list(max: params.limit, offset: params.offset) {
+      userInfos = UserInfo.createCriteria().list(max: params.limit, offset: params.offset) {
         permissions {
           'in'('grantedBy', userId)
           'in'('authority', 'Admin')
         }
       }
     }
-    println 'userInfos '+userInfos
+    println 'userInfos ' + userInfos
     respond userInfos
   }
 
@@ -98,7 +100,7 @@ class UserInfoController extends RestfulController {
     }
     def userInfos
     if (permission) {
-       userInfos = UserInfo.createCriteria().list(max: params.limit, offset: params.offset) {
+      userInfos = UserInfo.createCriteria().list(max: params.limit, offset: params.offset) {
         permissions {
           'in'('authority', 'Admin')
         }
@@ -106,7 +108,7 @@ class UserInfoController extends RestfulController {
 
       println userInfos
     } else {
-       userInfos = UserInfo.createCriteria().list(max: params.limit, offset: params.offset) {
+      userInfos = UserInfo.createCriteria().list(max: params.limit, offset: params.offset) {
         permissions {
           'in'('grantedBy', userId)
           'in'('authority', 'Admin')
