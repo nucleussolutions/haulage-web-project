@@ -68,11 +68,8 @@
                  type="text"/>
         </div>
         <div class="form-group">
-          <label for="companyImgUrl">Company Img Url
-            <span class="required-indicator">*</span>
-          </label>
-          <input class="form-control" required="" name="companyImgUrl" id="companyImgUrl"
-                 [(ngModel)]="company.companyImgUrl" type="text"/>
+          <label for="companyImage">Company Image</label>
+          <input type="file" class="form-control" id="companyImage" formControlName="companyImage" (change)="changeListener($event)">
         </div>
         <div class="form-group">
           <label for="code">Code

@@ -78,18 +78,19 @@ export class ForwarderInfoListComponent implements OnInit, OnDestroy {
 
       return this.userInfoService.listForwarders(this.userObject, this.offset);
     }).subscribe(json => {
-      let data = json['data'];
+      if(json){
+        let data = json['data'];
 
-      this.forwarderInfoList = [];
+        this.forwarderInfoList = [];
 
-      if(data){
-        data.forEach(forwarderInfoDatum => {
-          let forwarderInfo = new UserInfo(forwarderInfoDatum.attributes);
-          forwarderInfo.id = forwarderInfoDatum.id;
-          this.forwarderInfoList.push(forwarderInfo);
-        });
+        if(data){
+          data.forEach(forwarderInfoDatum => {
+            let forwarderInfo = new UserInfo(forwarderInfoDatum.attributes);
+            forwarderInfo.id = forwarderInfoDatum.id;
+            this.forwarderInfoList.push(forwarderInfo);
+          });
+        }
       }
-
 
     }, error => {
       let message;

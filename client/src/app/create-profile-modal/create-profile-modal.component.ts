@@ -44,13 +44,13 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   errors: any[];
 
   readThis(inputValue: any): void {
-    var file:File = inputValue.files[0];
-    var myReader:FileReader = new FileReader();
+    let file: File = inputValue.files[0];
+    let myReader:FileReader = new FileReader();
 
     myReader.onloadend = (e) => {
       this.base64Encoded = myReader.result;
       console.log("Encoded file!");
-    }
+    };
     myReader.readAsDataURL(file);
   }
 

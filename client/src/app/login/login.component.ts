@@ -31,6 +31,8 @@ export class LoginComponent implements OnInit {
       if(userObject['uid']){
         this.router.navigate(['/index']);
       }
+    }, error2 => {
+      //not logged in
     });
   }
 
