@@ -1,9 +1,6 @@
 package haulage.project
 
 
-import grails.rest.*
-
-@Resource(readOnly = false, formats = ['json', 'xml'])
 class ExpenseItem {
   String merchantName
 
@@ -15,6 +12,10 @@ class ExpenseItem {
 
   String receiptUrl
 
+  Boolean reimbursable = false
+
+  Boolean billable = false
+
   static belongsTo = [Expense]
 
   static constraints = {
@@ -23,5 +24,7 @@ class ExpenseItem {
     txDate nullable: false
     merchantName nullable: false
     receiptUrl nullable: false
+    reimbursable nullable: false
+    billable nullable: false
   }
 }
