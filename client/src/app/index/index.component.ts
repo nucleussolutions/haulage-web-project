@@ -83,6 +83,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+
   }
 
   ngAfterViewInit() {
@@ -93,6 +94,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         return this.userInfoService.getByUserId(this.userObject);
       }else{
         this.router.navigate(['/login']);
+        throw 'redirect to login'
       }
     }).subscribe(userInfo => {
       //nothing to do here

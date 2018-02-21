@@ -57,7 +57,6 @@ export class UserService {
         this.cookieService.put('refreshToken', response.stsTokenManager.refreshToken);
         this.cookieService.put('token', response.stsTokenManager.accessToken);
         this.cookieService.put('expiresIn', response.stsTokenManager.expiresIn);
-
         resolve(response);
       }, error => {
         reject(error);
@@ -78,9 +77,18 @@ export class UserService {
   }
 
   getUser() {
-    let cookieObjects = this.cookieService.getAll();
-    console.log('cookieObjects ' + JSON.stringify(cookieObjects));
-    return Observable.of(cookieObjects);
+    let subject = new Subject<any>();
+    this.firebaseAuth.authState.subscribe(currentUser => {
+      console.log('firebase current user '+JSON.stringify(currentUser));
+      if(currentUser){
+        let cookieObjects = this.cookieService.getAll();
+        console.log('cookieObjects ' + JSON.stringify(cookieObjects));
+        subject.next(cookieObjects);
+      }else{
+        subject.error('not logged in');
+      }
+    });
+    return subject.asObservable();
   }
 
   sendPasswordResetEmail(email: string) {
