@@ -109,7 +109,9 @@ export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
   }
 
   addCompany(){
-    const createCompanyModalRef = this.modalService.open(CreateCompanyModalComponent);
+    const createCompanyModalRef = this.modalService.open(CreateCompanyModalComponent, {
+      size: 'lg'
+    });
     createCompanyModalRef.componentInstance.userObject = this.userObject;
   }
 }
