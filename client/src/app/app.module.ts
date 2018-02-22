@@ -56,6 +56,7 @@ import { CreateCompanyModalComponent } from './create-company-modal/create-compa
 import { GeneralModalComponent } from './general-modal/general-modal.component';
 import { UserInfoModule } from './userInfo/userInfo.module';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ExpenseModule } from './expense/expense.module';
 
 
 
@@ -117,7 +118,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     PaginationModule,
     NgbModule.forRoot(),
     AgmCoreModule.forRoot({apiKey:'AIzaSyDwrBvVQ4vb99X-IUAn0ntKOK3zv4hokxc'}),
-    UserInfoModule
+    UserInfoModule,
+    ExpenseModule
 ],
   exports: [ReactiveFormsModule],
   providers: [{

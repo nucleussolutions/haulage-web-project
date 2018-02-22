@@ -1,0 +1,38 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/expense','list']" class="list">Expense List</a></li>
+    </ul>
+</div>
+<div id="persist-expense" class="content scaffold-edit" role="main">
+    <h1>{{create ? "Create" : "Edit"}} Expense</h1>
+    <ul class="errors" role="alert" *ngIf="errors">
+        <li *ngFor="let error of errors">{{error.message}}</li>
+    </ul>
+
+    <form name="save{className}" (ngSubmit)="save()">
+        <fieldset class="form">
+            <fieldset class="form">
+  <div class="fieldcontain required">
+    <label for="job">Job
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="job" id="job" [(ngModel)]="expense.job">
+      <option *ngFor="let job of jobList" [value]="job.id" [selected]="expense.job?.id == job.id">{{job.toString()}}</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
+    <label for="items">Items
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="items" id="items" [(ngModel)]="expense.items" multiple="">
+      <option *ngFor="let expenseItem of expenseItemList" [value]="expenseItem.id" [selected]="expense.items?.id == expenseItem.id">{{expenseItem.toString()}}</option>
+    </select>
+  </div>
+</fieldset>
+        </fieldset>
+        <fieldset class="buttons">
+            <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" />
+        </fieldset>
+    </form>
+</div>
