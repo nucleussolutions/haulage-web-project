@@ -1,0 +1,58 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/expenseItem','list']" class="list">ExpenseItem List</a></li>
+    </ul>
+</div>
+<div id="persist-expenseItem" class="content scaffold-edit" role="main">
+    <h1>{{create ? "Create" : "Edit"}} ExpenseItem</h1>
+    <ul class="errors" role="alert" *ngIf="errors">
+        <li *ngFor="let error of errors">{{error.message}}</li>
+    </ul>
+
+    <form name="save{className}" (ngSubmit)="save()">
+        <fieldset class="form">
+            <fieldset class="form">
+  <div class="fieldcontain required">
+    <label for="category">Category
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="category" id="category" [(ngModel)]="expenseItem.category" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="comment">Comment</label>
+    <input name="comment" id="comment" [(ngModel)]="expenseItem.comment" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="txDate">Tx Date
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="txDate" id="txDate" type="date" placeholder="YYYY-MM-DD" [value]="expenseItem.txDate | date:'y-MM-dd'" (change)="expenseItem.txDate = $event.target.valueAsDate" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="merchantName">Merchant Name
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="merchantName" id="merchantName" [(ngModel)]="expenseItem.merchantName" type="text" />
+  </div>
+  <div class="fieldcontain required">
+    <label for="receiptUrl">Receipt Url
+      <span class="required-indicator">*</span>
+    </label>
+    <input required="" name="receiptUrl" id="receiptUrl" [(ngModel)]="expenseItem.receiptUrl" type="text" />
+  </div>
+  <div class="fieldcontain">
+    <label for="reimbursable">Reimbursable</label>
+    <input name="reimbursable" id="reimbursable" [(ngModel)]="expenseItem.reimbursable" type="checkbox" />
+  </div>
+  <div class="fieldcontain">
+    <label for="billable">Billable</label>
+    <input name="billable" id="billable" [(ngModel)]="expenseItem.billable" type="checkbox" />
+  </div>
+</fieldset>
+        </fieldset>
+        <fieldset class="buttons">
+            <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" />
+        </fieldset>
+    </form>
+</div>

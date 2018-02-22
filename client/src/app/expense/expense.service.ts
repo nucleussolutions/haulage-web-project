@@ -1,53 +1,89 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, RequestOptions, RequestMethod, Request, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Expense} from './expense';
 import {Subject} from 'rxjs/Subject';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {environment} from "../../environments/environment";
 
 @Injectable()
 export class ExpenseService {
 
-  private baseUrl = 'http://localhost:8080/';
-
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
   }
 
-  list(): Observable<Expense[]> {
+  list(userObject: any, offset: number): Observable<Expense[]> {
     let subject = new Subject<Expense[]>();
-    this.http.get(this.baseUrl + 'expense')
-      .map((r: Response) => r.json())
+
+    let params = new HttpParams();
+    params = params.append('offset', offset.toString());
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+    this.http.get(environment.serverUrl + '/expense', {
+      params: params,
+      headers: headers
+    })
       .subscribe((json: any[]) => {
-        subject.next(json.map((item: any) => new Expense(item)))
+        subject.next(json);
       });
     return subject.asObservable();
   }
 
-  get(id: number): Observable<Expense> {
-    return this.http.get(this.baseUrl + 'expense/'+id)
-      .map((r: Response) => new Expense(r.json()));
+  get(id: number, userObject: any): Observable<Expense> {
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+    return this.http.get(environment.serverUrl + '/expense/'+id, {
+      headers: headers
+    })
+      .map((r: Response) => new Expense(r));
   }
 
-  save(expense: Expense): Observable<Expense> {
-    const requestOptions = new RequestOptions();
+  save(expense: Expense, userObject: any): Observable<Expense> {
+    
+    let requestMethodStr;
+    let url;
+    
+    // const requestOptions = new RequestOptions();
     if (expense.id) {
-      requestOptions.method = RequestMethod.Put;
-      requestOptions.url = this.baseUrl + 'expense/' + expense.id;
+      requestMethodStr = "PUT";
+      url = environment.serverUrl + '/expense/' + expense.id;
     } else {
-      requestOptions.method = RequestMethod.Post;
-      requestOptions.url = this.baseUrl + 'expense';
+      requestMethodStr = "POST";
+      url = environment.serverUrl + '/expense';
     }
-    requestOptions.body = JSON.stringify(expense);
-    requestOptions.headers = new Headers({"Content-Type": "application/json"});
+    const body = JSON.stringify(expense);
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json",
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
 
-    return this.http.request(new Request(requestOptions))
-      .map((r: Response) => new Expense(r.json()));
+    return this.http.request(requestMethodStr, url, {
+      headers: headers,
+      body: body
+    })
+      .map((r: Response) => new Expense(r));
   }
 
-  destroy(expense: Expense): Observable<boolean> {
-    return this.http.delete(this.baseUrl + 'expense/' + expense.id).map((res: Response) => res.ok).catch(() => {
+  destroy(expense: Expense, userObject: any): Observable<boolean> {
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+    return this.http.delete(environment.serverUrl + '/expense/' + expense.id, {
+      headers: headers
+    }).map((res: Response) => res.ok).catch(() => {
       return Observable.of(false);
     });
   }

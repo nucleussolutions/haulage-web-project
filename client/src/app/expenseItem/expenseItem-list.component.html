@@ -1,0 +1,47 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/expenseItem','create']" class="create">New ExpenseItem</a></li>
+    </ul>
+</div>
+<div id="list-expenseItem" class="content scaffold-list" role="main">
+    <h1>ExpenseItem List</h1>
+    <table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Category</th>
+      <th>Comment</th>
+      <th>Tx Date</th>
+      <th>Merchant Name</th>
+      <th>Receipt Url</th>
+      <th>Reimbursable</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let expenseItem of expenseItemList; let e = even;">
+      <td>
+        <a [routerLink]="['/expenseItem','show',expenseItem.id]">{{expenseItem.id}}</a>
+      </td>
+      <td>
+        <span>{{expenseItem.category}}</span>
+      </td>
+      <td>
+        <span>{{expenseItem.comment}}</span>
+      </td>
+      <td>
+        <span>{{expenseItem.txDate | date:'yyyy-MM-dd HH:mm:ss Z'}}</span>
+      </td>
+      <td>
+        <span>{{expenseItem.merchantName}}</span>
+      </td>
+      <td>
+        <span>{{expenseItem.receiptUrl}}</span>
+      </td>
+      <td>
+        <span>{{expenseItem.reimbursable}}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
