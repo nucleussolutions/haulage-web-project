@@ -5,7 +5,7 @@ import { UserService } from '../user.service';
 import { Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { Observable } from "rxjs/Observable";
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {GeneralModalComponent} from "../general-modal/general-modal.component";
 
@@ -18,7 +18,9 @@ import {GeneralModalComponent} from "../general-modal/general-modal.component";
 export class ExpenseListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-
+    if(this.subscription){
+      this.subscription.unsubscribe();
+    }
   }
 
   private page: number = 1;
@@ -35,14 +37,14 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
 
   private userObject: any;
 
-  constructor(private expenseService: ExpenseService, private userService: UserService,private titleService: Title, private router: Router, private modalService: NgbModal) {
+  constructor(private route: ActivatedRoute, private expenseService: ExpenseService, private userService: UserService,private titleService: Title, private router: Router, private modalService: NgbModal) {
 
     this.titleService.setTitle('Expenses');
   }
 
   ngOnInit() {
 
-    Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
+    this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.queryParams).flatMap(result => {
 
       this.userObject = result[0];
 
