@@ -7,6 +7,7 @@ import { JobService } from '../job/job.service';
 import { Job } from '../job/job';
 import { ExpenseItemService } from '../expenseItem/expenseItem.service';
 import { ExpenseItem } from '../expenseItem/expenseItem';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'expense-persist',
@@ -20,9 +21,15 @@ export class ExpensePersistComponent implements OnInit {
   jobList: Job[];
   expenseItemList: ExpenseItem[];
 
-  constructor(private route: ActivatedRoute, private expenseService: ExpenseService, private router: Router, private jobService: JobService, private expenseItemService: ExpenseItemService) {}
+  constructor(private route: ActivatedRoute, private expenseService: ExpenseService, private router: Router, private jobService: JobService, private expenseItemService: ExpenseItemService, private userService: UserService) {}
 
   ngOnInit() {
+
+    this.userService.getUser().subscribe(userObject => {
+
+    });
+
+
     this.jobService.list().subscribe((jobList: Job[]) => { this.jobList = jobList; });
     this.expenseItemService.list().subscribe((expenseItemList: ExpenseItem[]) => { this.expenseItemList = expenseItemList; });
     this.route.params.subscribe((params: Params) => {
