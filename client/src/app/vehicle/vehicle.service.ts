@@ -14,7 +14,7 @@ import {PermissionService} from "../permission/permission.service";
 export class VehicleService {
 
 
-  constructor(private http: HttpClient, private permissionService: PermissionService) {
+  constructor(private http: HttpClient) {
   }
 
   list(userObject: any, offset: number): Observable<Vehicle[]> {

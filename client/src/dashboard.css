@@ -91,3 +91,13 @@ body {
 
 .border-top { border-top: 1px solid #e5e5e5; }
 .border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+.modal-backdrop.show {
+  opacity: 0;
+  transition: 4s;
+}
+
+.modal-content {
+  opacity: 0;
+  transition: 0.15s;
+}

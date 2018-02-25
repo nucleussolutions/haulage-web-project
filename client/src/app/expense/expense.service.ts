@@ -35,6 +35,23 @@ export class ExpenseService {
     return subject.asObservable();
   }
 
+  listWithoutPaging(userObject: any){
+    let subject = new Subject<Expense[]>();
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+    this.http.get(environment.serverUrl + '/expense', {
+      headers: headers
+    })
+        .subscribe((json: any[]) => {
+          subject.next(json);
+        });
+    return subject.asObservable();
+  }
+
   get(id: number, userObject: any): Observable<Expense> {
     let headers = new HttpHeaders({
       'token': userObject.token,
@@ -87,4 +104,6 @@ export class ExpenseService {
       return Observable.of(false);
     });
   }
+
+
 }
