@@ -56,7 +56,14 @@
           class="material"
           [loadingIndicator]="loadingIndicator"
           [columns]="columns"
-
+          [columnMode]="'force'"
+          [headerHeight]="40"
+          [footerHeight]="40"
+          [limit]="10"
+          [rowHeight]="'auto'"
+          [selectionType]="'single'"
+          [selected]="selectedTerm"
+          (select)='onSelect($event)'
       >
 
       </ngx-datatable>
@@ -78,7 +85,10 @@
 
       <!-- ngx datatable for quote items -->
 
-      <ngx-datatable>
+      <ngx-datatable
+          class="material"
+          [loadingIndicator]="loadingIndicator"
+          [columns]="columns">
 
       </ngx-datatable>
 

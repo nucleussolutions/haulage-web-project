@@ -12,6 +12,7 @@ import {PermissionService} from "../permission/permission.service";
 import {Subscription} from "rxjs/Subscription";
 import {Permission} from "../permission/permission";
 import {Observable} from "rxjs/Observable";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'quote-persist',
@@ -31,7 +32,7 @@ export class QuotePersistComponent implements OnInit {
 
   permissions: Permission[];
 
-  constructor(private route: ActivatedRoute, private quoteService: QuoteService, private router: Router, private termAndConditionService: TermAndConditionService, private quoteItemService: QuoteItemService, private userService: UserService, private permissionService: PermissionService) {
+  constructor(private route: ActivatedRoute, private quoteService: QuoteService, private router: Router, private termAndConditionService: TermAndConditionService, private quoteItemService: QuoteItemService, private userService: UserService, private permissionService: PermissionService, private modalService: NgbModal) {
   }
 
   ngOnInit() {
@@ -76,5 +77,22 @@ export class QuotePersistComponent implements OnInit {
       }
       console.log('this.errors ' + JSON.stringify(this.errors));
     });
+  }
+
+  addTerm(){
+
+  }
+
+  editTerm(position: number){
+
+  }
+
+  addQuoteItem(){
+
+  }
+
+  editQuoteItem(position: number){
+    let quoteItem = this.quoteItemList[position];
+    // this.modalService.open()
   }
 }

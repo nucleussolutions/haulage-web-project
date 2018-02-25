@@ -1,0 +1,35 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/quoteItem','create']" class="create">New QuoteItem</a></li>
+    </ul>
+</div>
+<div id="list-quoteItem" class="content scaffold-list" role="main">
+    <h1>QuoteItem List</h1>
+    <table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Desc</th>
+      <th>Rebate Percent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let quoteItem of quoteItemList; let e = even;">
+      <td>
+        <a [routerLink]="['/quoteItem','show',quoteItem.id]">{{quoteItem.id}}</a>
+      </td>
+      <td>
+        <span>{{quoteItem.name}}</span>
+      </td>
+      <td>
+        <span>{{quoteItem.desc}}</span>
+      </td>
+      <td>
+        <span>{{quoteItem.rebatePercent}}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>

@@ -1,0 +1,34 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a class="list" [routerLink]="['/quoteItem', 'list']" class="list">QuoteItem List</a></li>
+        <li><a class="create" [routerLink]="['/quoteItem', 'create']" class="create">New QuoteItem</a></li>
+    </ul>
+</div>
+<div id="show-part" class="content scaffold-show" role="main">
+    <h1>Show QuoteItem</h1>
+    <ol class="property-list quoteItem">
+  <li class="fieldcontain">
+    <span id="name-label" class="property-label">Name</span>
+    <div class="property-value" aria-labelledby="name-label">
+      <span>{{quoteItem.name}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="desc-label" class="property-label">Desc</span>
+    <div class="property-value" aria-labelledby="desc-label">
+      <span>{{quoteItem.desc}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="rebatePercent-label" class="property-label">Rebate Percent</span>
+    <div class="property-value" aria-labelledby="rebatePercent-label">
+      <span>{{quoteItem.rebatePercent}}</span>
+    </div>
+  </li>
+</ol>
+
+    <a class="edit" [routerLink]="['/quoteItem', 'edit', quoteItem.id]">Edit</a>
+    <button type="button" (click)="destroy()">Delete</button>
+
+</div>

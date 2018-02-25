@@ -1,0 +1,36 @@
+<div class="nav" role="navigation">
+  <ul>
+    <li><a [routerLink]="['/index']" class="home">Home</a></li>
+    <li><a [routerLink]="['/quoteItem','list']" class="list">QuoteItem List</a></li>
+  </ul>
+</div>
+<div id="persist-quoteItem" class="content scaffold-edit" role="main">
+  <h1>{{create ? "Create" : "Edit"}} QuoteItem</h1>
+  <ul class="errors" role="alert" *ngIf="errors">
+    <li *ngFor="let error of errors">{{error.message}}</li>
+  </ul>
+
+  <form name="save{className}" (ngSubmit)="save()">
+        <div class="fieldcontain required">
+          <label for="name">Name
+            <span class="required-indicator">*</span>
+          </label>
+          <input required="" name="name" id="name" [(ngModel)]="quoteItem.name" type="text" />
+        </div>
+        <div class="fieldcontain required">
+          <label for="desc">Desc
+            <span class="required-indicator">*</span>
+          </label>
+          <input required="" name="desc" id="desc" [(ngModel)]="quoteItem.desc" type="text" />
+        </div>
+        <div class="fieldcontain required">
+          <label for="rebatePercent">Rebate Percent
+            <span class="required-indicator">*</span>
+          </label>
+          <input required="" name="rebatePercent" id="rebatePercent" [(ngModel)]="quoteItem.rebatePercent" type="number" step="any" />
+        </div>
+    <fieldset class="buttons">
+      <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" />
+    </fieldset>
+  </form>
+</div>

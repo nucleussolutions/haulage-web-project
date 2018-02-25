@@ -58,6 +58,8 @@ import { UserInfoModule } from './userInfo/userInfo.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ExpenseModule } from './expense/expense.module';
 import { ExpenseItemModule } from './expenseItem/expenseItem.module';
+import { QuoteItemModule } from './quoteItem/quoteItem.module';
+import { QuoteItemModalComponent } from './quote-item-modal/quote-item-modal.component';
 
 
 
@@ -89,6 +91,7 @@ import { ExpenseItemModule } from './expenseItem/expenseItem.module';
     CreateCompanyModalComponent,
     GeneralModalComponent,
     NavbarComponent,
+    QuoteItemModalComponent,
   ],
   entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent, GeneralModalComponent, CreateCompanyModalComponent],
   imports: [
@@ -121,7 +124,8 @@ import { ExpenseItemModule } from './expenseItem/expenseItem.module';
     AgmCoreModule.forRoot({apiKey:'AIzaSyDwrBvVQ4vb99X-IUAn0ntKOK3zv4hokxc'}),
     UserInfoModule,
     ExpenseModule,
-    ExpenseItemModule
+    ExpenseItemModule,
+    QuoteItemModule
 ],
   exports: [ReactiveFormsModule],
   providers: [{
