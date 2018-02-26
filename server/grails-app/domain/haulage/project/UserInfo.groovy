@@ -13,6 +13,8 @@ class UserInfo {
 
   DriverInfo driverInfo
 
+  String notifKey
+
   static hasMany = [permissions: Permission]
 
   static constraints = {
@@ -21,6 +23,7 @@ class UserInfo {
     userId nullable: false, unique: true
     permissions nullable: true
     driverInfo nullable: true
+    notifKey nullable: true
   }
 
   static searchable = true

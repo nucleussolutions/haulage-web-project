@@ -9,6 +9,8 @@ export class UserInfo {
   userId: string;
   permissions: Permission[];
 
+  notifKey : string;
+
   constructor (object?: any) {
     if (object) {
       
