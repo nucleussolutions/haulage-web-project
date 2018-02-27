@@ -39,8 +39,7 @@ class CompanyController extends RestfulController {
     return super.create()
   }
 
-//  @Override
-  @Transactional
+  @Override
   def save() {
     if(handleReadOnly()) {
       return
