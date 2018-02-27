@@ -8,6 +8,7 @@ import {ResetPasswordComponent} from "./reset-password/reset-password.component"
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {ChangePasswordComponent} from "./change-password/change-password.component";
 import {UnauthorizedComponent} from "./unauthorized/unauthorized.component";
+import {VerifyEmailComponent} from "./verify-email/verify-email.component";
 
 const appRoutes: Routes = [
     {path: 'forget-password', component: ForgetPasswordComponent},
@@ -16,6 +17,7 @@ const appRoutes: Routes = [
     {path: 'register', component: RegisterComponent},
     {path: 'unauthorized', component: UnauthorizedComponent},
     {path: 'login', component: LoginComponent},
+    {path: 'verify-email', component: VerifyEmailComponent},
     {
         path: 'index', component: IndexComponent, children:[
     ]
