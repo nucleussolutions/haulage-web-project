@@ -1,4 +1,5 @@
 import {UserInfo} from "../userInfo/userInfo";
+import {Company} from "../company/company";
 
 
 export class Permission {
@@ -7,6 +8,8 @@ export class Permission {
   email: string;
   authority: string;
   grantedBy: string;
+
+  company: Company;
 
   userInfo: UserInfo;
 

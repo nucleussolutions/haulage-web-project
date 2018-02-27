@@ -1,3 +1,4 @@
+import {Permission} from "../permission/permission";
 
 
 export class Company {
@@ -17,6 +18,8 @@ export class Company {
   code: string;
   email: string;
   postalCode: string;
+
+  permissions : Permission[];
 
   constructor (object?: any) {
     if (object) {
