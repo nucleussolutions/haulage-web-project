@@ -9,7 +9,6 @@ class UserInfo {
 
   String userId
   String name
-  Company company
 
   DriverInfo driverInfo
 
@@ -19,7 +18,6 @@ class UserInfo {
 
   static constraints = {
     name nullable: false
-    company nullable: true
     userId nullable: false, unique: true
     permissions nullable: true
     driverInfo nullable: true

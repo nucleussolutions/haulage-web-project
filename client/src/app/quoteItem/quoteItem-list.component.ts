@@ -13,8 +13,8 @@ export class QuoteItemListComponent implements OnInit {
   constructor(private quoteItemService: QuoteItemService) { }
 
   ngOnInit() {
-    this.quoteItemService.list().subscribe((quoteItemList: QuoteItem[]) => {
-      this.quoteItemList = quoteItemList;
-    });
+    // this.quoteItemService.list().subscribe((quoteItemList: QuoteItem[]) => {
+    //   this.quoteItemList = quoteItemList;
+    // });
   }
 }

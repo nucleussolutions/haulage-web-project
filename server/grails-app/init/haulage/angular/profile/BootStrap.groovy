@@ -38,29 +38,26 @@ class BootStrap {
 
     def kevinUserInfo = new UserInfo()
     kevinUserInfo.name = 'kevin tan'
-    kevinUserInfo.company = company1
     kevinUserInfo.userId = 'Wcd1ixuFLLStcm0GN4YylfU1nNx2'
     kevinUserInfo.save()
 
     def jordanUserInfo = new UserInfo()
     jordanUserInfo.name = 'jordan nucleus'
-    jordanUserInfo.company = company2
     jordanUserInfo.userId = 'OFrQip85jPRRmXkBR544ROU51y93'
     jordanUserInfo.save()
 
     def interceptorUserInfo = new UserInfo()
     interceptorUserInfo.name = 'interceptor'
-    interceptorUserInfo.company = company2
     interceptorUserInfo.userId = '1rCeH7yNVzX8OB7dMyFcURPkwi33'
     interceptorUserInfo.save()
 
-    def kevinAdminPermission = new Permission(email: 'kevintanhongann@gmail.com', userInfo: kevinUserInfo, authority: 'Super Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93')
+    def kevinAdminPermission = new Permission(email: 'kevintanhongann@gmail.com', userInfo: kevinUserInfo, authority: 'Super Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', company: company1)
     kevinUserInfo.permissions = [kevinAdminPermission]
     kevinUserInfo.save(flush: true, failOnError: true)
-    def jordanAdminPermission = new Permission(email: 'jordan@nucleus.my', userInfo: jordanUserInfo, authority: 'Super Admin', grantedBy: 'Wcd1ixuFLLStcm0GN4YylfU1nNx2')
+    def jordanAdminPermission = new Permission(email: 'jordan@nucleus.my', userInfo: jordanUserInfo, authority: 'Super Admin', grantedBy: 'Wcd1ixuFLLStcm0GN4YylfU1nNx2', company: company2)
     jordanUserInfo.permissions = [jordanAdminPermission]
     jordanUserInfo.save(flush: true, failOnError: true)
-    def interceptorPermission = new Permission(email: 'interceptorz3r0@gmail.com', userInfo: interceptorUserInfo, authority: 'Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93')
+    def interceptorPermission = new Permission(email: 'interceptorz3r0@gmail.com', userInfo: interceptorUserInfo, authority: 'Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', company: company2)
     interceptorUserInfo.permissions = [interceptorPermission]
     interceptorUserInfo.save(flush: true, failOnError: true)
 
@@ -143,7 +140,6 @@ class BootStrap {
 
     def forwarderUserInfo = new UserInfo()
     forwarderUserInfo.name = 'forwarder name'
-    forwarderUserInfo.company = company2
     forwarderUserInfo.userId = 'GWQOYWnAxxVPtnUODGCWe8cXllK2'
     forwarderUserInfo.save(flush: true)
 
@@ -172,7 +168,6 @@ class BootStrap {
 //    def quote2 = new Quote(haulierId: '', forwarderId: '', status: QuotationStatus.PENDING_ACCEPTANCE, )
     def driverUserInfo = new UserInfo()
     driverUserInfo.name = 'driver name'
-    driverUserInfo.company = company2
     driverUserInfo.userId = '6p3vO6jiPCenw3gXnq0tv2ylL4h1'
     driverUserInfo.save()
 
