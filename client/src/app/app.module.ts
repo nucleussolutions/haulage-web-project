@@ -60,6 +60,7 @@ import { ExpenseModule } from './expense/expense.module';
 import { ExpenseItemModule } from './expenseItem/expenseItem.module';
 import { QuoteItemModule } from './quoteItem/quoteItem.module';
 import { QuoteItemModalComponent } from './quote-item-modal/quote-item-modal.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 
@@ -125,7 +126,8 @@ import { QuoteItemModalComponent } from './quote-item-modal/quote-item-modal.com
     UserInfoModule,
     ExpenseModule,
     ExpenseItemModule,
-    QuoteItemModule
+    QuoteItemModule,
+    BrowserAnimationsModule
 ],
   exports: [ReactiveFormsModule],
   providers: [{
