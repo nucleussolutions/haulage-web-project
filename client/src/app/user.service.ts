@@ -123,7 +123,7 @@ export class UserService {
     });
   }
 
-  verifyEmail(oobCode: string){
+  verifyEmailWithCode(oobCode: string){
     let subject = new Subject();
     this.firebaseAuth.auth.checkActionCode(oobCode).then(value => {
       subject.next(value);
