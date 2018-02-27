@@ -7,6 +7,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Subject} from "rxjs/Subject";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import 'rxjs/add/operator/publish';
+import {nextTick} from "q";
 
 @Injectable()
 export class UserService {
@@ -120,6 +121,16 @@ export class UserService {
         reject(error);
       });
     });
+  }
+
+  verifyEmail(oobCode: string){
+    let subject = new Subject();
+    this.firebaseAuth.auth.checkActionCode(oobCode).then(value => {
+      subject.next(value);
+    }, reason => {
+      subject.error(reason);
+    });
+    return subject.asObservable();
   }
 
   // checkUserType(userId: string, token: string, apiKey: string) {
