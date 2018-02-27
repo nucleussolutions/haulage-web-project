@@ -11,7 +11,9 @@ import {GeneralModalComponent} from "../general-modal/general-modal.component";
 })
 export class VerifyEmailComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private userService: UserService, private modalService: NgbModal) {
+  message: string;
+
+  constructor(private route: ActivatedRoute, private userService: UserService) {
   }
 
   ngOnInit() {
@@ -21,15 +23,11 @@ export class VerifyEmailComponent implements OnInit {
       if(oobCode){
         return this.userService.verifyEmailWithCode(oobCode);
       }else{
-        const errorModalRef = this.modalService.open(GeneralModalComponent);
-        errorModalRef.componentInstance.modalTitle = 'Error';
-        errorModalRef.componentInstance.modalMessage = 'Email verification code not found';
+        this.message = 'Email verification code not found';
       }
     }).subscribe(value => {
       if(value){
-        const successModalRef = this.modalService.open(GeneralModalComponent);
-        successModalRef.componentInstance.modalTitle = 'Success';
-        successModalRef.componentInstance.modalMessage = 'Email verified. Proceed to login';
+        this.message = 'Verified. Please proceed to login.';
       }
     });
   }
