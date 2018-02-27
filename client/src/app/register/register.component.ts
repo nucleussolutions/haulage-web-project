@@ -1,11 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {RegisterService} from "../register.service";
 import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
 import {Title} from "@angular/platform-browser";
 import {Router} from "@angular/router";
-import {AngularFireAuth} from "angularfire2/auth";
 import {UserService} from 'app/user.service';
 import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {GeneralModalComponent} from "../general-modal/general-modal.component";
 
 @Component({
   selector: 'app-register',
@@ -36,14 +35,6 @@ export class RegisterComponent implements OnInit {
 
   closeResult: string;
 
-  openModal() {
-    this.modalService.open(this.content).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -56,12 +47,17 @@ export class RegisterComponent implements OnInit {
 
   register(formData) {
     this.userService.register(formData.value.email, formData.value.password).then(response => {
-      this.openModal();
+      let modalRef = this.modalService.open(GeneralModalComponent);
+      modalRef.componentInstance.modalTitle = 'Success';
+      modalRef.componentInstance.modalMessage = 'Email verification sent. Check your email';
     }, error => {
-      // this.modal.alert().title('Error').message(error).open();
-      console.log('failed to register ' + error);
+      let modalRef = this.modalService.open(GeneralModalComponent);
+      modalRef.componentInstance.modalTitle = 'Error';
+      modalRef.componentInstance.modalMessage = error;
     }).catch(error => {
-      console.log('failed to register ' + error.message);
+      let modalRef = this.modalService.open(GeneralModalComponent);
+      modalRef.componentInstance.modalTitle = 'Error';
+      modalRef.componentInstance.modalMessage = error;
     });
   }
 

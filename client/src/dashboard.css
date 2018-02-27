@@ -92,12 +92,20 @@ body {
 .border-top { border-top: 1px solid #e5e5e5; }
 .border-bottom { border-bottom: 1px solid #e5e5e5; }
 
-.modal-backdrop.show {
-  opacity: 0;
-  transition: 4s;
+.fade.in {
+  opacity: 1;
+}
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
 }
 
-.modal-content {
-  opacity: 0;
-  transition: 0.15s;
+.modal-backdrop .fade .in {
+  opacity: 0.5 !important;
+}
+
+
+.modal-backdrop.fade {
+  opacity: 0.5 !important;
 }
