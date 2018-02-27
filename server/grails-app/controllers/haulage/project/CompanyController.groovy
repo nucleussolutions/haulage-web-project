@@ -16,6 +16,8 @@ class CompanyController extends RestfulController {
 
   def companyService
 
+  HaulageBucketService haulageBucketService
+
   static responseFormats = ['json', 'xml']
 
   CompanyController() {
@@ -119,6 +121,7 @@ class CompanyController extends RestfulController {
       File file = new File('companylogo.jpg').withOutputStream {
         it.write(decoded)
       }
+      haulageBucketService.deleteFile('/home/company/${request.JSON.registrationNo}/logo/companylogo.jpg')
       instance.companyImgUrl = haulageBucketService.storeFile('/home/company/${request.JSON.registrationNo}/logo/', file)
     }
 

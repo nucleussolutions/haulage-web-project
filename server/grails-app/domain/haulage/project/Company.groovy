@@ -21,9 +21,11 @@ class Company {
   String email
   String postalCode
 
+  static hasMany = [permissions: Permission]
+
   static constraints = {
     name nullable: false, blank: false
-    registrationNo nullable: false, blank: false
+    registrationNo nullable: false, blank: false, unique: true
     address1 nullable: false, blank: false
     address2 nullable: false, blank: true
     city nullable: false, blank: false
@@ -35,6 +37,7 @@ class Company {
     code nullable: false, blank: false, unique: true
     email nullable: false, email: true
     postalCode nullable: true
+    permissions nullable: true
   }
 
   static searchable = true

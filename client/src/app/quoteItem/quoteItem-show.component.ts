@@ -14,22 +14,22 @@ export class QuoteItemShowComponent implements OnInit {
   constructor(private route: ActivatedRoute, private quoteItemService: QuoteItemService, private router: Router) {}
 
   ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
-      this.quoteItemService.get(+params['id']).subscribe((quoteItem: QuoteItem) => {
-        this.quoteItem = quoteItem;
-      });
-    });
+    // this.route.params.subscribe((params: Params) => {
+    //   this.quoteItemService.get(+params['id']).subscribe((quoteItem: QuoteItem) => {
+    //     this.quoteItem = quoteItem;
+    //   });
+    // });
   }
 
   destroy() {
     if (confirm("Are you sure?")) {
-      this.quoteItemService.destroy(this.quoteItem).subscribe((success: boolean) => {
-        if (success) {
-          this.router.navigate(['/quoteItem','list']);
-        } else {
-          alert("Error occurred during delete");
-        }
-      });
+      // this.quoteItemService.destroy(this.quoteItem).subscribe((success: boolean) => {
+      //   if (success) {
+      //     this.router.navigate(['/quoteItem','list']);
+      //   } else {
+      //     alert("Error occurred during delete");
+      //   }
+      // });
     }
   }
 
