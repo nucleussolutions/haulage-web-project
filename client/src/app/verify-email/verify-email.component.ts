@@ -12,13 +12,15 @@ export class VerifyEmailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private userService: UserService) { }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(queryParams  => {
+
+
+    this.route.queryParams.flatMap(queryParams  => {
          let mode = queryParams['mode'];
          let oobCode = queryParams['oobCode'];
-
+      return this.userService.verifyEmailWithCode(oobCode);
+    }).subscribe(value => {
 
     });
-
   }
 
 }
