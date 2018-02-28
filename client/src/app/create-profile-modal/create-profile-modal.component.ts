@@ -11,6 +11,8 @@ import {UserInfoService} from "../userInfo/userInfo.service";
 import {UserInfo} from "../userInfo/userInfo";
 import {Permission} from "../permission/permission";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {Observable} from "rxjs/Observable";
+import {CompanyService} from "../company/company.service";
 
 @Component({
   selector: 'app-create-profile-modal',
@@ -20,6 +22,26 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   @Input() userObject: any;
+
+  companyList: Company[];
+
+
+  companySearch = (text$: Observable<string>) =>
+      text$
+          .debounceTime(200)
+          .distinctUntilChanged()
+          .switchMap(term => term.length < 2 && this.userObject   // switch to new observable each time
+              // return the http search observable
+              ? [] : this.companyService.search(term, this.userObject)
+              // or the observable of empty heroes if no search term
+                  .map(json => {
+                    this.companyList = json['searchResults'];
+                    if (this.companyList) {
+                      return json['searchResults'].map(item => item.name);
+                    } else {
+                      throw 'not found';
+                    }
+                  }));
 
   ngOnDestroy(): void {
     if(this.subscription){
@@ -55,7 +77,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
 
-  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal) {
+  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal, private companyService: CompanyService) {
 
     this.personalDetails = this.formBuilder.group({
       name: ['', Validators.required],
@@ -123,6 +145,10 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       }
       console.log('this.errors ' + JSON.stringify(this.errors));
     });
+  }
+
+  addCompany(){
+
   }
 }
 
