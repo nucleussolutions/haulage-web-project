@@ -13,7 +13,6 @@ import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
 import {LocationModule} from './location/location.module';
 import {ForgetPasswordComponent} from './forget-password/forget-password.component';
-import {ResetPasswordComponent} from './reset-password/reset-password.component';
 import {VehicleModule} from './vehicle/vehicle.module';
 import {DriverInfoModule} from './driverInfo/driverInfo.module';
 import {HaulierInfoModule} from './haulierInfo/haulierInfo.module';
@@ -32,7 +31,7 @@ import {ResendCodeComponent} from './resend-code/resend-code.component';
 import {AngularFireModule} from 'angularfire2';
 import {environment} from 'environments/environment';
 import {AngularFireAuthModule} from 'angularfire2/auth';
-import {VerifyEmailComponent} from './verify-email/verify-email.component';
+import {AuthActionComponent} from './auth-action/auth-action.component';
 import {PermissionModule} from './permission/permission.module';
 import {JobModule} from './job/job.module';
 import {CreateConsignmentModalComponent} from './create-consignment-modal/create-consignment-modal.component';
@@ -73,13 +72,12 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     HomeComponent,
     LoginComponent,
     ForgetPasswordComponent,
-    ResetPasswordComponent,
     SettingsComponent,
     NavDrawerComponent,
     ChangePasswordComponent,
     CreateProfileModalComponent,
     ResendCodeComponent,
-    VerifyEmailComponent,
+    AuthActionComponent,
     CreateConsignmentModalComponent,
     UnauthorizedComponent,
     HelpComponent,

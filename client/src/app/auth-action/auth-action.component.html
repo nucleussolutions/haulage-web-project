@@ -1,5 +1,10 @@
+<div *ngIf="mode == 'verifyEmail'" class="row">
+  <div class="col-12 col-sm-4 col-md-4 col-lg-4">
+    {{message}}
+  </div>
+</div>
 
-<div class="row">
+<div *ngIf="mode == 'resetPassword'" class="row">
   <div class="col-12 col-sm-4 col-md-4 col-lg-4">
     <form [formGroup]="credentials" (ngSubmit)="resetPassword(credentials)">
       <div class="form-group">
