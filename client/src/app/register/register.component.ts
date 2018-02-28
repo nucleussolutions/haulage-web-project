@@ -47,15 +47,22 @@ export class RegisterComponent implements OnInit {
 
   register(formData) {
     this.userService.register(formData.value.email, formData.value.password).then(response => {
-      let modalRef = this.modalService.open(GeneralModalComponent);
+      let modalRef = this.modalService.open(GeneralModalComponent, {
+        windowClass: 'dark-modal'
+      });
       modalRef.componentInstance.modalTitle = 'Success';
       modalRef.componentInstance.modalMessage = 'Email verification sent. Check your email';
     }, error => {
-      let modalRef = this.modalService.open(GeneralModalComponent);
+      let modalRef = this.modalService.open(GeneralModalComponent, {
+        windowClass: 'dark-modal'
+
+      });
       modalRef.componentInstance.modalTitle = 'Error';
       modalRef.componentInstance.modalMessage = error;
     }).catch(error => {
-      let modalRef = this.modalService.open(GeneralModalComponent);
+      let modalRef = this.modalService.open(GeneralModalComponent, {
+        windowClass: 'dark-modal'
+      });
       modalRef.componentInstance.modalTitle = 'Error';
       modalRef.componentInstance.modalMessage = error;
     });
