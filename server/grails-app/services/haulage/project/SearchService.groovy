@@ -74,7 +74,7 @@ class SearchService {
           'authority': 'Admin'
       )
     }
-    elasticSearchService.search(term, filter)
+    elasticSearchService.search(term, filter, [ indices: UserInfo, types: UserInfo, from: 0, size: 10 ])
   }
 
   def searchForwarder(String term){
@@ -83,7 +83,7 @@ class SearchService {
           'authority': 'Manager'
       )
     }
-    elasticSearchService.search(term, filter)
+    elasticSearchService.search(term, filter, [ indices: UserInfo, types: UserInfo, from: 0, size: 10 ])
   }
 
   def searchCompany(String term){
