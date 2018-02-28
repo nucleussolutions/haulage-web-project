@@ -22,7 +22,7 @@ import {CreateCompanyModalComponent} from "../create-company-modal/create-compan
 export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
-    if(this.subscription){
+    if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
@@ -50,13 +50,29 @@ export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
               // or the observable of empty heroes if no search term
                   .map(json => {
                     this.companyList = json['searchResults'];
-                    if(this.companyList){
+                    if (this.companyList) {
                       return json['searchResults'].map(item => item.name);
-                    }else{
+                    } else {
                       throw 'not found';
                     }
                   }));
 
+  forwarderSearch = (text$: Observable<string>) =>
+      text$
+          .debounceTime(200)
+          .distinctUntilChanged()
+          .switchMap(term => term.length < 2 && this.userObject   // switch to new observable each time
+              // return the http search observable
+              ? [] : this.companyService.search(term, this.userObject)
+              // or the observable of empty heroes if no search term
+                  .map(json => {
+                    this.companyList = json['searchResults'];
+                    if (this.companyList) {
+                      return json['searchResults'].map(item => item.name);
+                    } else {
+                      throw 'not found';
+                    }
+                  }));
 
   constructor(private route: ActivatedRoute, private userInfoService: UserInfoService, private router: Router, private companyService: CompanyService, private userService: UserService, private firebaseAuth: AngularFireAuth, private modalService: NgbModal) {
 
@@ -82,7 +98,7 @@ export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    if(this.create){
+    if (this.create) {
       const permission = new Permission();
       permission.authority = 'Manager';
       permission.userInfo = this.forwarderInfo;
@@ -108,14 +124,14 @@ export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
     });
   }
 
-  addCompany(){
+  addCompany() {
     const createCompanyModalRef = this.modalService.open(CreateCompanyModalComponent, {
       size: 'lg'
     });
     createCompanyModalRef.componentInstance.userObject = this.userObject;
   }
 
-  addForwarder(){
+  addForwarder() {
 
   }
 }

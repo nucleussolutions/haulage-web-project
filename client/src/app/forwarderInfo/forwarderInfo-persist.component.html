@@ -42,8 +42,7 @@
 
         <div class="form-group">
           <label>Forwarder</label>
-
-          <input id="forwarder" name="forwarder" required type="text" class="form-control">
+          <input id="forwarder" name="forwarder" required type="text" class="form-control" [ngbTypeahead]="forwarderSearch">
           <button type="button" class="btn btn-primary" (click)="addForwarder()">Add New Forwarder</button>
         </div>
 

@@ -6,13 +6,19 @@ import {AngularFireAuth} from "angularfire2/auth";
 import {UserService} from 'app/user.service';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {GeneralModalComponent} from "../general-modal/general-modal.component";
+import {fadeInAnimation} from "../_animations";
 
 
 @Component({
   selector: 'app-forget-password',
   templateUrl: './forget-password.component.html',
   styleUrls: ['./forget-password.component.css'],
-  providers: [UserService]
+  providers: [UserService],
+  // make fade in animation available to this component
+  animations: [fadeInAnimation],
+
+  // attach the fade in animation to the host (root) element of this component
+  host: { '[@fadeInAnimation]': '' }
 })
 export class ForgetPasswordComponent implements OnInit {
 

@@ -5,12 +5,18 @@ import {Router} from "@angular/router";
 import {UserService} from 'app/user.service';
 import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {GeneralModalComponent} from "../general-modal/general-modal.component";
+import {fadeInAnimation} from "../_animations";
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers: [UserService]
+  providers: [UserService],
+  // make fade in animation available to this component
+  animations: [fadeInAnimation],
+
+  // attach the fade in animation to the host (root) element of this component
+  host: { '[@fadeInAnimation]': '' }
 })
 export class RegisterComponent implements OnInit {
 
