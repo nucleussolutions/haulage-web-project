@@ -114,4 +114,8 @@ export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
     });
     createCompanyModalRef.componentInstance.userObject = this.userObject;
   }
+
+  addForwarder(){
+
+  }
 }
