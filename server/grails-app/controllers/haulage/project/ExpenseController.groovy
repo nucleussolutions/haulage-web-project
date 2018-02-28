@@ -18,7 +18,7 @@ class ExpenseController extends RestfulController {
     //todo get permission of user
     def userId = request.getHeader('userId')
     if(userId){
-      Permission permission = Permission.where {
+      def permission = Permission.where {
         userInfo.userId == userId
       }
 
