@@ -10,6 +10,7 @@ class Permission {
   String email
   String authority
 
+  String role
   //this admin id is the user id of who granted access to the forwarder, from the haulier
   String grantedBy
 
@@ -21,6 +22,7 @@ class Permission {
     grantedBy nullable: true
     userInfo nullable: true
     company nullable: true
+    role nullable: true
   }
 
   static searchable = true
