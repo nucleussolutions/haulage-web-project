@@ -124,6 +124,7 @@ export class CompanyService {
   }
 
   search(term: string, userObject: any): Observable<Company[]> {
+    console.log('search company');
     let subject = new Subject<Company[]>();
 
     let headers = new HttpHeaders({

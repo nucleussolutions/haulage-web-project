@@ -26,7 +26,7 @@ export class CreateCompanyModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.company.country = 'Malaysia'
+    this.company.country = 'Malaysia';
   }
 
   save() {

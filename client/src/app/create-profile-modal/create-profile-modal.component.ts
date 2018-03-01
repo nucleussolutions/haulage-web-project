@@ -10,9 +10,10 @@ import {Subscription} from 'rxjs/Subscription';
 import {UserInfoService} from "../userInfo/userInfo.service";
 import {UserInfo} from "../userInfo/userInfo";
 import {Permission} from "../permission/permission";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Observable} from "rxjs/Observable";
 import {CompanyService} from "../company/company.service";
+import {CreateCompanyModalComponent} from "../create-company-modal/create-company-modal.component";
 
 @Component({
   selector: 'app-create-profile-modal',
@@ -25,6 +26,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   companyList: Company[];
 
+  company: Company;
 
   companySearch = (text$: Observable<string>) =>
       text$
@@ -76,11 +78,11 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     myReader.readAsDataURL(file);
   }
 
-
-  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal, private companyService: CompanyService) {
+  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal, private companyService: CompanyService, private modalService: NgbModal) {
 
     this.personalDetails = this.formBuilder.group({
       name: ['', Validators.required],
+      company: ['', Validators.required],
       companyName: ['', Validators.required],
       companyAddress1: ['', Validators.required],
       companyAddress2: ['', Validators.required],
@@ -148,7 +150,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   addCompany(){
-
+    // const companyModalRef = this.modalService.open(CreateCompanyModalComponent);
+    // companyModalRef.componentInstance.userObject = this.userObject;
   }
 }
 

@@ -134,4 +134,8 @@ export class ForwarderInfoPersistComponent implements OnInit, OnDestroy {
   addForwarder() {
 
   }
+
+  selectedCompany(value){
+    console.log('selected company '+value);
+  }
 }

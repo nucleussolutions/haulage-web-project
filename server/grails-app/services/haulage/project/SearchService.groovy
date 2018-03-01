@@ -87,7 +87,9 @@ class SearchService {
   }
 
   def searchCompany(String term){
-    elasticSearchService.search(term, [ indices: Company, types: Company, from: 0, size: 10 ])
+    def results = elasticSearchService.search(term, [ indices: Company, types: Company, from: 0, size: 10 ])
+    println results
+    results
   }
 
   def searchMemberSubscription(String term){

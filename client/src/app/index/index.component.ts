@@ -103,12 +103,13 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       // });
       // createProfileModalRef.componentInstance.userObject = this.userObject;
     }, error => {
-      console.log('IndexComponent error '+error);
+      console.log('IndexComponent error '+JSON.stringify(error));
       if(error != 'not logged in'){
         const createProfileModalRef = this.modalService.open(CreateProfileModalComponent, {
           size: 'lg'
         });
         createProfileModalRef.componentInstance.userObject = this.userObject;
+        console.log('assigned user object to create profile modal '+createProfileModalRef.componentInstance.userObject)
       }
     })
   }
