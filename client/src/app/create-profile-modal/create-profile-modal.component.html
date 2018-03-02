@@ -118,11 +118,16 @@
 
       <!-- show subscription plans when the user type is a haulier , otherwise hide it-->
       <div *ngIf="showSubscriptionSelections">
+        <div class="row">
+          <div class="col">
 
+          </div>
+
+        </div>
       </div>
     </div>
     <div class="modal-footer">
-      <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+      <i *ngIf="showSpinnerProgress" class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
       <input type="submit" class="btn btn-primary" value="Submit">
     </div>
   </div>

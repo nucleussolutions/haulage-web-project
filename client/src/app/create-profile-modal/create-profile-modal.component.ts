@@ -15,6 +15,7 @@ import {Observable} from "rxjs/Observable";
 import {CompanyService} from "../company/company.service";
 import {CreateCompanyModalComponent} from "../create-company-modal/create-company-modal.component";
 import {PermissionService} from "../permission/permission.service";
+import {PricingService} from "../pricing/pricing.service";
 
 @Component({
   selector: 'app-create-profile-modal',
@@ -34,6 +35,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   permission: Permission = new Permission();
 
   showSubscriptionSelections: boolean = false;
+
+  showSpinnerProgress : boolean = false;
 
   companySearch = (text$: Observable<string>) =>
       text$
@@ -59,7 +62,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
+    // this.pricingService.list()
   }
 
   private personalDetails: FormGroup;
@@ -85,7 +88,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     myReader.readAsDataURL(file);
   }
 
-  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal, private companyService: CompanyService, private permissionService: PermissionService) {
+  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal, private companyService: CompanyService, private permissionService: PermissionService, private pricingService: PricingService) {
 
     this.personalDetails = this.formBuilder.group({
       name: ['', Validators.required],

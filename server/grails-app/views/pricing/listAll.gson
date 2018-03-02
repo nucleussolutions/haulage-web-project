@@ -1,0 +1,7 @@
+import haulage.project.Pricing
+
+model {
+  Iterable<Pricing> pricingList
+}
+
+json tmpl.pricing(pricingList ?: [])

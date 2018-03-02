@@ -19,6 +19,11 @@ class PricingController extends RestfulController {
     return super.index(max)
   }
 
+  //customize the output in json views to get the desired output
+  def listAll(Integer max){
+    return super.index(max)
+  }
+
   @Override
   Object show() {
     return super.show()

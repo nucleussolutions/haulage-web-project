@@ -41,6 +41,26 @@ export class PricingService {
     return subject.asObservable();
   }
 
+  listAll(userObject: any): Observable<Pricing[]> {
+    let subject = new Subject<Pricing[]>();
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+    this.http.get(environment.serverUrl + '/pricing/all', {
+      headers: headers
+    })
+        .catch(err => {
+          subject.error(err);
+          return subject.asObservable();
+        }).subscribe((json: any[]) => {
+      subject.next(json.map((item: any) => new Pricing(item)))
+    });
+    return subject.asObservable();
+  }
+
   get(id: number, userObject: any): Observable<Pricing> {
 
     let headers = new HttpHeaders({
