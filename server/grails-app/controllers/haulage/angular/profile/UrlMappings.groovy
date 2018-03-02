@@ -23,6 +23,7 @@ class UrlMappings {
     get "/company/count"(controller: 'company', action: 'count')
     get "/location/count"(controller: 'location', action: 'count')
     get "/pricing/count"(controller: 'pricing', action: 'count')
+    get "/pricing/all/"(controller: 'pricing', action: 'listAll')
     get "/driverInfo/count"(controller: 'driverInfo', action:'count')
     get "/job/count"(controller: 'job', action: 'count')
     get "/memberSubscription/count"(controller: 'memberSubscription', action: 'count')
