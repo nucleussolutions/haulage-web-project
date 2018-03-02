@@ -13,6 +13,11 @@ export class Permission {
 
   userInfo: UserInfo;
 
+  role: string;
+
+  //pending approval or approved
+  status: string;
+
   constructor (object?: any) {
     if (object) {
       

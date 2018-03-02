@@ -14,6 +14,8 @@ class Permission {
   //this admin id is the user id of who granted access to the forwarder, from the haulier
   String grantedBy
 
+  String status = 'Pending Approval'
+
   static belongsTo = [userInfo: UserInfo, company: Company]
 
   static constraints = {
@@ -23,6 +25,7 @@ class Permission {
     userInfo nullable: true
     company nullable: true
     role nullable: true
+    status nullable: false, inList: ['Pending Approval', 'Approved']
   }
 
   static searchable = true

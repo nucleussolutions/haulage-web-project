@@ -14,6 +14,7 @@ import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Observable} from "rxjs/Observable";
 import {CompanyService} from "../company/company.service";
 import {CreateCompanyModalComponent} from "../create-company-modal/create-company-modal.component";
+import {PermissionService} from "../permission/permission.service";
 
 @Component({
   selector: 'app-create-profile-modal',
@@ -29,6 +30,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   company: Company;
 
   newCompany: boolean = false;
+
+  permission: Permission = new Permission();
 
   companySearch = (text$: Observable<string>) =>
       text$
@@ -80,7 +83,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     myReader.readAsDataURL(file);
   }
 
-  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal, private companyService: CompanyService, private modalService: NgbModal) {
+  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal, private companyService: CompanyService, private permissionService: PermissionService) {
 
     this.personalDetails = this.formBuilder.group({
       name: ['', Validators.required],
@@ -128,12 +131,12 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     userInfo.userId = this.userObject.uid;
     userInfo.company = this.company;
 
-    let permission = new Permission();
-    permission.email = this.userObject.email;
+    this.permission.email = this.userObject.email;
 
     //user permission will always be haulier since create profile is for the haulier
-    permission.authority = 'Admin';
-    userInfo.permissions = [permission];
+    this.permission.authority = 'Admin';
+    userInfo.permissions = [this.permission];
+
 
     this.userInfoService.save(userInfo, this.userObject).subscribe(userInfo => {
       this.activeModal.dismiss();
@@ -159,6 +162,16 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   selectedCompany(value){
     this.company = value;
+
+    //todo search for whether the company permission actually exists already, then ask for approval from the owner of the company permission
+    this.permissionService.getByCompany(this.userObject, this.company.id).subscribe(permission => {
+      //maybe send an email to the owner of the permission so that this user can be approved
+      this.permission.role = 'Staff';
+    }, error => {
+      //if the company permission doesnt exist, then proceed to create a new permission and assign owner role
+      this.permission.role = 'Owner';
+    });
+
   }
 }
 

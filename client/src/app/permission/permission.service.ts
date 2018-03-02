@@ -77,7 +77,7 @@ export class PermissionService {
     return subject.asObservable();
   }
 
-  getByCompany(userObject:any, companyId: string): Observable<Permission[]> {
+  getByCompany(userObject:any, companyId: number): Observable<Permission[]> {
     let subject = new Subject<Permission[]>();
     let headers = new HttpHeaders({
       'token': userObject.token,
