@@ -28,6 +28,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   company: Company;
 
+  newCompany: boolean = false;
+
   companySearch = (text$: Observable<string>) =>
       text$
           .debounceTime(200)
@@ -150,8 +152,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   addCompany(){
-    // const companyModalRef = this.modalService.open(CreateCompanyModalComponent);
-    // companyModalRef.componentInstance.userObject = this.userObject;
+    this.newCompany = true;
   }
 }
 
