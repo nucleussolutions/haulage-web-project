@@ -84,48 +84,49 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
     this.personalDetails = this.formBuilder.group({
       name: ['', Validators.required],
-      company: ['', Validators.required],
-      companyName: ['', Validators.required],
-      companyAddress1: ['', Validators.required],
-      companyAddress2: ['', Validators.required],
-      companyCity: ['', Validators.required],
-      companyState: ['', Validators.required],
-      companyCountry: new FormControl('Malaysia'),
-      companyOfficePhone: ['', Validators.required],
-      companyYardPhone: ['', Validators.required],
-      companyPostalCode: ['', Validators.required],
-      companyCode: ['', Validators.required],
-      companyImage: [''],
-      companyRegNo: ['', Validators.required],
+      company: this.formBuilder.group({
+        name: ['', Validators.required],
+        address1: ['', Validators.required],
+        address2: ['', Validators.required],
+        city: ['', Validators.required],
+        state: ['', Validators.required],
+        country: new FormControl('Malaysia'),
+        officePhone: ['', Validators.required],
+        yardPhone: ['', Validators.required],
+        postalCode: ['', Validators.required],
+        code: ['', Validators.required],
+        companyImage: [''],
+        registrationNo: ['', Validators.required],
+      })
     });
   }
 
   submitDetails(formData) {
     //todo perhaps check the uniqueness of the user id first then save
     // let loadingSpinner = document.getElementById('loading-spinner');
-    let company = new Company();
-    company.name = formData.value.companyName;
-    company.address1 = formData.value.companyAddress1;
-    company.address2 = formData.value.companyAddress2;
-    company.city = formData.value.companyCity;
-    company.state = formData.value.companyState;
-    company.country = formData.value.companyCountry;
-    company.registrationNo = formData.value.companyRegNo;
-    company.code = formData.value.companyCode;
-    company.yardPhone = formData.value.companyYardPhone;
-    company.officePhone = formData.value.companyOfficePhone;
-    company.email = this.userObject.email;
-    company.postalCode = formData.value.companyPostalCode;
-    //todo convert companyImage to base64 string
+    if(!this.company){
+      this.company = new Company();
+      this.company.name = formData.value.company.name;
+      this.company.address1 = formData.value.company.address1;
+      this.company.address2 = formData.value.company.address2;
+      this.company.city = formData.value.company.city;
+      this.company.state = formData.value.company.state;
+      this.company.country = formData.value.company.country;
+      this.company.registrationNo = formData.value.company.registrationNo;
+      this.company.code = formData.value.company.code;
+      this.company.yardPhone = formData.value.company.yardPhone;
+      this.company.officePhone = formData.value.company.officePhone;
+      this.company.email = this.userObject.email;
+      this.company.postalCode = formData.value.company.postalCode;
+      //todo convert companyImage to base64 string
 
-    company.companyImageBase64 = this.base64Encoded;
-    // company.companyImgUrl = this.base64Encoded;
-    //upload photos to amazon s3 or firebase storage
+      this.company.companyImageBase64 = this.base64Encoded;
+    }
 
     let userInfo = new UserInfo();
     userInfo.name = formData.value.name;
     userInfo.userId = this.userObject.uid;
-    userInfo.company = company;
+    userInfo.company = this.company;
 
     let permission = new Permission();
     permission.email = this.userObject.email;
@@ -152,7 +153,12 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   addCompany(){
-    this.newCompany = true;
+    // const companyModalRef = this.modalService.open(CreateCompanyModalComponent);
+    // companyModalRef.componentInstance.userObject = this.userObject;
+  }
+
+  selectedCompany(value){
+    this.company = value;
   }
 }
 
