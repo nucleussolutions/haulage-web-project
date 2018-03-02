@@ -94,4 +94,21 @@ class PermissionController extends RestfulController {
       }
     }
   }
+
+  def getByCompany(){
+    Company company = request.JSON.company
+    if(company){
+      def permission = Permission.findByCompany(company)
+      if(permission){
+        respond permission
+      }else{
+        response.status = NOT_FOUND.value()
+        respond message: 'permission doesnt exist'
+      }
+    }else{
+      response.status = NOT_FOUND.value()
+      respond message: 'company not found'
+    }
+
+  }
 }
