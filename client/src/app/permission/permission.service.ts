@@ -7,6 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import {environment} from 'environments/environment';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {Company} from "../company/company";
 
 @Injectable()
 export class PermissionService {
@@ -64,6 +65,27 @@ export class PermissionService {
     });
 
     this.http.get(environment.serverUrl + '/permission/userId', {
+      headers: headers,
+    })
+        .catch(err => {
+          subject.error(err);
+          return subject.asObservable();
+        })
+        .subscribe((json: any[]) => {
+          subject.next(json.map((item: any) => new Permission(item)))
+        });
+    return subject.asObservable();
+  }
+
+  getByCompany(userObject:any, companyId: string): Observable<Permission[]> {
+    let subject = new Subject<Permission[]>();
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+    this.http.get(environment.serverUrl + '/permission/company/'+companyId, {
       headers: headers,
     })
         .catch(err => {
