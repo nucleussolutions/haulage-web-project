@@ -20,7 +20,7 @@
             </label>
             <div class="input-group mb-3">
               <input id="company" name="company" required type="text" class="form-control"
-                     (selectItem)="selectedCompany($event)" [(ngModel)]="company" formControlName="company"
+                     (selectItem)="selectedCompany($event)"
                      [ngbTypeahead]="companySearch"/>
               <div class="input-group-append">
                 <button type="button" class="btn btn-primary" (click)="addCompany()">New Company</button>
@@ -29,78 +29,85 @@
           </div>
           <div *ngIf="newCompany" [formControlName]="company">
             <h2>New company</h2>
-            <div class="form-group">
-              <label for="companyName">Company name</label>
-              <input class="form-control" type="text" id="companyName" formControlName="name">
-            </div>
-            <div class="form-group">
-              <label for="companyRegNo">Company registration number</label>
-              <input class="form-control" type="text" id="companyRegNo" formControlName="registrationNo">
-            </div>
-            <div class="form-group">
-              <label for="companyAddress1">Company address 1</label>
-              <input class="form-control" type="text" id="companyAddress1" formControlName="address1">
-            </div>
-            <div class="form-group">
-              <label for="companyAddress2">Company address 2</label>
-              <input class="form-control" type="text" id="companyAddress2" formControlName="address2">
-            </div>
-            <div class="form-group">
-              <label for="companyCode">Company code</label>
-              <input type="text" class="form-control" id="companyCode" formControlName="code">
+
+            <div class="row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="companyName">Company name</label>
+                  <input class="form-control" type="text" id="companyName" formControlName="name">
+                </div>
+                <div class="form-group">
+                  <label for="companyRegNo">Company registration number</label>
+                  <input class="form-control" type="text" id="companyRegNo" formControlName="registrationNo">
+                </div>
+                <div class="form-group">
+                  <label for="companyAddress1">Company address 1</label>
+                  <input class="form-control" type="text" id="companyAddress1" formControlName="address1">
+                </div>
+                <div class="form-group">
+                  <label for="companyAddress2">Company address 2</label>
+                  <input class="form-control" type="text" id="companyAddress2" formControlName="address2">
+                </div>
+                <div class="form-group">
+                  <label for="companyCode">Company code</label>
+                  <input type="text" class="form-control" id="companyCode" formControlName="code">
+                </div>
+                <div class="form-group">
+                  <label for="companyOfficePhone">Office phone</label>
+                  <input type="text" class="form-control" id="companyOfficePhone" formControlName="officePhone">
+                </div>
+
+                <div class="form-group">
+                  <label for="companyYardPhone">Yard phone</label>
+                  <input type="text" class="form-control" id="companyYardPhone" formControlName="yardPhone">
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="form-group">
+                  <label for="companyImage">Company Image</label>
+                  <input type="file" class="form-control" id="companyImage" formControlName="companyImage" (change)="changeListener($event)">
+                </div>
+
+                <div class="form-group">
+                  <label for="companyCity">City</label>
+                  <input class="form-control" type="text" id="companyCity" formControlName="companyCity">
+                </div>
+
+                <div class="form-group">
+                  <label for="companyPostalCode">Postal Code</label>
+                  <input class="form-control" type="text" id="companyPostalCode" formControlName="companyPostalCode">
+                </div>
+
+                <div class="form-group">
+                  <label>State</label>
+                  <select class="form-control" name="state" id="companyState" formControlName="companyState">
+                    <option value="Johor">Johor</option>
+                    <option value="Kedah">Kedah</option>
+                    <option value="Kelantan">Kelantan</option>
+                    <option value="Kuala Lumpur">Kuala Lumpur</option>
+                    <option value="Negeri Sembilan">Negeri Sembilan</option>
+                    <option value="Pahang">Pahang</option>
+                    <option value="Melaka">Melaka</option>
+                    <option value="Perak">Perak</option>
+                    <option value="Perlis">Perlis</option>
+                    <option value="Pulau Pinang">Pulau Pinang</option>
+                    <option value="Sabah">Sabah</option>
+                    <option value="Sarawak">Sarawak</option>
+                    <option value="Selangor">Selangor</option>
+                    <option value="Terengganu">Terengganu</option>
+                    <option value="Wilayah Persekutuan – Labuan">Wilayah Persekutuan – Labuan</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Country</label>
+                  <input class="form-control" type="text" readonly="readonly" value="Malaysia" id="companyCountry"
+                         formControlName="companyCountry">
+                </div>
+              </div>
             </div>
 
-            <div class="form-group">
-              <label for="companyOfficePhone">Office phone</label>
-              <input type="text" class="form-control" id="companyOfficePhone" formControlName="officePhone">
-            </div>
-
-            <div class="form-group">
-              <label for="companyYardPhone">Yard phone</label>
-              <input type="text" class="form-control" id="companyYardPhone" formControlName="yardPhone">
-            </div>
-
-            <div class="form-group">
-              <label for="companyImage">Company Image</label>
-              <input type="file" class="form-control" id="companyImage" formControlName="companyImage" (change)="changeListener($event)">
-            </div>
-
-            <div class="form-group">
-              <label for="companyCity">City</label>
-              <input class="form-control" type="text" id="companyCity" formControlName="companyCity">
-            </div>
-
-            <div class="form-group">
-              <label for="companyPostalCode">Postal Code</label>
-              <input class="form-control" type="text" id="companyPostalCode" formControlName="companyPostalCode">
-            </div>
-
-            <div class="form-group">
-              <label>State</label>
-              <select class="form-control" name="state" id="companyState" formControlName="companyState">
-                <option value="Johor">Johor</option>
-                <option value="Kedah">Kedah</option>
-                <option value="Kelantan">Kelantan</option>
-                <option value="Kuala Lumpur">Kuala Lumpur</option>
-                <option value="Negeri Sembilan">Negeri Sembilan</option>
-                <option value="Pahang">Pahang</option>
-                <option value="Melaka">Melaka</option>
-                <option value="Perak">Perak</option>
-                <option value="Perlis">Perlis</option>
-                <option value="Pulau Pinang">Pulau Pinang</option>
-                <option value="Sabah">Sabah</option>
-                <option value="Sarawak">Sarawak</option>
-                <option value="Selangor">Selangor</option>
-                <option value="Terengganu">Terengganu</option>
-                <option value="Wilayah Persekutuan – Labuan">Wilayah Persekutuan – Labuan</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label>Country</label>
-              <input class="form-control" type="text" readonly="readonly" value="Malaysia" id="companyCountry"
-                     formControlName="companyCountry">
-            </div>
             <div class="text-right">
               <button class="btn btn-primary" type="button" (click)="newCompany = false">Cancel</button>
               <button class="btn btn-primary" type="button" (click)="newCompany = false">Save</button>

@@ -33,6 +33,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   permission: Permission = new Permission();
 
+  showSubscriptionSelections: boolean = false;
+
   companySearch = (text$: Observable<string>) =>
       text$
           .debounceTime(200)
@@ -156,8 +158,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   addCompany(){
-    // const companyModalRef = this.modalService.open(CreateCompanyModalComponent);
-    // companyModalRef.componentInstance.userObject = this.userObject;
+    this.newCompany = true;
   }
 
   selectedCompany(value){
