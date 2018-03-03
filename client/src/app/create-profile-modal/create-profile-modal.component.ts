@@ -36,7 +36,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   showSubscriptionSelections: boolean = false;
 
-  showSpinnerProgress : boolean = false;
+  showSpinnerProgress: boolean = false;
 
   companySearch = (text$: Observable<string>) =>
       text$
@@ -55,8 +55,17 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
                     }
                   }));
 
+  companySearchByRegNo = (text$: Observable<string>) => text$.debounceTime(200).distinctUntilChanged().switchMap(term => term.length > 2 && this.userObject ? null : this.companyService.searchByRegNo(term, this.userObject).map(json => {
+    this.companyList = json['searchResults'];
+    if (this.companyList) {
+      return json['searchResults'].map(item => item.name);
+    } else {
+      throw 'not found';
+    }
+  }));
+
   ngOnDestroy(): void {
-    if(this.subscription){
+    if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
@@ -71,7 +80,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   private base64Encoded: string;
 
-  changeListener($event) : void {
+  changeListener($event): void {
     this.readThis($event.target);
   }
 
@@ -79,7 +88,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   readThis(inputValue: any): void {
     let file: File = inputValue.files[0];
-    let myReader:FileReader = new FileReader();
+    let myReader: FileReader = new FileReader();
 
     myReader.onloadend = (e) => {
       this.base64Encoded = myReader.result;
@@ -112,7 +121,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   submitDetails(formData) {
     //todo perhaps check the uniqueness of the user id first then save
     // let loadingSpinner = document.getElementById('loading-spinner');
-    if(!this.company){
+    if (!this.company) {
       this.company = new Company();
       this.company.name = formData.value.company.name;
       this.company.address1 = formData.value.company.address1;
@@ -160,11 +169,11 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     });
   }
 
-  addCompany(){
+  addCompany() {
     this.newCompany = true;
   }
 
-  selectedCompany(value){
+  selectedCompany(value) {
     this.company = value;
 
     //todo search for whether the company permission actually exists already, then ask for approval from the owner of the company permission

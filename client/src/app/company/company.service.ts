@@ -143,4 +143,25 @@ export class CompanyService {
 
     return subject.asObservable();
   }
+
+  searchByRegNo(term: string, userObject: any): Observable<Company[]> {
+    console.log('search company');
+    let subject = new Subject<Company[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+    this.http.get(environment.serverUrl + '/search/company/registrationNo?term=' + term, {
+      headers: headers
+    }).subscribe((json: any[]) => {
+      subject.next(json);
+    }, error => {
+      subject.error(error);
+    });
+
+    return subject.asObservable();
+  }
 }
