@@ -38,7 +38,7 @@
                 </div>
                 <div class="form-group">
                   <label for="companyRegNo">Company registration number</label>
-                  <input class="form-control" type="text" id="companyRegNo" formControlName="registrationNo">
+                  <input class="form-control" type="text" id="companyRegNo" formControlName="registrationNo" (change)="companySearchByRegNo()">
                 </div>
                 <div class="form-group">
                   <label for="companyAddress1">Company address 1</label>
