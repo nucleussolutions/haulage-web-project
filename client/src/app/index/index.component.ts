@@ -104,7 +104,8 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       // createProfileModalRef.componentInstance.userObject = this.userObject;
     }, error => {
       console.log('IndexComponent error '+JSON.stringify(error));
-      if(error != 'not logged in'){
+      if(error !== 'not logged in'){
+        //should not open up a model
         const createProfileModalRef = this.modalService.open(CreateProfileModalComponent, {
           size: 'lg',
           backdrop: "static",

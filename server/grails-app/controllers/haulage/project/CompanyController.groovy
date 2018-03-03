@@ -6,6 +6,7 @@ import grails.rest.*
 import grails.converters.*
 import grails.web.http.HttpHeaders
 import groovy.transform.TypeCheckingMode
+import org.springframework.http.HttpStatus
 
 import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.http.HttpStatus.OK
@@ -137,6 +138,15 @@ class CompanyController extends RestfulController {
                 namespace: hasProperty('namespace') ? this.namespace : null ))
         respond instance, [status: OK]
       }
+    }
+  }
+
+  def getByRegistrationNo(){
+    if(params.registrationNo){
+      respond companyService.findByRegistrationNo(params.registrationNo as String)
+    }else{
+      response.status = HttpStatus.NOT_FOUND.value()
+      respond 'company registration number not found'
     }
   }
 

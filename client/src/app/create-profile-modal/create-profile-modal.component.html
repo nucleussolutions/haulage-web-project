@@ -27,7 +27,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="newCompany" [formControlName]="company">
+          <div *ngIf="newCompany" formGroupName="company">
             <h2>New company</h2>
 
             <div class="row">
@@ -71,17 +71,17 @@
 
                 <div class="form-group">
                   <label for="companyCity">City</label>
-                  <input class="form-control" type="text" id="companyCity" formControlName="companyCity">
+                  <input class="form-control" type="text" id="companyCity" formControlName="city">
                 </div>
 
                 <div class="form-group">
                   <label for="companyPostalCode">Postal Code</label>
-                  <input class="form-control" type="text" id="companyPostalCode" formControlName="companyPostalCode">
+                  <input class="form-control" type="text" id="companyPostalCode" formControlName="postalCode">
                 </div>
 
                 <div class="form-group">
                   <label>State</label>
-                  <select class="form-control" name="state" id="companyState" formControlName="companyState">
+                  <select class="form-control" name="state" id="companyState" formControlName="state">
                     <option value="Johor">Johor</option>
                     <option value="Kedah">Kedah</option>
                     <option value="Kelantan">Kelantan</option>
@@ -103,7 +103,7 @@
                 <div class="form-group">
                   <label>Country</label>
                   <input class="form-control" type="text" readonly="readonly" value="Malaysia" id="companyCountry"
-                         formControlName="companyCountry">
+                         formControlName="country">
                 </div>
               </div>
             </div>

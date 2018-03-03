@@ -16,4 +16,6 @@ interface CompanyService {
     void delete(Serializable id)
 
     Company save(Company company)
+
+    Company findByRegistrationNo(String registrationNo)
 }
