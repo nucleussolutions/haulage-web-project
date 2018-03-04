@@ -16,6 +16,7 @@ import {CompanyService} from "../company/company.service";
 import {CreateCompanyModalComponent} from "../create-company-modal/create-company-modal.component";
 import {PermissionService} from "../permission/permission.service";
 import {PricingService} from "../pricing/pricing.service";
+import {Pricing} from "../pricing/pricing";
 
 @Component({
   selector: 'app-create-profile-modal',
@@ -37,6 +38,9 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   showSubscriptionSelections: boolean = false;
 
   showSpinnerProgress: boolean = false;
+
+  //show pricing list on the modal itself
+  pricingList: Pricing[];
 
   companySearch = (text$: Observable<string>) =>
       text$
@@ -71,7 +75,9 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // this.pricingService.list()
+    this.pricingService.listAll(this.userObject).subscribe(pricingList => {
+      this.pricingList = pricingList;
+    })
   }
 
   private personalDetails: FormGroup;
