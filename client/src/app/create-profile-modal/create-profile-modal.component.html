@@ -1,7 +1,8 @@
 <form [formGroup]="personalDetails" (ngSubmit)="submitDetails(personalDetails)" autocomplete="off">
   <div class="modal-content">
     <div class="modal-header">
-      <h2>Create Your Haulier Profile</h2>
+      <h2 *ngIf="!showSubscriptionSelections">Create Your Haulier Profile</h2>
+      <h2 *ngIf="showSubscriptionSelections">Select Your Subscription</h2>
     </div>
     <div class="modal-body">
       <ul class="errors text-danger" role="alert" *ngIf="errors">
@@ -120,10 +121,24 @@
       <div *ngIf="showSubscriptionSelections">
         <div class="row">
           <div *ngFor="let pricing of pricingList" class="col">
-            <p>{{pricing.minPrimeMover}}</p>
-            <p>{{pricing.maxPrimeMover}}</p>
-            <p>{{pricing.price}}</p>
-            <p>{{pricing.pricePerMove}}</p>
+            <div class="card mb-3">
+              <h4 class="card-header">{{pricing.name}}</h4>
+              <div class="card-body">
+                <h6 class="card-subtitle text-muted">{{pricing.description}}</h6>
+              </div>
+              <!--<div class="card-body">-->
+                <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
+              <!--</div>-->
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Min Prime Movers : {{pricing.minPrimeMover}}</li>
+                <li class="list-group-item">Max Prime Movers : {{pricing.maxPrimeMover}}</li>
+                <li class="list-group-item">Price : {{pricing.price}}</li>
+                <li class="list-group-item">Price per move : {{pricing.pricePerMove}}</li>
+              </ul>
+              <div class="card-footer text-muted">
+                <input name="options" ng-control="options" type="radio" [value]="pricing">
+              </div>
+            </div>
           </div>
         </div>
       </div>

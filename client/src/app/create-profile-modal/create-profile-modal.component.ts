@@ -195,6 +195,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   showSubscriptions(show: boolean) {
+    //validate current fields for name and company
+
     this.showSubscriptionSelections = show;
     console.log('showSubs '+this.showSubscriptionSelections);
   }
