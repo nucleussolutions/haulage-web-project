@@ -17,6 +17,8 @@ import {CreateCompanyModalComponent} from "../create-company-modal/create-compan
 import {PermissionService} from "../permission/permission.service";
 import {PricingService} from "../pricing/pricing.service";
 import {Pricing} from "../pricing/pricing";
+import {MemberSubscriptionService} from "../memberSubscription/memberSubscription.service";
+import {MemberSubscription} from "../memberSubscription/memberSubscription";
 
 @Component({
   selector: 'app-create-profile-modal',
@@ -104,7 +106,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     myReader.readAsDataURL(file);
   }
 
-  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal, private companyService: CompanyService, private permissionService: PermissionService, private pricingService: PricingService) {
+  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal, private companyService: CompanyService, private permissionService: PermissionService, private pricingService: PricingService, private subscriptionService: MemberSubscriptionService) {
 
     this.personalDetails = this.formBuilder.group({
       name: ['', Validators.required],
@@ -197,8 +199,26 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   showSubscriptions(show: boolean) {
     //validate current fields for name and company
 
+    //check if  the company is new under the user or not
+
+    //if the company is new, then show the user some subscription options
+
+    //then submit an api to subscribe and link to payment gateway
+
     this.showSubscriptionSelections = show;
     console.log('showSubs '+this.showSubscriptionSelections);
+  }
+
+  subscribeToPlan(pricing: Pricing){
+    const memberSubscription = new MemberSubscription();
+    memberSubscription.pricing = pricing;
+    memberSubscription.monthlyRecurring = false;
+    memberSubscription.userId = this.userObject.uid;
+    this.subscriptionService.save(memberSubscription, this.userObject).subscribe(memberSubscription => {
+
+    }, error => {
+      //show some relevant error messages on the modal itself without opening a new modal
+    });
   }
 }
 
