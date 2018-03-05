@@ -77,6 +77,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.pricingService.listAll(this.userObject).subscribe(pricingList => {
       this.pricingList = pricingList;
+      console.log('pricing list '+this.pricingList);
     })
   }
 
@@ -191,6 +192,11 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       this.permission.role = 'Owner';
     });
 
+  }
+
+  showSubscriptions(show: boolean) {
+    this.showSubscriptionSelections = show;
+    console.log('showSubs '+this.showSubscriptionSelections);
   }
 }
 

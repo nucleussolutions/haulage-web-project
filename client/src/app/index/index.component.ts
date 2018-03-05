@@ -94,7 +94,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
         return this.userInfoService.getByUserId(this.userObject);
       }else{
         this.router.navigate(['/login']);
-        throw 'redirect to login'
+        throw 'redirect to login';
       }
     }).subscribe(userInfo => {
       //nothing to do here
@@ -104,7 +104,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       // createProfileModalRef.componentInstance.userObject = this.userObject;
     }, error => {
       console.log('IndexComponent error '+JSON.stringify(error));
-      if(error !== 'not logged in'){
+      if(this.userObject.uid){
         //should not open up a model
         const createProfileModalRef = this.modalService.open(CreateProfileModalComponent, {
           size: 'lg',

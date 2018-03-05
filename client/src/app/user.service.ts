@@ -79,15 +79,20 @@ export class UserService {
 
   getUser() {
     let subject = new Subject<any>();
+    let currentTime = (new Date).getTime();
+    console.log('current time '+currentTime);
     this.firebaseAuth.authState.subscribe(currentUser => {
-      console.log('firebase current user '+JSON.stringify(currentUser));
+      console.log('user id '+currentUser.uid);
       if(currentUser){
         let cookieObjects = this.cookieService.getAll();
         console.log('cookieObjects ' + JSON.stringify(cookieObjects));
         subject.next(cookieObjects);
       }else{
+        this.cookieService.removeAll();
         subject.error('not logged in');
       }
+    }, error => {
+      console.log(error);
     });
     return subject.asObservable();
   }

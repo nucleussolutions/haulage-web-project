@@ -31,7 +31,7 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   userPermission: any;
 
-  private userObject: any;
+  userObject: any;
 
   constructor(private permissionService: PermissionService, private userService: UserService, private userInfoService: UserInfoService) {
 
@@ -46,7 +46,11 @@ export class NavDrawerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.userService.getUser().flatMap(userObject => {
       this.userObject = userObject;
       console.log('userObject ' + JSON.stringify(userObject));
-      return this.permissionService.getByUserId(this.userObject);
+      if(this.userObject){
+        return this.permissionService.getByUserId(this.userObject);
+      }else {
+        throw 'user object not found';
+      }
     }).subscribe(permissions => {
       this.permissions = permissions;
       this.superAdminPermission = this.permissions.find(permission => permission.authority == 'Super Admin');

@@ -120,20 +120,17 @@
       <div *ngIf="showSubscriptionSelections">
         <div class="row">
           <div *ngFor="let pricing of pricingList" class="col">
-
             <p>{{pricing.minPrimeMover}}</p>
             <p>{{pricing.maxPrimeMover}}</p>
             <p>{{pricing.price}}</p>
             <p>{{pricing.pricePerMove}}</p>
-
           </div>
-
         </div>
       </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary">Next</button>
-      <button type="button" class="btn btn-primary">Previous</button>
+      <button type="button" *ngIf="showSubscriptionSelections" class="btn btn-primary" (click)="showSubscriptions(false)">Previous</button>
+      <button type="button" class="btn btn-primary" (click)="showSubscriptions(true)">Next</button>
       <i *ngIf="showSpinnerProgress" class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
       <input type="submit" class="btn btn-primary" value="Submit">
     </div>

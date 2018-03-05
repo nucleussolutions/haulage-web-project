@@ -11,7 +11,7 @@ class PricingInterceptor {
   def permissionService
 
   PricingInterceptor() {
-    match controller: 'pricing' except(action: 'index')
+    match controller: 'pricing' except(action: 'index') except(action: 'listAll')
   }
 
   boolean before() {
