@@ -31,10 +31,10 @@ class BootStrap {
 
     def trailer2 = new Vehicle(type: 'trailer', userId: 'OFrQip85jPRRmXkBR544ROU51y93', insuranceExpiryDate: new Date(), roadTaxRenewalDate: new Date(), puspakomExpiryDate: new Date(), otherInfo: '', model: 'asdklasdklasd', registrationNumber: 'asdasdasd', spadPermitExpiryDate: new Date(), netWeight: 40, internalNumber: '21312312', licensePlateNumber: '123123123', licenseExpiryDate: new Date()).save(flush: true)
 
-    def pricing1 = new Pricing(minPrimeMover: 1, maxPrimeMover: 5, price: 120.1, pricePerMove: 20, discountPercent: 0).save(flush: true)
-    def pricing2 = new Pricing(minPrimeMover: 1, maxPrimeMover: 5, price: 120.1, pricePerMove: 20, discountPercent: 0).save(flush: true)
-    def pricing3 = new Pricing(minPrimeMover: 1, maxPrimeMover: 5, price: 120.1, pricePerMove: 20, discountPercent: 0).save(flush: true)
-    def pricing4 = new Pricing(minPrimeMover: 1, maxPrimeMover: 5, price: 120.1, pricePerMove: 20, discountPercent: 0).save(flush: true)
+    def pricing1 = new Pricing(name: 'basic tier', description: 'basic tier desc', minPrimeMover: 1, maxPrimeMover: 5, price: 120.1, pricePerMove: 20, discountPercent: 0).save(flush: true, failOnError: true)
+    def pricing2 = new Pricing(name: 'normal tier', description: 'normal tier desc', minPrimeMover: 1, maxPrimeMover: 5, price: 120.1, pricePerMove: 20, discountPercent: 0).save(flush: true, failOnError: true)
+    def pricing3 = new Pricing(name: 'premium tier', description: 'premium tier desc', minPrimeMover: 1, maxPrimeMover: 5, price: 120.1, pricePerMove: 20, discountPercent: 0).save(flush: true, failOnError: true)
+    def pricing4 = new Pricing(name: 'gold tier', description: 'gold tier desc', minPrimeMover: 1, maxPrimeMover: 5, price: 120.1, pricePerMove: 20, discountPercent: 0).save(flush: true, failOnError: true)
 
     def kevinUserInfo = new UserInfo()
     kevinUserInfo.name = 'kevin tan'

@@ -8,6 +8,8 @@ export class Pricing {
   pricePerMove: number;
   minPrimeMover: number;
   maxPrimeMover: number;
+  description: string;
+  name: string;
 
   constructor (object?: any) {
     if (object) {

@@ -7,6 +7,9 @@ import groovy.transform.TypeCheckingMode
 @GrailsCompileStatic(TypeCheckingMode.SKIP)
 class Pricing {
 
+  String name
+  String description
+
   BigDecimal price
   BigDecimal pricePerMove
   Integer minPrimeMover
@@ -22,6 +25,8 @@ class Pricing {
     minPrimeMover nullable: true
     maxPrimeMover nullable: true
     published nullable: false
+    description nullable: false
+    name nullable: false
   }
 
   static mapping = {
