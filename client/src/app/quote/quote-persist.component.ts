@@ -13,6 +13,8 @@ import {Subscription} from "rxjs/Subscription";
 import {Permission} from "../permission/permission";
 import {Observable} from "rxjs/Observable";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {UserInfo} from "../userInfo/userInfo";
+import {UserInfoService} from "../userInfo/userInfo.service";
 
 @Component({
   selector: 'quote-persist',
@@ -32,10 +34,18 @@ export class QuotePersistComponent implements OnInit {
 
   permissions: Permission[];
 
-  constructor(private route: ActivatedRoute, private quoteService: QuoteService, private router: Router, private termAndConditionService: TermAndConditionService, private quoteItemService: QuoteItemService, private userService: UserService, private permissionService: PermissionService, private modalService: NgbModal) {
+  haulierInfos : UserInfo[];
+
+  forwarderInfos : UserInfo[];
+
+  constructor(private route: ActivatedRoute, private quoteService: QuoteService, private router: Router, private termAndConditionService: TermAndConditionService, private quoteItemService: QuoteItemService, private userService: UserService, private permissionService: PermissionService, private modalService: NgbModal, private userInfoService: UserInfoService) {
+
   }
 
   ngOnInit() {
+
+
+
 
     this.subscription = Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
       this.userObject = result[0];

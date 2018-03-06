@@ -27,6 +27,8 @@ class Quote {
   //this field is filled by autotimestamp, just exposing it as a usable variable for the forms
   Date lastUpdated
 
+
+
   static constraints = {
     haulierId nullable: false
     forwarderId nullable: false

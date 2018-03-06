@@ -7,6 +7,7 @@ import groovy.transform.TypeCheckingMode
 @GrailsCompileStatic(TypeCheckingMode.SKIP)
 class Tariff {
 
+  String area
   String desc
   Location location
   String zone
@@ -21,6 +22,7 @@ class Tariff {
     tollCharges nullable: false
     haulageCharges nullable: false
     fafPercent nullable: false
+    area nullable: false
   }
 
   static searchable = {
@@ -32,7 +34,7 @@ class Tariff {
 //    table "`tariff`"
 //    version false
 //    id column: 'tariff_id'
-    desc column: 'description'
+    desc column: 'description', sqlType: 'VARCHAR'
 //    location column: 'location'
 //    zone column: 'zone'
 //    tollCharges column: 'toll_charges'

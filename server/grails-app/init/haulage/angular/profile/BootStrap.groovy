@@ -220,7 +220,7 @@ class BootStrap {
   def parseTariffCsv(){
     File file = new File(getClass().getResource('/resources/tariff.csv').getPath())
     def br = new BufferedReader(new FileReader(file))
-    def csvData = CsvParser.parseCsv(br)
+    def csvData = CsvParser.parseCsv(readFirstLine: true, br)
 
     DecimalFormat df = new DecimalFormat()
     df.parseBigDecimal = true
@@ -228,11 +228,14 @@ class BootStrap {
     csvData.each {
       def tariff = new Tariff()
       tariff.zone = it[1]
-      tariff.desc = it[2]
+      tariff.area = it[2]
+      tariff.desc = it[3]
+      println tariff.desc
       tariff.fafPercent = 17.8
-      tariff.haulageCharges = df.parse(String.valueOf(it[4]).trim())
-      tariff.tollCharges = df.parse(String.valueOf(it[5]).trim())
+      tariff.haulageCharges = df.parse(String.valueOf(it[4]).stripIndent())
+      tariff.tollCharges = df.parse(String.valueOf(it[5]).stripIndent())
       tariff.save(flush: true, failOnError: true)
+      println tariff
     }
   }
 }

@@ -193,7 +193,6 @@ export class TransportRequestPersistComponent implements OnInit, OnDestroy {
   onAddConsignmentClick() {
     const modalRef = this.modalService.open(CreateConsignmentModalComponent);
     modalRef.componentInstance.name = 'Create or Edit Consignment';
-
     // const dialogRef = this.modal.open(CreateConsignmentModalComponent, overlayConfigFactory({
     //   isBlocking: false,
     //   size: 'md'
