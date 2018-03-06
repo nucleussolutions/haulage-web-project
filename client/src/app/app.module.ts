@@ -61,6 +61,7 @@ import { QuoteItemModule } from './quoteItem/quoteItem.module';
 import { QuoteItemModalComponent } from './quote-item-modal/quote-item-modal.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { ForwarderInfoModalComponent } from './forwarder-info-modal/forwarder-info-modal.component';
+import { LogoutComponent } from './logout/logout.component';
 
 
 
@@ -93,6 +94,7 @@ import { ForwarderInfoModalComponent } from './forwarder-info-modal/forwarder-in
     NavbarComponent,
     QuoteItemModalComponent,
     ForwarderInfoModalComponent,
+    LogoutComponent,
   ],
   entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent, GeneralModalComponent, CreateCompanyModalComponent],
   imports: [

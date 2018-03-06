@@ -34,7 +34,7 @@ class Tariff {
 //    table "`tariff`"
 //    version false
 //    id column: 'tariff_id'
-    desc column: 'description', sqlType: 'VARCHAR'
+    desc column: 'description'
 //    location column: 'location'
 //    zone column: 'zone'
 //    tollCharges column: 'toll_charges'
