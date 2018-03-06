@@ -214,10 +214,25 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     memberSubscription.pricing = pricing;
     memberSubscription.monthlyRecurring = false;
     memberSubscription.userId = this.userObject.uid;
+    this.showSpinnerProgress = true;
     this.subscriptionService.save(memberSubscription, this.userObject).subscribe(memberSubscription => {
+      //todo close modal dialog perhaps
 
-    }, error => {
+
+      this.showSpinnerProgress = false;
+    }, json => {
       //show some relevant error messages on the modal itself without opening a new modal
+      console.log('json error ' + JSON.stringify(json));
+      if (json.hasOwnProperty('message')) {
+        this.errors = json.error._embedded.errors;
+        console.info('[json.error]');
+      } else {
+        this.errors = json._embedded.errors;
+        console.info('json._embedded.errors');
+      }
+      console.log('this.errors ' + JSON.stringify(this.errors));
+
+      this.showSpinnerProgress = false;
     });
   }
 }
