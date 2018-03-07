@@ -1,7 +1,7 @@
 <form [formGroup]="personalDetails" (ngSubmit)="submitDetails(personalDetails)" autocomplete="off">
   <div class="modal-content">
     <div class="modal-header">
-      <h2 *ngIf="!showSubscriptionSelections">Create Your Haulier Profile</h2>
+      <h2 *ngIf="!showSubscriptionSelections">Create Your Profile</h2>
       <h2 *ngIf="showSubscriptionSelections">Select Your Subscription</h2>
     </div>
     <div class="modal-body">
@@ -10,6 +10,14 @@
       </ul>
       <div class="row">
         <div *ngIf="!showSubscriptionSelections" class="col-12">
+          <h3>Are you a Haulier or Forwarder?</h3>
+          <div class="radio">
+            <label><input type="radio" name="usertype" formControlName="usertype" checked value="Admin">Haulier</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" name="usertype" formControlName="usertype" value="Manager">Forwarder</label>
+          </div>
+
           <div class="form-group">
             <label for="name">Name</label>
             <input class="form-control" type="text" id="name" formControlName="name">
@@ -39,7 +47,7 @@
                 </div>
                 <div class="form-group">
                   <label for="companyRegNo">Company registration number</label>
-                  <input class="form-control" type="text" id="companyRegNo" formControlName="registrationNo" (change)="companySearchByRegNo()">
+                  <input class="form-control" type="text" id="companyRegNo" formControlName="registrationNo" (keyup)="onCompanyRegNoChanged($event)">
                 </div>
                 <div class="form-group">
                   <label for="companyAddress1">Company address 1</label>

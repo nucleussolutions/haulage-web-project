@@ -63,15 +63,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
                     }
                   }));
 
-  companySearchByRegNo = (text$: Observable<string>) => text$.debounceTime(200).distinctUntilChanged().switchMap(term => term.length > 2 && this.userObject ? null : this.companyService.searchByRegNo(term, this.userObject).map(json => {
-    this.companyList = json['searchResults'];
-    if (this.companyList) {
-      return json['searchResults'].map(item => item.name);
-    } else {
-      throw 'not found';
-    }
-  }));
-
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
@@ -107,6 +98,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
     this.personalDetails = this.formBuilder.group({
       name: ['', Validators.required],
+      usertype: new FormControl('Admin'),
       company: this.formBuilder.group({
         name: ['', Validators.required],
         address1: ['', Validators.required],
@@ -130,17 +122,30 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       console.log('pricing list '+this.pricingList);
     });
 
-    let newCompanyInput = this.personalDetails.controls['company.registrationNo'];
+    // let newCompanyInput = this.personalDetails.controls.company['registrationNo'];
+    // console.log('newCompanyInput '+newCompanyInput);
+    // newCompanyInput.valueChanges.flatMap(value => {
+    //   console.log('registrationNo input');
+    //   return Observable.of(value).debounceTime(200).distinctUntilChanged().switchMap(value => value.length > 2 && this.userObject ? null : this.companyService.searchByRegNo(value, this.userObject));
+    // }).map(json => {
+    //   this.companyList = json['searchResults'];
+    //   if (this.companyList) {
+    //     return json['searchResults'].map(item => item.name);
+    //   } else {
+    //     throw 'not found';
+    //   }
+    // });
+  }
 
-    newCompanyInput.valueChanges.flatMap(value => {
-      return Observable.of(value).debounceTime(200).distinctUntilChanged().switchMap(value => value.length > 2 && this.userObject ? null : this.companyService.searchByRegNo(value, this.userObject));
-    }).map(json => {
-      this.companyList = json['searchResults'];
-      if (this.companyList) {
-        return json['searchResults'].map(item => item.name);
-      } else {
-        throw 'not found';
-      }
+  onCompanyRegNoChanged(event: any){
+    console.log('event target value '+event.target.value);
+    Observable.of(event.target.value).flatMap(value => {
+        return Observable.of(value).debounceTime(200).distinctUntilChanged().switchMap(value => value.length < 2 && this.userObject ? null : this.companyService.searchByRegNo(value, this.userObject));
+    }).subscribe(json => {
+        this.companyList = json['searchResults'];
+        if(this.companyList){
+          //todo alert the registration no field that it must be unique
+        }
     });
   }
 

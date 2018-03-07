@@ -92,6 +92,12 @@ class SearchService {
     results
   }
 
+  def searchCompanyByRegNo(String term){
+    def results = elasticSearchService.search(term, [ indices: Company, types: Company, from: 0, size: 10 ])
+    println results
+    results
+  }
+
   def searchMemberSubscription(String term){
     elasticSearchService.search(term, [ indices: MemberSubscription, types: MemberSubscription, from: 0, size: 10 ])
   }

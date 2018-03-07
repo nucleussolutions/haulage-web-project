@@ -193,6 +193,15 @@ class SearchController {
     }
   }
 
+  def companyByRegNo(){
+    if(params.term){
+      println 'term '+params.term
+      respond searchService.searchCompanyByRegNo(params.term as String)
+    }else {
+      respond status: HttpStatus.NOT_FOUND, message: 'not found'
+    }
+  }
+
   def haulier(){
     if(params.term){
       respond searchService.searchHaulier(params.term as String)
