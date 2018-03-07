@@ -17,6 +17,14 @@ class Customer {
   String email
 
   static constraints = {
-    email email: true
+    email email: true, nullable: false
+    phone nullable: false
+    address1 nullable: false
+    address2 nullable: false
+    city nullable: false
+    state nullable: false
+    country nullable: false
+    personInCharge nullable: false
+    companyName nullable: false
   }
 }

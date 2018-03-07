@@ -82,8 +82,15 @@ export class UserService {
     let currentTime = (new Date).getTime();
     console.log('current time '+currentTime);
     this.firebaseAuth.authState.subscribe(currentUser => {
+      let currentUserJsonObject = JSON.stringify(currentUser);
+      let currentUserObject = JSON.parse(currentUserJsonObject);
+      console.log('currentUserJsonObject '+currentUserObject);
+      console.log('currentUser expiration '+currentUserObject.stsTokenManager.expirationTime);
+      let expirationTime = currentUserObject.stsTokenManager.expirationTime;
       console.log('user id '+currentUser.uid);
-      if(currentUser){
+      console.log('user anonymous '+currentUser.isAnonymous);
+
+      if(expirationTime < currentTime){
         let cookieObjects = this.cookieService.getAll();
         console.log('cookieObjects ' + JSON.stringify(cookieObjects));
         subject.next(cookieObjects);
@@ -132,27 +139,25 @@ export class UserService {
     let subject = new Subject();
     this.firebaseAuth.auth.checkActionCode(oobCode).then(value => {
       subject.next(value);
+      this.firebaseAuth.auth.applyActionCode(oobCode);
     }, reason => {
       subject.error(reason);
     });
     return subject.asObservable();
   }
 
-  // checkUserType(userId: string, token: string, apiKey: string) {
-  //
-  //   let headers = new HttpHeaders({
-  //     'token': token,
-  //     'apiKey': apiKey
-  //   });
-  //
-  //   return new Promise((resolve, reject) => {
-  //     this.http.get(environment.serverUrl + '/api/usertype?userId=' + userId, {
-  //       headers: headers
-  //     }).subscribe(response => {
-  //       resolve(response);
-  //     }, error => {
-  //       reject(error);
-  //     });
-  //   });
-  // }
+  refreshToken(): Observable<any>{
+    let subject = new Subject<any>();
+
+    this.firebaseAuth.authState.subscribe(currentUser => {
+      currentUser.getIdToken(true).then(value => {
+        subject.next(value);
+      }, reason => {
+        subject.error(reason);
+      });
+    });
+
+    return subject.asObservable();
+  }
+
 }

@@ -44,6 +44,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   //show pricing list on the modal itself
   pricingList: Pricing[];
 
+  pricing: Pricing;
+
   companySearch = (text$: Observable<string>) =>
       text$
           .debounceTime(200)
@@ -76,12 +78,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit(): void {
-    this.pricingService.listAll(this.userObject).subscribe(pricingList => {
-      this.pricingList = pricingList;
-      console.log('pricing list '+this.pricingList);
-    })
-  }
+
 
   private personalDetails: FormGroup;
 
@@ -127,6 +124,26 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngOnInit(): void {
+    this.pricingService.listAll(this.userObject).subscribe(pricingList => {
+      this.pricingList = pricingList;
+      console.log('pricing list '+this.pricingList);
+    });
+
+    let newCompanyInput = this.personalDetails.controls['company.registrationNo'];
+
+    newCompanyInput.valueChanges.flatMap(value => {
+      return Observable.of(value).debounceTime(200).distinctUntilChanged().switchMap(value => value.length > 2 && this.userObject ? null : this.companyService.searchByRegNo(value, this.userObject));
+    }).map(json => {
+      this.companyList = json['searchResults'];
+      if (this.companyList) {
+        return json['searchResults'].map(item => item.name);
+      } else {
+        throw 'not found';
+      }
+    });
+  }
+
   submitDetails(formData) {
     //todo perhaps check the uniqueness of the user id first then save
     // let loadingSpinner = document.getElementById('loading-spinner');
@@ -147,6 +164,17 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       //todo convert companyImage to base64 string
 
       this.company.companyImageBase64 = this.base64Encoded;
+
+
+
+
+      //todo submit user info with their relevant permissions
+
+
+
+      //todo submit the subscription info and trigger the payment gateway
+
+      this.subscribeToPlan(this.pricing)
     }
 
     let userInfo = new UserInfo();

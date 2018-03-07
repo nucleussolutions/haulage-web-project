@@ -9,7 +9,7 @@
         <li *ngFor="let error of errors">{{error.message}}</li>
       </ul>
       <div class="row">
-        <div class="col-12">
+        <div *ngIf="!showSubscriptionSelections" class="col-12">
           <div class="form-group">
             <label for="name">Name</label>
             <input class="form-control" type="text" id="name" formControlName="name">
@@ -147,7 +147,7 @@
       <button type="button" *ngIf="showSubscriptionSelections" class="btn btn-primary" (click)="showSubscriptions(false)">Previous</button>
       <button type="button" class="btn btn-primary" (click)="showSubscriptions(true)">Next</button>
       <i *ngIf="showSpinnerProgress" class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
-      <input type="submit" class="btn btn-primary" value="Submit">
+      <input *ngIf="showSubscriptionSelections" type="submit" class="btn btn-primary" value="Submit">
     </div>
   </div>
 </form>
