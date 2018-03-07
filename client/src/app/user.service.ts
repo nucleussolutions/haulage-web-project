@@ -30,7 +30,7 @@ export class UserService {
         this.cookieService.put('apiKey', response.apiKey);
         this.cookieService.put('refreshToken', response.stsTokenManager.refreshToken);
         this.cookieService.put('token', response.stsTokenManager.accessToken);
-        this.cookieService.put('expiresIn', response.stsTokenManager.expiresIn);
+        this.cookieService.put('expiresIn', response.stsTokenManager.expirationTime);
         this.firebaseAuth.auth.currentUser.sendEmailVerification().then(verificationResponse => {
           console.log('verification email sent');
         }, error => {
@@ -91,8 +91,6 @@ export class UserService {
       console.log('user anonymous '+currentUser.isAnonymous);
 
       if(expirationTime > currentTime){
-
-
         this.refreshToken().subscribe(value => {
           console.log('refresh token current user '+value);
         });
