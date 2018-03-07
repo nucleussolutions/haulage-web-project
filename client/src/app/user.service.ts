@@ -90,8 +90,15 @@ export class UserService {
       console.log('user id '+currentUser.uid);
       console.log('user anonymous '+currentUser.isAnonymous);
 
-      if(expirationTime < currentTime){
+      if(expirationTime > currentTime){
+
+
+        this.refreshToken().subscribe(value => {
+          console.log('refresh token current user '+value);
+        });
+
         let cookieObjects = this.cookieService.getAll();
+
         console.log('cookieObjects ' + JSON.stringify(cookieObjects));
         subject.next(cookieObjects);
       }else{
