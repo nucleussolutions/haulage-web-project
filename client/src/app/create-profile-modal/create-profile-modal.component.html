@@ -5,10 +5,11 @@
       <h2 *ngIf="showSubscriptionSelections">Select Your Subscription</h2>
     </div>
     <div class="modal-body">
-      <ul class="errors text-danger" role="alert" *ngIf="errors">
-        <li *ngFor="let error of errors">{{error.message}}</li>
-      </ul>
       <div class="row">
+        <ul class="errors text-danger" role="alert" *ngIf="errors">
+          <li *ngFor="let error of errors">{{error.message}}</li>
+        </ul>
+
         <div *ngIf="!showSubscriptionSelections" class="col-12">
           <h3>Are you a Haulier or Forwarder?</h3>
           <div class="radio">
@@ -38,17 +39,18 @@
           </div>
           <div *ngIf="newCompany" formGroupName="company">
             <h2>New company</h2>
-
             <div class="row">
               <div class="col">
-                <div class="form-group">
+                <div class="form-group ">
                   <label for="companyName">Company name</label>
                   <input class="form-control" type="text" id="companyName" formControlName="name">
                 </div>
                 <div class="form-group">
                   <label for="companyRegNo">Company registration number</label>
-                  <input class="form-control" type="text" id="companyRegNo" formControlName="registrationNo" (keyup)="onCompanyRegNoChanged($event)">
+                  <input class="form-control" type="text" id="companyRegNo" formControlName="registrationNo"
+                         >
                 </div>
+
                 <div class="form-group">
                   <label for="companyAddress1">Company address 1</label>
                   <input class="form-control" type="text" id="companyAddress1" formControlName="address1">
@@ -75,7 +77,8 @@
               <div class="col">
                 <div class="form-group">
                   <label for="companyImage">Company Image</label>
-                  <input type="file" class="form-control" id="companyImage" formControlName="companyImage" (change)="changeListener($event)">
+                  <input type="file" class="form-control" id="companyImage" formControlName="companyImage"
+                         (change)="changeListener($event)">
                 </div>
 
                 <div class="form-group">
@@ -125,34 +128,37 @@
         </div>
       </div>
 
-      <!-- show subscription plans when the user type is a haulier , otherwise hide it-->
-      <div *ngIf="showSubscriptionSelections">
-        <div class="row">
-          <div *ngFor="let pricing of pricingList" class="col">
-            <div class="card mb-3">
-              <h4 class="card-header">{{pricing.name}}</h4>
-              <div class="card-body">
-                <h6 class="card-subtitle text-muted">{{pricing.description}}</h6>
-              </div>
-              <!--<div class="card-body">-->
-                <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
-              <!--</div>-->
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">Min Prime Movers : {{pricing.minPrimeMover}}</li>
-                <li class="list-group-item">Max Prime Movers : {{pricing.maxPrimeMover}}</li>
-                <li class="list-group-item">Price : {{pricing.price}}</li>
-                <li class="list-group-item">Price per move : {{pricing.pricePerMove}}</li>
-              </ul>
-              <div class="card-footer text-muted">
-                <input name="options" ng-control="options" type="radio" [value]="pricing">
-              </div>
+
+    </div>
+    <!-- show subscription plans when the user type is a haulier , otherwise hide it-->
+    <div class="modal-body" *ngIf="showSubscriptionSelections">
+      <div class="row">
+        <div *ngFor="let pricing of pricingList" class="col">
+          <div class="card mb-3">
+            <h4 class="card-header">{{pricing.name}}</h4>
+            <div class="card-body">
+              <h6 class="card-subtitle text-muted">{{pricing.description}}</h6>
+            </div>
+            <!--<div class="card-body">-->
+            <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
+            <!--</div>-->
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Min Prime Movers : {{pricing.minPrimeMover}}</li>
+              <li class="list-group-item">Max Prime Movers : {{pricing.maxPrimeMover}}</li>
+              <li class="list-group-item">Price : {{pricing.price}}</li>
+              <li class="list-group-item">Price per move : {{pricing.pricePerMove}}</li>
+            </ul>
+            <div class="card-footer text-muted">
+              <input name="options" ng-control="options" type="radio" [value]="pricing">
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="modal-footer">
-      <button type="button" *ngIf="showSubscriptionSelections" class="btn btn-primary" (click)="showSubscriptions(false)">Previous</button>
+      <button type="button" *ngIf="showSubscriptionSelections" class="btn btn-primary"
+              (click)="showSubscriptions(false)">Previous
+      </button>
       <button type="button" class="btn btn-primary" (click)="showSubscriptions(true)">Next</button>
       <i *ngIf="showSpinnerProgress" class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
       <input *ngIf="showSubscriptionSelections" type="submit" class="btn btn-primary" value="Submit">

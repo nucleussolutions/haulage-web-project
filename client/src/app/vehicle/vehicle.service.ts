@@ -77,7 +77,7 @@ export class VehicleService {
     }
     let body = JSON.stringify(vehicle);
     let headers = new HttpHeaders({
-      "Content-Type": "appzlication/json",
+      "Content-Type": "application/json",
       'token': userObject.token,
       'apiKey': userObject.apiKey,
       'userId': userObject.uid

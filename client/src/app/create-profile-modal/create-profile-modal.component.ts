@@ -19,6 +19,9 @@ import {PricingService} from "../pricing/pricing.service";
 import {Pricing} from "../pricing/pricing";
 import {MemberSubscriptionService} from "../memberSubscription/memberSubscription.service";
 import {MemberSubscription} from "../memberSubscription/memberSubscription";
+import {environment} from "../../environments/environment";
+import * as firebase from "firebase";
+import Transaction = firebase.firestore.Transaction;
 
 @Component({
   selector: 'app-create-profile-modal',
@@ -121,22 +124,12 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       this.pricingList = pricingList;
       console.log('pricing list '+this.pricingList);
     });
-
-    // let newCompanyInput = this.personalDetails.controls.company['registrationNo'];
-    // console.log('newCompanyInput '+newCompanyInput);
-    // newCompanyInput.valueChanges.flatMap(value => {
-    //   console.log('registrationNo input');
-    //   return Observable.of(value).debounceTime(200).distinctUntilChanged().switchMap(value => value.length > 2 && this.userObject ? null : this.companyService.searchByRegNo(value, this.userObject));
-    // }).map(json => {
-    //   this.companyList = json['searchResults'];
-    //   if (this.companyList) {
-    //     return json['searchResults'].map(item => item.name);
-    //   } else {
-    //     throw 'not found';
-    //   }
-    // });
   }
 
+  /**
+   * this will come in when client side validation needs it
+   * @param event
+   */
   onCompanyRegNoChanged(event: any){
     console.log('event target value '+event.target.value);
     Observable.of(event.target.value).flatMap(value => {
@@ -145,6 +138,12 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
         this.companyList = json['searchResults'];
         if(this.companyList){
           //todo alert the registration no field that it must be unique
+
+          //todo add has-danger to form-group
+
+          //todo add is-invalid class to form-control of the registration number input
+
+          //todo make
         }
     });
   }
@@ -170,9 +169,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
       this.company.companyImageBase64 = this.base64Encoded;
 
-
-
-
       //todo submit user info with their relevant permissions
 
 
@@ -190,14 +186,20 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     this.permission.email = this.userObject.email;
 
     //user permission will always be haulier since create profile is for the haulier
-    this.permission.authority = 'Admin';
+    console.log('formData.value.usertype '+formData.value.usertype);
+    this.permission.authority = formData.value.usertype;
     userInfo.permissions = [this.permission];
 
 
     this.userInfoService.save(userInfo, this.userObject).subscribe(userInfo => {
-      this.activeModal.dismiss();
+      // this.activeModal.dismiss();
       //dismiss modal and reload the whole screen
-      window.location.reload();
+      // window.location.reload();
+
+
+      //todo this is supposed to submit the pricing and trigger a payment gateway as well
+
+
     }, json => {
       console.log('json error ' + JSON.stringify(json));
       if (json.hasOwnProperty('message')) {
@@ -209,6 +211,11 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       }
       console.log('this.errors ' + JSON.stringify(this.errors));
     });
+
+
+
+
+
   }
 
   addCompany() {
@@ -248,10 +255,18 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     memberSubscription.monthlyRecurring = false;
     memberSubscription.userId = this.userObject.uid;
     this.showSpinnerProgress = true;
+
+    if(environment.production){
+
+    }
+
     this.subscriptionService.save(memberSubscription, this.userObject).subscribe(memberSubscription => {
       //todo close modal dialog perhaps
-
-
+      if(environment.production){
+        //todo trigger payment gateway
+      }else{
+        this.activeModal.dismiss();
+      }
       this.showSpinnerProgress = false;
     }, json => {
       //show some relevant error messages on the modal itself without opening a new modal

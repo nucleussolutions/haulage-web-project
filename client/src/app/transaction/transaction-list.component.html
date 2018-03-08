@@ -1,0 +1,33 @@
+<div class="nav" role="navigation">
+  <ul>
+    <li><a [routerLink]="['/index']" class="home">Home</a></li>
+    <li><a [routerLink]="['/transaction','create']" class="create">New Transaction</a></li>
+  </ul>
+</div>
+<div id="list-transaction" class="content scaffold-list" role="main">
+  <h1>Transaction List</h1>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Status</th>
+        <th>Subscription</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr [ngClass]="{'even': e, 'odd': !e}" *ngFor="let transaction of transactionList; let e = even;">
+        <td>
+          <a [routerLink]="['/transaction','show',transaction.id]">{{transaction.id}}</a>
+        </td>
+        <td>
+          <span>{{transaction.status}}</span>
+        </td>
+        <td>
+          <a *ngIf="transaction.subscription" [routerLink]="['/transaction','show', transaction.subscription.id]">{{transaction.subscription.toString()}}</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

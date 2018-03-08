@@ -1,0 +1,28 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a class="list" [routerLink]="['/transaction', 'list']" class="list">Transaction List</a></li>
+        <li><a class="create" [routerLink]="['/transaction', 'create']" class="create">New Transaction</a></li>
+    </ul>
+</div>
+<div id="show-part" class="content scaffold-show" role="main">
+    <h1>Show Transaction</h1>
+    <ol class="property-list transaction">
+  <li class="fieldcontain">
+    <span id="status-label" class="property-label">Status</span>
+    <div class="property-value" aria-labelledby="status-label">
+      <span>{{transaction.status}}</span>
+    </div>
+  </li>
+  <li class="fieldcontain">
+    <span id="subscription-label" class="property-label">Subscription</span>
+    <div class="property-value" aria-labelledby="subscription-label">
+      <a *ngIf="transaction.subscription" [routerLink]="['/transaction','show', transaction.subscription.id]">{{transaction.subscription.toString()}}</a>
+    </div>
+  </li>
+</ol>
+
+    <a class="edit" [routerLink]="['/transaction', 'edit', transaction.id]">Edit</a>
+    <button type="button" (click)="destroy()">Delete</button>
+
+</div>

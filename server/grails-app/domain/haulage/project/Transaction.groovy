@@ -10,9 +10,12 @@ class Transaction {
   String status
   MemberSubscription subscription
 
+  String code
+
   static constraints = {
     status nullable: false, inList: TransactionStatus.values()*.id
     subscription nullable: false
+    code nullable: true
   }
 
   static mapping = {

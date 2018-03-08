@@ -1,0 +1,40 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li><a [routerLink]="['/index']" class="home">Home</a></li>
+        <li><a [routerLink]="['/transaction','list']" class="list">Transaction List</a></li>
+    </ul>
+</div>
+<div id="persist-transaction" class="content scaffold-edit" role="main">
+    <h1>{{create ? "Create" : "Edit"}} Transaction</h1>
+    <ul class="errors" role="alert" *ngIf="errors">
+        <li *ngFor="let error of errors">{{error.message}}</li>
+    </ul>
+
+    <form name="save{className}" (ngSubmit)="save()">
+        <fieldset class="form">
+            <fieldset class="form">
+  <div class="fieldcontain required">
+    <label for="status">Status
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="status" id="status" [(ngModel)]="transaction.status">
+      <option value="Pending">Pending</option>
+      <option value="Success">Success</option>
+      <option value="Failure">Failure</option>
+    </select>
+  </div>
+  <div class="fieldcontain required">
+    <label for="subscription">Subscription
+      <span class="required-indicator">*</span>
+    </label>
+    <select required="" name="subscription" id="subscription" [(ngModel)]="transaction.subscription">
+      <option *ngFor="let memberSubscription of memberSubscriptionList" [value]="memberSubscription.id" [selected]="transaction.subscription?.id == memberSubscription.id">{{memberSubscription.toString()}}</option>
+    </select>
+  </div>
+</fieldset>
+        </fieldset>
+        <fieldset class="buttons">
+            <input type="submit" class="save" [value]="create ? 'Save' : 'Update'" />
+        </fieldset>
+    </form>
+</div>

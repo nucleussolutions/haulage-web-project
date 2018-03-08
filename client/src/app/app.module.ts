@@ -62,6 +62,7 @@ import { QuoteItemModalComponent } from './quote-item-modal/quote-item-modal.com
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { ForwarderInfoModalComponent } from './forwarder-info-modal/forwarder-info-modal.component';
 import { LogoutComponent } from './logout/logout.component';
+import { TransactionModule } from './transaction/transaction.module';
 
 
 
@@ -129,7 +130,8 @@ import { LogoutComponent } from './logout/logout.component';
     ExpenseModule,
     ExpenseItemModule,
     QuoteItemModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    TransactionModule
 ],
   exports: [ReactiveFormsModule],
   providers: [{
