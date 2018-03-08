@@ -109,7 +109,6 @@ export class VehicleListComponent implements OnInit, OnDestroy {
           this.vehicleList = json['searchResults'];
           this.count = json['total'];
         }, error => {
-          // TODO: real error handling
           console.log(`Error in component ... ${error}`);
           return Observable.of<Vehicle[]>([]);
         });

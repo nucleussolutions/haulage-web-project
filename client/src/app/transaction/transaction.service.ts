@@ -86,7 +86,6 @@ export class TransactionService {
       'token': userObject.token,
       'apiKey': userObject.apiKey,
       'userId': userObject.uid
-
     });
     this.http.get(environment.serverUrl + '/transaction/count', {
       headers: headers
