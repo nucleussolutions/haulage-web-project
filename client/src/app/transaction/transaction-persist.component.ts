@@ -5,6 +5,8 @@ import {TransactionService} from './transaction.service';
 import {Response} from "@angular/http";
 import { MemberSubscriptionService } from '../memberSubscription/memberSubscription.service';
 import { MemberSubscription } from '../memberSubscription/memberSubscription';
+import {Observable} from "rxjs/Observable";
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'transaction-persist',
@@ -17,30 +19,44 @@ export class TransactionPersistComponent implements OnInit {
   errors: any[];
   memberSubscriptionList: MemberSubscription[];
 
-  constructor(private route: ActivatedRoute, private transactionService: TransactionService, private router: Router, private memberSubscriptionService: MemberSubscriptionService) {}
+  private userObject: any;
+
+  constructor(private route: ActivatedRoute, private transactionService: TransactionService, private router: Router, private memberSubscriptionService: MemberSubscriptionService, private userService: UserService) {}
 
   ngOnInit() {
-    this.memberSubscriptionService.list().subscribe((memberSubscriptionList: MemberSubscription[]) => { this.memberSubscriptionList = memberSubscriptionList; });
-    this.route.params.subscribe((params: Params) => {
-      if (params.hasOwnProperty('id')) {
-        this.transactionService.get(+params['id']).subscribe((transaction: Transaction) => {
-          this.create = false;
-          this.transaction = transaction;
-        });
+
+    Observable.combineLatest(this.userService.getUser(), this.route.params).flatMap(result => {
+
+      this.userObject = result[0];
+
+      let params = result[1];
+
+      if(params.hasOwnProperty('id')){
+        return this.transactionService.get(+params['id'], this.userObject);
+      }else{
+        throw 'params id not found. nothing to see here';
       }
+    }).subscribe((transaction: Transaction) => {
+      this.create = false;
+      this.transaction = transaction;
     });
+
+    // this.memberSubscriptionService.list().subscribe((memberSubscriptionList: MemberSubscription[]) => { this.memberSubscriptionList = memberSubscriptionList; });
   }
 
   save() {
-    this.transactionService.save(this.transaction).subscribe((transaction: Transaction) => {
+    this.transactionService.save(this.transaction, this.userObject).subscribe((transaction: Transaction) => {
       this.router.navigate(['/transaction', 'show', transaction.id]);
-    }, (res: Response) => {
-      const json = res.json();
+    }, json => {
+      console.log('json error ' + JSON.stringify(json));
       if (json.hasOwnProperty('message')) {
-        this.errors = [json];
+        this.errors = json.error._embedded.errors;
+        console.info('[json.error]');
       } else {
         this.errors = json._embedded.errors;
+        console.info('json._embedded.errors');
       }
+      console.log('this.errors ' + JSON.stringify(this.errors));
     });
   }
 }

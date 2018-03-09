@@ -10,6 +10,7 @@ import {TransactionShowComponent} from './transaction-show.component';
 import {TransactionListComponent} from './transaction-list.component';
 import {TransactionPersistComponent} from './transaction-persist.component';
 import { MemberSubscriptionModule } from '../memberSubscription/memberSubscription.module';
+import {NgbModalModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MemberSubscriptionModule } from '../memberSubscription/memberSubscripti
     CommonModule,
     FormsModule,
     TransactionRoutingModule,
-    MemberSubscriptionModule
+    MemberSubscriptionModule,
+      NgbModalModule
 ],
   providers: [
     TransactionService

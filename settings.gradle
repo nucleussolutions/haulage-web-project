@@ -1,1 +1,1 @@
-include 'server', 'driver-timeline-backend', 'client'
+include 'server', 'driver-timeline-backend'

@@ -7,7 +7,6 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {Vehicle} from "../vehicle/vehicle";
 
 @Injectable()
 export class TransactionService {
@@ -113,7 +112,7 @@ export class TransactionService {
   }
 
   search(term: string, userObject: any){
-    let subject = new Subject<Vehicle[]>();
+    let subject = new Subject<Transaction[]>();
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey,

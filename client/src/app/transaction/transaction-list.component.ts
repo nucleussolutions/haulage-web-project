@@ -7,7 +7,6 @@ import {Observable} from "rxjs/Observable";
 import {ActivatedRoute, Router} from "@angular/router";
 import {GeneralModalComponent} from "../general-modal/general-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Vehicle} from "../vehicle/vehicle";
 
 @Component({
   selector: 'transaction-list',
