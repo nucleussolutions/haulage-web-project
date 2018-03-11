@@ -28,5 +28,9 @@ class Permission {
     status nullable: false, inList: ['Pending Approval', 'Approved']
   }
 
+  static mapping = {
+    cache true
+  }
+
   static searchable = true
 }
