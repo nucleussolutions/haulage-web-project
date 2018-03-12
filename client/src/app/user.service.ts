@@ -79,32 +79,36 @@ export class UserService {
 
   getUser() {
     let subject = new Subject<any>();
-    let currentTime = (new Date).getTime();
-    console.log('current time '+currentTime);
+    let currentTime = (new Date).getTime() as number;
+
+    console.log('authState '+this.firebaseAuth.authState);
+
+    console.log('auth '+this.firebaseAuth.auth);
+
     this.firebaseAuth.authState.subscribe(currentUser => {
       let currentUserJsonObject = JSON.stringify(currentUser);
       let currentUserObject = JSON.parse(currentUserJsonObject);
       console.log('currentUserJsonObject '+currentUserObject);
+      console.log('current time '+currentTime);
       console.log('currentUser expiration '+currentUserObject.stsTokenManager.expirationTime);
-      let expirationTime = currentUserObject.stsTokenManager.expirationTime;
+      let expirationTime = currentUserObject.stsTokenManager.expirationTime as number;
       console.log('user id '+currentUser.uid);
       console.log('user anonymous '+currentUser.isAnonymous);
 
-      if(expirationTime > currentTime){
-        this.refreshToken().subscribe(value => {
-          console.log('refresh token current user '+value);
-        });
-
+      if(currentTime < expirationTime){
+        // this.refreshToken().subscribe(value => {
+        //   console.log('refresh token current user '+value);
+        // });
         let cookieObjects = this.cookieService.getAll();
-
         console.log('cookieObjects ' + JSON.stringify(cookieObjects));
         subject.next(cookieObjects);
       }else{
+        this.logout();
         this.cookieService.removeAll();
         subject.error('not logged in');
       }
     }, error => {
-      console.log(error);
+      console.log('this is supposedly that the access token has expired '+error);
     });
     return subject.asObservable();
   }

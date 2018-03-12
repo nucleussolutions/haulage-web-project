@@ -64,8 +64,6 @@ import { ForwarderInfoModalComponent } from './forwarder-info-modal/forwarder-in
 import { LogoutComponent } from './logout/logout.component';
 import { TransactionModule } from './transaction/transaction.module';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,

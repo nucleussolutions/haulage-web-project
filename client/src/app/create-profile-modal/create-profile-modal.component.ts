@@ -1,27 +1,23 @@
 import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {HaulierInfoService} from "../haulierInfo/haulierInfo.service";
-import {ForwarderInfoService} from "../forwarderInfo/forwarderInfo.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ForwarderInfo} from "../forwarderInfo/forwarderInfo";
 import {Company} from "../company/company";
-import {HaulierInfo} from "../haulierInfo/haulierInfo";
 import {UserService} from 'app/user.service';
 import {Subscription} from 'rxjs/Subscription';
 import {UserInfoService} from "../userInfo/userInfo.service";
 import {UserInfo} from "../userInfo/userInfo";
 import {Permission} from "../permission/permission";
-import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {Observable} from "rxjs/Observable";
 import {CompanyService} from "../company/company.service";
-import {CreateCompanyModalComponent} from "../create-company-modal/create-company-modal.component";
 import {PermissionService} from "../permission/permission.service";
 import {PricingService} from "../pricing/pricing.service";
 import {Pricing} from "../pricing/pricing";
 import {MemberSubscriptionService} from "../memberSubscription/memberSubscription.service";
 import {MemberSubscription} from "../memberSubscription/memberSubscription";
 import {environment} from "../../environments/environment";
-import * as firebase from "firebase";
-import Transaction = firebase.firestore.Transaction;
+import {Transaction} from "../transaction/transaction";
+import {TransactionService} from "../transaction/transaction.service";
+import {companyRegNoValidator} from "../company-regno-validator";
 
 @Component({
   selector: 'app-create-profile-modal',
@@ -97,7 +93,15 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     myReader.readAsDataURL(file);
   }
 
-  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal, private companyService: CompanyService, private permissionService: PermissionService, private pricingService: PricingService, private subscriptionService: MemberSubscriptionService) {
+  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal, private companyService: CompanyService, private permissionService: PermissionService, private pricingService: PricingService, private subscriptionService: MemberSubscriptionService, private transactionService: TransactionService) {
+
+  }
+
+  ngOnInit(): void {
+    this.pricingService.listAll(this.userObject).subscribe(pricingList => {
+      this.pricingList = pricingList;
+      console.log('pricing list '+this.pricingList);
+    });
 
     this.personalDetails = this.formBuilder.group({
       name: ['', Validators.required],
@@ -114,20 +118,13 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
         postalCode: ['', Validators.required],
         code: ['', Validators.required],
         companyImage: [''],
-        registrationNo: ['', Validators.required],
+        registrationNo: ['', Validators.required, companyRegNoValidator(this.userObject, this.companyService)],
       })
     });
   }
 
-  ngOnInit(): void {
-    this.pricingService.listAll(this.userObject).subscribe(pricingList => {
-      this.pricingList = pricingList;
-      console.log('pricing list '+this.pricingList);
-    });
-  }
-
   /**
-   * this will come in when client side validation needs it
+   * todo this will come in when client side validation needs it
    * @param event
    */
   onCompanyRegNoChanged(event: any){
@@ -149,7 +146,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   submitDetails(formData) {
-    //todo perhaps check the uniqueness of the user id first then save
     // let loadingSpinner = document.getElementById('loading-spinner');
     if (!this.company) {
       this.company = new Company();
@@ -181,7 +177,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     let userInfo = new UserInfo();
     userInfo.name = formData.value.name;
     userInfo.userId = this.userObject.uid;
-    userInfo.company = this.company;
+
+    // userInfo.company = this.company;
 
     this.permission.email = this.userObject.email;
 
@@ -265,7 +262,14 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       if(environment.production){
         //todo trigger payment gateway
       }else{
-        this.activeModal.dismiss();
+        //todo create dummy subscription and transaction
+        let transaction = new Transaction();
+        transaction.code = 'dummy';
+        transaction.status = 'paid';
+        transaction.subscription = memberSubscription;
+        this.transactionService.save(transaction, this.userObject).subscribe(transaction => {
+          this.activeModal.dismiss();
+        });
       }
       this.showSpinnerProgress = false;
     }, json => {

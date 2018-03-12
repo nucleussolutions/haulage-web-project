@@ -11,6 +11,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {GeneralModalComponent} from "../general-modal/general-modal.component";
 import {UserInfoService} from "../userInfo/userInfo.service";
 import {Router} from "@angular/router";
+import {environment} from "../../environments/environment";
 
 
 @Component({
@@ -98,21 +99,17 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }).subscribe(userInfo => {
       //nothing to do here
-      // const createProfileModalRef = this.modalService.open(CreateProfileModalComponent, {
-      //   size: 'lg'
-      // });
-      // createProfileModalRef.componentInstance.userObject = this.userObject;
     }, error => {
       console.log('IndexComponent error '+JSON.stringify(error));
-      if(this.userObject.uid){
+      if(this.userObject && this.userObject.uid){
         //should not open up a model
         const createProfileModalRef = this.modalService.open(CreateProfileModalComponent, {
           size: 'lg',
-          backdrop: "static",
-          keyboard: false
+          backdrop: environment.production ? true : "static",
+          keyboard: !environment.production
         });
         createProfileModalRef.componentInstance.userObject = this.userObject;
-        console.log('assigned user object to create profile modal '+createProfileModalRef.componentInstance.userObject)
+        console.log('assigned user object to create profile modal '+JSON.stringify(createProfileModalRef.componentInstance.userObject));
       }
     })
   }
