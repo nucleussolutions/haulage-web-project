@@ -171,7 +171,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
       //todo submit the subscription info and trigger the payment gateway
 
-      this.subscribeToPlan(this.pricing)
     }
 
     let userInfo = new UserInfo();
@@ -193,10 +192,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       //dismiss modal and reload the whole screen
       // window.location.reload();
 
-
       //todo this is supposed to submit the pricing and trigger a payment gateway as well
-
-
+      this.subscribeToPlan(this.pricing);
     }, json => {
       console.log('json error ' + JSON.stringify(json));
       if (json.hasOwnProperty('message')) {
@@ -208,11 +205,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       }
       console.log('this.errors ' + JSON.stringify(this.errors));
     });
-
-
-
-
-
   }
 
   addCompany() {
@@ -229,6 +221,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     }, error => {
       //if the company permission doesnt exist, then proceed to create a new permission and assign owner role
       this.permission.role = 'Owner';
+      this.permission.status = 'Approved';
+      this.permission.grantedBy = this.userObject.uid;
     });
 
   }
@@ -247,6 +241,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   subscribeToPlan(pricing: Pricing){
+    console.log('executing subscribe to plan');
     const memberSubscription = new MemberSubscription();
     memberSubscription.pricing = pricing;
     memberSubscription.monthlyRecurring = false;

@@ -26,6 +26,8 @@ class Permission {
     company nullable: true
     role nullable: true
     status nullable: false, inList: ['Pending Approval', 'Approved']
+
+    //todo might need a custom validator for granted by, since the status will be flicked to approved
   }
 
   static mapping = {

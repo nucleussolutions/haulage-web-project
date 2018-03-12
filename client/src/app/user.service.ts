@@ -7,7 +7,9 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Subject} from "rxjs/Subject";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import 'rxjs/add/operator/publish';
-import {nextTick} from "q";
+
+import 'rxjs/add/operator/publishReplay';
+
 
 @Injectable()
 export class UserService {
@@ -81,7 +83,7 @@ export class UserService {
     let subject = new Subject<any>();
     this.http.post("https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key="+apiKey, {
       idToken: token
-    }).subscribe(value => {
+    }).publishReplay(1).refCount().subscribe(value => {
       subject.next(value);
     }, error => {
       subject.error(error);
