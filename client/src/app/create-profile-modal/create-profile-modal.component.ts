@@ -164,20 +164,11 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       //todo convert companyImage to base64 string
 
       this.company.companyImageBase64 = this.base64Encoded;
-
-      //todo submit user info with their relevant permissions
-
-
-
-      //todo submit the subscription info and trigger the payment gateway
-
     }
 
     let userInfo = new UserInfo();
     userInfo.name = formData.value.name;
     userInfo.userId = this.userObject.uid;
-
-    // userInfo.company = this.company;
 
     this.permission.email = this.userObject.email;
 
@@ -185,7 +176,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     console.log('formData.value.usertype '+formData.value.usertype);
     this.permission.authority = formData.value.usertype;
     userInfo.permissions = [this.permission];
-
 
     this.userInfoService.save(userInfo, this.userObject).subscribe(userInfo => {
       // this.activeModal.dismiss();
@@ -215,6 +205,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     this.company = value;
 
     //todo search for whether the company permission actually exists already, then ask for approval from the owner of the company permission
+    console.log('selected company '+JSON.stringify(value));
     this.permissionService.getByCompany(this.userObject, this.company.id).subscribe(permission => {
       //maybe send an email to the owner of the permission so that this user can be approved
       this.permission.role = 'Staff';

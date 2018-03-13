@@ -16,6 +16,7 @@ class UrlMappings {
     get "/permission/userId/"(controller: 'permission', action: 'getByUserId')
     get "/permission/grantedBy/${userId}"(controller: 'custom', action: 'permissionByGrantedBy')
     get "/permission/company/"(controller: 'permission', action: 'getByCompany')
+    get "/permission/companyname/${companyName}"(controller: 'permission', action: 'getByCompanyName')
     get "/location/type/${type}"(controller: 'custom', action: 'locationByType')
 
 
