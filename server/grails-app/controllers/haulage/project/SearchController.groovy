@@ -18,6 +18,7 @@ class SearchController {
     if (params.term) {
       respond searchService.searchTransportRequest(params.term as String)
     } else {
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -26,6 +27,7 @@ class SearchController {
     if(params.term){
       respond searchService.searchTransportRequestByHaulier(params.term as String, request.getHeader('userId'))
     }else{
+      response.status = HttpStatus.NOT_FOUND.value()
       respond HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -34,6 +36,7 @@ class SearchController {
     if(params.term){
       respond searchService.searchTransportRequestByForwarder(params.term as String, request.getHeader('userId') as String)
     }else{
+      response.status = HttpStatus.NOT_FOUND.value()
       respond HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -42,6 +45,7 @@ class SearchController {
     if (params.term) {
       respond searchService.searchConsignment(params.term as String)
     } else {
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -50,6 +54,7 @@ class SearchController {
     if (params.term) {
       respond searchService.searchQuote(params.term as String)
     } else {
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -58,6 +63,7 @@ class SearchController {
     if(params.term){
       respond searchService.searchQuotesByForwarder(params.term as String, request.getHeader('userId'))
     }else{
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -66,6 +72,7 @@ class SearchController {
     if(params.term){
       respond searchService.searchQuoteByHaulier(params.term as String, request.getHeader('userId'))
     }else{
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -74,6 +81,7 @@ class SearchController {
     if (params.term) {
       respond searchService.searchMemberSubscription(params.term as String)
     } else {
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -82,6 +90,7 @@ class SearchController {
     if (params.term) {
       respond searchService.searchPermission(params.term)
     } else {
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -90,6 +99,7 @@ class SearchController {
     if(params.term){
       respond searchService.searchPermissionByGrantedBy(params.term as String, request.getHeader('userId'))
     }else {
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -98,6 +108,7 @@ class SearchController {
     if (params.term) {
       respond searchService.searchTariff(params.term as String)
     } else {
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -106,6 +117,7 @@ class SearchController {
     if (params.term) {
       respond searchService.searchVehicle(params.term as String)
     } else {
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -114,6 +126,7 @@ class SearchController {
     if(params.term){
       respond searchService.searchVehicleByHaulier(params.term as String, request.getHeader('userId'))
     }else{
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -122,6 +135,7 @@ class SearchController {
     if (params.term) {
       respond searchService.searchDriverInfo(params.term as String)
     } else {
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -130,6 +144,7 @@ class SearchController {
     if(params.term){
       respond searchService.searchDriverInfoByHaulier(params.term as String, request.getHeader('userId'))
     }else{
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -138,6 +153,7 @@ class SearchController {
     if (params.term) {
       respond searchService.searchForwarderInfo(params.term as String)
     } else {
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -146,6 +162,7 @@ class SearchController {
     if (params.term) {
       respond searchService.searchHaulierInfo(params.term as String)
     } else {
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -154,6 +171,7 @@ class SearchController {
     if (params.term) {
       respond searchService.searchLocation(params.term as String)
     } else {
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -163,6 +181,7 @@ class SearchController {
     if(params.term){
       respond searchService.searchJob(params.term as String)
     }else{
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -171,6 +190,7 @@ class SearchController {
     if(params.term){
       respond searchService.searchJobByHaulier(params.term as String, request.getHeader('userId'))
     }else{
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -189,6 +209,7 @@ class SearchController {
       println 'term '+params.term
       respond searchService.searchCompany(params.term as String)
     }else{
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -198,6 +219,7 @@ class SearchController {
       println 'term '+params.term
       respond searchService.searchCompanyByRegNo(params.term as String)
     }else {
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -206,6 +228,7 @@ class SearchController {
     if(params.term){
       respond searchService.searchHaulier(params.term as String)
     }else{
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
@@ -214,6 +237,7 @@ class SearchController {
     if(params.term){
       respond searchService.searchForwarder(params.term as String)
     }else{
+      response.status = HttpStatus.NOT_FOUND.value()
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }

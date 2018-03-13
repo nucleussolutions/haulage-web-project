@@ -30,13 +30,6 @@ class CustomRestInterceptor {
 
       println 'request url ' + request.requestURL
 
-//      if (request.method == "OPTIONS") {
-//        response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200")
-//        response.setHeader("Access-Control-Allow-Credentials", "true")
-//        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")
-//        response.setHeader("Access-Control-Max-Age", "3600")
-//      }
-
       def http = new HTTPBuilder('https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key=' + apiKey)
 
       def postBody = [idToken: token] // will be url-encoded

@@ -5,7 +5,6 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {CookieService} from 'ngx-cookie';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Subject} from "rxjs/Subject";
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import 'rxjs/add/operator/publish';
 
 import 'rxjs/add/operator/publishReplay';
