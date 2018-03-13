@@ -55,19 +55,21 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
               // or the observable of empty heroes if no search term
                   .map(json => {
                     this.companyList = json['searchResults'];
-                    if (this.companyList) {
+                    if (this.companyList.length > 0) {
                       return json['searchResults'].map(item => item.name);
                     } else {
+                      //todo show some error message on the typeahead field for company
                       throw 'not found';
                     }
                   }));
+
+  companySearchErrorMessage
 
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
   }
-
 
 
   private personalDetails: FormGroup;
@@ -100,7 +102,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.pricingService.listAll(this.userObject).subscribe(pricingList => {
       this.pricingList = pricingList;
-      console.log('pricing list '+this.pricingList);
+      console.log('pricing list ' + this.pricingList);
     });
 
     this.personalDetails = this.formBuilder.group({
@@ -127,21 +129,21 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
    * todo this will come in when client side validation needs it
    * @param event
    */
-  onCompanyRegNoChanged(event: any){
-    console.log('event target value '+event.target.value);
+  onCompanyRegNoChanged(event: any) {
+    console.log('event target value ' + event.target.value);
     Observable.of(event.target.value).flatMap(value => {
-        return Observable.of(value).debounceTime(200).distinctUntilChanged().switchMap(value => value.length < 2 && this.userObject ? null : this.companyService.searchByRegNo(value, this.userObject));
+      return Observable.of(value).debounceTime(200).distinctUntilChanged().switchMap(value => value.length < 2 && this.userObject ? null : this.companyService.searchByRegNo(value, this.userObject));
     }).subscribe(json => {
-        this.companyList = json['searchResults'];
-        if(this.companyList){
-          //todo alert the registration no field that it must be unique
+      this.companyList = json['searchResults'];
+      if (this.companyList) {
+        //todo alert the registration no field that it must be unique
 
-          //todo add has-danger to form-group
+        //todo add has-danger to form-group
 
-          //todo add is-invalid class to form-control of the registration number input
+        //todo add is-invalid class to form-control of the registration number input
 
-          //todo make
-        }
+        //todo make
+      }
     });
   }
 
@@ -173,7 +175,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     this.permission.email = this.userObject.email;
 
     //user permission will always be haulier since create profile is for the haulier
-    console.log('formData.value.usertype '+formData.value.usertype);
+    console.log('formData.value.usertype ' + formData.value.usertype);
     this.permission.authority = formData.value.usertype;
     userInfo.permissions = [this.permission];
 
@@ -202,20 +204,28 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   selectedCompany(value) {
-    this.company = value;
-
     //todo search for whether the company permission actually exists already, then ask for approval from the owner of the company permission
-    console.log('selected company '+JSON.stringify(value));
-    this.permissionService.getByCompany(this.userObject, this.company.id).subscribe(permission => {
-      //maybe send an email to the owner of the permission so that this user can be approved
+    console.log('selected company ' + JSON.stringify(value));
+    // this.permissionService.getByCompany(this.userObject, this.company.id).subscribe(permission => {
+    //   //maybe send an email to the owner of the permission so that this user can be approved
+    //   this.permission.role = 'Staff';
+    // }, error => {
+    //   //if the company permission doesnt exist, then proceed to create a new permission and assign owner role
+    //   this.permission.role = 'Owner';
+    //   this.permission.status = 'Approved';
+    //   this.permission.grantedBy = this.userObject.uid;
+    // });
+
+    this.permissionService.getByCompanyName(this.userObject, value.item).subscribe(permissions => {
       this.permission.role = 'Staff';
+      this.permission.status = 'Pending Approval';
+      console.log('permission staff is set, and pending approval');
     }, error => {
-      //if the company permission doesnt exist, then proceed to create a new permission and assign owner role
       this.permission.role = 'Owner';
       this.permission.status = 'Approved';
       this.permission.grantedBy = this.userObject.uid;
+      console.log('permission owner is set, and approved and granted by himself');
     });
-
   }
 
   showSubscriptions(show: boolean) {
@@ -228,10 +238,10 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     //then submit an api to subscribe and link to payment gateway
 
     this.showSubscriptionSelections = show;
-    console.log('showSubs '+this.showSubscriptionSelections);
+    console.log('showSubs ' + this.showSubscriptionSelections);
   }
 
-  subscribeToPlan(pricing: Pricing){
+  subscribeToPlan(pricing: Pricing) {
     console.log('executing subscribe to plan');
     const memberSubscription = new MemberSubscription();
     memberSubscription.pricing = pricing;
@@ -239,15 +249,15 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     memberSubscription.userId = this.userObject.uid;
     this.showSpinnerProgress = true;
 
-    if(environment.production){
+    if (environment.production) {
 
     }
 
     this.subscriptionService.save(memberSubscription, this.userObject).subscribe(memberSubscription => {
       //todo close modal dialog perhaps
-      if(environment.production){
+      if (environment.production) {
         //todo trigger payment gateway
-      }else{
+      } else {
         //todo create dummy subscription and transaction
         let transaction = new Transaction();
         transaction.code = 'dummy';
@@ -272,6 +282,10 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
       this.showSpinnerProgress = false;
     });
+  }
+
+  showPermissionPendingApprovalDiv() {
+
   }
 }
 
