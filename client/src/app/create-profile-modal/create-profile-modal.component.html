@@ -53,10 +53,15 @@
                   <label for="companyName">Company name</label>
                   <input class="form-control" type="text" id="companyName" formControlName="name">
                 </div>
-                <div class="form-group">
+                <div class="form-group" [ngClass]="registrationNo.valid ? 'has-success' : 'has-danger'">
                   <label for="companyRegNo">Company registration number</label>
-                  <input class="form-control" type="text" id="companyRegNo" formControlName="registrationNo"
-                         >
+                  <input class="form-control" type="text" id="companyRegNo" formControlName="registrationNo">
+                  <div [ngClass]="registrationNo.valid" class="valid-feedback">
+                    Company registration number is valid
+                  </div>
+                  <div [ngClass]="registrationNo.invalid" class="invalid-feedback">
+                    Company registration number has been taken
+                  </div>
                 </div>
 
                 <div class="form-group">
