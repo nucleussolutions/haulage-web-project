@@ -40,6 +40,27 @@ export class CompanyService {
     return subject.asObservable();
   }
 
+  listWithoutPaging(userObject:any): Observable<Company[]>{
+    let subject = new Subject<Company[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+    });
+
+    this.http.get(environment.serverUrl + '/company', {
+      headers: headers
+    })
+        .catch(err => {
+            subject.error(err);
+            return subject.asObservable();
+        })
+      .subscribe((json: any[]) => {
+        subject.next(json);
+      });
+    return subject.asObservable();
+  }
+
   get(id: number, userObject: any): Observable<Company> {
 
     let headers = new HttpHeaders({

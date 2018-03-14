@@ -24,17 +24,24 @@
             <input class="form-control" type="text" id="name" formControlName="name">
           </div>
 
-          <div *ngIf="!newCompany" class="form-group">
+          <!-- formgroup must have has-success and has-danger for feedback to work -->
+          <div *ngIf="!newCompany" class="form-group" ngClass="isExistingCompanyNameValid ? has-success : has-danger">
             <label for="company">Company
               <span class="required-indicator">*</span>
             </label>
             <div class="input-group mb-3">
-              <input id="company" name="company" required type="text" class="form-control"
-                     (selectItem)="selectedCompany($event)"
+              <input id="companyname" name="companyname" required type="text" class="form-control"
+                     (selectItem)="selectedCompany($event)" ngClass="isExistingCompanyNameValid ? is-valid : is-invalid"
                      [ngbTypeahead]="companySearch"/>
               <div class="input-group-append">
                 <button type="button" class="btn btn-primary" (click)="addCompany()">New Company</button>
               </div>
+            </div>
+            <div *ngIf="isExistingCompanyNameValid" class="valid-feedback">
+              Company found.
+            </div>
+            <div *ngIf="!isExistingCompanyNameValid" class="invalid-feedback">
+              Company does not exist. New company?
             </div>
           </div>
           <div *ngIf="newCompany" formGroupName="company">

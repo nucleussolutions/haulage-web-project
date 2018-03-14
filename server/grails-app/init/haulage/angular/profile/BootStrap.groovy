@@ -18,7 +18,7 @@ class BootStrap {
 
     def company1 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'AGL', name: 'AGL Logistics', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '12932813901283', email: 'kevin2@kevin.com', postalCode: '21309').save(flush: true, failOnError: true)
 
-    def company2 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'BGL', name: 'AGL Logistics', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '343243204328409', email: 'kevin@kevin.com', postalCode: '98700').save(flush: true, failOnError: true)
+    def company2 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'BGL', name: 'BGL Logistics', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '343243204328409', email: 'kevin@kevin.com', postalCode: '98700').save(flush: true, failOnError: true)
 
     def location1 = new Location(name: 'North Port', city: 'petaling jaya', state: 'petaling jaya', country: 'malaysia', type: 'customer location', address1: 'ajsdlasdj', address2: 'aksdjsdjsald', formattedAddress: 'asasddasdsd', postalCode: '12323').save(flush: true)
     def location2 = new Location(name: 'North Port', city: 'petaling jaya', state: 'petaling jaya', country: 'malaysia', type: 'customer location', address1: 'jasdlkadjlas', address2: 'akjsdlasdjslad', formattedAddress: 'asdadasdsad', postalCode: '123123').save(flush: true)
@@ -54,10 +54,10 @@ class BootStrap {
     def kevinAdminPermission = new Permission(email: 'kevintanhongann@gmail.com', userInfo: kevinUserInfo, authority: 'Super Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', company: company1)
     kevinUserInfo.permissions = [kevinAdminPermission]
     kevinUserInfo.save(flush: true, failOnError: true)
-    def jordanAdminPermission = new Permission(email: 'jordan@nucleus.my', userInfo: jordanUserInfo, authority: 'Super Admin', grantedBy: 'Wcd1ixuFLLStcm0GN4YylfU1nNx2', company: company2)
+    def jordanAdminPermission = new Permission(email: 'jordan@nucleus.my', userInfo: jordanUserInfo, authority: 'Super Admin', grantedBy: 'Wcd1ixuFLLStcm0GN4YylfU1nNx2', company: company2, role: 'Owner')
     jordanUserInfo.permissions = [jordanAdminPermission]
     jordanUserInfo.save(flush: true, failOnError: true)
-    def interceptorPermission = new Permission(email: 'kevin5@kevin.com', userInfo: interceptorUserInfo, authority: 'Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', company: company2)
+    def interceptorPermission = new Permission(email: 'kevin5@kevin.com', userInfo: interceptorUserInfo, authority: 'Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', company: company2, role: 'Staff')
     interceptorUserInfo.permissions = [interceptorPermission]
     interceptorUserInfo.save(flush: true, failOnError: true)
 

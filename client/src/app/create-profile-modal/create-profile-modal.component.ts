@@ -95,6 +95,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     myReader.readAsDataURL(file);
   }
 
+  isExistingCompanyNameValid: boolean = false;
+
   constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal, private companyService: CompanyService, private permissionService: PermissionService, private pricingService: PricingService, private subscriptionService: MemberSubscriptionService, private transactionService: TransactionService) {
 
   }
@@ -107,6 +109,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
     this.personalDetails = this.formBuilder.group({
       name: ['', Validators.required],
+      // existingCompanyName: ['']
       usertype: new FormControl('Admin'),
       company: this.formBuilder.group({
         name: ['', Validators.required],
