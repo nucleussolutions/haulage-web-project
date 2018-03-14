@@ -59,11 +59,11 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
                       return json['searchResults'].map(item => item.name);
                     } else {
                       //todo show some error message on the typeahead field for company
-                      throw 'not found';
+                      // throw 'not found';
+                      this.isExistingCompanyNameValid = false;
+                      console.log('isExistingCompanyNameValid '+this.isExistingCompanyNameValid);
                     }
                   }));
-
-  companySearchErrorMessage
 
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -209,6 +209,9 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   selectedCompany(value) {
     //todo search for whether the company permission actually exists already, then ask for approval from the owner of the company permission
     console.log('selected company ' + JSON.stringify(value));
+
+    this.isExistingCompanyNameValid = true;
+    console.log('isExistingCompanyNameValid '+this.isExistingCompanyNameValid);
     // this.permissionService.getByCompany(this.userObject, this.company.id).subscribe(permission => {
     //   //maybe send an email to the owner of the permission so that this user can be approved
     //   this.permission.role = 'Staff';
