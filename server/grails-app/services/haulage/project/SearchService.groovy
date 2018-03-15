@@ -92,8 +92,7 @@ class SearchService {
 
     def searchCompanyByRegNo(String term) {
         println 'company search term ' + term
-        def results = elasticSearchService.search(term, [indices: Company, types: Company, from: 0, size: 10])
-        println results
+        def results = Company.search("registrationNo: ${term}")
         results
     }
 
@@ -110,10 +109,11 @@ class SearchService {
     }
 
     def searchVehicleByHaulier(String term, String haulierId) {
-        elasticSearchService.search(indices: Vehicle, types: Vehicle, from: 0, size: 10) {
+        def results = elasticSearchService.search(indices: Vehicle, types: Vehicle, from: 0, size: 10) {
             queryString(term)
             match("haulierId": haulierId)
         }
+        results
     }
 
     def searchQuote(String term) {

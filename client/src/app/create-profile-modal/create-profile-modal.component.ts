@@ -48,6 +48,10 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   pricing: Pricing;
 
+  showSuccessWindow : boolean = false;
+
+  successMessage: string;
+
   companySearch = (text$: Observable<string>) =>
       text$
           .debounceTime(200)
@@ -144,10 +148,12 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
             message: 'company registration number exists'
           });
           this.isCompanyRegNoValid = false;
+          console.log('this.isCompanyRegNoValid '+this.isCompanyRegNoValid);
         }, error => {
           console.log('results not found');
           subject.next(null);
           this.isCompanyRegNoValid = true;
+          console.log('this.isCompanyRegNoValid '+this.isCompanyRegNoValid);
         });
       }
       return subject.asObservable();
