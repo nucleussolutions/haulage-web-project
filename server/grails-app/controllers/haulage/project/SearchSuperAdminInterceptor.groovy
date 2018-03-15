@@ -3,7 +3,7 @@ package haulage.project
 class SearchSuperAdminInterceptor {
 
   SearchSuperAdminInterceptor() {
-    match(controller: 'search').except(action: 'location').except(action: 'transportRequestByHaulier').except(action: 'transportRequestByForwarder').except(action: 'quoteByHaulier').except(action: 'quoteByForwarder').except(action: 'company')
+    match(controller: 'search').except(action: 'location').except(action: 'transportRequestByHaulier').except(action: 'transportRequestByForwarder').except(action: 'quoteByHaulier').except(action: 'quoteByForwarder').except(action: 'company').except(action:'companyByRegNo')
   }
 
   boolean before() {

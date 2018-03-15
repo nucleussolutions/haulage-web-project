@@ -1,5 +1,8 @@
 import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {
+  AbstractControl, AsyncValidatorFn, FormBuilder, FormControl, FormGroup, ValidationErrors,
+  Validators
+} from '@angular/forms';
 import {Company} from "../company/company";
 import {UserService} from 'app/user.service';
 import {Subscription} from 'rxjs/Subscription';
@@ -17,7 +20,7 @@ import {MemberSubscription} from "../memberSubscription/memberSubscription";
 import {environment} from "../../environments/environment";
 import {Transaction} from "../transaction/transaction";
 import {TransactionService} from "../transaction/transaction.service";
-import {companyRegNoValidator} from "../company-regno-validator";
+import {Subject} from "rxjs/Subject";
 
 @Component({
   selector: 'app-create-profile-modal',
@@ -97,6 +100,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   isExistingCompanyNameValid: boolean = false;
 
+  isCompanyRegNoValid: boolean = false;
+
   constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal, private companyService: CompanyService, private permissionService: PermissionService, private pricingService: PricingService, private subscriptionService: MemberSubscriptionService, private transactionService: TransactionService) {
 
   }
@@ -123,11 +128,31 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
         postalCode: ['', Validators.required],
         code: ['', Validators.required],
         companyImage: [''],
-        registrationNo: ['', Validators.required, companyRegNoValidator(this.userObject, this.companyService)],
+        registrationNo: ['', Validators.required, this.companyRegNoValidator(this.userObject, this.companyService)],
       })
     });
   }
 
+  companyRegNoValidator(userObject: any, companyService: CompanyService) : AsyncValidatorFn {
+    return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+      let subject = new Subject<ValidationErrors | null>();
+      console.log('companyRegNoValidator userObject '+JSON.stringify(userObject));
+      if(control.value.length > 2){
+        companyService.searchByRegNo(control.value, userObject).map(value => {
+          console.log('results found '+JSON.stringify(value));
+          subject.next({
+            message: 'company registration number exists'
+          });
+          this.isCompanyRegNoValid = false;
+        }, error => {
+          console.log('results not found');
+          subject.next(null);
+          this.isCompanyRegNoValid = true;
+        });
+      }
+      return subject.asObservable();
+    }
+  }
   /**
    * todo this will come in when client side validation needs it
    * @param event
