@@ -25,7 +25,7 @@ class Company {
 
   static constraints = {
     name nullable: false, blank: false
-    registrationNo nullable: false, blank: false, unique: true
+    registrationNo nullable: false, unique: true
     address1 nullable: false, blank: false
     address2 nullable: false, blank: true
     city nullable: false, blank: false
@@ -41,4 +41,7 @@ class Company {
   }
 
   static searchable = true
+
+  static mapping = {
+  }
 }

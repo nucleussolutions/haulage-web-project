@@ -21,8 +21,8 @@ class UrlMappings {
 
 
 
-    get "/company/count"(controller: 'company', action: 'count')
     get "/company/registrationNo/${registrationNo}"(controller: 'company', action: 'getByRegistrationNo')
+    get "/company/count"(controller: 'company', action: 'count')
     get "/location/count"(controller: 'location', action: 'count')
     get "/pricing/count"(controller: 'pricing', action: 'count')
     get "/pricing/all/"(controller: 'pricing', action: 'listAll')

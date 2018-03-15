@@ -141,8 +141,9 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
       let subject = new Subject<ValidationErrors | null>();
       console.log('companyRegNoValidator userObject '+JSON.stringify(userObject));
+      console.log('control.value '+control.value);
       if(control.value.length > 2){
-        companyService.searchByRegNo(control.value, userObject).map(value => {
+        companyService.getByRegistrationNo(control.value, userObject).subscribe(value => {
           console.log('results found '+JSON.stringify(value));
           subject.next({
             message: 'company registration number exists'

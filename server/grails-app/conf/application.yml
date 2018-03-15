@@ -130,6 +130,7 @@ environments:
             username: postgres
             password: 'kevintan'
             logSql: true
+            formatSql: true
         hibernate:
             dialect: net.kaleidos.hibernate.PostgresqlExtensionsDialect
     test:

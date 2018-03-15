@@ -86,10 +86,11 @@ export class CompanyService {
       'apiKey': userObject.apiKey
     });
 
+    console.log('registrationNo '+registrationNo);
+
     return this.http.get(environment.serverUrl + '/company/registrationNo/' + registrationNo, {
       headers: headers
-    })
-        .map((r: Response) => new Company(r)).catch(err => {
+    }).map((r: Response) => new Company(r)).catch(err => {
           if (err.status === 401) {
             return Observable.throw(new Error('Unauthorized'));
           } else if (err.status === 500) {
