@@ -80,6 +80,8 @@ export class CompanyService {
         });
   }
 
+
+
   getByRegistrationNo(registrationNo: string, userObject: any): Observable<Company> {
     let headers = new HttpHeaders({
       'token': userObject.token,
@@ -204,4 +206,48 @@ export class CompanyService {
 
     return subject.asObservable();
   }
+
+  searchHauliers(term: string, userObject: any): Observable<Company[]>{
+    //list companies where permission = admin
+    console.log('search company');
+    let subject = new Subject<Company[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+    this.http.get(environment.serverUrl + '/search/company/haulier?term=' + term, {
+      headers: headers
+    }).subscribe((json: any[]) => {
+      subject.next(json);
+    }, error => {
+      subject.error(error);
+    });
+
+    return subject.asObservable();
+  }
+
+  searchForwarders(term: string, userObject: any): Observable<Company[]>{
+    console.log('search company');
+    let subject = new Subject<Company[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+    this.http.get(environment.serverUrl + '/search/company/forwarder?term=' + term, {
+      headers: headers
+    }).subscribe((json: any[]) => {
+      subject.next(json);
+    }, error => {
+      subject.error(error);
+    });
+
+    return subject.asObservable();
+  }
+
 }

@@ -13,10 +13,10 @@
         <div *ngIf="!showSubscriptionSelections" class="col-12">
           <h3>Are you a Haulier or Forwarder?</h3>
           <div class="radio">
-            <label><input type="radio" name="usertype" formControlName="usertype" checked value="Admin">Haulier</label>
+            <label><input type="radio" name="usertype" formControlName="usertype" checked value="Admin" (change)="onUserTypeChanged($event)">Haulier</label>
           </div>
           <div class="radio">
-            <label><input type="radio" name="usertype" formControlName="usertype" value="Manager">Forwarder</label>
+            <label><input type="radio" name="usertype" formControlName="usertype" value="Manager" (change)="onUserTypeChanged($event)">Forwarder</label>
           </div>
 
           <div class="form-group">
@@ -187,9 +187,9 @@
       <button type="button" *ngIf="showSubscriptionSelections" class="btn btn-primary"
               (click)="showSubscriptions(false)">Previous
       </button>
-      <button type="button" class="btn btn-primary" (click)="showSubscriptions(true)">Next</button>
+      <button *ngIf="showNextButton" type="button" class="btn btn-primary" (click)="showSubscriptions(true)">Next</button>
       <i *ngIf="showSpinnerProgress" class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
-      <input *ngIf="showSubscriptionSelections" type="submit" class="btn btn-primary" value="Submit">
+      <input *ngIf="showSubmitButton" type="submit" class="btn btn-primary" value="Submit">
     </div>
   </div>
 </form>

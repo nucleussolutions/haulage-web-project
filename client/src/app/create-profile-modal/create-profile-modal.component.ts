@@ -21,7 +21,7 @@ import {environment} from "../../environments/environment";
 import {Transaction} from "../transaction/transaction";
 import {TransactionService} from "../transaction/transaction.service";
 import {Subject} from "rxjs/Subject";
-import { parse, format, AsYouType } from 'libphonenumber-js'
+import {parse, format, AsYouType} from 'libphonenumber-js'
 
 @Component({
   selector: 'app-create-profile-modal',
@@ -47,7 +47,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   //show pricing list on the modal itself
   pricingList: Pricing[];
 
-  showSuccessWindow : boolean = false;
+  showSuccessWindow: boolean = false;
 
   successMessage: string;
 
@@ -67,9 +67,22 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
                       //todo show some error message on the typeahead field for company
                       // throw 'not found';
                       this.isExistingCompanyNameValid = false;
-                      console.log('isExistingCompanyNameValid '+this.isExistingCompanyNameValid);
+                      console.log('isExistingCompanyNameValid ' + this.isExistingCompanyNameValid);
                     }
                   }));
+  errors: any[];
+  isExistingCompanyNameValid: boolean = false;
+  isCompanyRegNoValid: boolean = false;
+  private personalDetails: FormGroup;
+  private subscription: Subscription;
+  private base64Encoded: string;
+
+  showSubmitButton: boolean = false;
+  showNextButton: boolean = false;
+
+  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal, private companyService: CompanyService, private permissionService: PermissionService, private pricingService: PricingService, private subscriptionService: MemberSubscriptionService, private transactionService: TransactionService) {
+
+  }
 
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -77,18 +90,9 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     }
   }
 
-
-  private personalDetails: FormGroup;
-
-  private subscription: Subscription;
-
-  private base64Encoded: string;
-
   changeListener($event): void {
     this.readThis($event.target);
   }
-
-  errors: any[];
 
   readThis(inputValue: any): void {
     let file: File = inputValue.files[0];
@@ -99,14 +103,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       console.log("Encoded file!");
     };
     myReader.readAsDataURL(file);
-  }
-
-  isExistingCompanyNameValid: boolean = false;
-
-  isCompanyRegNoValid: boolean = false;
-
-  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal, private companyService: CompanyService, private permissionService: PermissionService, private pricingService: PricingService, private subscriptionService: MemberSubscriptionService, private transactionService: TransactionService) {
-
   }
 
   ngOnInit(): void {
@@ -137,29 +133,30 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     });
   }
 
-  companyRegNoValidator(userObject: any, companyService: CompanyService) : AsyncValidatorFn {
+  companyRegNoValidator(userObject: any, companyService: CompanyService): AsyncValidatorFn {
     return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
       let subject = new Subject<ValidationErrors | null>();
-      console.log('companyRegNoValidator userObject '+JSON.stringify(userObject));
-      console.log('control.value '+control.value);
-      if(control.value.length > 2){
+      console.log('companyRegNoValidator userObject ' + JSON.stringify(userObject));
+      console.log('control.value ' + control.value);
+      if (control.value.length > 2) {
         companyService.getByRegistrationNo(control.value, userObject).subscribe(value => {
-          console.log('results found '+JSON.stringify(value));
+          console.log('results found ' + JSON.stringify(value));
           subject.next({
             message: 'company registration number exists'
           });
           this.isCompanyRegNoValid = false;
-          console.log('this.isCompanyRegNoValid '+this.isCompanyRegNoValid);
+          console.log('this.isCompanyRegNoValid ' + this.isCompanyRegNoValid);
         }, error => {
           console.log('results not found');
           subject.next(null);
           this.isCompanyRegNoValid = true;
-          console.log('this.isCompanyRegNoValid '+this.isCompanyRegNoValid);
+          console.log('this.isCompanyRegNoValid ' + this.isCompanyRegNoValid);
         });
       }
       return subject.asObservable();
     }
   }
+
   /**
    * todo this will come in when client side validation needs it
    * @param event
@@ -243,19 +240,39 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     console.log('selected company ' + JSON.stringify(value));
 
     this.isExistingCompanyNameValid = true;
-    console.log('isExistingCompanyNameValid '+this.isExistingCompanyNameValid);
+    console.log('isExistingCompanyNameValid ' + this.isExistingCompanyNameValid);
 
     this.permissionService.getByCompanyName(this.userObject, value.item).subscribe(permissions => {
       this.permission.role = 'Staff';
       this.permission.status = 'Pending Approval';
       this.permission.grantedBy = '';
       console.log('permission staff is set, and pending approval');
+
+      //todo show submit button
+      this.showSubmitButton = true;
+
     }, error => {
       this.permission.role = 'Owner';
       this.permission.status = 'Approved';
       this.permission.grantedBy = this.userObject.uid;
       console.log('permission owner is set, and approved and granted by himself');
+
+      //todo hide submit button
+      this.showSubmitButton = false;
     });
+  }
+
+  onUserTypeChanged(evt) {
+    let target = evt.target;
+    console.log('onUserTypeChanged ' + target);
+
+    //if the usertype is admin and owner. show the next button
+    if (this.personalDetails.get('usertype').value == 'Admin' && this.permission.role == 'Owner') {
+      this.showNextButton = true;
+    } else {
+      this.showNextButton = false;
+      this.showSubmitButton = false;
+    }
   }
 
   showSubscriptions(show: boolean) {
@@ -267,12 +284,14 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
     //then submit an api to subscribe and link to payment gateway
 
+    //todo check if user type is a forwarder, then skip subscription
+
     this.showSubscriptionSelections = show;
     console.log('showSubs ' + this.showSubscriptionSelections);
   }
 
   subscribeToPlan(pricing: Pricing) {
-    console.log('executing subscribe to plan '+pricing);
+    console.log('executing subscribe to plan ' + pricing);
     const memberSubscription = new MemberSubscription();
     memberSubscription.pricing = pricing;
     memberSubscription.monthlyRecurring = false;
