@@ -245,15 +245,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
     this.isExistingCompanyNameValid = true;
     console.log('isExistingCompanyNameValid '+this.isExistingCompanyNameValid);
-    // this.permissionService.getByCompany(this.userObject, this.company.id).subscribe(permission => {
-    //   //maybe send an email to the owner of the permission so that this user can be approved
-    //   this.permission.role = 'Staff';
-    // }, error => {
-    //   //if the company permission doesnt exist, then proceed to create a new permission and assign owner role
-    //   this.permission.role = 'Owner';
-    //   this.permission.status = 'Approved';
-    //   this.permission.grantedBy = this.userObject.uid;
-    // });
 
     this.permissionService.getByCompanyName(this.userObject, value.item).subscribe(permissions => {
       this.permission.role = 'Staff';
@@ -321,10 +312,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
       this.showSpinnerProgress = false;
     });
-  }
-
-  showPermissionPendingApprovalDiv() {
-
   }
 }
 
