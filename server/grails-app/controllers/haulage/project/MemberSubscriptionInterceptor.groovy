@@ -13,7 +13,7 @@ class MemberSubscriptionInterceptor {
   def permissionService
 
   MemberSubscriptionInterceptor() {
-    match controller: 'memberSubscription'
+    match(controller: 'memberSubscription').except(action: 'save').except(action: 'update')
   }
 
   boolean before() {

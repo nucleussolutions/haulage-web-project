@@ -177,7 +177,7 @@
               <li class="list-group-item">Price per move : {{pricing.pricePerMove}}</li>
             </ul>
             <div class="card-footer text-muted">
-              <input name="options" ng-control="options" type="radio" [value]="pricing">
+              <input name="pricing" type="radio" [value]="pricing" formControlName="pricing">
             </div>
           </div>
         </div>

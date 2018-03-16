@@ -47,8 +47,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   //show pricing list on the modal itself
   pricingList: Pricing[];
 
-  pricing: Pricing;
-
   showSuccessWindow : boolean = false;
 
   successMessage: string;
@@ -134,7 +132,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
         code: ['', Validators.required],
         companyImage: [''],
         registrationNo: ['', Validators.required, this.companyRegNoValidator(this.userObject, this.companyService)],
-      })
+      }),
+      pricing: ['', Validators.required]
     });
   }
 
@@ -221,7 +220,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       // window.location.reload();
 
       //todo this is supposed to submit the pricing and trigger a payment gateway as well
-      this.subscribeToPlan(this.pricing);
+      this.subscribeToPlan(formData.value.pricing);
     }, json => {
       console.log('json error ' + JSON.stringify(json));
       if (json.hasOwnProperty('message')) {
@@ -249,6 +248,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     this.permissionService.getByCompanyName(this.userObject, value.item).subscribe(permissions => {
       this.permission.role = 'Staff';
       this.permission.status = 'Pending Approval';
+      this.permission.grantedBy = '';
       console.log('permission staff is set, and pending approval');
     }, error => {
       this.permission.role = 'Owner';
@@ -272,7 +272,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   subscribeToPlan(pricing: Pricing) {
-    console.log('executing subscribe to plan');
+    console.log('executing subscribe to plan '+pricing);
     const memberSubscription = new MemberSubscription();
     memberSubscription.pricing = pricing;
     memberSubscription.monthlyRecurring = false;
