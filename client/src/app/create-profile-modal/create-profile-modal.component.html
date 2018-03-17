@@ -32,7 +32,7 @@
             <div class="input-group mb-3">
               <input required type="text" class="form-control"
                      (selectItem)="selectedCompany($event)" [ngClass]="isExistingCompanyNameValid ? 'is-valid' : 'is-invalid'"
-                     [ngbTypeahead]="companySearch"/>
+                     [ngbTypeahead]="isHaulier ? haulierCompanySearch : forwarderCompanySearch" />
               <div class="input-group-append">
                 <button type="button" class="btn btn-primary" (click)="addCompany()">New Company</button>
               </div>

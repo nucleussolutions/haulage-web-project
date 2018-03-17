@@ -51,25 +51,64 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   successMessage: string;
 
-  companySearch = (text$: Observable<string>) =>
+  // companySearch = (text$: Observable<string>) =>
+  //     text$
+  //         .debounceTime(200)
+  //         .distinctUntilChanged()
+  //         .switchMap(term => term.length < 2 && this.userObject   // switch to new observable each time
+  //             // return the http search observable
+  //             ? [] : this.companyService.search(term, this.userObject)
+  //             // or the observable of empty heroes if no search term
+  //                 .map(json => {
+  //                   this.companyList = json['searchResults'];
+  //                   if (this.companyList.length > 0) {
+  //                     return json['searchResults'].map(item => item.name);
+  //                   } else {
+  //                     //todo show some error message on the typeahead field for company
+  //                     // throw 'not found';
+  //                     this.isExistingCompanyNameValid = false;
+  //                     console.log('isExistingCompanyNameValid ' + this.isExistingCompanyNameValid);
+  //                   }
+  //                 }));
+
+  haulierCompanySearch = (text$: Observable<string>) =>
       text$
           .debounceTime(200)
           .distinctUntilChanged()
           .switchMap(term => term.length < 2 && this.userObject   // switch to new observable each time
               // return the http search observable
-              ? [] : this.companyService.search(term, this.userObject)
+              ? [] : this.companyService.searchHauliers(term, this.userObject)
               // or the observable of empty heroes if no search term
                   .map(json => {
+                    console.log('search haulier companies');
                     this.companyList = json['searchResults'];
                     if (this.companyList.length > 0) {
                       return json['searchResults'].map(item => item.name);
                     } else {
-                      //todo show some error message on the typeahead field for company
-                      // throw 'not found';
                       this.isExistingCompanyNameValid = false;
                       console.log('isExistingCompanyNameValid ' + this.isExistingCompanyNameValid);
                     }
                   }));
+
+  forwarderCompanySearch = (text$: Observable<string>) =>
+      text$
+          .debounceTime(200)
+          .distinctUntilChanged()
+          .switchMap(term => term.length < 2 && this.userObject   // switch to new observable each time
+              // return the http search observable
+              ? [] : this.companyService.searchForwarders(term, this.userObject)
+              // or the observable of empty heroes if no search term
+                  .map(json => {
+                    console.log('search forwarder companies');
+                    this.companyList = json['searchResults'];
+                    if (this.companyList.length > 0) {
+                      return json['searchResults'].map(item => item.name);
+                    } else {
+                      this.isExistingCompanyNameValid = false;
+                      console.log('isExistingCompanyNameValid ' + this.isExistingCompanyNameValid);
+                    }
+                  }));
+
   errors: any[];
   isExistingCompanyNameValid: boolean = false;
   isCompanyRegNoValid: boolean = false;
@@ -273,7 +312,11 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       this.showNextButton = false;
       this.showSubmitButton = false;
     }
+
+    this.isHaulier = this.personalDetails.get('usertype').value == 'Admin';
   }
+
+  isHaulier: boolean = true;
 
   showSubscriptions(show: boolean) {
     //validate current fields for name and company
