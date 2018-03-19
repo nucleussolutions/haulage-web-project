@@ -80,7 +80,22 @@ export class CompanyService {
         });
   }
 
+  getByCompanyCode(code: string, userObject: any): Observable<Company> {
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey
+    });
 
+    return this.http.get(environment.serverUrl + '/company/code/' + code, {
+      headers: headers
+    }).map((r: Response) => new Company(r)).catch(err => {
+      if (err.status === 401) {
+        return Observable.throw(new Error('Unauthorized'));
+      } else if (err.status === 500) {
+        return Observable.throw(new Error('Internal server error'));
+      }
+    });
+  }
 
   getByRegistrationNo(registrationNo: string, userObject: any): Observable<Company> {
     let headers = new HttpHeaders({

@@ -147,19 +147,33 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
         postalCode: ['', Validators.required],
         code: ['', Validators.required],
         companyImage: [''],
-        registrationNo: ['', Validators.required, this.companyRegNoValidator(this.userObject, this.companyService)],
+        registrationNo: ['', Validators.required, this.companyRegNoValidator()],
       }),
       pricing: ['', Validators.required]
     });
   }
 
-  companyRegNoValidator(userObject: any, companyService: CompanyService): AsyncValidatorFn {
+  companyCodeValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
       let subject = new Subject<ValidationErrors | null>();
-      console.log('companyRegNoValidator userObject ' + JSON.stringify(userObject));
+
+      this.companyService.getByCompanyCode(control.value, this.userObject).subscribe(company => {
+        if(company){
+
+        } else{
+
+        }
+      });
+      return subject.asObservable();
+    }
+  }
+
+  companyRegNoValidator(): AsyncValidatorFn {
+    return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+      let subject = new Subject<ValidationErrors | null>();
       console.log('control.value ' + control.value);
       if (control.value.length > 2) {
-        companyService.getByRegistrationNo(control.value, userObject).subscribe(value => {
+        this.companyService.getByRegistrationNo(control.value, this.userObject).subscribe(value => {
           console.log('results found ' + JSON.stringify(value));
           subject.next({
             message: 'company registration number exists'
