@@ -22,6 +22,7 @@ import {Transaction} from "../transaction/transaction";
 import {TransactionService} from "../transaction/transaction.service";
 import {Subject} from "rxjs/Subject";
 import {parse, format, AsYouType} from 'libphonenumber-js'
+import {malaysianPhoneNumberValidator} from "../validators/malaysian-phone-validator";
 
 @Component({
   selector: 'app-create-profile-modal',
@@ -50,26 +51,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   showSuccessWindow: boolean = false;
 
   successMessage: string;
-
-  // companySearch = (text$: Observable<string>) =>
-  //     text$
-  //         .debounceTime(200)
-  //         .distinctUntilChanged()
-  //         .switchMap(term => term.length < 2 && this.userObject   // switch to new observable each time
-  //             // return the http search observable
-  //             ? [] : this.companyService.search(term, this.userObject)
-  //             // or the observable of empty heroes if no search term
-  //                 .map(json => {
-  //                   this.companyList = json['searchResults'];
-  //                   if (this.companyList.length > 0) {
-  //                     return json['searchResults'].map(item => item.name);
-  //                   } else {
-  //                     //todo show some error message on the typeahead field for company
-  //                     // throw 'not found';
-  //                     this.isExistingCompanyNameValid = false;
-  //                     console.log('isExistingCompanyNameValid ' + this.isExistingCompanyNameValid);
-  //                   }
-  //                 }));
 
   haulierCompanySearch = (text$: Observable<string>) =>
       text$
@@ -161,8 +142,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
         city: ['', Validators.required],
         state: ['', Validators.required],
         country: new FormControl('Malaysia'),
-        officePhone: ['', Validators.required],
-        yardPhone: ['', Validators.required],
+        officePhone: ['', [Validators.required, malaysianPhoneNumberValidator]],
+        yardPhone: ['', [Validators.required, malaysianPhoneNumberValidator]],
         postalCode: ['', Validators.required],
         code: ['', Validators.required],
         companyImage: [''],

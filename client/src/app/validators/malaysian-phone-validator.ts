@@ -8,8 +8,10 @@ export function malaysianPhoneNumberValidator(): ValidatorFn{
     let subject = new Subject<any>();
     let valid = isValidNumber(control.value, 'MY');
     if(valid){
+      console.log('valid phone number');
       subject.next(null);
     }else{
+      console.log('invalid phone number');
       subject.error('not valid');
     }
     return subject.asObservable();

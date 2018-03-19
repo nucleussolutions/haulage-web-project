@@ -153,6 +153,17 @@ class CompanyController extends RestfulController {
         }
     }
 
+    def getByCompanyCode(String companyCode){
+        if(companyCode){
+            Company company = companyService.findByCode(companyCode)
+            println 'company ' + company
+            respond company
+        }else{
+            response.status = HttpStatus.NOT_FOUND.value()
+            respond 'company code not found'
+        }
+    }
+
     @Override
     Object delete() {
         return super.delete()
