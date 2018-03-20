@@ -70,21 +70,21 @@
                 <div class="form-group">
                   <label for="companyAddress1">Company address 1</label>
                   <input class="form-control" type="text" id="companyAddress1" formControlName="address1">
-                  <div class="invalid-feedback">
+                  <div *ngIf="address1.hasError('required')" class="invalid-feedback">
                     Required
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="companyAddress2">Company address 2</label>
                   <input class="form-control" type="text" id="companyAddress2" formControlName="address2">
-                  <div class="invalid-feedback">
+                  <div *ngIf="address2.hasError('required')" class="invalid-feedback">
                     Required
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="companyCode">Company code</label>
                   <input type="text" class="form-control" id="companyCode" formControlName="code">
-                  <div *ngIf="" class="invalid-feedback">
+                  <div *ngIf="code.hasError('required')" class="invalid-feedback">
                     Required
                   </div>
                 </div>
@@ -96,9 +96,11 @@
                     </div>
                     <input type="text" class="form-control" id="companyOfficePhone" formControlName="officePhone">
                   </div>
-
                   <div>
                     Required
+                  </div>
+                  <div>
+                    Invalid number, please check again
                   </div>
                 </div>
 
@@ -111,8 +113,11 @@
                     <input type="text" class="form-control" id="companyYardPhone" formControlName="yardPhone">
                   </div>
                   <div *ngIf="city.invalid && (city.dirty || city.touched)" class="invalid-feedback">
-                    <div >
+                    <div *ngIf="city.hasError('required')">
                       Required
+                    </div>
+                    <div>
+                      Invalid number, please check again
                     </div>
                   </div>
                 </div>
@@ -139,7 +144,7 @@
                   <label for="companyPostalCode">Postal Code</label>
                   <input class="form-control" type="text" id="companyPostalCode" formControlName="postalCode">
                   <div *ngIf="postalCode.invalid && (postalCode.dirty || postalCode.touched)" class="text-danger">
-                    <div *ngIf="postalCode.invalid" class="invalid-feedback">
+                    <div *ngIf="postalCode.hasError('required')" class="invalid-feedback">
                       Required
                     </div>
                   </div>

@@ -153,15 +153,19 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     });
   }
 
+  enableNewCompanyFields(enable : boolean){
+    this.personalDetails.get('company').enable(enable);
+  }
+
   companyCodeValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
       let subject = new Subject<ValidationErrors | null>();
 
       this.companyService.getByCompanyCode(control.value, this.userObject).subscribe(company => {
         if(company){
-
+          subject.next(company);
         } else{
-
+          subject.next(null);
         }
       });
       return subject.asObservable();
