@@ -154,7 +154,13 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   enableNewCompanyFields(enable : boolean){
-    this.personalDetails.get('company').enable(enable);
+    if(enable){
+      this.personalDetails.get('company').enable();
+      console.log('enable new company fields');
+    }else{
+      this.personalDetails.get('company').disable();
+      console.log('disable new company fields');
+    }
   }
 
   companyCodeValidator(): AsyncValidatorFn {

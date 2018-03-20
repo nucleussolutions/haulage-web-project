@@ -21,8 +21,8 @@
 
           <div class="form-group" [ngClass]="personalDetails.get('name').valid ? 'has_success' : 'has-danger'">
             <label for="name">Name</label>
-            <input class="form-control" type="text" id="name" formControlName="name" [ngClass]="name.valid ? 'is-valid' : 'is-invalid'">
-            <div *ngIf="name.hasError('required')" class="invalid-feedback">
+            <input class="form-control" type="text" id="name" formControlName="name" [ngClass]="personalDetails.get('name').valid ? 'is-valid' : 'is-invalid'">
+            <div *ngIf="personalDetails.get('name').hasError('required')" class="invalid-feedback">
               Required
             </div>
           </div>
