@@ -5,26 +5,29 @@
       <h1>Sign up</h1>
       <div class="form-group" [ngClass]="credentials.get('email').valid ? 'has-success' : 'has-danger'">
         <label for="email">Email</label>
-        <input class="form-control" id="email" formControlName="email" *ngIf="email.valid ? 'is-valid' : 'is-invalid'"/>
-        <div *ngIf="email.hasError('required')" class="invalid-feedback">
+        <input class="form-control" id="email" formControlName="email" [ngClass]="credentials.get('email').valid ? 'is-valid' : 'is-invalid'"/>
+        <div *ngIf="credentials.get('email').hasError('required')" class="invalid-feedback">
           Required
+        </div>
+        <div *ngIf="credentials.get('email').invalid" class="invalid-feedback">
+          Invalid email
         </div>
       </div>
       <div class="form-group" [ngClass]="credentials.get('password').valid ? 'has-success' : 'has-danger'">
         <label for="password">Password</label>
-        <input class="form-control" type="password" id="password" formControlName="password" *ngIf="password.valid ? 'is-valid' : 'is-invalid'"/>
-        <div *ngIf="password.hasError('required')" class="invalid-feedback">
+        <input class="form-control" type="password" id="password" formControlName="password" [ngClass]="credentials.get('password').valid ? 'is-valid' : 'is-invalid'"/>
+        <div *ngIf="credentials.get('password').hasError('required')" class="invalid-feedback">
           Required
         </div>
-        <div *ngIf="password.hasError('minlength')" class="invalid-feedback">
+        <div *ngIf="credentials.get('password').hasError('minlength')" class="invalid-feedback">
           Minimum length of password is 6 characters
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" [ngClass]="credentials.get('retypePassword').valid ? 'has-success' : 'has-danger'">
         <label for="password2">Password Repeat</label>
-        <input class="form-control" type="password" id="password2" formControlName="retypePassword"/>
-        <div *ngIf="retypePassword.hasError('')">
+        <input class="form-control" type="password" id="password2" formControlName="retypePassword" [ngClass]="credentials.get('retypePassword').valid ? 'is-valid' : 'is-invalid'"/>
+        <div class="invalid-feedback">
           Password and retype must match
         </div>
       </div>
