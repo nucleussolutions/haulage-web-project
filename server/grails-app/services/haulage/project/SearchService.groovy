@@ -13,9 +13,6 @@ class SearchService {
 
     ElasticSearchService elasticSearchService
 
-    // import the ElasticSearchService provided by the plugin
-//  def ElasticSearchService
-
     def searchLocation(String term) {
         elasticSearchService.search(term, [indices: Location, types: Location, from: 0, size: 10])
     }
