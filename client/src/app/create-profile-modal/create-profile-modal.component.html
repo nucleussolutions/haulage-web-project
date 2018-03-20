@@ -19,10 +19,10 @@
             <label><input type="radio" name="usertype" formControlName="usertype" value="Manager" (change)="onUserTypeChanged($event)">Forwarder</label>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" [ngClass]="personalDetails.get('name').valid ? 'has_success' : 'has-danger'">
             <label for="name">Name</label>
-            <input class="form-control" type="text" id="name" formControlName="name">
-            <div>
+            <input class="form-control" type="text" id="name" formControlName="name" [ngClass]="name.valid ? 'is-valid' : 'is-invalid'">
+            <div *ngIf="name.hasError('required')" class="invalid-feedback">
               Required
             </div>
           </div>
@@ -70,21 +70,21 @@
                 <div class="form-group">
                   <label for="companyAddress1">Company address 1</label>
                   <input class="form-control" type="text" id="companyAddress1" formControlName="address1">
-                  <div>
+                  <div class="invalid-feedback">
                     Required
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="companyAddress2">Company address 2</label>
                   <input class="form-control" type="text" id="companyAddress2" formControlName="address2">
-                  <div>
+                  <div class="invalid-feedback">
                     Required
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="companyCode">Company code</label>
                   <input type="text" class="form-control" id="companyCode" formControlName="code">
-                  <div>
+                  <div *ngIf="" class="invalid-feedback">
                     Required
                   </div>
                 </div>
@@ -110,7 +110,7 @@
                     </div>
                     <input type="text" class="form-control" id="companyYardPhone" formControlName="yardPhone">
                   </div>
-                  <div *ngIf="city.invalid && (city.dirty || city.touched)" class="text-danger">
+                  <div *ngIf="city.invalid && (city.dirty || city.touched)" class="invalid-feedback">
                     <div >
                       Required
                     </div>
@@ -129,7 +129,7 @@
                   <label for="companyCity">City</label>
                   <input class="form-control" type="text" id="companyCity" formControlName="city">
                   <div *ngIf="city.invalid && (city.dirty || city.touched)" class="text-danger">
-                    <div *ngIf="city.errors.required">
+                    <div *ngIf="city.hasError('required')" class="invalid-feedback">
                       Required
                     </div>
                   </div>
@@ -139,7 +139,7 @@
                   <label for="companyPostalCode">Postal Code</label>
                   <input class="form-control" type="text" id="companyPostalCode" formControlName="postalCode">
                   <div *ngIf="postalCode.invalid && (postalCode.dirty || postalCode.touched)" class="text-danger">
-                    <div *ngIf="postalCode.errors.required">
+                    <div *ngIf="postalCode.invalid" class="invalid-feedback">
                       Required
                     </div>
                   </div>
@@ -164,20 +164,15 @@
                     <option value="Terengganu">Terengganu</option>
                     <option value="Wilayah Persekutuan – Labuan">Wilayah Persekutuan – Labuan</option>
                   </select>
-                  <div>
+                  <div *ngIf="state.hasError('required')" class="invalid-feedback">
                     Required
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label>Country</label>
+                  <label for="companyCountry">Country</label>
                   <input class="form-control" type="text" readonly="readonly" value="Malaysia" id="companyCountry"
                          formControlName="country">
-                  <div *ngIf="country.invalid && (country.dirty || country.touched)" class="text-danger">
-                    <div *ngIf="country.errors.required">
-                      Required
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
