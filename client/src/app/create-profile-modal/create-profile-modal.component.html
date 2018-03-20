@@ -52,9 +52,12 @@
             <h2>New company</h2>
             <div class="row">
               <div class="col">
-                <div class="form-group ">
+                <div class="form-group" [ngClass]="personalDetails.get('company').get('name').valid ? '' : ''">
                   <label for="companyName">Company name</label>
                   <input class="form-control" type="text" id="companyName" formControlName="name">
+                  <div class="invalid-feedback">
+                    Required
+                  </div>
                 </div>
                 <div class="form-group" [ngClass]="isCompanyRegNoValid ? 'has-success' : 'has-danger'">
                   <label for="companyRegNo">Company registration number</label>
@@ -70,25 +73,25 @@
                 <div class="form-group">
                   <label for="companyAddress1">Company address 1</label>
                   <input class="form-control" type="text" id="companyAddress1" formControlName="address1">
-                  <div *ngIf="address1.hasError('required')" class="invalid-feedback">
+                  <div *ngIf="personalDetails.get('company').get('address1').hasError('required')" class="invalid-feedback">
                     Required
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="companyAddress2">Company address 2</label>
                   <input class="form-control" type="text" id="companyAddress2" formControlName="address2">
-                  <div *ngIf="address2.hasError('required')" class="invalid-feedback">
+                  <div *ngIf="personalDetails.get('company').get('address2').hasError('required')" class="invalid-feedback">
                     Required
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" [ngClass]="personalDetails.get('company').get('code').valid ? 'has-success' : 'has-danger'">
                   <label for="companyCode">Company code</label>
                   <input type="text" class="form-control" id="companyCode" formControlName="code">
-                  <div *ngIf="code.hasError('required')" class="invalid-feedback">
+                  <div *ngIf="personalDetails.get('company').get('code').hasError('required')" class="invalid-feedback">
                     Required
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" [ngClass]="personalDetails.get('company').get('officePhone').valid ? 'has-success' : 'has-danger'">
                   <label for="companyOfficePhone">Office phone</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -96,15 +99,15 @@
                     </div>
                     <input type="text" class="form-control" id="companyOfficePhone" formControlName="officePhone">
                   </div>
-                  <div>
+                  <div *ngIf="personalDetails.get('company').get('officePhone').hasError('required')" class="invalid-feedback">
                     Required
                   </div>
-                  <div>
+                  <div *ngIf="personalDetails.get('company').get('officePhone').valid" class="invalid-feedback">
                     Invalid number, please check again
                   </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" [ngClass]="personalDetails.get('company').get('yardPhone').valid ? 'has-success' : 'has-danger'">
                   <label for="companyYardPhone">Yard phone</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -112,11 +115,11 @@
                     </div>
                     <input type="text" class="form-control" id="companyYardPhone" formControlName="yardPhone">
                   </div>
-                  <div *ngIf="city.invalid && (city.dirty || city.touched)" class="invalid-feedback">
-                    <div *ngIf="city.hasError('required')">
+                  <div *ngIf="personalDetails.get('company').get('yardPhone').invalid && (personalDetails.get('company').get('yardPhone').dirty || personalDetails.get('company').get('yardPhone').touched)" class="invalid-feedback">
+                    <div *ngIf="personalDetails.get('company').get('yardPhone').hasError('required')">
                       Required
                     </div>
-                    <div>
+                    <div *ngIf="personalDetails.get('company').get('yardPhone').invalid">
                       Invalid number, please check again
                     </div>
                   </div>
@@ -130,21 +133,21 @@
                          (change)="changeListener($event)">
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" [ngClass]="personalDetails.get('company').valid ? 'has-success' : 'has-danger'">
                   <label for="companyCity">City</label>
                   <input class="form-control" type="text" id="companyCity" formControlName="city">
-                  <div *ngIf="city.invalid && (city.dirty || city.touched)" class="text-danger">
-                    <div *ngIf="city.hasError('required')" class="invalid-feedback">
+                  <div *ngIf="personalDetails.get('company').get('city').invalid && (personalDetails.get('company').get('city').dirty || personalDetails.get('company').get('city').touched)" class="text-danger">
+                    <div *ngIf="personalDetails.get('company').get('city').hasError('required')" class="invalid-feedback">
                       Required
                     </div>
                   </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" [ngClass]="personalDetails.get('company').get('postalCode').valid ? '' : 'has-danger'">
                   <label for="companyPostalCode">Postal Code</label>
                   <input class="form-control" type="text" id="companyPostalCode" formControlName="postalCode">
-                  <div *ngIf="postalCode.invalid && (postalCode.dirty || postalCode.touched)" class="text-danger">
-                    <div *ngIf="postalCode.hasError('required')" class="invalid-feedback">
+                  <div *ngIf="personalDetails.get('company').get('postalCode').invalid && (personalDetails.get('company').get('postalCode').dirty || personalDetails.get('company').get('postalCode').touched)" class="text-danger">
+                    <div *ngIf="personalDetails.get('company').get('postalCode').hasError('required')" class="invalid-feedback">
                       Required
                     </div>
                   </div>
@@ -169,7 +172,7 @@
                     <option value="Terengganu">Terengganu</option>
                     <option value="Wilayah Persekutuan – Labuan">Wilayah Persekutuan – Labuan</option>
                   </select>
-                  <div *ngIf="state.hasError('required')" class="invalid-feedback">
+                  <div *ngIf="personalDetails.get('company').get('state').hasError('required')" class="invalid-feedback">
                     Required
                   </div>
                 </div>

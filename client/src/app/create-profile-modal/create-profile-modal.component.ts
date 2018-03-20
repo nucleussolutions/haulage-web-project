@@ -319,6 +319,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     }
 
     this.isHaulier = this.personalDetails.get('usertype').value == 'Admin';
+    console.log('this.isHaulier '+this.isHaulier);
   }
 
   isHaulier: boolean = true;
