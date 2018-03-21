@@ -104,7 +104,7 @@ class SearchService {
 
     def searchCompanyByForwarder(String term){
         println 'company search term ' + term
-        def results = elasticSearchService.search(term, filter, [indices: Company, types: Company, from: 0, size: 10, permissions: {
+        def results = elasticSearchService.search(term, [indices: Company, types: Company, from: 0, size: 10, permissions: {
             'authority' == 'Manager'
         }])
         results

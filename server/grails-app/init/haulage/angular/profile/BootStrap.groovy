@@ -20,6 +20,8 @@ class BootStrap {
 
     def company2 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'BGL', name: 'BGL Logistics', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '343243204328409', email: 'kevin@kevin.com', postalCode: '98700').save(flush: true, failOnError: true)
 
+    def company3 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'CGL', name: 'CGL Forwarding', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '1230812390', email: 'kevin@kevin.com', postalCode: '98700').save(flush: true, failOnError: true)
+
     def location1 = new Location(name: 'North Port', city: 'petaling jaya', state: 'petaling jaya', country: 'malaysia', type: 'customer location', address1: 'ajsdlasdj', address2: 'aksdjsdjsald', formattedAddress: 'asasddasdsd', postalCode: '12323').save(flush: true)
     def location2 = new Location(name: 'North Port', city: 'petaling jaya', state: 'petaling jaya', country: 'malaysia', type: 'customer location', address1: 'jasdlkadjlas', address2: 'akjsdlasdjslad', formattedAddress: 'asdadasdsad', postalCode: '123123').save(flush: true)
 
@@ -60,6 +62,7 @@ class BootStrap {
     def interceptorPermission = new Permission(email: 'kevin5@kevin.com', userInfo: interceptorUserInfo, authority: 'Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', company: company2, role: 'Staff')
     interceptorUserInfo.permissions = [interceptorPermission]
     interceptorUserInfo.save(flush: true, failOnError: true)
+
 
     def consignments = []
 
@@ -143,7 +146,7 @@ class BootStrap {
     forwarderUserInfo.userId = 'GWQOYWnAxxVPtnUODGCWe8cXllK2'
     forwarderUserInfo.save(flush: true)
 
-    def forwarderPermission = new Permission(email: 'kevin@kevin.com', userInfo: forwarderUserInfo, authority: 'Manager', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93')
+    def forwarderPermission = new Permission(email: 'kevin@kevin.com', userInfo: forwarderUserInfo, authority: 'Manager', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', company: company3, role: 'Owner')
     forwarderUserInfo.permissions = [forwarderPermission]
     forwarderUserInfo.save(flush: true)
 
