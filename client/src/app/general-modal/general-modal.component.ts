@@ -1,12 +1,24 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {animate, style, transition, trigger} from "@angular/animations";
 
 // import the required animation functions from the angular animations module
 @Component({
   selector: 'app-error-modal',
   templateUrl: './general-modal.component.html',
   styleUrls: ['./general-modal.component.css'],
-  // make fade in animation available to this component
+
+  animations: [
+    trigger('dialog', [
+      transition('void => *', [
+        style({ transform: 'scale3d(.3, .3, .3)' }),
+        animate(100)
+      ]),
+      transition('* => void', [
+        animate(100, style({ transform: 'scale3d(.0, .0, .0)' }))
+      ])
+    ])
+  ]
 })
 export class GeneralModalComponent implements OnInit {
 
