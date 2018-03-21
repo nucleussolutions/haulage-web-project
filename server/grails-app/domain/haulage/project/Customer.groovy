@@ -1,9 +1,11 @@
 package haulage.project
 
 import grails.compiler.GrailsCompileStatic
+import groovy.transform.ToString
 import groovy.transform.TypeCheckingMode
 
 @GrailsCompileStatic(TypeCheckingMode.SKIP)
+@ToString(includeNames = true, includePackage = false)
 class Customer {
 
   String companyName

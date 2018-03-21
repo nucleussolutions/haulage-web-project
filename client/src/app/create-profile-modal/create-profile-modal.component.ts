@@ -256,12 +256,12 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     userInfo.permissions = [this.permission];
 
     this.userInfoService.save(userInfo, this.userObject).subscribe(userInfo => {
-      // this.activeModal.dismiss();
-      //dismiss modal and reload the whole screen
-      // window.location.reload();
-
       //todo this is supposed to submit the pricing and trigger a payment gateway as well
-      this.subscribeToPlan(formData.value.pricing);
+      if(this.personalDetails.get('usertype').value == 'Admin'){
+        this.subscribeToPlan(formData.value.pricing);
+      }else{
+        window.location.reload();
+      }
     }, json => {
       console.log('json error ' + JSON.stringify(json));
       if (json.hasOwnProperty('message')) {

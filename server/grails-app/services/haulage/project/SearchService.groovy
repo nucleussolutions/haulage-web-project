@@ -99,6 +99,7 @@ class SearchService {
         def results = elasticSearchService.search(term, [indices: Company, types: Company, from: 0, size: 10, permissions: {
             'authority' == 'Admin'
         }])
+        println results
         results
     }
 
@@ -107,6 +108,7 @@ class SearchService {
         def results = elasticSearchService.search(term, [indices: Company, types: Company, from: 0, size: 10, permissions: {
             'authority' == 'Manager'
         }])
+        println results
         results
     }
 

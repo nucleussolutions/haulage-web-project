@@ -213,9 +213,6 @@
             <div class="card-body">
               <h6 class="card-subtitle text-muted">{{pricing.description}}</h6>
             </div>
-            <!--<div class="card-body">-->
-            <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
-            <!--</div>-->
             <ul class="list-group list-group-flush">
               <li class="list-group-item">Min Prime Movers : {{pricing.minPrimeMover}}</li>
               <li class="list-group-item">Max Prime Movers : {{pricing.maxPrimeMover}}</li>
@@ -233,7 +230,7 @@
       <button type="button" *ngIf="showSubscriptionSelections" class="btn btn-primary"
               (click)="showSubscriptions(false)">Previous
       </button>
-      <button *ngIf="showNextButton" type="button" class="btn btn-primary" (click)="showSubscriptions(true)">Next</button>
+      <button [ngClass]="showNextButton ? disabled : ''" type="button" class="btn btn-primary" (click)="showSubscriptions(true)">Next</button>
       <i *ngIf="showSpinnerProgress" class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
       <input *ngIf="showSubmitButton" type="submit" class="btn btn-primary" value="Submit">
     </div>

@@ -2,8 +2,10 @@ package haulage.project
 
 
 import grails.rest.*
+import groovy.transform.ToString
 
 @Resource(readOnly = false, formats = ['json', 'xml'])
+@ToString(includeNames = true, includePackage = false)
 class Expense {
 
   Job job

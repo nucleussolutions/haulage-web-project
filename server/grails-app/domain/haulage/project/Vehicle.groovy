@@ -2,9 +2,11 @@ package haulage.project
 
 import grails.compiler.GrailsCompileStatic
 import grails.rest.*
+import groovy.transform.ToString
 import groovy.transform.TypeCheckingMode
 
 @GrailsCompileStatic(TypeCheckingMode.SKIP)
+@ToString(includeNames = true, includePackage = false)
 class Vehicle {
 
     String internalNumber
