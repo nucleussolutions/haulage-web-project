@@ -241,5 +241,23 @@ class SearchController {
       respond status: HttpStatus.NOT_FOUND, message: 'not found'
     }
   }
+
+  def haulierCompany(){
+    if(params.term){
+      respond searchService.searchCompanyByHaulier(params.term as String)
+    }else{
+      response.status = HttpStatus.NOT_FOUND.value()
+      respond status: HttpStatus.NOT_FOUND, message: 'not found'
+    }
+  }
+
+  def forwarderCompany(){
+    if(params.term){
+      respond searchService.searchCompanyByForwarder(params.term as String)
+    }else{
+      response.status = HttpStatus.NOT_FOUND.value()
+      respond status: HttpStatus.NOT_FOUND, message: 'not found'
+    }
+  }
 }
 

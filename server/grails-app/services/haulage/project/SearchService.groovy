@@ -93,6 +93,29 @@ class SearchService {
         results
     }
 
+    def searchCompanyByHaulier(String term){
+        println 'company search term ' + term
+//        de permissions = Permission.search()
+        //search permissions that have admin, then list the companies
+        Closure filter = {
+            permissions (
+                'authority': 'Admin'
+            )
+        }
+        def results = elasticSearchService.search(term, filter, [indices: Company, types: Company, from: 0, size: 10])
+        results
+    }
+
+    def searchCompanyByForwarder(String term){
+        println 'company search term ' + term
+        Closure filter = {
+            permissions (
+                    'authority': 'Manager'
+            )
+        }
+        def results = elasticSearchService.search(term, filter, [indices: Company, types: Company, from: 0, size: 10])
+    }
+
     def searchMemberSubscription(String term) {
         elasticSearchService.search(term, [indices: MemberSubscription, types: MemberSubscription, from: 0, size: 10])
     }
