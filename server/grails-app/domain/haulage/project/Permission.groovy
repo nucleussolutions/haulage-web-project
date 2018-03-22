@@ -24,8 +24,8 @@ class Permission {
     email nullable: false, email: true
     authority nullable: false, inList: ['Admin', 'Manager', 'Super Admin', 'User']
     grantedBy nullable: true
-    userInfo nullable: true
-    company nullable: true
+    userInfo nullable: false
+    company nullable: false
     role nullable: true
     status nullable: false, inList: ['Pending Approval', 'Approved']
 

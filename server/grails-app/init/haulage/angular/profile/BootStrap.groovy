@@ -16,16 +16,16 @@ class BootStrap {
 
   def init = { servletContext ->
 
-    def company1 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'AGL', name: 'AGL Logistics', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '12932813901283', email: 'kevin2@kevin.com', postalCode: '21309')
+    def company1 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'AGL', name: 'AGL Logistics', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '12932813901283', email: 'kevin2@kevin.com', postalCode: '21309').save(flush: true)
 
     assert company1 != null
 
-    def company2 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'BGL', name: 'BGL Logistics', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '343243204328409', email: 'kevin@kevin.com', postalCode: '98700')
+    def company2 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'BGL', name: 'BGL Logistics', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '343243204328409', email: 'kevin@kevin.com', postalCode: '98700').save(flush: true)
 
     assert company2 != null
 
 
-    def company3 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'CGL', name: 'CGL Forwarding', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '1230812390', email: 'kevin@kevin.com', postalCode: '98700')
+    def company3 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'CGL', name: 'CGL Forwarding', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '1230812390', email: 'kevin@kevin.com', postalCode: '98700').save(flush: true)
 
     assert company3 != null
 
@@ -161,11 +161,10 @@ class BootStrap {
     forwarderUserInfo.userId = 'GWQOYWnAxxVPtnUODGCWe8cXllK2'
     forwarderUserInfo.save(flush: true)
 
-    def forwarderPermission = new Permission(email: 'kevin@kevin.com', userInfo: forwarderUserInfo, authority: 'Manager', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', role: 'Owner')
+    def forwarderPermission = new Permission(email: 'kevin@kevin.com', userInfo: forwarderUserInfo, authority: 'Manager', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', role: 'Owner', company: company3)
     forwarderUserInfo.permissions = [forwarderPermission]
     company3.permissions = [forwarderPermission]
     company3.save(flush: true, failOnError: true)
-    forwarderPermission.company = company3
     forwarderPermission.save(flush: true, failOnError: true)
 
     def quoteItem1 = new QuoteItem(desc: 'desc 1', rebatePercent: 20, name: 'quote item 1')
@@ -192,7 +191,7 @@ class BootStrap {
     driverUserInfo.userId = '6p3vO6jiPCenw3gXnq0tv2ylL4h1'
     driverUserInfo.save()
 
-    def driverPermission = new Permission(email: 'driver@kevin.com', userInfo: driverUserInfo, authority: 'User', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93').save(flush: true, failOnError: true)
+    def driverPermission = new Permission(email: 'driver@kevin.com', userInfo: driverUserInfo, authority: 'User', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', company: company1).save(flush: true, failOnError: true)
 
   }
   def destroy = {
