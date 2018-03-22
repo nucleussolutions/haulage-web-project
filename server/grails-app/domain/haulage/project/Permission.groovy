@@ -36,7 +36,5 @@ class Permission {
     cache true
   }
 
-  static searchable = {
-    userInfo reference: true
-  }
+  static searchable = true
 }

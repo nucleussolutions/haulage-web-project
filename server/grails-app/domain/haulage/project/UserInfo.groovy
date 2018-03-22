@@ -26,8 +26,6 @@ class UserInfo {
     notifKey nullable: true
   }
 
-  static searchable = {
-    permissions reference: true
-  }
+  static searchable = true
 
 }

@@ -4,6 +4,8 @@ import grails.compiler.GrailsCompileStatic
 import grails.rest.*
 import groovy.transform.ToString
 import groovy.transform.TypeCheckingMode
+import net.kaleidos.hibernate.usertype.ArrayType
+
 
 @GrailsCompileStatic(TypeCheckingMode.SKIP)
 @ToString(includeNames = true, includePackage = false)
@@ -43,10 +45,10 @@ class Company {
   }
 
   static searchable = {
-    permissions reference: true
+    permissions component: true
   }
 
   static mapping = {
-
+//    permissions type:ArrayType, params: [type: Permission]
   }
 }

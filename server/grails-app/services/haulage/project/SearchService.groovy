@@ -96,24 +96,9 @@ class SearchService {
     def searchCompanyByHaulier(String term){
         println 'company search term ' + term
         //search permissions that have admin, then list the companies
-//        def results = elasticSearchService.search(term, [indices: Company, types: Company, from: 0, size: 10, permissions: {
-//            'authority' == 'Admin'
-//        }])
-
-//        def results = elasticSearchService.search("${term}"){
-//            must {
-//
-//            }
-//        }
-
-//        def results = elasticSearchService.search(searchType:'dfs_query_and_fetch'){
-//            bool {
-//                must {
-//
-//                }
-//            }
-//        }
-
+        def results = elasticSearchService.search(term, [indices: Company, types: Company, permissions: {
+            authority : 'Admin'
+        }])
         println results
         results
     }
