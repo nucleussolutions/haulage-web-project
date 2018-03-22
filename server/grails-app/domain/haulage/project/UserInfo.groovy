@@ -26,17 +26,8 @@ class UserInfo {
     notifKey nullable: true
   }
 
-  static searchable = true
-
-
-  @Override
-  public String toString() {
-    return "UserInfo{" +
-        "permissions=" + permissions +
-        ", userId='" + userId + '\'' +
-        ", name='" + name + '\'' +
-        ", company=" + company +
-        ", driverInfo=" + driverInfo +
-        '}';
+  static searchable = {
+    permissions reference: true
   }
+
 }

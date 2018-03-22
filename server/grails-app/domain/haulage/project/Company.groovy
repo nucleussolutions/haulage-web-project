@@ -42,7 +42,9 @@ class Company {
     permissions nullable: true
   }
 
-  static searchable = true
+  static searchable = {
+    permissions reference: true
+  }
 
   static mapping = {
 
