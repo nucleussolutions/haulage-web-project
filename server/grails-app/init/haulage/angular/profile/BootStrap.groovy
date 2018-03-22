@@ -16,11 +16,18 @@ class BootStrap {
 
   def init = { servletContext ->
 
-    def company1 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'AGL', name: 'AGL Logistics', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '12932813901283', email: 'kevin2@kevin.com', postalCode: '21309').save(flush: true, failOnError: true)
+    def company1 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'AGL', name: 'AGL Logistics', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '12932813901283', email: 'kevin2@kevin.com', postalCode: '21309')
 
-    def company2 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'BGL', name: 'BGL Logistics', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '343243204328409', email: 'kevin@kevin.com', postalCode: '98700').save(flush: true, failOnError: true)
+    assert company1 != null
 
-    def company3 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'CGL', name: 'CGL Forwarding', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '1230812390', email: 'kevin@kevin.com', postalCode: '98700').save(flush: true, failOnError: true)
+    def company2 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'BGL', name: 'BGL Logistics', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '343243204328409', email: 'kevin@kevin.com', postalCode: '98700')
+
+    assert company2 != null
+
+
+    def company3 = new Company(country: 'Malaysia', address1: 'address1', address2: 'address2', city: 'oeopwqeiwqpe', state: 'uqwiewqeowque', code: 'CGL', name: 'CGL Forwarding', officePhone: '1203123921-3', yardPhone: '120312-309', companyImgUrl: 'asdsdklsdk;las', registrationNo: '1230812390', email: 'kevin@kevin.com', postalCode: '98700')
+
+    assert company3 != null
 
     def location1 = new Location(name: 'North Port', city: 'petaling jaya', state: 'petaling jaya', country: 'malaysia', type: 'customer location', address1: 'ajsdlasdj', address2: 'aksdjsdjsald', formattedAddress: 'asasddasdsd', postalCode: '12323').save(flush: true)
     def location2 = new Location(name: 'North Port', city: 'petaling jaya', state: 'petaling jaya', country: 'malaysia', type: 'customer location', address1: 'jasdlkadjlas', address2: 'akjsdlasdjslad', formattedAddress: 'asdadasdsad', postalCode: '123123').save(flush: true)
@@ -53,15 +60,23 @@ class BootStrap {
     interceptorUserInfo.userId = '1rCeH7yNVzX8OB7dMyFcURPkwi33'
     interceptorUserInfo.save()
 
-    def kevinAdminPermission = new Permission(email: 'kevintanhongann@gmail.com', userInfo: kevinUserInfo, authority: 'Super Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', company: company1)
+    def kevinAdminPermission = new Permission(email: 'kevintanhongann@gmail.com', userInfo: kevinUserInfo, authority: 'Super Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', company: company1).save(flush: true, failOnError: true)
     kevinUserInfo.permissions = [kevinAdminPermission]
+    company1.permissions = []
+    company1.permissions.add(kevinAdminPermission)
+    company1.save(flush: true, failOnError: true)
     kevinUserInfo.save(flush: true, failOnError: true)
-    def jordanAdminPermission = new Permission(email: 'jordan@nucleus.my', userInfo: jordanUserInfo, authority: 'Super Admin', grantedBy: 'Wcd1ixuFLLStcm0GN4YylfU1nNx2', company: company2, role: 'Owner')
+    def jordanAdminPermission = new Permission(email: 'jordan@nucleus.my', userInfo: jordanUserInfo, authority: 'Super Admin', grantedBy: 'Wcd1ixuFLLStcm0GN4YylfU1nNx2', company: company2, role: 'Owner').save(flush: true, failOnError: true)
+    company2.permissions = []
+    company2.permissions.add(jordanAdminPermission)
     jordanUserInfo.permissions = [jordanAdminPermission]
+    company2.save(flush: true, failOnError: true)
     jordanUserInfo.save(flush: true, failOnError: true)
-    def interceptorPermission = new Permission(email: 'kevin5@kevin.com', userInfo: interceptorUserInfo, authority: 'Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', company: company2, role: 'Staff')
+    def interceptorPermission = new Permission(email: 'kevin5@kevin.com', userInfo: interceptorUserInfo, authority: 'Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', company: company2, role: 'Staff').save(flush: true, failOnError: true)
     interceptorUserInfo.permissions = [interceptorPermission]
     interceptorUserInfo.save(flush: true, failOnError: true)
+    company2.permissions.add(interceptorPermission)
+    company2.save(flush: true, failOnError: true)
 
 
     def consignments = []
@@ -146,9 +161,12 @@ class BootStrap {
     forwarderUserInfo.userId = 'GWQOYWnAxxVPtnUODGCWe8cXllK2'
     forwarderUserInfo.save(flush: true)
 
-    def forwarderPermission = new Permission(email: 'kevin@kevin.com', userInfo: forwarderUserInfo, authority: 'Manager', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', company: company3, role: 'Owner')
+    def forwarderPermission = new Permission(email: 'kevin@kevin.com', userInfo: forwarderUserInfo, authority: 'Manager', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', role: 'Owner')
     forwarderUserInfo.permissions = [forwarderPermission]
-    forwarderUserInfo.save(flush: true)
+    company3.permissions = [forwarderPermission]
+    company3.save(flush: true, failOnError: true)
+    forwarderPermission.company = company3
+    forwarderPermission.save(flush: true, failOnError: true)
 
     def quoteItem1 = new QuoteItem(desc: 'desc 1', rebatePercent: 20, name: 'quote item 1')
     def quoteItem2 = new QuoteItem(desc: 'desc 2', rebatePercent: 20, name: 'quote item 1')

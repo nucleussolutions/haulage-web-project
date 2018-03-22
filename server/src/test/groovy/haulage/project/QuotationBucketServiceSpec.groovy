@@ -3,16 +3,16 @@ package haulage.project
 import grails.testing.services.ServiceUnitTest
 import spock.lang.Specification
 
-class QuotationBucketServiceSpec extends Specification implements ServiceUnitTest<QuotationBucketService>{
-
-    def setup() {
-    }
-
-    def cleanup() {
-    }
-
-    void "test something"() {
-        expect:"fix me"
-            true == false
-    }
-}
+//class QuotationBucketServiceSpec extends Specification implements ServiceUnitTest<QuotationBucketService>{
+//
+//    def setup() {
+//    }
+//
+//    def cleanup() {
+//    }
+//
+//    void "test something"() {
+//        expect:"fix me"
+//            true == false
+//    }
+//}

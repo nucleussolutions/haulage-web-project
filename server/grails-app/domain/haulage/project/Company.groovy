@@ -45,5 +45,6 @@ class Company {
   static searchable = true
 
   static mapping = {
+
   }
 }

@@ -60,6 +60,7 @@ class UserInfoController extends RestfulController {
           it.write(decoded)
         }
         instance.companyImgUrl = haulageBucketService.storeFile('/home/company/${request.JSON.company.registrationNo}/logo/', file)
+        printlnt 'companyImgUrl '+instance.companyImgUrl
       }
 //      instance.company.companyImgUrl
       instance.company.address1 = request.JSON.company.address1
