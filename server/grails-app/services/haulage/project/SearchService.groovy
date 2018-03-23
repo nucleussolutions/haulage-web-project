@@ -100,6 +100,7 @@ class SearchService {
             authority : 'Admin'
         }])
         println results
+
         results
     }
 

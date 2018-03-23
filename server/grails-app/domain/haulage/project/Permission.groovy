@@ -6,7 +6,6 @@ import groovy.transform.ToString
 import groovy.transform.TypeCheckingMode
 
 @GrailsCompileStatic(TypeCheckingMode.SKIP)
-@ToString(includeNames = true, includePackage = false)
 class Permission {
 
   String email
@@ -36,5 +35,9 @@ class Permission {
     cache true
   }
 
-  static searchable = true
+  static searchable = {
+    userInfo component: 'inner'
+    except = ['company']
+  }
+
 }
