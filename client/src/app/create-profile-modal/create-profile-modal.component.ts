@@ -71,7 +71,45 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
                     }
                   }));
 
+  haulierCompanySlowSearch = (text$: Observable<string>) =>
+      text$
+          .debounceTime(200)
+          .distinctUntilChanged()
+          .switchMap(term => term.length < 2 && this.userObject   // switch to new observable each time
+              // return the http search observable
+              ? [] : this.companyService.searchHauliers(term, this.userObject)
+              // or the observable of empty heroes if no search term
+                  .map(json => {
+                    console.log('search haulier companies');
+                    this.companyList = json['searchResults'];
+                    if (this.companyList.length > 0) {
+                      return json['searchResults'].map(item => item.name);
+                    } else {
+                      this.isExistingCompanyNameValid = false;
+                      console.log('isExistingCompanyNameValid ' + this.isExistingCompanyNameValid);
+                    }
+                  }));
+
   forwarderCompanySearch = (text$: Observable<string>) =>
+      text$
+          .debounceTime(200)
+          .distinctUntilChanged()
+          .switchMap(term => term.length < 2 && this.userObject   // switch to new observable each time
+              // return the http search observable
+              ? [] : this.companyService.searchForwarders(term, this.userObject)
+              // or the observable of empty heroes if no search term
+                  .map(json => {
+                    console.log('search forwarder companies');
+                    this.companyList = json['searchResults'];
+                    if (this.companyList.length > 0) {
+                      return json['searchResults'].map(item => item.name);
+                    } else {
+                      this.isExistingCompanyNameValid = false;
+                      console.log('isExistingCompanyNameValid ' + this.isExistingCompanyNameValid);
+                    }
+                  }));
+
+  forwarderCompanySlowSearch = (text$: Observable<string>) =>
       text$
           .debounceTime(200)
           .distinctUntilChanged()

@@ -164,9 +164,9 @@ class CompanyController extends RestfulController {
         }
     }
 
-    def listCompaniesByHaulier(String name){
-        if(name){
-            def companies = Company.findAllWhere(name: name, permissions: {
+    def listCompaniesByHaulier(){
+        if(params.name){
+            def companies = Company.findAllWhere(name: params.name, permissions: {
                 authority == 'Admin'
             })
             respond companies
@@ -176,9 +176,9 @@ class CompanyController extends RestfulController {
         }
     }
 
-    def listCompaniesByForwarder(String name){
-        if(name){
-            def companies = Company.findAllWhere(name: name, permissions: {
+    def listCompaniesByForwarder(){
+        if(params.name){
+            def companies = Company.findAllWhere(name: params.name, permissions: {
                 authority == 'Manager'
             })
             respond companies

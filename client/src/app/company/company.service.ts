@@ -244,6 +244,33 @@ export class CompanyService {
     return subject.asObservable();
   }
 
+  getHauliers(term: string, userObject: any): Observable<Company[]> {
+    //list companies where permission = admin
+    console.log('search company');
+    let subject = new Subject<Company[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+  }
+
+  getForwarders(term: string, userObject: any): Observable<Company[]> {
+    //list companies where permission = manager
+    console.log('search company');
+    let subject = new Subject<Company[]>();
+
+    let headers = new HttpHeaders({
+      'token': userObject.token,
+      'apiKey': userObject.apiKey,
+      'userId': userObject.uid
+    });
+
+
+  }
+
   searchForwarders(term: string, userObject: any): Observable<Company[]>{
     console.log('search company');
     let subject = new Subject<Company[]>();
