@@ -149,7 +149,7 @@ class CompanyController extends RestfulController {
             respond company
         } else {
             response.status = HttpStatus.NOT_FOUND.value()
-            respond 'company registration number not found'
+            respond message: 'company registration number not found'
         }
     }
 
@@ -160,7 +160,31 @@ class CompanyController extends RestfulController {
             respond company
         }else{
             response.status = HttpStatus.NOT_FOUND.value()
-            respond 'company code not found'
+            respond message: 'company code not found'
+        }
+    }
+
+    def listCompaniesByHaulier(String name){
+        if(name){
+            def companies = Company.findAllWhere(name: name, permissions: {
+                authority == 'Admin'
+            })
+            respond companies
+        }else {
+            response.status = HttpStatus.NOT_FOUND.value()
+            respond message: 'company name not found'
+        }
+    }
+
+    def listCompaniesByForwarder(String name){
+        if(name){
+            def companies = Company.findAllWhere(name: name, permissions: {
+                authority == 'Manager'
+            })
+            respond companies
+        }else{
+            response.status = HttpStatus.NOT_FOUND.value()
+            respond message: 'company name not found'
         }
     }
 

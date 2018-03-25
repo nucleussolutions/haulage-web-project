@@ -2,6 +2,7 @@ package haulage.project
 
 import grails.gorm.transactions.Transactional
 import grails.plugins.elasticsearch.ElasticSearchService
+import org.elasticsearch.action.search.SearchRequest
 import org.elasticsearch.index.query.QueryBuilder
 import org.elasticsearch.index.query.QueryBuilders
 import org.elasticsearch.search.sort.SortBuilders
@@ -93,22 +94,60 @@ class SearchService {
         results
     }
 
-    def searchCompanyByHaulier(String term){
-        println 'company search term ' + term
+    def searchCompanyByHaulier(String keyword) {
+        println 'company search term ' + keyword
         //search permissions that have admin, then list the companies
-        def results = elasticSearchService.search(term, [indices: Company, types: Company, permissions: {
-            authority : 'Admin'
-        }])
+        def filter = {
+            nested {
+                array {
+                    element('permissions')
+                    query {
+                        bool {
+                            must {
+                                term("authority": 'Admin')
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        def results = elasticSearchService.search(keyword, filter,[indices: Company, types: Company, from: 0, size: 10])
+//        def results = Company.search("name: ${keyword}"){
+//            bool {
+//                must {
+//                    term('permissions.authority': 'Admin')
+//                }
+//            }
+//        }
         println results
-
         results
     }
 
-    def searchCompanyByForwarder(String term){
+    def searchCompanyByForwarder(String term) {
         println 'company search term ' + term
-        def results = elasticSearchService.search(term, [indices: Company, types: Company, from: 0, size: 10, permissions: {
-            'authority' == 'Manager'
-        }])
+        def filter = {
+            nested {
+                array {
+                    element('permissions')
+                    query {
+                        bool {
+                            must {
+                                term("authority": 'Manager')
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        def results = elasticSearchService.search(term, filter, [indices: Company, types: Company, from: 0, size: 10])
+//        def results = Company.search("name: ${term}"){
+//            bool {
+//                must {
+//                    term('permissions.authority': 'Manager')
+//                }
+//            }
+//        }
         println results
         results
     }

@@ -48,7 +48,7 @@ class Company {
         permissions component: 'inner'
     }
 
-    //static transients = ['permissions']
+//    static transients = ['permissions']
 
     static mapping = {
 //    permissions type:ArrayType, params: [type: Permission]
