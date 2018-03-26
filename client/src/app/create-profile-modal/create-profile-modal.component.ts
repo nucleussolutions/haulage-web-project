@@ -79,7 +79,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
           .distinctUntilChanged()
           .switchMap(term => term.length < 2 && this.userObject   // switch to new observable each time
               // return the http search observable
-              ? [] : this.companyService.searchHauliers(term, this.userObject)
+              ? [] : this.companyService.getHauliers(term, this.userObject)
               // or the observable of empty heroes if no search term
                   .map(companyList => {
                     console.log('search haulier companies');
@@ -119,7 +119,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
           .distinctUntilChanged()
           .switchMap(term => term.length < 2 && this.userObject   // switch to new observable each time
               // return the http search observable
-              ? [] : this.companyService.searchForwarders(term, this.userObject)
+              ? [] : this.companyService.getForwarders(term, this.userObject)
               // or the observable of empty heroes if no search term
                   .map(companyList => {
                     console.log('search forwarder companies');

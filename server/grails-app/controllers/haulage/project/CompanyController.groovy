@@ -153,36 +153,75 @@ class CompanyController extends RestfulController {
         }
     }
 
-    def getByCompanyCode(String companyCode){
-        if(companyCode){
+    def getByCompanyCode(String companyCode) {
+        if (companyCode) {
             Company company = companyService.findByCode(companyCode)
             println 'company ' + company
             respond company
-        }else{
+        } else {
             response.status = HttpStatus.NOT_FOUND.value()
             respond message: 'company code not found'
         }
     }
 
-    def listCompaniesByHaulier(){
-        if(params.name){
-            def companies = Company.findAllWhere(name: params.name, permissions: {
-                authority == 'Admin'
-            })
-            respond companies
-        }else {
+    //fixme
+    def listCompaniesByHaulier() {
+        if (params.name) {
+
+            def companies = Company.createCriteria().list {
+                ilike("name", "%${params.name}%")
+//                permissions {
+//                    eq("authority", "Admin")
+//                }
+            }
+
+            def filteredCompanies = []
+
+            companies.each { company ->
+                company.permissions.each {
+                    println it.authority
+                    if(it.authority == 'Admin'){
+                        filteredCompanies.add(company)
+                    }
+                }
+            }
+
+
+            println filteredCompanies
+
+            respond filteredCompanies
+        } else {
             response.status = HttpStatus.NOT_FOUND.value()
             respond message: 'company name not found'
         }
     }
 
-    def listCompaniesByForwarder(){
-        if(params.name){
-            def companies = Company.findAllWhere(name: params.name, permissions: {
-                authority == 'Manager'
-            })
-            respond companies
-        }else{
+    //fixme
+    def listCompaniesByForwarder() {
+        if (params.name) {
+
+            def companies = Company.createCriteria().list {
+                ilike("name", "%${params.name}%")
+//                permissions {
+//                    eq("authority", "Manager")
+//                }
+            }
+
+            def filteredCompanies = []
+
+            companies.each { company ->
+                company.permissions.each {
+                    println it.authority
+                    if(it.authority == 'Manager'){
+                        filteredCompanies.add(company)
+                    }
+                }
+            }
+
+            println filteredCompanies
+
+            respond filteredCompanies
+        } else {
             response.status = HttpStatus.NOT_FOUND.value()
             respond message: 'company name not found'
         }
