@@ -230,7 +230,7 @@
       <button type="button" *ngIf="showSubscriptionSelections" class="btn btn-primary"
               (click)="showSubscriptions(false)">Previous
       </button>
-      <button [ngClass]="showNextButton ? disabled : ''" type="button" class="btn btn-primary" (click)="showSubscriptions(true)">Next</button>
+      <button *ngIf="showNextButton" type="button" class="btn btn-primary" (click)="showSubscriptions(true)">Next</button>
       <i *ngIf="showSpinnerProgress" class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
       <input *ngIf="showSubmitButton" type="submit" class="btn btn-primary" value="Submit">
     </div>

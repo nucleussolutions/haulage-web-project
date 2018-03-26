@@ -339,8 +339,14 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       this.permission.grantedBy = '';
       console.log('permission staff is set, and pending approval');
 
-      // show submit button
-      this.showSubmitButton = true;
+      // show submit button if owner
+      if(this.permission.role == 'Owner'){
+        this.showSubmitButton = false;
+        this.showNextButton = true;
+      }else{
+        this.showSubmitButton = true;
+        this.showNextButton = false;
+      }
 
     }, error => {
       this.permission.role = 'Owner';
