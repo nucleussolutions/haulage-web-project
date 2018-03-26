@@ -298,9 +298,14 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     userInfo.permissions = [this.permission];
 
     this.userInfoService.save(userInfo, this.userObject).subscribe(userInfo => {
-      //todo this is supposed to submit the pricing and trigger a payment gateway as well
+      // this is supposed to submit the pricing and trigger a payment gateway as well
       if(this.personalDetails.get('usertype').value == 'Admin'){
-        this.subscribeToPlan(formData.value.pricing);
+        //todo check if the person is a staff or not
+        if(this.permission.role == 'Owner'){
+          this.subscribeToPlan(formData.value.pricing);
+        }else{
+          window.location.reload();
+        }
       }else{
         window.location.reload();
       }
@@ -334,7 +339,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       this.permission.grantedBy = '';
       console.log('permission staff is set, and pending approval');
 
-      //todo show submit button
+      // show submit button
       this.showSubmitButton = true;
 
     }, error => {
@@ -343,7 +348,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       this.permission.grantedBy = this.userObject.uid;
       console.log('permission owner is set, and approved and granted by himself');
 
-      //todo hide submit button
+      // hide submit button
       this.showSubmitButton = false;
     });
   }
