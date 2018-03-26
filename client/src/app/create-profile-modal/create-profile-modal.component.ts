@@ -224,8 +224,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
       let subject = new Subject<ValidationErrors | null>();
       console.log('control.value ' + control.value);
-      if (control.value.length > 2) {
-        this.companyService.getByRegistrationNo(control.value, this.userObject).subscribe(value => {
+      Observable.of(control.value).debounceTime(200).distinctUntilChanged().switchMap(term => term.length < 2 ? this.companyService.getByRegistrationNo(control.value, this.userObject) : []).subscribe(value => {
           console.log('results found ' + JSON.stringify(value));
           subject.next({
             message: 'company registration number exists'
@@ -238,7 +237,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
           this.isCompanyRegNoValid = true;
           console.log('this.isCompanyRegNoValid ' + this.isCompanyRegNoValid);
         });
-      }
       return subject.asObservable();
     }
   }

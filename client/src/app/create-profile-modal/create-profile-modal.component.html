@@ -140,7 +140,7 @@
 
                 <div class="form-group" [ngClass]="personalDetails.get('company').valid ? 'has-success' : 'has-danger'">
                   <label for="companyCity">City</label>
-                  <input class="form-control" type="text" id="companyCity" formControlName="city">
+                  <input class="form-control" type="text" id="companyCity" formControlName="city" [ngClass]="personalDetails.get('company').valid ? 'is-valid' : 'is-invalid'">
                   <div *ngIf="personalDetails.get('company').get('city').invalid && (personalDetails.get('company').get('city').dirty || personalDetails.get('company').get('city').touched)" class="text-danger">
                     <div *ngIf="personalDetails.get('company').get('city').hasError('required')" class="invalid-feedback">
                       Required
