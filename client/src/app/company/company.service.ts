@@ -56,7 +56,7 @@ export class CompanyService {
           return subject.asObservable();
         })
         .subscribe((json: any[]) => {
-          subject.next(json);
+          subject.next(json.map((item: any) => new Company(item)))
         });
     return subject.asObservable();
   }
@@ -258,7 +258,7 @@ export class CompanyService {
     this.http.get(environment.serverUrl + '/company/haulier?name=' + term, {
       headers: headers
     }).subscribe((json: any[]) => {
-      subject.next(json);
+      subject.next(json.map((item: any) => new Company(item)))
     }, error => {
       subject.error(error);
     });
@@ -281,7 +281,7 @@ export class CompanyService {
     this.http.get(environment.serverUrl + '/company/forwarder?name=' + term, {
       headers: headers
     }).subscribe((json: any[]) => {
-      subject.next(json);
+      subject.next(json.map((item: any) => new Company(item)))
     }, error => {
       subject.error(error);
     });

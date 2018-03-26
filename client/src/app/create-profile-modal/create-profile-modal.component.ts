@@ -52,6 +52,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   successMessage: string;
 
+  //todo replace slow search in the future when elastic search is sorted out
   haulierCompanySearch = (text$: Observable<string>) =>
       text$
           .debounceTime(200)
@@ -71,6 +72,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
                     }
                   }));
 
+  //FIXME remove when elastic search is sorted out
   haulierCompanySlowSearch = (text$: Observable<string>) =>
       text$
           .debounceTime(200)
@@ -79,17 +81,18 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
               // return the http search observable
               ? [] : this.companyService.searchHauliers(term, this.userObject)
               // or the observable of empty heroes if no search term
-                  .map(json => {
+                  .map(companyList => {
                     console.log('search haulier companies');
-                    this.companyList = json['searchResults'];
+                    this.companyList = companyList;
                     if (this.companyList.length > 0) {
-                      return json['searchResults'].map(item => item.name);
+                      return this.companyList.map(item => item.name);
                     } else {
                       this.isExistingCompanyNameValid = false;
                       console.log('isExistingCompanyNameValid ' + this.isExistingCompanyNameValid);
                     }
                   }));
 
+  //todo replace slow search in the future when elastic search is sorted out
   forwarderCompanySearch = (text$: Observable<string>) =>
       text$
           .debounceTime(200)
@@ -109,6 +112,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
                     }
                   }));
 
+  //FIXME remove when elastic search is sorted out
   forwarderCompanySlowSearch = (text$: Observable<string>) =>
       text$
           .debounceTime(200)
@@ -117,11 +121,11 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
               // return the http search observable
               ? [] : this.companyService.searchForwarders(term, this.userObject)
               // or the observable of empty heroes if no search term
-                  .map(json => {
+                  .map(companyList => {
                     console.log('search forwarder companies');
-                    this.companyList = json['searchResults'];
+                    this.companyList = companyList;
                     if (this.companyList.length > 0) {
-                      return json['searchResults'].map(item => item.name);
+                      return this.companyList.map(item => item.name);
                     } else {
                       this.isExistingCompanyNameValid = false;
                       console.log('isExistingCompanyNameValid ' + this.isExistingCompanyNameValid);

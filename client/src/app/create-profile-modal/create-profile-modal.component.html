@@ -35,11 +35,11 @@
             <div class="input-group mb-3">
               <input *ngIf="isHaulier" type="text" class="form-control"
                      (selectItem)="selectedCompany($event)" [ngClass]="isExistingCompanyNameValid ? 'is-valid' : 'is-invalid'"
-                     [ngbTypeahead]="haulierCompanySearch " />
+                     [ngbTypeahead]="haulierCompanySlowSearch " />
 
               <input *ngIf="!isHaulier" type="text" class="form-control"
                      (selectItem)="selectedCompany($event)" [ngClass]="isExistingCompanyNameValid ? 'is-valid' : 'is-invalid'"
-                     [ngbTypeahead]="forwarderCompanySearch" />
+                     [ngbTypeahead]="forwarderCompanySlowSearch" />
 
               <div class="input-group-append">
                 <button type="button" class="btn btn-primary" (click)="addCompany()">New Company</button>
