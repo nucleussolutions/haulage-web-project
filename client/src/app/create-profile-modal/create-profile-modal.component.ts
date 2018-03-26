@@ -187,7 +187,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
         officePhone: ['', [Validators.required, malaysianPhoneNumberValidator]],
         yardPhone: ['', [Validators.required, malaysianPhoneNumberValidator]],
         postalCode: ['', Validators.required],
-        code: ['', Validators.required],
+        code: ['', Validators.required, this.companyCodeValidator],
         companyImage: [''],
         registrationNo: ['', Validators.required, this.companyRegNoValidator()],
       }),
@@ -195,11 +195,11 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     });
   }
 
-  enableNewCompanyFields(enable : boolean){
-    if(enable){
+  enableNewCompanyFields(enable: boolean) {
+    if (enable) {
       this.personalDetails.get('company').enable();
       console.log('enable new company fields');
-    }else{
+    } else {
       this.personalDetails.get('company').disable();
       console.log('disable new company fields');
     }
@@ -210,9 +210,9 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       let subject = new Subject<ValidationErrors | null>();
 
       this.companyService.getByCompanyCode(control.value, this.userObject).subscribe(company => {
-        if(company){
+        if (company) {
           subject.next(company);
-        } else{
+        } else {
           subject.next(null);
         }
       });
@@ -225,18 +225,18 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       let subject = new Subject<ValidationErrors | null>();
       console.log('control.value ' + control.value);
       Observable.of(control.value).debounceTime(200).distinctUntilChanged().switchMap(term => term.length < 2 ? this.companyService.getByRegistrationNo(control.value, this.userObject) : []).subscribe(value => {
-          console.log('results found ' + JSON.stringify(value));
-          subject.next({
-            message: 'company registration number exists'
-          });
-          this.isCompanyRegNoValid = false;
-          console.log('this.isCompanyRegNoValid ' + this.isCompanyRegNoValid);
-        }, error => {
-          console.log('results not found');
-          subject.next(null);
-          this.isCompanyRegNoValid = true;
-          console.log('this.isCompanyRegNoValid ' + this.isCompanyRegNoValid);
+        console.log('results found ' + JSON.stringify(value));
+        subject.next({
+          message: 'company registration number exists'
         });
+        this.isCompanyRegNoValid = false;
+        console.log('this.isCompanyRegNoValid ' + this.isCompanyRegNoValid);
+      }, error => {
+        console.log('results not found');
+        subject.next(null);
+        this.isCompanyRegNoValid = true;
+        console.log('this.isCompanyRegNoValid ' + this.isCompanyRegNoValid);
+      });
       return subject.asObservable();
     }
   }
@@ -297,14 +297,14 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
     this.userInfoService.save(userInfo, this.userObject).subscribe(userInfo => {
       // this is supposed to submit the pricing and trigger a payment gateway as well
-      if(this.personalDetails.get('usertype').value == 'Admin'){
+      if (this.personalDetails.get('usertype').value == 'Admin') {
         //todo check if the person is a staff or not
-        if(this.permission.role == 'Owner'){
+        if (this.permission.role == 'Owner') {
           this.subscribeToPlan(formData.value.pricing);
-        }else{
+        } else {
           window.location.reload();
         }
-      }else{
+      } else {
         window.location.reload();
       }
     }, json => {
@@ -338,10 +338,10 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       console.log('permission staff is set, and pending approval');
 
       // show submit button if owner
-      if(this.permission.role == 'Owner'){
+      if (this.permission.role == 'Owner') {
         this.showSubmitButton = false;
         this.showNextButton = true;
-      }else{
+      } else {
         this.showSubmitButton = true;
         this.showNextButton = false;
       }
@@ -370,7 +370,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     }
 
     this.isHaulier = this.personalDetails.get('usertype').value == 'Admin';
-    console.log('this.isHaulier '+this.isHaulier);
+    console.log('this.isHaulier ' + this.isHaulier);
   }
 
   isHaulier: boolean = true;
@@ -388,6 +388,14 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
     this.showSubscriptionSelections = show;
     console.log('showSubs ' + this.showSubscriptionSelections);
+  }
+
+  saveCompany() {
+
+    this.companyService.save(this.company, this.userObject).subscribe(company => {
+      //todo assign this company object for details submission to the backend
+      this.newCompany = false;
+    });
   }
 
   subscribeToPlan(pricing: Pricing) {
