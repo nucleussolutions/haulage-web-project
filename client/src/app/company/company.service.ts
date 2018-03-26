@@ -255,6 +255,16 @@ export class CompanyService {
       'userId': userObject.uid
     });
 
+    this.http.get(environment.serverUrl + '/company/haulier?name=' + term, {
+      headers: headers
+    }).subscribe((json: any[]) => {
+      subject.next(json);
+    }, error => {
+      subject.error(error);
+    });
+
+    return subject.asObservable();
+
   }
 
   getForwarders(term: string, userObject: any): Observable<Company[]> {
@@ -268,7 +278,15 @@ export class CompanyService {
       'userId': userObject.uid
     });
 
+    this.http.get(environment.serverUrl + '/company/forwarder?name=' + term, {
+      headers: headers
+    }).subscribe((json: any[]) => {
+      subject.next(json);
+    }, error => {
+      subject.error(error);
+    });
 
+    return subject.asObservable();
   }
 
   searchForwarders(term: string, userObject: any): Observable<Company[]>{
