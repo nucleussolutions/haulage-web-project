@@ -18,4 +18,6 @@ interface CompanyService {
     Company save(Company company)
 
     Company findByRegistrationNo(String registrationNo)
+
+    Company findByCode(String companyCode)
 }

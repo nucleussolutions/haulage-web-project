@@ -73,7 +73,7 @@ class UrlMappings {
 //    get "/search/userInfo/haulier"(controller: 'search', action: '')
 
     get "/company/haulier"(controller: 'company', action: 'listCompaniesByHaulier')
-
+    get "/company/code/${companyCode}"(controller: 'company', action: 'getByCompanyCode')
     get "/company/forwarder"(controller: 'company', action: 'listCompaniesByForwarder')
 
 
@@ -101,5 +101,6 @@ class UrlMappings {
     get "/vehicle/haulier/${haulierId}"(controller: 'custom', action: 'vehicleByHaulier')
 
     get "/driverInfo/haulier/${haulierId}"(controller: 'custom', action: 'driverInfoByHaulier')
+
   }
 }
