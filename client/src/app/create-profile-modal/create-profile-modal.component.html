@@ -57,10 +57,10 @@
             <h2>New company</h2>
             <div class="row">
               <div class="col">
-                <div class="form-group" [ngClass]="personalDetails.get('company').get('name').valid ? '' : ''">
+                <div class="form-group" [ngClass]="personalDetails.get('company').get('name').valid ? '' : 'has-danger'">
                   <label for="companyName">Company name</label>
-                  <input class="form-control" type="text" id="companyName" formControlName="name">
-                  <div class="invalid-feedback">
+                  <input class="form-control" type="text" id="companyName" formControlName="name" [ngClass]="personalDetails.get('company').get('name').valid ? '' : 'is-invalid'">
+                  <div *ngIf="personalDetails.get('company').get('name').invalid" class="invalid-feedback">
                     Required
                   </div>
                 </div>
@@ -91,9 +91,15 @@
                 </div>
                 <div class="form-group" [ngClass]="personalDetails.get('company').get('code').valid ? 'has-success' : 'has-danger'">
                   <label for="companyCode">Company code</label>
-                  <input type="text" class="form-control" id="companyCode" formControlName="code">
+                  <input type="text" class="form-control" id="companyCode" formControlName="code" [ngClass]="personalDetails.get('company').get('code').valid ? 'is-valid' : 'is-invalid'">
                   <div *ngIf="personalDetails.get('company').get('code').hasError('required')" class="invalid-feedback">
                     Required
+                  </div>
+                  <div *ngIf="personalDetails.get('company').get('code').invalid" class="invalid-feedback">
+                    Company code is taken. Choose another
+                  </div>
+                  <div *ngIf="personalDetails.get('company').get('code').valid" class="valid-feedback">
+                    Company code available
                   </div>
                 </div>
                 <div class="form-group" [ngClass]="personalDetails.get('company').get('officePhone').valid ? 'has-success' : 'has-danger'">
@@ -192,7 +198,7 @@
 
             <div class="text-right">
               <button class="btn btn-primary" type="button" (click)="newCompany = false">Cancel</button>
-              <button class="btn btn-primary" type="button" (click)="newCompany = false">Save</button>
+              <button class="btn btn-primary" type="button" (click)="saveCompany()">Save</button>
             </div>
           </div>
         </div>

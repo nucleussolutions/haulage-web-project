@@ -212,8 +212,10 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       this.companyService.getByCompanyCode(control.value, this.userObject).subscribe(company => {
         if (company) {
           subject.next(company);
+          console.log('company code invalid');
         } else {
           subject.next(null);
+          console.log('company code valid');
         }
       });
       return subject.asObservable();
@@ -239,28 +241,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       });
       return subject.asObservable();
     }
-  }
-
-  /**
-   * todo this will come in when client side validation needs it
-   * @param event
-   */
-  onCompanyRegNoChanged(event: any) {
-    console.log('event target value ' + event.target.value);
-    Observable.of(event.target.value).flatMap(value => {
-      return Observable.of(value).debounceTime(200).distinctUntilChanged().switchMap(value => value.length < 2 && this.userObject ? null : this.companyService.searchByRegNo(value, this.userObject));
-    }).subscribe(json => {
-      this.companyList = json['searchResults'];
-      if (this.companyList) {
-        //todo alert the registration no field that it must be unique
-
-        //todo add has-danger to form-group
-
-        //todo add is-invalid class to form-control of the registration number input
-
-        //todo make
-      }
-    });
   }
 
   submitDetails(formData) {
@@ -391,11 +371,13 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   saveCompany() {
-
     this.companyService.save(this.company, this.userObject).subscribe(company => {
       //todo assign this company object for details submission to the backend
       this.newCompany = false;
+      this.company = company;
+      console.log('this.company '+this.company);
     });
+
   }
 
   subscribeToPlan(pricing: Pricing) {
