@@ -187,7 +187,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
         officePhone: ['', [Validators.required, malaysianPhoneNumberValidator]],
         yardPhone: ['', [Validators.required, malaysianPhoneNumberValidator]],
         postalCode: ['', Validators.required],
-        code: ['', Validators.required, this.companyCodeValidator],
+        code: ['', Validators.required, this.companyCodeValidator()],
         companyImage: [''],
         registrationNo: ['', Validators.required, this.companyRegNoValidator()],
       }),
@@ -208,11 +208,11 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   companyCodeValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
       let subject = new Subject<ValidationErrors | null>();
-
-      this.companyService.getByCompanyCode(control.value, this.userObject).subscribe(company => {
+      console.log('control.value ' + control.value);
+      Observable.of(control.value).debounceTime(200).distinctUntilChanged().switchMap(term => term.length > 2 ? this.companyService.getByCompanyCode(term, this.userObject) : []).subscribe(company => {
         if (company) {
           subject.next(company);
-          console.log('company code invalid');
+          console.log('company code invalid '+company.name);
         } else {
           subject.next(null);
           console.log('company code valid');
@@ -226,7 +226,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
       let subject = new Subject<ValidationErrors | null>();
       console.log('control.value ' + control.value);
-      Observable.of(control.value).debounceTime(200).distinctUntilChanged().switchMap(term => term.length < 2 ? this.companyService.getByRegistrationNo(control.value, this.userObject) : []).subscribe(value => {
+      Observable.of(control.value).debounceTime(200).distinctUntilChanged().switchMap(term => term.length > 2 ? this.companyService.getByRegistrationNo(term, this.userObject) : []).subscribe(value => {
         console.log('results found ' + JSON.stringify(value));
         subject.next({
           message: 'company registration number exists'

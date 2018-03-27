@@ -155,6 +155,7 @@ class CompanyController extends RestfulController {
 
     def getByCompanyCode(String companyCode) {
         if (companyCode) {
+            //todo make case insensitve query for this
             Company company = companyService.findByCode(companyCode)
             println 'company ' + company
             respond company

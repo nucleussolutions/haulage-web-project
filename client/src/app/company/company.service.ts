@@ -81,6 +81,7 @@ export class CompanyService {
   }
 
   getByCompanyCode(code: string, userObject: any): Observable<Company> {
+    console.log('code '+code);
     let headers = new HttpHeaders({
       'token': userObject.token,
       'apiKey': userObject.apiKey

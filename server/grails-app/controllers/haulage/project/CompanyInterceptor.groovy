@@ -4,7 +4,7 @@ package haulage.project
 class CompanyInterceptor {
 
     CompanyInterceptor() {
-        match(controller: 'company').except(action: 'delete')
+        match(controller: 'company').matches(action: 'delete')
     }
 
     boolean before() {
