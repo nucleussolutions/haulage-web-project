@@ -318,6 +318,9 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     this.permission.authority = formData.value.usertype;
     userInfo.permissions = [this.permission];
 
+    //todo check if permission role is owner or not, then check if subscriptions have been filled or not
+
+
     this.userInfoService.save(userInfo, this.userObject).subscribe(userInfo => {
       // this is supposed to submit the pricing and trigger a payment gateway as well
       if (this.personalDetails.get('usertype').value == 'Admin') {
@@ -411,16 +414,20 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
     this.showSubscriptionSelections = show;
     console.log('showSubs ' + this.showSubscriptionSelections);
+
   }
 
   saveCompany() {
-    this.companyService.save(this.company, this.userObject).subscribe(company => {
-      //todo assign this company object for details submission to the backend
-      this.newCompany = false;
-      this.company = company;
-      console.log('this.company '+this.company);
-    });
+    this.permission.role = 'Owner';
+    this.permission.authority = 'Admin';
+    this.showSubmitButton = true;
+    this.showSubscriptionSelections = true;
+  }
 
+  cancelNewCompany(){
+    this.permission.role = 'Staff';
+    this.permission.authority = 'Admin';
+    this.newCompany = false;
   }
 
   subscribeToPlan(pricing: Pricing) {
