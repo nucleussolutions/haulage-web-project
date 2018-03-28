@@ -77,6 +77,12 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       text$
           .debounceTime(200)
           .distinctUntilChanged()
+          .switchMap(term => {
+            if(term.length < 2){
+              this.isExistingCompanyNameValid = false;
+            }
+            return Observable.of(term);
+          })
           .switchMap(term => term.length < 2 && this.userObject   // switch to new observable each time
               // return the http search observable
               ? [] : this.companyService.getHauliers(term, this.userObject)
@@ -117,6 +123,12 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       text$
           .debounceTime(200)
           .distinctUntilChanged()
+          .switchMap(term => {
+            if(term.length < 2){
+              this.isExistingCompanyNameValid = false;
+            }
+            return Observable.of(term);
+          })
           .switchMap(term => term.length < 2 && this.userObject   // switch to new observable each time
               // return the http search observable
               ? [] : this.companyService.getForwarders(term, this.userObject)

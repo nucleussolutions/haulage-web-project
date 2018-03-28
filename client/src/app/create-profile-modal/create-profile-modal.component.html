@@ -30,7 +30,6 @@
             </div>
           </div>
 
-          <!-- formgroup must have has-success and has-danger for feedback to work -->
           <div *ngIf="!newCompany" class="form-group"
                [ngClass]="isExistingCompanyNameValid ? 'has-success' : 'has-danger'">
             <label>Company
