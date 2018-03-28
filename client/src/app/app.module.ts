@@ -63,6 +63,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { ForwarderInfoModalComponent } from './forwarder-info-modal/forwarder-info-modal.component';
 import { LogoutComponent } from './logout/logout.component';
 import { TransactionModule } from './transaction/transaction.module';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { TransactionModule } from './transaction/transaction.module';
     QuoteItemModalComponent,
     ForwarderInfoModalComponent,
     LogoutComponent,
+    ProfileComponent,
   ],
   entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent, GeneralModalComponent, CreateCompanyModalComponent],
   imports: [

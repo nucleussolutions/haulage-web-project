@@ -455,17 +455,16 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     }
 
     this.subscriptionService.save(memberSubscription, this.userObject).subscribe(memberSubscription => {
-      //todo close modal dialog perhaps
       if (environment.production) {
         //todo trigger payment gateway
       } else {
-        //todo create dummy subscription and transaction
+        // create dummy subscription and transaction
         let transaction = new Transaction();
         transaction.code = 'dummy';
         transaction.status = 'paid';
         transaction.subscription = memberSubscription;
         this.transactionService.save(transaction, this.userObject).subscribe(transaction => {
-          this.activeModal.dismiss();
+          window.location.reload();
         });
       }
       this.showSpinnerProgress = false;
