@@ -157,10 +157,9 @@ class CompanyController extends RestfulController {
         if (companyCode) {
             //todo make case insensitve query for this
             Company company = Company.createCriteria().get {
-                ilike('code': "%companyCode%")
+                ilike("code", "%${companyCode}%")
             }
 
-//            Company company = companyService.findByCode(companyCode)
             println 'company ' + company
             respond company
         } else {

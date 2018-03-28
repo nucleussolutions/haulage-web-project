@@ -217,6 +217,9 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
           subject.next(null);
           console.log('company code valid');
         }
+      }, error => {
+        subject.next(null);
+        console.log('company code valid');
       });
       return subject.asObservable();
     }
