@@ -21,7 +21,7 @@ import {environment} from "../../environments/environment";
 import {Transaction} from "../transaction/transaction";
 import {TransactionService} from "../transaction/transaction.service";
 import {Subject} from "rxjs/Subject";
-import {parse, format, AsYouType} from 'libphonenumber-js'
+import {parse, format, AsYouType, isValidNumber} from 'libphonenumber-js'
 import {malaysianPhoneNumberValidator} from "../validators/malaysian-phone-validator";
 
 @Component({
@@ -138,7 +138,11 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   isCompanyCodeValid: boolean = false;
 
-  private personalDetails: FormGroup;
+  isOfficePhoneValid: boolean = false;
+
+  isYardPhoneValid: boolean = false;
+
+  personalDetails: FormGroup;
   private subscription: Subscription;
   private base64Encoded: string;
 
@@ -187,8 +191,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
         city: ['', Validators.required],
         state: ['', Validators.required],
         country: new FormControl('Malaysia'),
-        officePhone: ['', [Validators.required, malaysianPhoneNumberValidator()]],
-        yardPhone: ['', [Validators.required, malaysianPhoneNumberValidator()]],
+        officePhone: ['', [Validators.required, this.officePhoneValidator()]],
+        yardPhone: ['', [Validators.required, this.yardPhoneValidator()]],
         postalCode: ['', Validators.required],
         code: ['', Validators.required, this.companyCodeValidator()],
         companyImage: [''],
@@ -249,6 +253,36 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
         console.log('this.isCompanyRegNoValid ' + this.isCompanyRegNoValid);
       });
       return subject.asObservable();
+    }
+  }
+
+  officePhoneValidator(): AsyncValidatorFn {
+    return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+      let valid = isValidNumber(control.value, 'MY');
+      console.log('phone number valid '+valid);
+      this.isOfficePhoneValid = valid;
+      if(valid){
+        return Observable.of(null);
+      }else{
+        return Observable.of({
+          myPhoneValid: valid
+        });
+      }
+    }
+  }
+
+  yardPhoneValidator(): AsyncValidatorFn {
+    return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+      let valid = isValidNumber(control.value, 'MY');
+      console.log('phone number valid '+valid);
+      this.isYardPhoneValid = valid;
+      if(valid){
+        return Observable.of(null);
+      }else{
+        return Observable.of({
+          myPhoneValid: valid
+        });
+      }
     }
   }
 
