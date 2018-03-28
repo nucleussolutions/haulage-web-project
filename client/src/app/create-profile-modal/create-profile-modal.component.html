@@ -89,16 +89,16 @@
                     Required
                   </div>
                 </div>
-                <div class="form-group" [ngClass]="personalDetails.get('company').get('code').valid ? 'has-success' : 'has-danger'">
+                <div class="form-group" [ngClass]="isCompanyCodeValid ? 'has-success' : 'has-danger'">
                   <label for="companyCode">Company code</label>
-                  <input type="text" class="form-control" id="companyCode" formControlName="code" [ngClass]="personalDetails.get('company').get('code').valid ? 'is-valid' : 'is-invalid'">
+                  <input type="text" class="form-control" id="companyCode" formControlName="code" [ngClass]="isCompanyCodeValid ? 'is-valid' : 'is-invalid'">
                   <div *ngIf="personalDetails.get('company').get('code').hasError('required')" class="invalid-feedback">
                     Required
                   </div>
-                  <div *ngIf="personalDetails.get('company').get('code').invalid" class="invalid-feedback">
+                  <div *ngIf="!isCompanyCodeValid" class="invalid-feedback">
                     Company code is taken. Choose another
                   </div>
-                  <div *ngIf="personalDetails.get('company').get('code').valid" class="valid-feedback">
+                  <div *ngIf="isCompanyCodeValid" class="valid-feedback">
                     Company code available
                   </div>
                 </div>

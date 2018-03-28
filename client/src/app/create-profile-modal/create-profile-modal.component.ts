@@ -135,6 +135,9 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   errors: any[];
   isExistingCompanyNameValid: boolean = false;
   isCompanyRegNoValid: boolean = false;
+
+  isCompanyCodeValid: boolean = false;
+
   private personalDetails: FormGroup;
   private subscription: Subscription;
   private base64Encoded: string;
@@ -213,13 +216,16 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
         if (company) {
           subject.next(company);
           console.log('company code invalid '+company.name);
+          this.isCompanyCodeValid = false;
         } else {
           subject.next(null);
           console.log('company code valid');
+          this.isCompanyCodeValid = true;
         }
       }, error => {
         subject.next(null);
         console.log('company code valid');
+        this.isCompanyCodeValid = true;
       });
       return subject.asObservable();
     }
