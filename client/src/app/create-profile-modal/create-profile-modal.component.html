@@ -108,7 +108,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">+60</span>
                     </div>
-                    <input type="text" class="form-control" id="companyOfficePhone" formControlName="officePhone">
+                    <input type="text" class="form-control" id="companyOfficePhone" formControlName="officePhone" [ngClass]="personalDetails.get('company').get('officePhone').valid ? '' : ''">
                   </div>
                   <div *ngIf="personalDetails.get('company').get('officePhone').hasError('required')" class="invalid-feedback">
                     Required
