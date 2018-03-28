@@ -13,7 +13,9 @@ export function malaysianPhoneNumberValidator(): AsyncValidatorFn{
       subject.next(null);
     }else{
       console.log('invalid phone number');
-      subject.next('not valid');
+      subject.next({
+        myPhoneInvalid: true
+      });
     }
     return subject.asObservable();
   }
