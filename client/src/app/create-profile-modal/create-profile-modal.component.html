@@ -124,13 +124,13 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">+60</span>
                     </div>
-                    <input type="text" class="form-control" id="companyYardPhone" formControlName="yardPhone">
+                    <input type="text" class="form-control" id="companyYardPhone" formControlName="yardPhone" [ngClass]="personalDetails.get('company').get('yardPhone').valid ? '' : 'is-invalid'">
                   </div>
                   <div *ngIf="personalDetails.get('company').get('yardPhone').invalid && (personalDetails.get('company').get('yardPhone').dirty || personalDetails.get('company').get('yardPhone').touched)" class="invalid-feedback">
-                    <div *ngIf="personalDetails.get('company').get('yardPhone').hasError('required')">
+                    <div *ngIf="personalDetails.get('company').get('yardPhone').hasError('required')" class="invalid-feedback">
                       Required
                     </div>
-                    <div *ngIf="personalDetails.get('company').get('yardPhone').invalid">
+                    <div *ngIf="personalDetails.get('company').get('yardPhone').invalid" class="invalid-feedback">
                       Invalid number, please check again
                     </div>
                   </div>
