@@ -9,7 +9,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {UserInfoService} from "../userInfo/userInfo.service";
 import {UserInfo} from "../userInfo/userInfo";
 import {Permission} from "../permission/permission";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal, NgbTypeaheadConfig} from "@ng-bootstrap/ng-bootstrap";
 import {Observable} from "rxjs/Observable";
 import {CompanyService} from "../company/company.service";
 import {PermissionService} from "../permission/permission.service";
@@ -28,6 +28,7 @@ import {malaysianPhoneNumberValidator} from "../validators/malaysian-phone-valid
   selector: 'app-create-profile-modal',
   templateUrl: './create-profile-modal.component.html',
   styleUrls: ['./create-profile-modal.component.css'],
+  providers: [NgbTypeaheadConfig] // add NgbTypeaheadConfig to the component providers
 })
 export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
@@ -161,8 +162,9 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   showSubmitButton: boolean = false;
   showNextButton: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal, private companyService: CompanyService, private permissionService: PermissionService, private pricingService: PricingService, private subscriptionService: MemberSubscriptionService, private transactionService: TransactionService) {
-
+  constructor(private formBuilder: FormBuilder, private cdRef: ChangeDetectorRef, private userService: UserService, private userInfoService: UserInfoService, public activeModal: NgbActiveModal, private companyService: CompanyService, private permissionService: PermissionService, private pricingService: PricingService, private subscriptionService: MemberSubscriptionService, private transactionService: TransactionService, config: NgbTypeaheadConfig) {
+    // customize default values of typeaheads used by this component tree
+    config.showHint = true;
   }
 
   ngOnDestroy(): void {
@@ -360,6 +362,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   addCompany() {
     this.newCompany = true;
+    this.showSubmitButton = false;
   }
 
   selectedCompany(value) {
@@ -430,6 +433,61 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   saveCompany() {
+    if(!this.personalDetails.get(['company', 'name']).valid){
+      console.log('company name not valid');
+      return
+    }
+
+    if(!this.personalDetails.get(['company', 'registrationNo']).valid){
+      console.log('company registration number not valid');
+      return
+    }
+
+    if(!this.personalDetails.get(['company', 'address1']).valid){
+      console.log('company address1 not valid');
+      return
+    }
+
+    if(!this.personalDetails.get(['company', 'address2']).valid){
+      console.log('company address2 not valid');
+      return
+    }
+
+    if(!this.personalDetails.get(['company', 'postalCode']).valid){
+      console.log('company postalCode not valid')
+      return
+    }
+
+    if(!this.personalDetails.get(['company', 'city']).valid){
+      console.log('company city not valid')
+      return
+    }
+
+    if(!this.personalDetails.get(['company', 'state']).valid){
+      console.log('company state not valid');
+      return
+    }
+
+    if(!this.personalDetails.get(['company', 'country']).valid){
+      console.log('company country not valid')
+      return
+    }
+
+    if(!this.personalDetails.get(['company', 'code']).valid){
+      console.log('company code not valid')
+      return
+    }
+
+    if(!this.personalDetails.get(['company', 'officePhone']).valid){
+      console.log('company office phone not valid');
+      return
+    }
+
+    if(!this.personalDetails.get(['company', 'yardPhone']).valid){
+      console.log('company yard phone not valid');
+      return
+    }
+
     this.permission.role = 'Owner';
     this.permission.authority = 'Admin';
     this.permission.grantedBy = this.userObject.uid;
