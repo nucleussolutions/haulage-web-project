@@ -432,6 +432,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   saveCompany() {
     this.permission.role = 'Owner';
     this.permission.authority = 'Admin';
+    this.permission.grantedBy = this.userObject.uid;
+    this.permission.status = 'Approved';
     this.showSubmitButton = true;
     this.showSubscriptionSelections = true;
   }
@@ -439,7 +441,11 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   cancelNewCompany(){
     this.permission.role = 'Staff';
     this.permission.authority = 'Admin';
+    this.permission.grantedBy = '';
+    this.permission.status = 'Pending Approval';
     this.newCompany = false;
+    this.showSubmitButton = false;
+    this.showSubscriptionSelections = false;
   }
 
   subscribeToPlan(pricing: Pricing) {
