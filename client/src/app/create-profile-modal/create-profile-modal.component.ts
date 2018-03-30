@@ -331,6 +331,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     console.log('formData.value.usertype ' + formData.value.usertype);
     this.permission.authority = formData.value.usertype;
 
+    this.permission.company = this.company;
     console.log('saving permission '+this.permission);
 
     this.permissionService.save(this.permission, this.userObject).flatMap(permission => {
@@ -460,12 +461,12 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     }
 
     if(!this.personalDetails.get(['company', 'postalCode']).valid){
-      console.log('company postalCode not valid')
+      console.log('company postalCode not valid');
       return
     }
 
     if(!this.personalDetails.get(['company', 'city']).valid){
-      console.log('company city not valid')
+      console.log('company city not valid');
       return
     }
 
@@ -475,12 +476,12 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     }
 
     if(!this.personalDetails.get(['company', 'country']).valid){
-      console.log('company country not valid')
+      console.log('company country not valid');
       return
     }
 
     if(!this.isCompanyCodeValid){
-      console.log('company code not valid')
+      console.log('company code not valid');
       return
     }
 
