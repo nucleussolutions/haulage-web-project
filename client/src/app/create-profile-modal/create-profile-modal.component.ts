@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
   AbstractControl, AsyncValidatorFn, FormBuilder, FormControl, FormGroup, ValidationErrors,
   Validators
@@ -256,7 +256,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       Observable.of(control.value).debounceTime(200).distinctUntilChanged().switchMap(term => term.length > 2 ? this.companyService.getByRegistrationNo(term, this.userObject) : []).subscribe(value => {
         console.log('results found ' + JSON.stringify(value));
         subject.next({
-          message: 'company registration number exists'
+          companyRegNoExists: true
         });
         this.isCompanyRegNoValid = false;
         console.log('this.isCompanyRegNoValid ' + this.isCompanyRegNoValid);
@@ -330,12 +330,18 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     //user permission will always be haulier since create profile is for the haulier
     console.log('formData.value.usertype ' + formData.value.usertype);
     this.permission.authority = formData.value.usertype;
-    userInfo.permissions = [this.permission];
 
-    //todo check if permission role is owner or not, then check if subscriptions have been filled or not
+    console.log('saving permission '+this.permission);
 
-
-    this.userInfoService.save(userInfo, this.userObject).subscribe(userInfo => {
+    this.permissionService.save(this.permission, this.userObject).flatMap(permission => {
+      this.permission = permission;
+      userInfo.permissions = [this.permission];
+      if(permission.id){
+        return this.userInfoService.save(userInfo, this.userObject);
+      }else{
+        throw 'error saving permissions';
+      }
+    }).subscribe(userInfo => {
       // this is supposed to submit the pricing and trigger a payment gateway as well
       if (this.personalDetails.get('usertype').value == 'Admin') {
         //todo check if the person is a staff or not
@@ -429,7 +435,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
     this.showSubscriptionSelections = show;
     console.log('showSubs ' + this.showSubscriptionSelections);
-
+    this.showSubmitButton = false;
   }
 
   saveCompany() {
@@ -438,7 +444,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       return
     }
 
-    if(!this.personalDetails.get(['company', 'registrationNo']).valid){
+    if(!this.isCompanyRegNoValid){
       console.log('company registration number not valid');
       return
     }
@@ -473,27 +479,35 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       return
     }
 
-    if(!this.personalDetails.get(['company', 'code']).valid){
+    if(!this.isCompanyCodeValid){
       console.log('company code not valid')
       return
     }
 
-    if(!this.personalDetails.get(['company', 'officePhone']).valid){
+    if(!this.isOfficePhoneValid){
       console.log('company office phone not valid');
       return
     }
 
-    if(!this.personalDetails.get(['company', 'yardPhone']).valid){
+    if(!this.isYardPhoneValid){
       console.log('company yard phone not valid');
       return
     }
 
     this.permission.role = 'Owner';
-    this.permission.authority = 'Admin';
     this.permission.grantedBy = this.userObject.uid;
     this.permission.status = 'Approved';
-    this.showSubmitButton = true;
-    this.showSubscriptionSelections = true;
+
+    if(this.personalDetails.get('usertype').value == 'Admin'){
+      this.permission.authority = 'Admin';
+      this.showSubmitButton = true;
+      this.showSubscriptionSelections = true;
+    }else{
+      console.log('submit details straight away since forwarder');
+      this.permission.authority = 'Manager';
+      //trigger submit details
+      this.submitDetails(this.personalDetails);
+    }
   }
 
   cancelNewCompany(){

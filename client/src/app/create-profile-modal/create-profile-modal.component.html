@@ -1,4 +1,4 @@
-<form [formGroup]="personalDetails" (ngSubmit)="submitDetails(personalDetails)" autocomplete="off">
+<form [formGroup]="personalDetails" #personalDetailsForm (ngSubmit)="submitDetails(personalDetails)" autocomplete="off">
   <div class="modal-content">
     <div class="modal-header">
       <h2 *ngIf="!showSubscriptionSelections">Create Your Profile</h2>
