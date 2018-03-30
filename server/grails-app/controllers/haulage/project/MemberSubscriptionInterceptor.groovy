@@ -19,11 +19,15 @@ class MemberSubscriptionInterceptor {
   boolean before() {
     def userId = request.getHeader('userId')
     if(userId){
-      def userPermission = Permission.where {
-        userInfo.userId == userId
-      }
+
+      def userInfo = UserInfo.findByUserId(userId)
+
+      def userPermission = userInfo.permissions.stream().filter({ permission ->
+        permission.authority == 'Super Admin' || permission.authority == 'Admin'
+      })
+
       if(userPermission){
-        userPermission.authority == 'Super Admin' || userPermission.authority == 'Admin'
+        true
       }else{
         false
       }

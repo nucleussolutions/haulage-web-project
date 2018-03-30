@@ -8,18 +8,20 @@ class JobInterceptor {
 
   def permissionService
 
+  def userInfoService
+
   JobInterceptor() {
     match controller: 'job'
   }
 
   boolean before() {
     def userId = request.getHeader('userId')
+    UserInfo userInfo = userInfoService.findByUserId(userId)
 
     if(userId){
-      def userPermission = Permission.where {
-        userInfo.userId == userId
-        authority == 'Super Admin' || authority == 'Admin'
-      }
+      def userPermission = userInfo.permissions.stream().filter({ permission ->
+        permission.authority == 'Super Admin' || permission.authority == 'Admin'
+      })
       if(userPermission){
         true
       }else{

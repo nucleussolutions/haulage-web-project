@@ -18,10 +18,12 @@ class LocationInterceptor {
     def userId = request.getHeader('userId')
 
     if(userId){
-      def userPermission = Permission.where {
-        userInfo.userId == userId
-        authority == 'Super Admin'
-      }.first()
+
+      def userInfo = UserInfo.findByUserId(userId)
+
+      def userPermission = userInfo.permissions.stream().filter({ permission ->
+        permission.authority == 'Super Admin'
+      })
 
       if(userPermission){
         true

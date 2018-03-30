@@ -77,27 +77,6 @@ export class PermissionService {
     return subject.asObservable();
   }
 
-  getByCompany(userObject:any, companyId: number): Observable<Permission[]> {
-    let subject = new Subject<Permission[]>();
-    let headers = new HttpHeaders({
-      'token': userObject.token,
-      'apiKey': userObject.apiKey,
-      'userId': userObject.uid
-    });
-
-    this.http.get(environment.serverUrl + '/permission/company/'+companyId, {
-      headers: headers,
-    })
-        .catch(err => {
-          subject.error(err);
-          return subject.asObservable();
-        })
-        .subscribe((json: any[]) => {
-          subject.next(json.map((item: any) => new Permission(item)))
-        });
-    return subject.asObservable();
-  }
-
   getByCompanyName(userObject: any, companyName: string) : Observable<Permission[]> {
     let subject = new Subject<Permission[]>();
     let headers = new HttpHeaders({

@@ -9,6 +9,8 @@ class ExpenseController extends RestfulController {
 
   static responseFormats = ['json', 'xml']
 
+  def userInfoService
+
   ExpenseController() {
     super(Expense)
   }
@@ -17,13 +19,15 @@ class ExpenseController extends RestfulController {
   def index(Integer max) {
     //todo get permission of user
     def userId = request.getHeader('userId')
+    UserInfo userInfo = userInfoService.findByUserId(userId)
     if(userId){
-      def permission = Permission.where {
-        userInfo.userId == userId
-      }
 
-      if(permission){
-        if(permission.authority == 'Super Admin'){
+
+      if(userInfo.permissions){
+        def superAdminPermission = userInfo.permissions.stream().filter({permission ->
+          permission.authority == 'Super Admin'
+        })
+        if(superAdminPermission){
           //show all
           return super.index(max)
         }else{

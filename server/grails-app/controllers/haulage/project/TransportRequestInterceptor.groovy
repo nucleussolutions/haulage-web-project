@@ -10,20 +10,23 @@ class TransportRequestInterceptor {
   //kick user out
   def permissionService
 
+  def userInfoService
+
   TransportRequestInterceptor() {
     match controller: 'transportRequest'
   }
 
   boolean before() {
     def userId = request.getHeader('userId')
+    UserInfo userInfo = userInfoService.findByUserId(userId)
     if(userId) {
-      def userPermission = Permission.where {
-        userInfo.userId == userId
-      }
+      def userPermission = userInfo.permissions.stream().filter({ permission ->
+        permission.authority == 'User'
+      })
       if(userPermission){
-        userPermission.authority != 'User'
-      }else {
         false
+      }else {
+        true
       }
     }else {
       false

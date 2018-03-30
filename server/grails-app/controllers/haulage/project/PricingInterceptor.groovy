@@ -10,17 +10,19 @@ class PricingInterceptor {
 
   def permissionService
 
+  def userInfoService
+
   PricingInterceptor() {
     match controller: 'pricing' except(action: 'index') except(action: 'listAll')
   }
 
   boolean before() {
     def userId = request.getHeader('userId')
+    UserInfo userInfo = userInfoService.findByUserId(userId)
     if(userId){
-      def userPermission = Permission.where {
-        userInfo.userId == userId
-        authority == 'Super Admin'
-      }.first()
+      def userPermission = userInfo.permissions.stream().filter({ permission ->
+        permission.authority == 'Super Admin'
+      })
 
       if(userPermission){
         true

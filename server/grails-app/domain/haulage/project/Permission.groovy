@@ -17,14 +17,14 @@ class Permission {
 
   String status = 'Pending Approval'
 
-  static belongsTo = [userInfo: UserInfo, company: Company]
+  static belongsTo = [UserInfo, Company]
 
   static constraints = {
     email nullable: false, email: true
     authority nullable: false, inList: ['Admin', 'Manager', 'Super Admin', 'User']
     grantedBy nullable: true
-    userInfo nullable: false
-    company nullable: false
+//    userInfo nullable: true
+//    company nullable: true
     role nullable: true
     status nullable: false, inList: ['Pending Approval', 'Approved']
 
@@ -36,8 +36,8 @@ class Permission {
   }
 
   static searchable = {
-    userInfo component: 'inner'
-    except = ['company']
+//    userInfo component: 'inner'
+//    except = ['company']
   }
 
 }

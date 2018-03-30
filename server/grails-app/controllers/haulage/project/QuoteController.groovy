@@ -8,6 +8,8 @@ class QuoteController extends RestfulController {
 
   QuoteService quoteService
 
+  def userInfoService
+
   static responseFormats = ['json', 'xml']
 
   QuoteController() {
@@ -17,10 +19,10 @@ class QuoteController extends RestfulController {
   @Override
   Object index(Integer max) {
     def userId = request.getHeader('userId')
-    def permission = Permission.where {
-      userInfo.userId == userId
-      authority == 'Super Admin'
-    }
+    UserInfo userInfo = userInfoService.findByUserId(userId)
+    def permission = userInfo.permissions.stream().filter({ permission ->
+      permission.authority == 'Super Admin'
+    })
     if (permission) {
       return super.index(max)
     } else {
@@ -68,10 +70,10 @@ class QuoteController extends RestfulController {
 
   def count() {
     def userId = request.getHeader('userId')
-    def permission = Permission.where {
-      userInfo.userId == userId
-      authority == 'Super Admin'
-    }
+    UserInfo userInfo = userInfoService.findByUserId(userId)
+    def permission = userInfo.permissions.stream().filter({ permission ->
+      permission.authority == 'Super Admin'
+    })
     if(permission){
       respond count: quoteService.count()
     }else{

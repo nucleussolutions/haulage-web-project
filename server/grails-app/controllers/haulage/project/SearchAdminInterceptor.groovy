@@ -8,6 +8,8 @@ class SearchAdminInterceptor {
 
   def permissionService
 
+  def userInfoService
+
   SearchAdminInterceptor() {
     match(controller: 'search', action: 'transportRequestByHaulier')
     match(controller: 'search', action: 'quoteByHaulier')
@@ -15,11 +17,11 @@ class SearchAdminInterceptor {
 
   boolean before() {
     def userId = request.getHeader('userId')
+    UserInfo userInfo = userInfoService.findByUserId(userId)
     if(userId){
-      def userPermission = Permission.where {
-        userInfo.userId == userId
-        authority == 'Admin'
-      }.first()
+      def userPermission = userInfo.permissions.stream().filter({ permission ->
+        permission.authority == 'Admin'
+      })
       if(userPermission){
         return true
       }else {

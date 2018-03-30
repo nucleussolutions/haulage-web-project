@@ -23,7 +23,6 @@ class ConsignmentController extends RestfulController {
     //todo list based on permissions
     def userId = request.getHeader('userId')
     def permission = Permission.where {
-      userInfo.userId == userId
       authority == 'Super Admin'
     }
     //todo if user has super admin permissions, return all
@@ -120,7 +119,6 @@ class ConsignmentController extends RestfulController {
   def count() {
     def userId = request.getHeader('userId')
     def permission = Permission.where {
-      userInfo.userId == userId
       authority == 'Super Admin'
     }
     if(permission){

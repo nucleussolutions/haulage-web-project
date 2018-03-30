@@ -9,6 +9,8 @@ class QuoteInterceptor {
 
   def permissionService
 
+  def userInfoService
+
   //todo access to only super admin, forwarder and haulier only
   QuoteInterceptor(){
     match controller: 'quote'
@@ -16,12 +18,11 @@ class QuoteInterceptor {
 
   boolean before() {
     def userId = request.getHeader('userId')
+    UserInfo userInfo = userInfoService.findByUserId(userId)
     if(userId){
-      def userPermission = Permission.where {
-        userInfo.userId == userId
-        authority == 'User'
-      }
-      println 'permission '+userPermission
+      def userPermission = userInfo.permissions.stream().filter({ permission ->
+        permission.authority == 'User'
+      })
       if(userPermission){
         false
       }else{

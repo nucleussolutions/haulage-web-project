@@ -8,20 +8,7 @@ class ConsignmentInterceptor {
   }
 
   boolean before() {
-    def userId = request.getHeader('userId')
-
-    if(userId){
-      def userPermission = Permission.where {
-        userInfo.userId == userId
-      }
-      if(userPermission){
-        userPermission.authority != 'User'
-      }else{
-        false
-      }
-    }else{
-      false
-    }
+    true
   }
 
   boolean after() { true }

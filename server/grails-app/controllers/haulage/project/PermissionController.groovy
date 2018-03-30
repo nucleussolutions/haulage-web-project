@@ -12,6 +12,8 @@ class PermissionController extends RestfulController {
 
   def permissionService
 
+  def userInfoService
+
   static responseFormats = ['json', 'xml']
 
   PermissionController() {
@@ -21,10 +23,11 @@ class PermissionController extends RestfulController {
   @Override
   Object index(Integer max) {
     def userId = request.getHeader('userId')
-    def permission = Permission.where {
-      userInfo.userId == userId
-      authority == 'Super Admin'
-    }
+    UserInfo userInfo = userInfoService.findByUserId(userId)
+
+    def permission = userInfo.permissions.stream().filter({ permission ->
+      permission.authority == 'Super Admin'
+    })
 
     if(permission){
       return super.index(max)
@@ -77,48 +80,29 @@ class PermissionController extends RestfulController {
 
   def getByUserId() {
     def userId = request.getHeader('userId')
+    UserInfo userInfo = userInfoService.findByUserId(userId)
     println 'userId ' + userId
     if (!userId) {
       response.status = NOT_FOUND.value()
       respond status: NOT_FOUND, message: 'user id not found'
     } else {
-      def permissions = Permission.where {
-        userInfo.userId == userId
-      }
 
-      if (!permissions) {
+      if (!userInfo.permissions) {
         response.status = NOT_FOUND.value()
         respond status: NOT_FOUND, message: 'user permissions not found'
       } else {
-        respond permissions, status: OK
+        respond userInfo.permissions, status: OK
       }
     }
-  }
-
-  def getByCompany(){
-    Company company = request.JSON.company
-    if(company){
-      def permission = Permission.findByCompany(company)
-      if(permission){
-        respond permission
-      }else{
-        response.status = NOT_FOUND.value()
-        respond message: 'permission doesnt exist'
-      }
-    }else{
-      response.status = NOT_FOUND.value()
-      respond message: 'company not found'
-    }
-
   }
 
   def getByCompanyName(String companyName){
     if(companyName){
-      def permission = Permission.where {
-        company.name == companyName
-      }
-      if(permission){
-        respond permission
+
+      def company = Company.findByName(companyName)
+
+      if(company.permissions){
+        respond company.permissions
       }else{
         response.status = NOT_FOUND.value()
         respond message: 'permission doesnt exist'

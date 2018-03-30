@@ -331,18 +331,12 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     console.log('formData.value.usertype ' + formData.value.usertype);
     this.permission.authority = formData.value.usertype;
 
-    this.permission.company = this.company;
+    // this.permission.company = this.company;
+    // this.permission.userInfo = userInfo;
     console.log('saving permission '+this.permission);
-
-    this.permissionService.save(this.permission, this.userObject).flatMap(permission => {
-      this.permission = permission;
-      userInfo.permissions = [this.permission];
-      if(permission.id){
-        return this.userInfoService.save(userInfo, this.userObject);
-      }else{
-        throw 'error saving permissions';
-      }
-    }).subscribe(userInfo => {
+    userInfo.permissions = [this.permission];
+    console.log('saving userinfo '+userInfo);
+    this.userInfoService.save(userInfo, this.userObject).subscribe(userInfo => {
       // this is supposed to submit the pricing and trigger a payment gateway as well
       if (this.personalDetails.get('usertype').value == 'Admin') {
         //todo check if the person is a staff or not

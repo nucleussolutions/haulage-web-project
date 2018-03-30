@@ -9,6 +9,7 @@ class JobController extends RestfulController {
 
   def jobService
   def quartzService
+  def userInfoService
 
   JobController() {
     super(Job)
@@ -17,9 +18,10 @@ class JobController extends RestfulController {
   @Override
   Object index(Integer max) {
     def userId = request.getHeader('userId')
-    def permission = Permission.where {
-      userInfo.userId == userId
-    }.first()
+    UserInfo userInfo = userInfoService.findByUserId(userId)
+    def permission = userInfo.permissions.stream().filter({ permission ->
+      permission.authority == 'Super Admin'
+    })
     if(permission){
       return super.index(max)
     }else{
@@ -70,9 +72,10 @@ class JobController extends RestfulController {
 
   def count(){
     def userId = request.getHeader('userId')
-    def permission = Permission.where {
-      authority == 'Super Admin'
-    }.first()
+    def userInfo = UserInfo.findByUserId(userId)
+    def permission = userInfo.permissions.stream().filter({ permission ->
+      permission.authority == 'Super Admin'
+    })
     if(permission){
       respond count: jobService.count()
     }else{

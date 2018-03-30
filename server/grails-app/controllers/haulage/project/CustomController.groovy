@@ -26,13 +26,15 @@ class CustomController {
       render([status: NOT_FOUND, message: 'user id not found'])
     } else {
 
-      def userPermission = Permission.where {
-        userInfo.userId == userId
-      }
+      def userInfo = UserInfo.findByUserId(userId)
+
+      def userPermission = userInfo.permissions.stream().filter({permission ->
+        permission.authority == 'Super Admin'
+      })
 
       def permissions
 
-      if(userPermission.authority == 'Super Admin'){
+      if(userPermission){
         permissions = Permission.list()
       }else{
         permissions = permissionService.findAllByGrantedBy(userId, [offset: params.offset])
@@ -109,22 +111,6 @@ class CustomController {
       respond status: NOT_FOUND, message: 'forwarder id not found'
     }
   }
-
-//  def consignmentsByHaulier(String haulierId){
-//    if(haulierId){
-//
-//
-//    }else{
-//      respond status: NOT_FOUND, message: 'haulier id not found'
-//    }
-//  }
-//
-//  def consignmentsByForwarder(String forwarderId){
-//    if(forwarderId){
-//    }else{
-//      respond status: NOT_FOUND, message: 'forwarder id not found'
-//    }
-//  }
 
   def consignmentsByRFT(Long rftId){
     if(rftId){

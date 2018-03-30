@@ -7,6 +7,7 @@ import groovy.transform.TypeCheckingMode
 class TransactionInterceptor {
 
   def permissionService
+  def userInfoService
 
   TransactionInterceptor() {
     match controller: 'transaction'
@@ -14,11 +15,11 @@ class TransactionInterceptor {
 
   boolean before() {
     String userId = request.getHeader('userId')
+    UserInfo userInfo = userInfoService.findByUserId(userId)
     if(userId){
-      def userPermission = Permission.where {
-        userInfo.userId == userId
-        authority == 'Super Admin'
-      }
+      def userPermission = userInfo.permissions.stream().filter({ permission ->
+        permission.authority == 'Super Admin'
+      })
       if(userPermission){
         true
       }else{

@@ -12,6 +12,8 @@ class DriverInfoController extends RestfulController {
 
   def driverInfoService
 
+  def userInfoService
+
   static responseFormats = ['json', 'xml']
 
   DriverInfoController() {
@@ -21,10 +23,10 @@ class DriverInfoController extends RestfulController {
   @Override
   Object index(Integer max) {
     def userId = request.getHeader('userId')
-    def permission = Permission.where {
-      userInfo.userId == userId
-      authority == 'Super Admin'
-    }
+    UserInfo userInfo = userInfoService.findByUserId(userId)
+    def permission = userInfo.permissions.stream().filter({ permission ->
+      permission.authority == 'Super Admin'
+    })
     if (permission) {
       return super.index(max)
     } else {

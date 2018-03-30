@@ -12,7 +12,6 @@ class CompanyInterceptor {
         if (userId) {
 
             def userPermission = Permission.where {
-                userInfo.userId == userId
                 authority == 'Super Admin'
             }
 

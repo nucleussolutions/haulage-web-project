@@ -18,6 +18,8 @@ class UserInfoController extends RestfulController {
   AmazonS3Service s3Service
   HaulageBucketService haulageBucketService
 
+
+
   static responseFormats = ['json', 'xml']
 
   UserInfoController() {
@@ -273,10 +275,10 @@ class UserInfoController extends RestfulController {
 
   def getHauliers() {
     def userId = request.getHeader('userId')
-    def permission = Permission.where {
-      userInfo.userId == userId
-      authority == 'Super Admin'
-    }
+    UserInfo userInfo = userInfoService.findByUserId(userId)
+    def permission = userInfo.permissions.stream().filter({ permission ->
+      permission.authority == 'Super Admin'
+    })
     def userInfos
     if (permission) {
       userInfos = UserInfo.createCriteria().list(max: params.limit, offset: params.offset) {
@@ -299,10 +301,11 @@ class UserInfoController extends RestfulController {
 
   def countHauliers() {
     def userId = request.getHeader('userId')
-    def permission = Permission.where {
-      userInfo.userId == userId
-      authority == 'Super Admin'
-    }
+    def userInfo = userInfoService.findByUserId(userId)
+
+    def permission = userInfo.permissions.stream().filter({ permission ->
+      permission.authority == 'Super Admin'
+    })
     def userInfos
     if (permission) {
       userInfos = UserInfo.createCriteria().list(max: params.limit, offset: params.offset) {
@@ -326,10 +329,10 @@ class UserInfoController extends RestfulController {
 
   def countForwarders() {
     def userId = request.getHeader('userId')
-    def permission = Permission.where {
-      userInfo.userId == userId
-      authority == 'Super Admin'
-    }
+    def userInfo = userInfoService.findByUserId(userId)
+    def permission = userInfo.permissions.stream().filter({ permission ->
+      permission.authority == 'Super Admin'
+    })
     def userInfos
     if (permission) {
       // display all forwarders
@@ -352,10 +355,10 @@ class UserInfoController extends RestfulController {
 
   def getForwarders() {
     def userId = request.getHeader('userId')
-    def permission = Permission.where {
-      userInfo.userId == userId
-      authority == 'Super Admin'
-    }
+    UserInfo userInfo = userInfoService.findByUserId(userId)
+    def permission = userInfo.permissions.stream().filter({ permission ->
+      permission.authority == 'Super Admin'
+    })
     def userInfos
     if (permission) {
       // display all forwarders
