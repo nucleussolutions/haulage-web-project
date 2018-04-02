@@ -303,6 +303,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   submitDetails(formData) {
     // let loadingSpinner = document.getElementById('loading-spinner');
     if (!this.company) {
+      console.log('setting new company info');
       this.company = new Company();
       this.company.name = formData.value.company.name;
       this.company.address1 = formData.value.company.address1;
@@ -319,6 +320,11 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       //todo convert companyImage to base64 string
 
       this.company.companyImageBase64 = this.base64Encoded;
+
+      //save company first before continuing
+      this.companyService.save(this.company, this.userObject).subscribe(company => {
+        console.log('company saved');
+      });
     }
 
     let userInfo = new UserInfo();
@@ -336,6 +342,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     console.log('saving permission '+this.permission);
     userInfo.permissions = [this.permission];
     console.log('saving userinfo '+userInfo);
+
     this.userInfoService.save(userInfo, this.userObject).subscribe(userInfo => {
       // this is supposed to submit the pricing and trigger a payment gateway as well
       if (this.personalDetails.get('usertype').value == 'Admin') {
