@@ -96,8 +96,7 @@ import {ArchwizardModule} from "angular-archwizard";
     QuoteItemModalComponent,
     ForwarderInfoModalComponent,
     LogoutComponent,
-    ProfileComponent,
-    ArchwizardModule
+    ProfileComponent
   ],
   entryComponents: [CreateProfileModalComponent, CreateConsignmentModalComponent, LoadingComponent, GeneralModalComponent, CreateCompanyModalComponent],
   imports: [
@@ -133,7 +132,8 @@ import {ArchwizardModule} from "angular-archwizard";
     ExpenseItemModule,
     QuoteItemModule,
     BrowserAnimationsModule,
-    TransactionModule
+    TransactionModule,
+    ArchwizardModule
 ],
   exports: [ReactiveFormsModule],
   providers: [{
