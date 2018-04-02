@@ -5,6 +5,25 @@
       <h2 *ngIf="showSubscriptionSelections">Select Your Subscription</h2>
     </div>
     <div class="modal-body">
+
+      <aw-wizard>
+        <aw-wizard-step stepTitle="Create Profile">
+          Content of Step 1
+          <button type="button" awNextStep>Next Step</button>
+          <button type="button" [awGoToStep]="{stepIndex: 2}">Go directly to third Step</button>
+        </aw-wizard-step>
+        <aw-wizard-step stepTitle="Select Your Subscriptions" awOptionalStep>
+          Content of Step 2
+          <button type="button" awPreviousStep>Go to previous step</button>
+          <button type="button" awNextStep>Go to next step</button>
+        </aw-wizard-step>
+        <aw-wizard-step stepTitle="Done">
+          Content of Step 3
+          <button type="button" awPreviousStep>Previous Step</button>
+          <button type="button" (click)="finishFunction()">Finish</button>
+        </aw-wizard-step>
+      </aw-wizard>
+
       <div class="row">
         <ul class="errors text-danger" role="alert" *ngIf="errors">
           <li *ngFor="let error of errors">{{error.message}}</li>
