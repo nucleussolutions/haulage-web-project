@@ -563,6 +563,10 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       this.showSpinnerProgress = false;
     });
   }
+
+  finish(){
+    window.location.reload();
+  }
 }
 
 
