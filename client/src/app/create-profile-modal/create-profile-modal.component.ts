@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
   AbstractControl, AsyncValidatorFn, FormBuilder, FormControl, FormGroup, ValidationErrors,
   Validators
@@ -22,7 +22,7 @@ import {Transaction} from "../transaction/transaction";
 import {TransactionService} from "../transaction/transaction.service";
 import {Subject} from "rxjs/Subject";
 import {parse, format, AsYouType, isValidNumber} from 'libphonenumber-js'
-import {WizardState} from "angular-archwizard";
+import {WizardComponent, WizardState} from "angular-archwizard";
 
 @Component({
   selector: 'app-create-profile-modal',
@@ -51,8 +51,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   showSuccessWindow: boolean = false;
 
-  // @ViewChild(WizardComponent)
-  // public wizard: WizardComponent;
+  @ViewChild(WizardComponent)
+  public wizard: WizardComponent;
 
   successMessage: string;
 
@@ -515,6 +515,12 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     }
   }
 
+  @ViewChild('searchHaulierCompanyInput')
+  private searchHaulierCompanyInput : ElementRef;
+
+  @ViewChild('searchForwarderCompanyInput')
+  private searchForwarderCompanyInput : ElementRef;
+
   cancelNewCompany(){
     this.permission.role = 'Staff';
     this.permission.authority = 'Admin';
@@ -522,7 +528,9 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     this.permission.status = 'Pending Approval';
     this.newCompany = false;
     this.showSubmitButton = false;
+    this.showNextButton = true;
     this.showSubscriptionSelections = false;
+    this.isExistingCompanyNameValid = false;
   }
 
   subscribeToPlan(pricing: Pricing) {

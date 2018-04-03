@@ -31,12 +31,12 @@
               </label>
               <div class="input-group mb-3">
                 <input *ngIf="isHaulier" type="text" class="form-control"
-                       (selectItem)="selectedCompany($event)"
+                       (selectItem)="selectedCompany($event)" #searchHaulierCompanyInput
                        [ngClass]="isExistingCompanyNameValid ? 'is-valid' : 'is-invalid'"
                        [ngbTypeahead]="haulierCompanySlowSearch "/>
 
                 <input *ngIf="!isHaulier" type="text" class="form-control"
-                       (selectItem)="selectedCompany($event)"
+                       (selectItem)="selectedCompany($event)" #searchForwarderCompanyInput
                        [ngClass]="isExistingCompanyNameValid ? 'is-valid' : 'is-invalid'"
                        [ngbTypeahead]="forwarderCompanySlowSearch"/>
 
@@ -217,8 +217,8 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" awNextStep>Next</button>
-            <button type="button" class="btn btn-primary">Submit</button>
+            <button *ngIf="showNextButton" type="button" class="btn btn-primary" awNextStep>Next</button>
+            <button *ngIf="showSubmitButton" type="button" class="btn btn-primary">Submit</button>
           </div>
 
         </aw-wizard-step>
