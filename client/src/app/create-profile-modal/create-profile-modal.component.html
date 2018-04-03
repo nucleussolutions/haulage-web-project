@@ -1,11 +1,6 @@
 <form [formGroup]="personalDetails" #personalDetailsForm (ngSubmit)="submitDetails(personalDetails)" autocomplete="off">
   <div class="modal-content">
-    <!--<div class="modal-header">-->
-      <!--<h2 *ngIf="!showSubscriptionSelections">Create Your Profile</h2>-->
-      <!--<h2 *ngIf="showSubscriptionSelections">Select Your Subscription</h2>-->
-    <!--</div>-->
     <div class="modal-body">
-
       <aw-wizard>
         <aw-wizard-step stepTitle="Create Profile">
 
@@ -221,9 +216,13 @@
             </div>
           </div>
 
-        </aw-wizard-step>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" awNextStep>Next</button>
+            <button type="button" class="btn btn-primary">Submit</button>
+          </div>
 
-        <aw-wizard-step *ngIf="isHaulier" stepTitle="Select Your Subscription" awOptionalStep>
+        </aw-wizard-step>
+        <aw-wizard-step #subscriptionStep *ngIf="isHaulier" stepTitle="Select Your Subscription" awOptionalStep>
 
           <div class="modal-body">
             <div class="row">
@@ -246,36 +245,37 @@
               </div>
             </div>
           </div>
-
-          <button type="button" awPreviousStep>Go to previous step</button>
-          <button type="button" awNextStep>Go to next step</button>
+          <!-- show subscription plans when the user type is a haulier , otherwise hide it-->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" awPreviousStep>Previous</button>
+            <button type="button" class="btn btn-primary" awNextStep>Next</button>
+            <i *ngIf="showSpinnerProgress" class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+            <input *ngIf="showSubmitButton" type="submit" class="btn btn-primary" value="Submit">
+          </div>
         </aw-wizard-step>
         <aw-wizard-step stepTitle="Done">
 
-          You're ready to go!
+          <div class="row">
+            <div class="col-12" style="height: 200px">
+              <h3 class="text-center" style="padding-top: 75px">You're ready to go!</h3>
+            </div>
+          </div>
 
-          <button type="button" class="btn btn-primary" (click)="finish()">Finish</button>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="finish()">Finish</button>
+          </div>
         </aw-wizard-step>
       </aw-wizard>
-
       <div class="row">
         <ul class="errors text-danger" role="alert" *ngIf="errors">
           <li *ngFor="let error of errors">{{error.message}}</li>
         </ul>
-
 
         <div *ngIf="showSuccessWindow" class="col-12">
           <p>{{successMessage}}</p>
         </div>
       </div>
 
-    </div>
-    <!-- show subscription plans when the user type is a haulier , otherwise hide it-->
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary" awPreviousStep>Previous Step</button>
-      <button type="button" class="btn btn-primary" awNextStep>Next Step</button>
-      <i *ngIf="showSpinnerProgress" class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
-      <input *ngIf="showSubmitButton" type="submit" class="btn btn-primary" value="Submit">
     </div>
   </div>
 </form>

@@ -174,9 +174,6 @@ class CompanyController extends RestfulController {
 
             def companies = Company.createCriteria().list {
                 ilike("name", "%${params.name}%")
-//                permissions {
-//                    eq("authority", "Admin")
-//                }
             }
 
             def filteredCompanies = []
@@ -189,7 +186,6 @@ class CompanyController extends RestfulController {
                     }
                 }
             }
-
 
             println filteredCompanies
 

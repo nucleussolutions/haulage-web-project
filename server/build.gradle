@@ -90,6 +90,8 @@ dependencies {
 
   //for firebase cloud messaging
   compile group: 'com.google.api-client', name: 'google-api-client', version: '1.23.0'
+  compile 'org.grails.plugins:rxjava'
+
 }
 
 bootRun {
