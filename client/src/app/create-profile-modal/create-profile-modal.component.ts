@@ -377,6 +377,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   addCompany() {
+    this.company = null;
     this.newCompany = true;
     this.showSubmitButton = false;
   }
