@@ -322,8 +322,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       this.company.officePhone = formData.value.company.officePhone;
       this.company.email = this.userObject.email;
       this.company.postalCode = formData.value.company.postalCode;
-      //todo convert companyImage to base64 string
-
+      // convert companyImage to base64 string
       this.company.companyImageBase64 = this.base64Encoded;
 
       //save company first before continuing
@@ -342,8 +341,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     console.log('formData.value.usertype ' + formData.value.usertype);
     this.permission.authority = formData.value.usertype;
 
-    // this.permission.company = this.company;
-    // this.permission.userInfo = userInfo;
     console.log('saving permission '+this.permission);
     console.log('saving userinfo '+userInfo);
 
@@ -358,10 +355,21 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
           this.subscribeToPlan(formData.value.pricing);
         } else {
           this.successMessage = 'Your permission is pending approval by account owner'
+          //todo reload window or just trigger ngrx store
+          this.wizard.navigation.goToNextStep();
         }
       } else {
 
-        // window.location.reload();
+        if(this.permission.role == 'Owner'){
+          this.successMessage = 'You are good to go';
+          //todo reload window or just trigger ngrx store
+          this.wizard.navigation.goToNextStep();
+        }else{
+          this.successMessage = 'Your permission is pending approval by account owner';
+          //todo reload window or just trigger ngrx store
+          this.wizard.navigation.goToNextStep();
+        }
+
       }
     }, json => {
       console.log('json error ' + JSON.stringify(json));
