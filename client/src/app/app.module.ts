@@ -64,7 +64,7 @@ import { ForwarderInfoModalComponent } from './forwarder-info-modal/forwarder-in
 import { LogoutComponent } from './logout/logout.component';
 import { TransactionModule } from './transaction/transaction.module';
 import { ProfileComponent } from './profile/profile.component';
-import {ArchwizardModule} from "angular-archwizard";
+import {ArchwizardModule, WizardNavigationBarComponent} from "angular-archwizard";
 
 @NgModule({
   declarations: [

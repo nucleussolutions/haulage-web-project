@@ -22,13 +22,13 @@ import {Transaction} from "../transaction/transaction";
 import {TransactionService} from "../transaction/transaction.service";
 import {Subject} from "rxjs/Subject";
 import {parse, format, AsYouType, isValidNumber} from 'libphonenumber-js'
-import {malaysianPhoneNumberValidator} from "../validators/malaysian-phone-validator";
+import {WizardState} from "angular-archwizard";
 
 @Component({
   selector: 'app-create-profile-modal',
   templateUrl: './create-profile-modal.component.html',
   styleUrls: ['./create-profile-modal.component.css'],
-  providers: [NgbTypeaheadConfig] // add NgbTypeaheadConfig to the component providers
+  providers: [NgbTypeaheadConfig, WizardState] // add NgbTypeaheadConfig to the component providers
 })
 export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
@@ -50,6 +50,9 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   pricingList: Pricing[];
 
   showSuccessWindow: boolean = false;
+
+  // @ViewChild(WizardComponent)
+  // public wizard: WizardComponent;
 
   successMessage: string;
 
