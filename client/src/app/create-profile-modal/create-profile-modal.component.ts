@@ -56,6 +56,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   successMessage: string;
 
+  formatter = (result: Company) => result.name;
+
   //todo replace slow search in the future when elastic search is sorted out
   haulierCompanySearch = (text$: Observable<string>) =>
       text$
@@ -95,7 +97,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
                     console.log('search haulier companies');
                     this.companyList = companyList;
                     if (this.companyList.length > 0) {
-                      return this.companyList.map(item => item.name);
+                      return this.companyList;
                     } else {
                       this.isExistingCompanyNameValid = false;
                       console.log('isExistingCompanyNameValid ' + this.isExistingCompanyNameValid);
@@ -141,7 +143,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
                     console.log('search forwarder companies');
                     this.companyList = companyList;
                     if (this.companyList.length > 0) {
-                      return this.companyList.map(item => item.name);
+                      return this.companyList;
                     } else {
                       this.isExistingCompanyNameValid = false;
                       console.log('isExistingCompanyNameValid ' + this.isExistingCompanyNameValid);
@@ -343,20 +345,23 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     // this.permission.company = this.company;
     // this.permission.userInfo = userInfo;
     console.log('saving permission '+this.permission);
-    userInfo.permissions = [this.permission];
     console.log('saving userinfo '+userInfo);
 
-    this.userInfoService.save(userInfo, this.userObject).subscribe(userInfo => {
+    this.permissionService.save(this.permission, this.userObject).flatMap(permission => {
+      userInfo.permissions = [permission];
+      return this.userInfoService.save(userInfo, this.userObject);
+    }).subscribe(userInfo => {
       // this is supposed to submit the pricing and trigger a payment gateway as well
       if (this.personalDetails.get('usertype').value == 'Admin') {
         //todo check if the person is a staff or not
         if (this.permission.role == 'Owner') {
           this.subscribeToPlan(formData.value.pricing);
         } else {
-          window.location.reload();
+          this.successMessage = 'Your permission is pending approval by account owner'
         }
       } else {
-        window.location.reload();
+
+        // window.location.reload();
       }
     }, json => {
       console.log('json error ' + JSON.stringify(json));
@@ -378,12 +383,15 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
 
   selectedCompany(value) {
     //todo search for whether the company permission actually exists already, then ask for approval from the owner of the company permission
-    console.log('selected company ' + JSON.stringify(value));
+    console.log('selected company ' + JSON.stringify(value.item));
+
+    //assign company from selected
+    this.company = value.item;
 
     this.isExistingCompanyNameValid = true;
     console.log('isExistingCompanyNameValid ' + this.isExistingCompanyNameValid);
 
-    this.permissionService.getByCompanyName(this.userObject, value.item).subscribe(permissions => {
+    this.permissionService.getByCompanyName(this.userObject, value.item.name).subscribe(permissions => {
       this.permission.role = 'Staff';
       this.permission.status = 'Pending Approval';
       this.permission.grantedBy = '';

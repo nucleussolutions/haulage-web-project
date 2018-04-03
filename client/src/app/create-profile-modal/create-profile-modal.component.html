@@ -4,221 +4,232 @@
       <aw-wizard>
         <aw-wizard-step stepTitle="Create Profile">
 
-          <div class="col-12">
-            <h3>Are you a Haulier or Forwarder?</h3>
-            <div class="radio">
-              <label><input type="radio" name="usertype" formControlName="usertype" checked value="Admin"
-                            (change)="onUserTypeChanged($event)">Haulier</label>
-            </div>
-            <div class="radio">
-              <label><input type="radio" name="usertype" formControlName="usertype" value="Manager"
-                            (change)="onUserTypeChanged($event)">Forwarder</label>
-            </div>
+          <div class="row">
 
-            <div class="form-group" [ngClass]="personalDetails.get('name').valid ? '' : 'has-danger'">
-              <label for="name">Name</label>
-              <input class="form-control" type="text" id="name" formControlName="name"
-                     [ngClass]="personalDetails.get('name').valid ? 'is-valid' : 'is-invalid'">
-              <div *ngIf="personalDetails.get('name').hasError('required')" class="invalid-feedback">
-                Required
+            <div class="col-12">
+
+              <ul class="errors text-danger" role="alert" *ngIf="errors">
+                <li *ngFor="let error of errors">{{error.message}}</li>
+              </ul>
+
+              <h3>Are you a Haulier or Forwarder?</h3>
+              <div class="radio">
+                <label><input type="radio" name="usertype" formControlName="usertype" checked value="Admin"
+                              (change)="onUserTypeChanged($event)">Haulier</label>
               </div>
-            </div>
+              <div class="radio">
+                <label><input type="radio" name="usertype" formControlName="usertype" value="Manager"
+                              (change)="onUserTypeChanged($event)">Forwarder</label>
+              </div>
 
-            <div *ngIf="!newCompany" class="form-group"
-                 [ngClass]="isExistingCompanyNameValid ? 'has-success' : 'has-danger'">
-              <label>Company
-                <span class="required-indicator">*</span>
-              </label>
-              <div class="input-group mb-3">
-                <input *ngIf="isHaulier" type="text" class="form-control"
-                       (selectItem)="selectedCompany($event)" #searchHaulierCompanyInput
-                       [ngClass]="isExistingCompanyNameValid ? 'is-valid' : 'is-invalid'"
-                       [ngbTypeahead]="haulierCompanySlowSearch "/>
-
-                <input *ngIf="!isHaulier" type="text" class="form-control"
-                       (selectItem)="selectedCompany($event)" #searchForwarderCompanyInput
-                       [ngClass]="isExistingCompanyNameValid ? 'is-valid' : 'is-invalid'"
-                       [ngbTypeahead]="forwarderCompanySlowSearch"/>
-
-                <div class="input-group-append">
-                  <button type="button" class="btn btn-primary" (click)="addCompany()">New Company</button>
-                </div>
-                <div *ngIf="isExistingCompanyNameValid" class="valid-feedback">
-                  Company found.
-                </div>
-                <div *ngIf="!isExistingCompanyNameValid" class="invalid-feedback">
-                  Company does not exist. New company?
+              <div class="form-group" [ngClass]="personalDetails.get('name').valid ? '' : 'has-danger'">
+                <label for="name">Name</label>
+                <input class="form-control" type="text" id="name" formControlName="name"
+                       [ngClass]="personalDetails.get('name').valid ? 'is-valid' : 'is-invalid'">
+                <div *ngIf="personalDetails.get('name').hasError('required')" class="invalid-feedback">
+                  Required
                 </div>
               </div>
 
-            </div>
-            <div *ngIf="newCompany" formGroupName="company">
-              <h2>New company</h2>
-              <div class="row">
-                <div class="col">
-                  <div class="form-group"
-                       [ngClass]="personalDetails.get('company').get('name').valid ? '' : 'has-danger'">
-                    <label for="companyName">Company name</label>
-                    <input class="form-control" type="text" id="companyName" formControlName="name"
-                           [ngClass]="personalDetails.get('company').get('name').valid ? '' : 'is-invalid'">
-                    <div *ngIf="personalDetails.get('company').get('name').invalid" class="invalid-feedback">
-                      Required
-                    </div>
-                  </div>
-                  <div class="form-group" [ngClass]="isCompanyRegNoValid ? 'has-success' : 'has-danger'">
-                    <label for="companyRegNo">Company registration number</label>
-                    <input class="form-control" type="text" name="companyRegNo" id="companyRegNo"
-                           formControlName="registrationNo" [ngClass]="isCompanyRegNoValid ? 'is-valid' : 'is-invalid'">
-                    <div *ngIf="isCompanyRegNoValid" class="valid-feedback">
-                      Company registration number is valid
-                    </div>
-                    <div *ngIf="!isCompanyRegNoValid" class="invalid-feedback">
-                      Company registration number has been taken
-                    </div>
-                  </div>
+              <div *ngIf="!newCompany" class="form-group"
+                   [ngClass]="isExistingCompanyNameValid ? 'has-success' : 'has-danger'">
+                <label>Company
+                  <span class="required-indicator">*</span>
+                </label>
+                <div class="input-group mb-3">
+                  <input *ngIf="isHaulier" type="text" class="form-control"
+                         (selectItem)="selectedCompany($event)" #searchHaulierCompanyInput
+                         [ngClass]="isExistingCompanyNameValid ? 'is-valid' : 'is-invalid'"
+                         [resultFormatter]="formatter" [inputFormatter]="formatter"
+                         [ngbTypeahead]="haulierCompanySlowSearch "/>
 
-                  <div class="form-group"
-                       [ngClass]="personalDetails.get('company').get('address1').valid ? '' : 'has-danger'">
-                    <label for="companyAddress1">Company address 1</label>
-                    <input class="form-control" type="text" id="companyAddress1" formControlName="address1"
-                           [ngClass]="personalDetails.get('company').get('address1').valid ? '' : 'is-invalid'">
-                    <div *ngIf="personalDetails.get('company').get('address1').hasError('required')"
-                         class="invalid-feedback">
-                      Required
-                    </div>
-                  </div>
-                  <div class="form-group"
-                       [ngClass]="personalDetails.get('company').get('address2').valid ? '' : 'has-danger'">
-                    <label for="companyAddress2">Company address 2</label>
-                    <input class="form-control" type="text" id="companyAddress2" formControlName="address2"
-                           [ngClass]="personalDetails.get('company').get('address2').valid ? '' : 'is-invalid'">
-                    <div *ngIf="personalDetails.get('company').get('address2').hasError('required')"
-                         class="invalid-feedback">
-                      Required
-                    </div>
-                  </div>
-                  <div class="form-group" [ngClass]="isCompanyCodeValid ? 'has-success' : 'has-danger'">
-                    <label for="companyCode">Company code</label>
-                    <input type="text" class="form-control" id="companyCode" formControlName="code"
-                           [ngClass]="isCompanyCodeValid ? 'is-valid' : 'is-invalid'">
-                    <div *ngIf="personalDetails.get('company').get('code').hasError('required')" class="invalid-feedback">
-                      Required
-                    </div>
-                    <div *ngIf="!isCompanyCodeValid" class="invalid-feedback">
-                      Company code is taken. Choose another
-                    </div>
-                    <div *ngIf="isCompanyCodeValid" class="valid-feedback">
-                      Company code available
-                    </div>
-                  </div>
-                  <div class="form-group"
-                       [ngClass]="isOfficePhoneValid ? 'has-success' : 'has-danger'">
-                    <label for="companyOfficePhone">Office phone</label>
-                    <input type="text" class="form-control" id="companyOfficePhone" formControlName="officePhone"
-                           [ngClass]="isOfficePhoneValid ? 'is-valid' : 'is-invalid'">
+                  <input *ngIf="!isHaulier" type="text" class="form-control"
+                         (selectItem)="selectedCompany($event)" #searchForwarderCompanyInput
+                         [ngClass]="isExistingCompanyNameValid ? 'is-valid' : 'is-invalid'"
+                         [resultFormatter]="formatter" [inputFormatter]="formatter"
+                         [ngbTypeahead]="forwarderCompanySlowSearch"/>
 
-                    <div *ngIf="personalDetails.get('company').get('officePhone').hasError('required')"
-                         class="invalid-feedback">
-                      Required
-                    </div>
-                    <div *ngIf="!isOfficePhoneValid" class="invalid-feedback">
-                      Invalid number, please check again
-                    </div>
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-primary" (click)="addCompany()">New Company</button>
                   </div>
-
-                  <div class="form-group" [ngClass]="isYardPhoneValid ? 'has-success' : 'has-danger'">
-                    <label for="companyYardPhone">Yard phone</label>
-                    <input type="text" class="form-control" id="companyYardPhone" formControlName="yardPhone"
-                           [ngClass]="isYardPhoneValid ? 'is-valid' : 'is-invalid'">
-                    <div *ngIf="personalDetails.get('company').get('yardPhone').hasError('required')"
-                         class="invalid-feedback">
-                      Required
-                    </div>
-                    <div *ngIf="!isYardPhoneValid" class="invalid-feedback">
-                      Invalid number, please check again
-                    </div>
+                  <div *ngIf="isExistingCompanyNameValid" class="valid-feedback">
+                    Company found.
+                  </div>
+                  <div *ngIf="!isExistingCompanyNameValid" class="invalid-feedback">
+                    Company does not exist. New company?
                   </div>
                 </div>
 
-                <div class="col">
-                  <div class="form-group">
-                    <label for="companyImage">Company Image</label>
-                    <input type="file" class="form-control" id="companyImage" formControlName="companyImage"
-                           (change)="changeListener($event)">
-                  </div>
+              </div>
+              <div *ngIf="newCompany" formGroupName="company">
+                <h2>New company</h2>
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group"
+                         [ngClass]="personalDetails.get('company').get('name').valid ? '' : 'has-danger'">
+                      <label for="companyName">Company name</label>
+                      <input class="form-control" type="text" id="companyName" formControlName="name"
+                             [ngClass]="personalDetails.get('company').get('name').valid ? '' : 'is-invalid'">
+                      <div *ngIf="personalDetails.get('company').get('name').invalid" class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                    <div class="form-group" [ngClass]="isCompanyRegNoValid ? 'has-success' : 'has-danger'">
+                      <label for="companyRegNo">Company registration number</label>
+                      <input class="form-control" type="text" name="companyRegNo" id="companyRegNo"
+                             formControlName="registrationNo" [ngClass]="isCompanyRegNoValid ? 'is-valid' : 'is-invalid'">
+                      <div *ngIf="isCompanyRegNoValid" class="valid-feedback">
+                        Company registration number is valid
+                      </div>
+                      <div *ngIf="!isCompanyRegNoValid" class="invalid-feedback">
+                        Company registration number has been taken
+                      </div>
+                    </div>
 
-                  <div class="form-group"
-                       [ngClass]="personalDetails.get('company').get('city').valid ? '' : 'has-danger'">
-                    <label for="companyCity">City</label>
-                    <input class="form-control" type="text" id="companyCity" formControlName="city"
-                           [ngClass]="personalDetails.get('company').get('city').valid ? '' : 'is-invalid'">
-                    <div
-                        *ngIf="personalDetails.get('company').get('city').invalid && (personalDetails.get('company').get('city').dirty || personalDetails.get('company').get('city').touched)"
-                        class="text-danger">
-                      <div *ngIf="personalDetails.get('company').get('city').hasError('required')"
+                    <div class="form-group"
+                         [ngClass]="personalDetails.get('company').get('address1').valid ? '' : 'has-danger'">
+                      <label for="companyAddress1">Company address 1</label>
+                      <input class="form-control" type="text" id="companyAddress1" formControlName="address1"
+                             [ngClass]="personalDetails.get('company').get('address1').valid ? '' : 'is-invalid'">
+                      <div *ngIf="personalDetails.get('company').get('address1').hasError('required')"
                            class="invalid-feedback">
                         Required
                       </div>
                     </div>
-                  </div>
-
-                  <div class="form-group"
-                       [ngClass]="personalDetails.get('company').get('postalCode').valid ? '' : 'has-danger'">
-                    <label for="companyPostalCode">Postal Code</label>
-                    <input class="form-control" type="text" id="companyPostalCode" formControlName="postalCode">
-                    <div
-                        *ngIf="personalDetails.get('company').get('postalCode').invalid && (personalDetails.get('company').get('postalCode').dirty || personalDetails.get('company').get('postalCode').touched)"
-                        class="text-danger">
-                      <div *ngIf="personalDetails.get('company').get('postalCode').hasError('required')"
+                    <div class="form-group"
+                         [ngClass]="personalDetails.get('company').get('address2').valid ? '' : 'has-danger'">
+                      <label for="companyAddress2">Company address 2</label>
+                      <input class="form-control" type="text" id="companyAddress2" formControlName="address2"
+                             [ngClass]="personalDetails.get('company').get('address2').valid ? '' : 'is-invalid'">
+                      <div *ngIf="personalDetails.get('company').get('address2').hasError('required')"
                            class="invalid-feedback">
                         Required
                       </div>
                     </div>
-                  </div>
+                    <div class="form-group" [ngClass]="isCompanyCodeValid ? 'has-success' : 'has-danger'">
+                      <label for="companyCode">Company code</label>
+                      <input type="text" class="form-control" id="companyCode" formControlName="code"
+                             [ngClass]="isCompanyCodeValid ? 'is-valid' : 'is-invalid'">
+                      <div *ngIf="personalDetails.get('company').get('code').hasError('required')" class="invalid-feedback">
+                        Required
+                      </div>
+                      <div *ngIf="!isCompanyCodeValid" class="invalid-feedback">
+                        Company code is taken. Choose another
+                      </div>
+                      <div *ngIf="isCompanyCodeValid" class="valid-feedback">
+                        Company code available
+                      </div>
+                    </div>
+                    <div class="form-group"
+                         [ngClass]="isOfficePhoneValid ? 'has-success' : 'has-danger'">
+                      <label for="companyOfficePhone">Office phone</label>
+                      <input type="text" class="form-control" id="companyOfficePhone" formControlName="officePhone"
+                             [ngClass]="isOfficePhoneValid ? 'is-valid' : 'is-invalid'">
 
-                  <div class="form-group">
-                    <label>State</label>
-                    <select class="form-control" name="state" id="companyState" formControlName="state">
-                      <option value="Johor">Johor</option>
-                      <option value="Kedah">Kedah</option>
-                      <option value="Kelantan">Kelantan</option>
-                      <option value="Kuala Lumpur">Kuala Lumpur</option>
-                      <option value="Negeri Sembilan">Negeri Sembilan</option>
-                      <option value="Pahang">Pahang</option>
-                      <option value="Melaka">Melaka</option>
-                      <option value="Perak">Perak</option>
-                      <option value="Perlis">Perlis</option>
-                      <option value="Pulau Pinang">Pulau Pinang</option>
-                      <option value="Sabah">Sabah</option>
-                      <option value="Sarawak">Sarawak</option>
-                      <option value="Selangor">Selangor</option>
-                      <option value="Terengganu">Terengganu</option>
-                      <option value="Wilayah Persekutuan – Labuan">Wilayah Persekutuan – Labuan</option>
-                    </select>
-                    <div *ngIf="personalDetails.get('company').get('state').hasError('required')"
-                         class="invalid-feedback">
-                      Required
+                      <div *ngIf="personalDetails.get('company').get('officePhone').hasError('required')"
+                           class="invalid-feedback">
+                        Required
+                      </div>
+                      <div *ngIf="!isOfficePhoneValid" class="invalid-feedback">
+                        Invalid number, please check again
+                      </div>
+                    </div>
+
+                    <div class="form-group" [ngClass]="isYardPhoneValid ? 'has-success' : 'has-danger'">
+                      <label for="companyYardPhone">Yard phone</label>
+                      <input type="text" class="form-control" id="companyYardPhone" formControlName="yardPhone"
+                             [ngClass]="isYardPhoneValid ? 'is-valid' : 'is-invalid'">
+                      <div *ngIf="personalDetails.get('company').get('yardPhone').hasError('required')"
+                           class="invalid-feedback">
+                        Required
+                      </div>
+                      <div *ngIf="!isYardPhoneValid" class="invalid-feedback">
+                        Invalid number, please check again
+                      </div>
                     </div>
                   </div>
 
-                  <div class="form-group">
-                    <label for="companyCountry">Country</label>
-                    <input class="form-control" type="text" readonly="readonly" value="Malaysia" id="companyCountry"
-                           formControlName="country">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="companyImage">Company Image</label>
+                      <input type="file" class="form-control" id="companyImage" formControlName="companyImage"
+                             (change)="changeListener($event)">
+                    </div>
+
+                    <div class="form-group"
+                         [ngClass]="personalDetails.get('company').get('city').valid ? '' : 'has-danger'">
+                      <label for="companyCity">City</label>
+                      <input class="form-control" type="text" id="companyCity" formControlName="city"
+                             [ngClass]="personalDetails.get('company').get('city').valid ? '' : 'is-invalid'">
+                      <div
+                          *ngIf="personalDetails.get('company').get('city').invalid && (personalDetails.get('company').get('city').dirty || personalDetails.get('company').get('city').touched)"
+                          class="text-danger">
+                        <div *ngIf="personalDetails.get('company').get('city').hasError('required')"
+                             class="invalid-feedback">
+                          Required
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group"
+                         [ngClass]="personalDetails.get('company').get('postalCode').valid ? '' : 'has-danger'">
+                      <label for="companyPostalCode">Postal Code</label>
+                      <input class="form-control" type="text" id="companyPostalCode" formControlName="postalCode">
+                      <div
+                          *ngIf="personalDetails.get('company').get('postalCode').invalid && (personalDetails.get('company').get('postalCode').dirty || personalDetails.get('company').get('postalCode').touched)"
+                          class="text-danger">
+                        <div *ngIf="personalDetails.get('company').get('postalCode').hasError('required')"
+                             class="invalid-feedback">
+                          Required
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label>State</label>
+                      <select class="form-control" name="state" id="companyState" formControlName="state">
+                        <option value="Johor">Johor</option>
+                        <option value="Kedah">Kedah</option>
+                        <option value="Kelantan">Kelantan</option>
+                        <option value="Kuala Lumpur">Kuala Lumpur</option>
+                        <option value="Negeri Sembilan">Negeri Sembilan</option>
+                        <option value="Pahang">Pahang</option>
+                        <option value="Melaka">Melaka</option>
+                        <option value="Perak">Perak</option>
+                        <option value="Perlis">Perlis</option>
+                        <option value="Pulau Pinang">Pulau Pinang</option>
+                        <option value="Sabah">Sabah</option>
+                        <option value="Sarawak">Sarawak</option>
+                        <option value="Selangor">Selangor</option>
+                        <option value="Terengganu">Terengganu</option>
+                        <option value="Wilayah Persekutuan – Labuan">Wilayah Persekutuan – Labuan</option>
+                      </select>
+                      <div *ngIf="personalDetails.get('company').get('state').hasError('required')"
+                           class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="companyCountry">Country</label>
+                      <input class="form-control" type="text" readonly="readonly" value="Malaysia" id="companyCountry"
+                             formControlName="country">
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div class="text-right">
-                <button class="btn btn-primary" type="button" (click)="cancelNewCompany()">Cancel</button>
-                <button class="btn btn-primary" type="button" (click)="saveCompany()">Save</button>
+                <div class="text-right">
+                  <button class="btn btn-primary" type="button" (click)="cancelNewCompany()">Cancel</button>
+                  <button class="btn btn-primary" type="button" (click)="saveCompany()">Save</button>
+                </div>
               </div>
             </div>
+
           </div>
 
           <div class="modal-footer">
             <button *ngIf="showNextButton" type="button" class="btn btn-primary" awNextStep>Next</button>
-            <button *ngIf="showSubmitButton" type="button" class="btn btn-primary">Submit</button>
+            <button *ngIf="showSubmitButton || !isHaulier" type="submit" class="btn btn-primary">Submit</button>
           </div>
 
         </aw-wizard-step>
