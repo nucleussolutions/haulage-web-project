@@ -1,6 +1,0 @@
-import haulage.project.ForwarderInfo
-
-model {
-  ForwarderInfo forwarderInfo
-}
-json g.render(forwarderInfo, [resolveTemplate: false, deep: true])
