@@ -354,9 +354,9 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
         if (this.permission.role == 'Owner') {
           this.subscribeToPlan(formData.value.pricing);
         } else {
-          this.successMessage = 'Your permission is pending approval by account owner'
-          //todo reload window or just trigger ngrx store
-          this.wizard.navigation.goToNextStep();
+          this.successMessage = 'Your permission is pending approval by account owner';
+          // goto done
+          this.wizard.navigation.goToStep(2);
         }
       } else {
 
@@ -391,7 +391,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   selectedCompany(value) {
-    //todo search for whether the company permission actually exists already, then ask for approval from the owner of the company permission
+    // search for whether the company permission actually exists already, then ask for approval from the owner of the company permission
     console.log('selected company ' + JSON.stringify(value.item));
 
     //assign company from selected
