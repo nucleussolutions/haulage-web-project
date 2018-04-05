@@ -11,8 +11,8 @@ class JobSpec extends Specification implements DomainUnitTest<Job> {
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-        true == false
-    }
+//    void "test something"() {
+//        expect:"fix me"
+//        true == false
+//    }
 }

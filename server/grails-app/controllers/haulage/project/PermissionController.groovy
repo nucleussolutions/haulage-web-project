@@ -87,11 +87,11 @@ class PermissionController extends RestfulController {
       respond status: NOT_FOUND, message: 'user id not found'
     } else {
 
-      if (!userInfo.permissions) {
+      if (userInfo.permissions) {
+        respond userInfo.permissions, status: OK
+      } else {
         response.status = NOT_FOUND.value()
         respond status: NOT_FOUND, message: 'user permissions not found'
-      } else {
-        respond userInfo.permissions, status: OK
       }
     }
   }
