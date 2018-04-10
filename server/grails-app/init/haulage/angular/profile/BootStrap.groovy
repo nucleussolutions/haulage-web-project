@@ -65,12 +65,16 @@ class BootStrap {
     company1.permissions = []
     company1.permissions.add(kevinAdminPermission)
     company1.save(flush: true, failOnError: true)
+    kevinUserInfo.permissions = []
+    kevinUserInfo.permissions.add(kevinAdminPermission)
     kevinUserInfo.save(flush: true, failOnError: true)
     def jordanAdminPermission = new Permission(email: 'jordan@nucleus.my', userInfo: jordanUserInfo, authority: 'Super Admin', grantedBy: 'Wcd1ixuFLLStcm0GN4YylfU1nNx2', company: company2, role: 'Owner').save(flush: true, failOnError: true)
     company2.permissions = []
     company2.permissions.add(jordanAdminPermission)
     jordanUserInfo.permissions = [jordanAdminPermission]
     company2.save(flush: true, failOnError: true)
+    jordanUserInfo.permissions = []
+    jordanUserInfo.permissions.add(jordanAdminPermission)
     jordanUserInfo.save(flush: true, failOnError: true)
     def interceptorPermission = new Permission(email: 'kevin5@kevin.com', userInfo: interceptorUserInfo, authority: 'Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', company: company2, role: 'Staff').save(flush: true, failOnError: true)
     interceptorUserInfo.permissions = [interceptorPermission]

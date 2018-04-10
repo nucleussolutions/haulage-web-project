@@ -31,7 +31,7 @@ class Company {
         name nullable: false, blank: false
         registrationNo nullable: false, unique: true
         address1 nullable: false, blank: false
-        address2 nullable: false, blank: true
+        address2 nullable: true, blank: true
         city nullable: false, blank: false
         state nullable: false, blank: false
         country nullable: false, blank: false

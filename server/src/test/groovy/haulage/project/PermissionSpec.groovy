@@ -11,8 +11,8 @@ class PermissionSpec extends Specification implements DomainUnitTest<Permission>
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-        true == false
-    }
+//    void "test something"() {
+//        expect:"fix me"
+//        true == false
+//    }
 }
