@@ -84,7 +84,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
           .debounceTime(200)
           .distinctUntilChanged()
           .switchMap(term => {
-            if(term.length < 2){
+            if (term.length < 2) {
               this.isExistingCompanyNameValid = false;
             }
             return Observable.of(term);
@@ -130,7 +130,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
           .debounceTime(200)
           .distinctUntilChanged()
           .switchMap(term => {
-            if(term.length < 2){
+            if (term.length < 2) {
               this.isExistingCompanyNameValid = false;
             }
             return Observable.of(term);
@@ -238,7 +238,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
       Observable.of(control.value).debounceTime(200).distinctUntilChanged().switchMap(term => term.length > 2 ? this.companyService.getByCompanyCode(term, this.userObject) : []).subscribe(company => {
         if (company) {
           subject.next(company);
-          console.log('company code invalid '+company.name);
+          console.log('company code invalid ' + company.name);
           this.isCompanyCodeValid = false;
         } else {
           subject.next(null);
@@ -278,11 +278,11 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   officePhoneValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
       let valid = isValidNumber(control.value, 'MY');
-      console.log('phone number valid '+valid);
+      console.log('phone number valid ' + valid);
       this.isOfficePhoneValid = valid;
-      if(valid){
+      if (valid) {
         return Observable.of(null);
-      }else{
+      } else {
         return Observable.of({
           myPhoneValid: valid
         });
@@ -293,11 +293,11 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   yardPhoneValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
       let valid = isValidNumber(control.value, 'MY');
-      console.log('phone number valid '+valid);
+      console.log('phone number valid ' + valid);
       this.isYardPhoneValid = valid;
-      if(valid){
+      if (valid) {
         return Observable.of(null);
-      }else{
+      } else {
         return Observable.of({
           myPhoneValid: valid
         });
@@ -306,31 +306,6 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   submitDetails(formData) {
-    // let loadingSpinner = document.getElementById('loading-spinner');
-    if (!this.company) {
-      console.log('setting new company info');
-      this.company = new Company();
-      this.company.name = formData.value.company.name;
-      this.company.address1 = formData.value.company.address1;
-      this.company.address2 = formData.value.company.address2;
-      this.company.city = formData.value.company.city;
-      this.company.state = formData.value.company.state;
-      this.company.country = formData.value.company.country;
-      this.company.registrationNo = formData.value.company.registrationNo;
-      this.company.code = formData.value.company.code;
-      this.company.yardPhone = formData.value.company.yardPhone;
-      this.company.officePhone = formData.value.company.officePhone;
-      this.company.email = this.userObject.email;
-      this.company.postalCode = formData.value.company.postalCode;
-      // convert companyImage to base64 string
-      this.company.companyImageBase64 = this.base64Encoded;
-
-      //save company first before continuing
-      this.companyService.save(this.company, this.userObject).subscribe(company => {
-        console.log('company saved');
-      });
-    }
-
     let userInfo = new UserInfo();
     userInfo.name = formData.value.name;
     userInfo.userId = this.userObject.uid;
@@ -341,8 +316,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     console.log('formData.value.usertype ' + formData.value.usertype);
     this.permission.authority = formData.value.usertype;
 
-    console.log('saving permission '+this.permission);
-    console.log('saving userinfo '+userInfo);
+    console.log('saving permission ' + this.permission);
+    console.log('saving userinfo ' + userInfo);
 
     this.permissionService.save(this.permission, this.userObject).flatMap(permission => {
       userInfo.permissions = [permission];
@@ -360,11 +335,11 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
         }
       } else {
 
-        if(this.permission.role == 'Owner'){
+        if (this.permission.role == 'Owner') {
           this.successMessage = 'You are good to go';
           //todo reload window or just trigger ngrx store
           this.wizard.navigation.goToNextStep();
-        }else{
+        } else {
           this.successMessage = 'Your permission is pending approval by account owner';
           //todo reload window or just trigger ngrx store
           this.wizard.navigation.goToNextStep();
@@ -461,57 +436,57 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
   }
 
   saveCompany() {
-    if(!this.personalDetails.get(['company', 'name']).valid){
+    if (!this.personalDetails.get(['company', 'name']).valid) {
       console.log('company name not valid');
       return
     }
 
-    if(!this.isCompanyRegNoValid){
+    if (!this.isCompanyRegNoValid) {
       console.log('company registration number not valid');
       return
     }
 
-    if(!this.personalDetails.get(['company', 'address1']).valid){
+    if (!this.personalDetails.get(['company', 'address1']).valid) {
       console.log('company address1 not valid');
       return
     }
 
-    if(!this.personalDetails.get(['company', 'address2']).valid){
+    if (!this.personalDetails.get(['company', 'address2']).valid) {
       console.log('company address2 not valid');
       return
     }
 
-    if(!this.personalDetails.get(['company', 'postalCode']).valid){
+    if (!this.personalDetails.get(['company', 'postalCode']).valid) {
       console.log('company postalCode not valid');
       return
     }
 
-    if(!this.personalDetails.get(['company', 'city']).valid){
+    if (!this.personalDetails.get(['company', 'city']).valid) {
       console.log('company city not valid');
       return
     }
 
-    if(!this.personalDetails.get(['company', 'state']).valid){
+    if (!this.personalDetails.get(['company', 'state']).valid) {
       console.log('company state not valid');
       return
     }
 
-    if(!this.personalDetails.get(['company', 'country']).valid){
+    if (!this.personalDetails.get(['company', 'country']).valid) {
       console.log('company country not valid');
       return
     }
 
-    if(!this.isCompanyCodeValid){
+    if (!this.isCompanyCodeValid) {
       console.log('company code not valid');
       return
     }
 
-    if(!this.isOfficePhoneValid){
+    if (!this.isOfficePhoneValid) {
       console.log('company office phone not valid');
       return
     }
 
-    if(!this.isYardPhoneValid){
+    if (!this.isYardPhoneValid) {
       console.log('company yard phone not valid');
       return
     }
@@ -520,25 +495,51 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     this.permission.grantedBy = this.userObject.uid;
     this.permission.status = 'Approved';
 
-    if(this.personalDetails.get('usertype').value == 'Admin'){
+    if (this.personalDetails.get('usertype').value == 'Admin') {
       this.permission.authority = 'Admin';
       this.showSubmitButton = true;
       this.showSubscriptionSelections = true;
-    }else{
+    } else {
       console.log('submit details straight away since forwarder');
       this.permission.authority = 'Manager';
       //trigger submit details
       this.submitDetails(this.personalDetails);
+
+
+
+      if (!this.company) {
+        console.log('setting new company info');
+        this.company = new Company();
+        this.company.name = formData.value.company.name;
+        this.company.address1 = formData.value.company.address1;
+        this.company.address2 = formData.value.company.address2;
+        this.company.city = formData.value.company.city;
+        this.company.state = formData.value.company.state;
+        this.company.country = formData.value.company.country;
+        this.company.registrationNo = formData.value.company.registrationNo;
+        this.company.code = formData.value.company.code;
+        this.company.yardPhone = formData.value.company.yardPhone;
+        this.company.officePhone = formData.value.company.officePhone;
+        this.company.email = this.userObject.email;
+        this.company.postalCode = formData.value.company.postalCode;
+        //convert companyImage to base64 string
+        this.company.companyImageBase64 = this.base64Encoded;
+
+        //save company first before continuing
+        this.companyService.save(this.company, this.userObject).subscribe(company => {
+         console.log('company saved');
+        });
+      }
     }
   }
 
   @ViewChild('searchHaulierCompanyInput')
-  private searchHaulierCompanyInput : ElementRef;
+  private searchHaulierCompanyInput: ElementRef;
 
   @ViewChild('searchForwarderCompanyInput')
-  private searchForwarderCompanyInput : ElementRef;
+  private searchForwarderCompanyInput: ElementRef;
 
-  cancelNewCompany(){
+  cancelNewCompany() {
     this.permission.role = 'Staff';
     this.permission.authority = 'Admin';
     this.permission.grantedBy = '';
@@ -572,7 +573,8 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
         transaction.status = 'paid';
         transaction.subscription = memberSubscription;
         this.transactionService.save(transaction, this.userObject).subscribe(transaction => {
-          window.location.reload();
+          this.successMessage = 'Thank you for subscribing to our plan ' + transaction.subscription.pricing.name;
+          this.wizard.navigation.goToNextStep();
         });
       }
       this.showSpinnerProgress = false;
@@ -592,7 +594,7 @@ export class CreateProfileModalComponent implements OnInit, OnDestroy {
     });
   }
 
-  finish(){
+  finish() {
     window.location.reload();
   }
 }
