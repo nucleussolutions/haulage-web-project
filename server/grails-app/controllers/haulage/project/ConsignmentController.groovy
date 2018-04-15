@@ -20,19 +20,26 @@ class ConsignmentController extends RestfulController {
 
   @Override
   Object index(Integer max) {
-    //todo list based on permissions
+    // list based on permissions
     def userId = request.getHeader('userId')
     def permission = Permission.where {
       authority == 'Super Admin'
     }
-    //todo if user has super admin permissions, return all
+    // if user has super admin permissions, return all
     if(permission){
       return super.index(max)
     }else{
-      //todo list by haulier
-      def consignments = Consignment.where {
-        transportRequest.haulierId == userId
-      }
+      // list by haulier company
+      // check which haulier company does the user work for
+      def userInfo = UserInfo.findByUserId(userId)
+      def transportRequests = TransportRequest.findAllByHaulierCompany(userInfo.company)
+      def consignments = []
+      // loop through consignments and collect them into a list
+
+      transportRequests.forEach({ transportRequest ->
+        consignments.addAll(transportRequests.consignments)
+      })
+
       return consignments
     }
   }

@@ -39,7 +39,9 @@ class Vehicle {
     Integer netWeight
 
     //belongs to haulier, but first check role
-    String userId
+    // String userId
+
+    static belongsTo = [Company, UserInfo]
 
     static constraints = {
         internalNumber blank: false, nullable: false
@@ -54,7 +56,7 @@ class Vehicle {
         netWeight nullable: false
         spadPermitExpiryDate nullable: false
         insuranceExpiryDate nullable: false
-        userId nullable: false
+        // userId nullable: false
         subType nullable: true
     }
 

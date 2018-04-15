@@ -3,6 +3,7 @@ package haulage.project
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import grails.async.Promise
 import grails.compiler.GrailsCompileStatic
+import grails.plugin.awssdk.s3.AmazonS3Service
 import grails.rest.RestfulController
 import groovy.transform.TypeCheckingMode
 import org.apache.commons.io.FileUtils
@@ -13,10 +14,9 @@ class TransportRequestController extends RestfulController {
 
   static responseFormats = ['json', 'xml']
 
-//  AmazonS3Service amazonS3Service
-  def haulageBucketService
-//  def asyncTransportRequestService
-  def transportRequestService
+  AmazonS3Service amazonS3Service
+  HaulageBucketService haulageBucketService
+  TransportRequestService transportRequestService
 
   TransportRequestController() {
     super(TransportRequest)

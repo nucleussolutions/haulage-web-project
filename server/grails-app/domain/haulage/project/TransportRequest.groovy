@@ -48,18 +48,23 @@ class TransportRequest {
   String bookingConfirmationImgUrl
   String cmoImgUrl
 
+  //create consignment in the rft can only be done by the haulier, not the forwarder
   static hasMany = [consignments: Consignment]
-
-  //forwarder id or in the rft form's case it's requestor
-  String forwarderId
-
-  String haulierId
 
   Customer customer
 
   String status = RFTStatus.PENDING
 
   Location pickupOrDropoffEmptyDepoh
+
+  static belongsTo = [forwarderCompany: Company, haulierCompany: Company]
+
+  //to record who issued the rft
+  String forwarderId
+
+
+  //to record who approved it
+  String haulierId
 
   //can do back to back shipment, somehow needs to generify the name of this variable
   Boolean backToBack
@@ -94,7 +99,11 @@ class TransportRequest {
     cmoImgUrl nullable: true
     consignments nullable: false
     forwarderId nullable: false
-    haulierId nullable: false
+    haulierId nullable: true
+
+    forwarderCompany nullable: false
+    haulierCompany nullable: false
+
     customer nullable: false
     status nullable: false, inList: RFTStatus.values()*.id
 

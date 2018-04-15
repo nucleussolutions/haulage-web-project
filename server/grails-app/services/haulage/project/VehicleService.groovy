@@ -17,5 +17,7 @@ interface VehicleService {
 
   Vehicle save(Vehicle vehicle)
 
-  List<Vehicle> findAllByUserId(String haulierId, Map args)
+//  List<Vehicle> findAllByUserId(String haulierId, Map args)
+
+
 }

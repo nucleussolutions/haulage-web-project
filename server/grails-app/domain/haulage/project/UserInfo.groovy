@@ -18,6 +18,9 @@ class UserInfo {
 
   static hasMany = [permissions: Permission]
 
+  //this is assuming a user works for only one company
+  Company company
+
   static constraints = {
     name nullable: false
     userId nullable: false, unique: true
