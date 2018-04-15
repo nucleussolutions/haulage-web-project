@@ -25,7 +25,7 @@ class Company {
     String email
     String postalCode
 
-    static hasMany = [permissions: Permission]
+    static hasMany = [permissions: Permission, vehicles: Vehicle]
 
     static constraints = {
         name nullable: false, blank: false
@@ -42,10 +42,12 @@ class Company {
         email nullable: false, email: true
         postalCode nullable: true
         permissions nullable: true
+        vehicles nullable: true
     }
 
     static searchable = {
         permissions component: 'inner'
+        vehicles component: 'inner'
     }
 
 //    static transients = ['permissions']

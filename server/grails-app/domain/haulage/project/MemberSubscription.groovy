@@ -10,14 +10,18 @@ import groovy.transform.TypeCheckingMode
 class MemberSubscription {
 
   String userId
+
   Pricing pricing
 
   Boolean monthlyRecurring = false
+
+  static belongsTo = [company: Company]
 
   static constraints = {
     userId nullable: false
     pricing nullable: false
     monthlyRecurring nullable: false
+    company nullable: false
   }
 
   static mapping = {

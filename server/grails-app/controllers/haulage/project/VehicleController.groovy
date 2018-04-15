@@ -6,7 +6,7 @@ import grails.converters.*
 
 class VehicleController extends RestfulController {
 
-  def vehicleService
+  VehicleService vehicleService
 
   static responseFormats = ['json', 'xml']
 
@@ -23,8 +23,12 @@ class VehicleController extends RestfulController {
     if (permission) {
       return super.index(max)
     } else {
-      return Vehicle.where {
-        userId == userId
+
+      def userInfo = UserInfo.findByUserId(userId)
+
+      if(userInfo){
+        def company = Company.find(userInfo.company)
+        return company.vehicles
       }
     }
   }
@@ -72,8 +76,10 @@ class VehicleController extends RestfulController {
     if (permission) {
       respond count: vehicleService.count()
     } else {
-      //todo count by haulier
-      respond vehicleService.findAllByUserId(userId, [offset: params.offset])
+      // count by haulier company
+      def userInfo = UserInfo.findByUserId(userId)
+      def company = Company.find(userInfo.company)
+      respond company.vehicles?.size()
     }
   }
 }

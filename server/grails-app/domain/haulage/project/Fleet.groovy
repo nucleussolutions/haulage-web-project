@@ -8,6 +8,7 @@ import groovy.transform.TypeCheckingMode
 @GrailsCompileStatic(TypeCheckingMode.SKIP)
 class Fleet {
 
+    UserInfo userInfo
     Vehicle primeMover
     Vehicle trailer
 
@@ -22,5 +23,13 @@ class Fleet {
                 return 'type cannot be prime mover'
             }
         }
+
+        userInfo validator: {
+            if(userInfo.driverInfo == null){
+                return 'user must be a driver'
+            }
+        }
     }
+
+    static searchable = true
 }

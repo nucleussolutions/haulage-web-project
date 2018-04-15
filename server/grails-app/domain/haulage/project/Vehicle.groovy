@@ -41,7 +41,7 @@ class Vehicle {
     //belongs to haulier, but first check role
     // String userId
 
-    static belongsTo = [Company, UserInfo]
+    static belongsTo = [UserInfo, Company]
 
     static constraints = {
         internalNumber blank: false, nullable: false
@@ -58,6 +58,7 @@ class Vehicle {
         insuranceExpiryDate nullable: false
         // userId nullable: false
         subType nullable: true
+        company nullable: true
     }
 
     static mapping = {
