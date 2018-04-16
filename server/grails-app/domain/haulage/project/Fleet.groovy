@@ -32,4 +32,8 @@ class Fleet {
     }
 
     static searchable = true
+    static mapping = {
+        //to know when the vehicles are coupled or uncoupled?
+        autoTimestamp true
+    }
 }
