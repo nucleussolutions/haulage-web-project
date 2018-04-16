@@ -58,7 +58,7 @@ class Vehicle {
         insuranceExpiryDate nullable: false
         // userId nullable: false
         subType nullable: true
-        company nullable: true
+//        company nullable: true
     }
 
     static mapping = {

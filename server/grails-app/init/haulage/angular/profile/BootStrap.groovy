@@ -67,6 +67,7 @@ class BootStrap {
     company1.save(flush: true, failOnError: true)
     kevinUserInfo.permissions = []
     kevinUserInfo.permissions.add(kevinAdminPermission)
+    kevinUserInfo.company = company1
     kevinUserInfo.save(flush: true, failOnError: true)
     def jordanAdminPermission = new Permission(email: 'jordan@nucleus.my', userInfo: jordanUserInfo, authority: 'Super Admin', grantedBy: 'Wcd1ixuFLLStcm0GN4YylfU1nNx2', company: company2, role: 'Owner').save(flush: true, failOnError: true)
     company2.permissions = []
@@ -75,13 +76,14 @@ class BootStrap {
     company2.save(flush: true, failOnError: true)
     jordanUserInfo.permissions = []
     jordanUserInfo.permissions.add(jordanAdminPermission)
+    jordanUserInfo.company = company2
     jordanUserInfo.save(flush: true, failOnError: true)
     def interceptorPermission = new Permission(email: 'kevin5@kevin.com', userInfo: interceptorUserInfo, authority: 'Admin', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', company: company2, role: 'Staff').save(flush: true, failOnError: true)
     interceptorUserInfo.permissions = [interceptorPermission]
-    interceptorUserInfo.save(flush: true, failOnError: true)
     company2.permissions.add(interceptorPermission)
     company2.save(flush: true, failOnError: true)
-
+    interceptorUserInfo.company = company2
+    interceptorUserInfo.save(flush: true, failOnError: true)
 
     def consignments = []
 
@@ -126,7 +128,8 @@ class BootStrap {
     consignments.add new Consignment(name: 'consignment 2', type: ConsignmentType.GP.id, acceptTime: new Date(), taskType: ConsignmentTaskType.DROP_OFF.id, consignmentCode: '213123', ladenOrDropOffLocation: pickupLadenDropOff, pickupLocation: pickupLadenDropOff, containerNo: '21312312', size: '232323', transportRequest: testRFT)
     consignments.add new Consignment(name: 'consignment 3', type: ConsignmentType.HQ.id, acceptTime: new Date(), taskType: ConsignmentTaskType.DROP_OFF.id, consignmentCode: '123123', ladenOrDropOffLocation: pickupLadenDropOff, pickupLocation: pickupLadenDropOff, containerNo: '12321313', size: '123123', transportRequest: testRFT)
     consignments.add new Consignment(name: 'consignment 4', type: ConsignmentType.OT.id, acceptTime: new Date(), taskType: ConsignmentTaskType.DROP_OFF.id, consignmentCode: '1231232', ladenOrDropOffLocation: pickupLadenDropOff, pickupLocation: pickupLadenDropOff, containerNo: '1230281312', size: '123123', transportRequest: testRFT)
-
+    testRFT.haulierCompany = company1
+    testRFT.forwarderCompany = company3
     testRFT.save(flush: true, failOnError: true)
 
     def testRFT2 = new TransportRequest()
@@ -158,6 +161,8 @@ class BootStrap {
     testRFT2.backToBack = true
     testRFT2.openCargoBoat = true
 
+    testRFT2.haulierCompany = company1
+    testRFT2.forwarderCompany = company3
     testRFT2.save(flush: true, failOnError: true)
 
     def forwarderUserInfo = new UserInfo()
