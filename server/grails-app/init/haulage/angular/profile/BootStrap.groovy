@@ -69,7 +69,7 @@ class BootStrap {
     kevinUserInfo.permissions.add(kevinAdminPermission)
     kevinUserInfo.company = company1
     kevinUserInfo.save(flush: true, failOnError: true)
-    def jordanAdminPermission = new Permission(email: 'jordan@nucleus.my', userInfo: jordanUserInfo, authority: 'Super Admin', grantedBy: 'Wcd1ixuFLLStcm0GN4YylfU1nNx2', company: company2, role: 'Owner').save(flush: true, failOnError: true)
+    def jordanAdminPermission = new Permission(email: 'jordan@nucleus.my', userInfo: jordanUserInfo, authority: 'Admin', grantedBy: 'Wcd1ixuFLLStcm0GN4YylfU1nNx2', company: company2, role: 'Owner').save(flush: true, failOnError: true)
     company2.permissions = []
     company2.permissions.add(jordanAdminPermission)
     jordanUserInfo.permissions = [jordanAdminPermission]
@@ -171,10 +171,13 @@ class BootStrap {
     forwarderUserInfo.save(flush: true)
 
     def forwarderPermission = new Permission(email: 'kevin@kevin.com', userInfo: forwarderUserInfo, authority: 'Manager', grantedBy: 'OFrQip85jPRRmXkBR544ROU51y93', role: 'Owner', company: company3)
-    forwarderUserInfo.permissions = [forwarderPermission]
-    company3.permissions = [forwarderPermission]
+    company3.permissions = []
+    company3.permissions.add(forwarderPermission)
     company3.save(flush: true, failOnError: true)
-    forwarderPermission.save(flush: true, failOnError: true)
+    forwarderUserInfo.permissions = []
+    forwarderUserInfo.permissions.add(forwarderPermission)
+    forwarderUserInfo.company = company2
+    forwarderUserInfo.save(flush: true, failOnError: true)
 
     def quoteItem1 = new QuoteItem(desc: 'desc 1', rebatePercent: 20, name: 'quote item 1')
     def quoteItem2 = new QuoteItem(desc: 'desc 2', rebatePercent: 20, name: 'quote item 1')
